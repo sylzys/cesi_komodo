@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.*;
 import controllers.getLoginInfos;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
@@ -16,11 +17,8 @@ import javax.swing.border.EmptyBorder;
  */
 public class Fenetre extends JFrame {
 
-   
-  public Fenetre fen = this;
-  public JPanel conteneur = new JPanel();
-  
-    
+    public Fenetre fen = this;
+    public JPanel conteneur = new JPanel();
     //menu
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new JMenu("Menu"),
@@ -32,36 +30,39 @@ public class Fenetre extends JFrame {
             sortie = new JMenuItem("Quitter"),
             afficher = new JMenuItem("Afficher"),
             creer = new JMenuItem("Creer");
-    
     //toolbar
-     private JToolBar toolbar = new JToolBar();
-     private JButton logout = new JButton ("Deconnexion");
-     private JLabel username = new JLabel();
-     
-     //User
-      UserActif user = new UserActif();
-     
-      
+    private JToolBar toolbar = new JToolBar();
+    private JButton logout = new JButton("Deconnexion");
+    private JLabel username = new JLabel();
+    //User
+    public UserActif user;
+
     public Fenetre() {
         this.setTitle("Plast'Prod");
         this.setSize(1024, 768);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         boolean login_ok = false;
 
-        while (!login_ok) {
+        while (!login_ok)
+        {
             loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
             getLoginInfos zInfos = zd.showZDialog();
             JOptionPane jop = new JOptionPane();
             System.out.println(zInfos.toString());
-            if("-NA-".equals(zInfos.toString())){
+            if ("-NA-".equals(zInfos.toString()))
+            {
                 System.exit(0);
             }
-            user.setLogin(zInfos.toString().split("#")[0]);
-            user.setPass(zInfos.toString().split("#")[1]);
-            if (user.verify()) {
+//            user.setLogin(zInfos.toString().split("#")[0]);
+//            user.setPass(zInfos.toString().split("#")[1]);
+            user = new UserActif(zInfos.toString().split("#")[0]);
+            if (user.verify(zInfos.toString().split("#")[1]))
+            {
                 break;
-            } else {
+            }
+            else
+            {
                 JOptionPane jop3 = new JOptionPane();
                 jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
             }
@@ -92,20 +93,21 @@ public class Fenetre extends JFrame {
         this.setJMenuBar(menuBar);
         this.conteneur.setLayout(new BorderLayout());
         this.conteneur.add(toolbar, BorderLayout.NORTH);
-        
+
         //toolbar
         logout.addActionListener(new LogoutListener());
         username.setText(user.getFullName());
-        username.setBorder(new EmptyBorder(0, 0, 0, 20) );
+        username.setBorder(new EmptyBorder(0, 0, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
         toolbar.add(username);
         toolbar.add(logout);
-        
+        toolbar.setBackground(Color.white);
+
         this.setContentPane(this.conteneur);
-        
+
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        
+
         //Affiachage accueil
         Accueil home = new Accueil(user);
         conteneur.removeAll();
@@ -113,20 +115,15 @@ public class Fenetre extends JFrame {
         conteneur.add(home.getPanel(), BorderLayout.CENTER);
         conteneur.revalidate();
     }
-    
-    
-    
-   //LISTENERS
-    
-     private class AlertListener implements ActionListener {
 
-        public
-        AlertListener() {
+    //LISTENERS
+    private class AlertListener implements ActionListener {
+
+        public AlertListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Alertes al = new Alertes(user);
             conteneur.removeAll();
             conteneur.add(toolbar, BorderLayout.NORTH);
@@ -137,13 +134,11 @@ public class Fenetre extends JFrame {
 
     private class CreateListener implements ActionListener {
 
-        public
-        CreateListener() {
+        public CreateListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Creation cr = new Creation(user);
             conteneur.removeAll();
             conteneur.add(toolbar, BorderLayout.NORTH);
@@ -154,13 +149,11 @@ public class Fenetre extends JFrame {
 
     private class DisplayListener implements ActionListener {
 
-        public
-        DisplayListener() {
+        public DisplayListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Affichage af = new Affichage(user);
             conteneur.removeAll();
             conteneur.add(toolbar, BorderLayout.NORTH);
@@ -171,14 +164,11 @@ public class Fenetre extends JFrame {
 
     private class EvenementListener implements ActionListener {
 
-        public
-        EvenementListener() {
-            
+        public EvenementListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Evenement ev = new Evenement(user);
             conteneur.removeAll();
             conteneur.add(toolbar, BorderLayout.NORTH);
@@ -189,13 +179,11 @@ public class Fenetre extends JFrame {
 
     private class FindListener implements ActionListener {
 
-        public
-        FindListener() {
+        public FindListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
             Recherche re = new Recherche(user);
             conteneur.removeAll();
             conteneur.add(toolbar, BorderLayout.NORTH);
@@ -206,24 +194,24 @@ public class Fenetre extends JFrame {
 
     private class SynchroListener implements ActionListener {
 
-        public
-        SynchroListener() {
+        public SynchroListener() {
         }
 
         @Override
-        public
-        void actionPerformed(ActionEvent e) {
-           Synchro sy = new Synchro(user);
-           conteneur.removeAll();
-           conteneur.add(toolbar, BorderLayout.NORTH);
+        public void actionPerformed(ActionEvent e) {
+            Synchro sy = new Synchro(user);
+            conteneur.removeAll();
+            conteneur.add(toolbar, BorderLayout.NORTH);
             conteneur.add(sy.getPanel(), BorderLayout.CENTER);
             conteneur.revalidate();
         }
     }
+
     private class LogoutListener implements ActionListener {
 
         public LogoutListener() {
         }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             Logout lo = new Logout(user);

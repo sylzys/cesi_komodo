@@ -19,12 +19,12 @@ public abstract class KContainer {
 
     public KContainer() {
         this.panel = new JPanel();
-        this.user = new UserActif();
+        //this.user = new UserActif();
         this.panel.setBackground(Color.WHITE);
     }
 
     protected JPanel getPanel() {
         return this.panel;
     }
-    protected abstract void initPanel();
+    protected abstract void initPanel() ;
 }
