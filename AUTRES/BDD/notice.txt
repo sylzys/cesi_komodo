@@ -1,0 +1,4 @@
+#Si jamais vous avez deja installer postgres sous windows et que vous souhaiter le reinstaller sans vous souvenir du mot de passe
+#il faudra supprimer l'utilisateur postgres sous windows 
+net user postgres /del /y
+#postgres est le nom de l'utilisateur postgres sous windows
