@@ -13,6 +13,6 @@
   <property name="show_sql">true</property>
   <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping class="cesi_komodo.models.Utilisateur"/>
+  <mapping class="models.Utilisateur"/>
 </session-factory>
 </hibernate-configuration>

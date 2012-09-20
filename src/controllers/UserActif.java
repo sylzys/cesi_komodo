@@ -8,14 +8,14 @@ package controllers;
  *
  * @author sylv
  */
-public class Utilisateur {
+public class UserActif {
 
     String login, pass;
 
-    public Utilisateur() {
+    public UserActif() {
     }
 
-    public Utilisateur(String login, String pass) {
+    public UserActif(String login, String pass) {
         this.login = login;
         this.pass = pass;
         System.out.println("New user: " + this.login + "/" + this.pass);

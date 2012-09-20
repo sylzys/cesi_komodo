@@ -4,7 +4,7 @@
  */
 package views;
 
-import controllers.Utilisateur;
+import controllers.UserActif;
 import java.awt.Color;
 import javax.swing.JPanel;
 
@@ -15,11 +15,11 @@ import javax.swing.JPanel;
 public abstract class KContainer {
 
     protected JPanel panel;
-    protected Utilisateur user;
+    protected UserActif user;
 
     public KContainer() {
         this.panel = new JPanel();
-        this.user = new Utilisateur();
+        this.user = new UserActif();
         this.panel.setBackground(Color.WHITE);
     }
 

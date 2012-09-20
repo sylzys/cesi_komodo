@@ -1,6 +1,6 @@
 package views;
 
-import controllers.Utilisateur;
+import controllers.UserActif;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
@@ -39,7 +39,7 @@ public class Fenetre extends JFrame {
      private JLabel username = new JLabel();
      
      //User
-      Utilisateur user = new Utilisateur();
+      UserActif user = new UserActif();
      
       
     public Fenetre() {

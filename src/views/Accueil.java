@@ -4,7 +4,7 @@
  */
 package views;
 
-import controllers.Utilisateur;
+import controllers.UserActif;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
  */
 public class Accueil extends KContainer {
     JLabel title = new JLabel ();
-    public Accueil(Utilisateur user) {
+    public Accueil(UserActif user) {
     super();
     this.user = user;
     initPanel();

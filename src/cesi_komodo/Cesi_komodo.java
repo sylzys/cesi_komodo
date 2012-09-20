@@ -44,26 +44,26 @@ public class Cesi_komodo {
         }
         
         /******EXEMPLE INSERT*****************/
-        Session session = null;
-    	Transaction tx = null;
-    	try{
-            SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-            session =sessionFactory.openSession();
-            tx = session.beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-            Utilisateur uti = new Utilisateur();
-            uti.setUtinom("newuser");
-            session.save(uti); 		  
-            tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");		  
-    	}
-    	catch(Exception e){
-            System.out.println(e.getMessage());
-		}
-    	finally{
-            session.flush();
-            session.close();
-    	}
+//        Session session = null;
+//    	Transaction tx = null;
+//    	try{
+//            SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+//            session =sessionFactory.openSession();
+//            tx = session.beginTransaction();
+//            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+//            Utilisateur uti = new Utilisateur();
+//            uti.setUtinom("newuser");
+//            session.save(uti); 		  
+//            tx.commit();
+//            System.out.println("Insertion de l'enregistrement terminé");		  
+//    	}
+//    	catch(Exception e){
+//            System.out.println(e.getMessage());
+//		}
+//    	finally{
+//            session.flush();
+//            session.close();
+//    	}
 		
 		
 		/******EXEMPLE UPDATE*****************/

@@ -3,13 +3,12 @@ package models;
 
 import java.util.Date;
 import javax.persistence.*;
-
 @Entity
 @Table(name="utilisateur")
 public class Utilisateur {
 	
     @Id
-    @EmbeddedId
+    @GeneratedValue
     private int utiid;
 
     @Column(name="utinom", columnDefinition="VARCHAR(50)", nullable=true)
