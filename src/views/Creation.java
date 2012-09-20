@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cesi_komodo.views;
+package views;
 
-import cesi_komodo.controllers.Utilisateur;
+import controllers.Utilisateur;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

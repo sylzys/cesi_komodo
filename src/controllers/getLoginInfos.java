@@ -1,5 +1,5 @@
 
-package cesi_komodo.controllers;
+package controllers;
 public class getLoginInfos {
    private String login, pass;
 

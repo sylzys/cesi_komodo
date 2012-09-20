@@ -1,6 +1,6 @@
-package cesi_komodo.views;
+package views;
 
-import cesi_komodo.controllers.getLoginInfos;
+import controllers.getLoginInfos;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -99,8 +99,8 @@ public class loginDialog extends JDialog {
 // * To change this template, choose Tools | Templates
 // * and open the template in the editor.
 // */
-//package cesi_komodo.views;
-//import cesi_komodo.controllers.getLoginInfos;
+//package views;
+//import controllers.getLoginInfos;
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 //import java.awt.Dimension;

@@ -1,10 +1,10 @@
-package cesi_komodo.views;
+package views;
 
-import cesi_komodo.controllers.Utilisateur;
+import controllers.Utilisateur;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import cesi_komodo.controllers.getLoginInfos;
+import controllers.getLoginInfos;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
