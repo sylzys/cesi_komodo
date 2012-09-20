@@ -54,17 +54,23 @@ public class Fenetre extends JFrame {
             {
                 System.exit(0);
             }
-//            user.setLogin(zInfos.toString().split("#")[0]);
-//            user.setPass(zInfos.toString().split("#")[1]);
-            user = new UserActif(zInfos.toString().split("#")[0]);
-            if (user.verify(zInfos.toString().split("#")[1]))
+            String[] login = zInfos.toString().split("#");
+            if (!login[0].isEmpty() && !login[1].isEmpty())
             {
-                break;
+                user = new UserActif(login[0]);
+                if (user.verify(login[1]))
+                {
+                    break;
+                }
+                else
+                {
+                    JOptionPane jop3 = new JOptionPane();
+                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            else
-            {
-                JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+            else {
+                JOptionPane jop4 = new JOptionPane();
+                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
             }
         }
         //menu
@@ -88,6 +94,7 @@ public class Fenetre extends JFrame {
         this.menu.addSeparator();
         sortie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        sortie.addActionListener(new LogoutListener());
         this.menu.add(sortie);
         this.menuBar.add(menu);
         this.setJMenuBar(menuBar);
