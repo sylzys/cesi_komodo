@@ -8,13 +8,25 @@ import controllers.UserActif;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
+import java.lang.reflect.Array;
+import java.util.List;
+import javax.swing.JFrame;
+import models.Client;
+import models.HibernateConnection;
+import models.Utilisateur;
+import org.hibernate.Query;
 /**
  *
  * @author sylv
  */
 public class Affichage extends KContainer {
     JLabel title = new JLabel ("PANNEAU AFFICHAGE");
+    public List<Client> liste;
+    
     public Affichage(UserActif user) {
     super();
     this.user = user;
@@ -25,10 +37,38 @@ public class Affichage extends KContainer {
     protected
     void initPanel() {
         JPanel content = new JPanel();
-
+        
         content.setLayout(new BorderLayout());
         content.add(title, BorderLayout.CENTER);      
+        
+        getCompanyList();
+        for (Client cli : this.liste) 
+        {   
+            System.out.println("LISTING CLIENT");
+            System.out.println("Sté : " + cli.getClinom());
+            System.out.println("createur : " + cli.getUti_utiid());
+            System.out.println("createur : " + cli.getClidteadd());
+        }
+        
+        //show table
+        
+        SimpleTableDemo cp = new SimpleTableDemo();
+        //;
+        content.add(cp.showtable(), BorderLayout.SOUTH);
         this.panel.add(content);
     }
+    private void getCompanyList(){
+        
+       HibernateConnection connection = HibernateConnection.getInstance();
+        try {
+                Query query = connection.getSession().createQuery("from Client where utiid = :utiid");
+                //query.setParameter("utiid", 1);
+                query.setParameter("utiid", this.user.getId());
+               this.liste = query.list();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+       
 }
 
