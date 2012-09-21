@@ -38,32 +38,54 @@ public class Evenement extends KContainer {
 
     @Override
     protected void initPanel() {
-        JPanel content = new JPanel();
-
-        content.setLayout(new BorderLayout());
-        content.add(title, BorderLayout.CENTER);
+        JPanel b1 = new JPanel();
+        b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
+        jLabel1.setText("Intitulé");
+        b1.add(jLabel1, BorderLayout.WEST);
+        b1.add(jTextField1, BorderLayout.EAST);
         
+
+        JPanel b2 = new JPanel();
+        b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
+        jLabel2.setText("Description");
+        b2.add(jLabel2, BorderLayout.WEST);
+        b1.add(jTextArea1, BorderLayout.EAST);
+
+        JPanel b3 = new JPanel();
+        b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
+        jLabel3.setText("Début");
+        b3.add(jLabel3, BorderLayout.WEST);
+        b3.add(jFormattedTextField1, BorderLayout.CENTER);
+        b3.add(jFormattedTextField2, BorderLayout.EAST);
+        
+        JPanel b4 = new JPanel();
+        b4.setLayout(new BoxLayout(b4, BoxLayout.LINE_AXIS));
+        jLabel4.setText("Fin");
+        b4.add(jLabel4, BorderLayout.WEST);
+        b4.add(jFormattedTextField3, BorderLayout.CENTER);
+        b4.add(jFormattedTextField4, BorderLayout.EAST);
+
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+        content.add(b1);
+        content.add(b2);
+        content.add(b3);
+        content.add(b4);
+
+
         button.setText("Ajouter");
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonActionPerformed(evt);
             }
         });
-        content.add(button, BorderLayout.PAGE_END);
         
-        jLabel1.setText("Intitulé");
-        content.add(jLabel1, BorderLayout.WEST);
-        jLabel2.setText("Description");
-        content.add(jLabel2, BorderLayout.EAST);
-        jLabel3.setText("Début");
-        content.add(jLabel3, BorderLayout.SOUTH);
-        jLabel4.setText("Fin");
-        content.add(jLabel4, BorderLayout.NORTH);
-        
-        
-        this.panel.add(content);
+
+        this.panel.add(title, BorderLayout.NORTH);
+        this.panel.add(content, BorderLayout.CENTER);
+        this.panel.add(button, BorderLayout.SOUTH);
     }
-    
+
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
