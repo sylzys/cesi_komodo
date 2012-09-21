@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Utilisateur {
 	
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int utiid;
 
     @Column(name="utinom", columnDefinition="VARCHAR(50)", nullable=true)

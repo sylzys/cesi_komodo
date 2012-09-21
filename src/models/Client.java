@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Client {
 	
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int cliid;
 
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)

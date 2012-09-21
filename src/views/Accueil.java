@@ -34,7 +34,7 @@ public class Accueil extends KContainer {
         
         content.setBackground(Color.white);
         title.setText("<html><center>Bienvenue "+name+"<br>"+
-                "Votre dernière connexion date du "+
+                "Votre dernière connexion date du " +
                 this.user.getLastLogin().toString()+"</center></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);  
         title.setBorder(new EmptyBorder(30, 0, 30, 0));
