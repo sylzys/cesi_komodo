@@ -54,3 +54,8 @@ c.clirais, c.clinom, c.cliadresse, c.clicp, c.cliville, c.clipays, c.clitel, c.c
 c.clietat, c.clilogin, c.climdp, c.cliacces, c.clisuppr, c.clidteadd, c.clidtelog 
 FROM utilisateur u, client c, interlocuteur i
 WHERE u.utiid = i.utiid AND c.cliid = i.cliid;
+
+CREATE OR REPLACE VIEW getalerte AS
+SELECT 	s.comid, i.interid, i.internom, i.interprenom, l.cliid, l.clinom, s.suivdoscom, s.suivdosdate, s.utiid
+FROM suivdossier s, interlocuteur i,  client l
+WHERE s.interid = i.interid AND i.cliid = l.cliid AND s.suividossuppr = false;
