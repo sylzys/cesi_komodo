@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  18/07/2012 11:59:22                      */
+/* Date de création :  21/09/2012 07:51:55                      */
 /*==============================================================*/
 
 
@@ -269,6 +269,8 @@ FOURID
 /*==============================================================*/
 create table COMMANDE (
    COMID                SERIAL               not null,
+   COMTITRE             VARCHAR(50)          null,
+   COMDESC              VARCHAR(254)         null,
    COMDATE              DATE                 null,
    COMDATEPREV          DATE                 null,
    COMETAT              INT4                 null,
@@ -376,6 +378,7 @@ CLIID
 /*==============================================================*/
 create table DEVIS (
    DEVID                SERIAL               not null,
+   DEVETAT              VARCHAR(50)          null,
    DEVDATE              DATE                 null,
    DEVPRIX              INT4                 null,
    DEVSUPPR             BOOL                 null,
