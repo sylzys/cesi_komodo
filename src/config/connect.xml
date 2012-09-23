@@ -6,9 +6,9 @@
 <hibernate-configuration>
 <session-factory>
   <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-  <property name="hibernate.connection.url">jdbc:postgresql://127.0.0.1:5432/projetcesi</property>
+  <property name="hibernate.connection.url">jdbc:postgresql://.0.0.1:5432/projetcesi</property>
   <property name="hibernate.connection.username">cesi</property>
   <property name="hibernate.connection.password">cesi</property>
-  <property name="hibernate.connection.pool_size">10</property>
+  <property name="hibernate.connection.timeout">1</property>
 </session-factory>
 </hibernate-configuration>
