@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import controllers.getLoginInfos;
+import instances.ClientInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -16,8 +17,7 @@ import javax.swing.border.EmptyBorder;
  * @author sylv
  */
 public class Fenetre extends JFrame {
-
-    public Fenetre fen = this;
+    public static Fenetre instance;
     public JPanel conteneur = new JPanel();
     //menu
     private JMenuBar menuBar = new JMenuBar();
@@ -68,7 +68,8 @@ public class Fenetre extends JFrame {
                     jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            else {
+            else
+            {
                 JOptionPane jop4 = new JOptionPane();
                 jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
             }
@@ -117,10 +118,7 @@ public class Fenetre extends JFrame {
 
         //Affiachage accueil
         Accueil home = new Accueil(user);
-        conteneur.removeAll();
-        conteneur.add(toolbar, BorderLayout.NORTH);
-        conteneur.add(home.getPanel(), BorderLayout.CENTER);
-        conteneur.revalidate();
+        RenewContener(home.getPanel());
     }
 
     //LISTENERS
@@ -132,10 +130,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Alertes al = new Alertes(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(al.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(al.getPanel());
         }
     }
 
@@ -147,10 +142,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Creation cr = new Creation(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(cr.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(cr.getPanel());
         }
     }
 
@@ -162,10 +154,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Affichage af = new Affichage(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(af.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(af.getPanel());
         }
     }
 
@@ -177,10 +166,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Evenement ev = new Evenement(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(ev.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(ev.getPanel());
         }
     }
 
@@ -192,10 +178,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Recherche re = new Recherche(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(re.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(re.getPanel());
         }
     }
 
@@ -207,10 +190,7 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Synchro sy = new Synchro(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(sy.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(sy.getPanel());
         }
     }
 
@@ -222,10 +202,26 @@ public class Fenetre extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Logout lo = new Logout(user);
-            conteneur.removeAll();
-            conteneur.add(toolbar, BorderLayout.NORTH);
-            conteneur.add(lo.getPanel(), BorderLayout.CENTER);
-            conteneur.revalidate();
+            RenewContener(lo.getPanel());
         }
+    }
+
+    public void RenewContener(JPanel panel) {
+        conteneur.removeAll();
+        conteneur.add(toolbar, BorderLayout.NORTH);
+        conteneur.add(panel, BorderLayout.CENTER);
+        conteneur.revalidate();
+    }
+    public void Erase(){
+         conteneur.removeAll();
+         conteneur.revalidate();
+    }
+    public static synchronized Fenetre getInstance() {
+        if (instance == null)
+        {
+            instance = new Fenetre();
+        }
+        System.out.println("INSTANCE :"+instance);
+        return instance;
     }
 }

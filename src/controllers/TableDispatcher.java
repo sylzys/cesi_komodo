@@ -13,10 +13,12 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import models.ModelesTables;
 import tableModels.ClientModel;
+import views.ClientDetail;
+import views.Logout;
 
 public class TableDispatcher extends JPanel {
 
-    ModelesTables modelesTables; 
+    ModelesTables modeleTable; 
       
    
     public TableDispatcher() {
@@ -24,7 +26,7 @@ public class TableDispatcher extends JPanel {
         private TableModel model;
         public TableDispatcher(ModelesTables mt){
         super(new GridLayout(1,0));
-        
+        modeleTable = mt;
         //get table model
         switch (mt) {
             case CLIENT:
@@ -50,6 +52,10 @@ public class TableDispatcher extends JPanel {
                 Object value = tm.getValueAt(row,999); //999 = id dans le model
           System.out.println("Selection : " + value ); 
               System.out.println("DOUBLE CLICKED "+row + "/" +column + "->"+value);
+              switch (modeleTable){
+                  case CLIENT:
+                     ClientDetail cd = new ClientDetail((Integer)tm.getValueAt(row,999));
+              }
           }
         }
       });

@@ -20,7 +20,7 @@ public class ClientModel extends AbstractTableModel {
     {
         "Nom", "Créateur", "Date de création"
     };
-private ClientInstance noteService;
+    
     private List<Client> clients;
 
     public ClientModel() {
@@ -55,14 +55,16 @@ private ClientInstance noteService;
                 return clients.get(rowIndex).getClinom();
 
             case 1:
-                System.out.println("Crétaeur:" + clients.get(rowIndex).getUti_utiid());
+                System.out.println("Créateur:" + clients.get(rowIndex).getUti_utiid());
                 return clients.get(rowIndex).getUti_utiid();
 
             case 2:
                 System.out.println("Date:" + clients.get(rowIndex).getClidteadd());
                 return clients.get(rowIndex).getClidteadd();
+                
             case 999:
                 return clients.get(rowIndex).getCliid();
+                
             default:
                 throw new IllegalArgumentException();
         }
@@ -83,7 +85,7 @@ private ClientInstance noteService;
         }
     }
 
-    public List<Client> getNotes() {
+    public List<Client> getClients() {
         return clients;
     }
 }

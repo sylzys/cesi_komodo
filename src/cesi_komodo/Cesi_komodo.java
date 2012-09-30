@@ -21,30 +21,30 @@ public class Cesi_komodo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Fenetre fen = new Fenetre();
+        Fenetre fen = Fenetre.getInstance();
         
-        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
-        try 
-        {
-            Query query = HibernateConnection.getSession().createQuery("from Utilisateur where utiid = :utiid");
-            query.setParameter("utiid", 1);
-            List<Utilisateur> userlist = query.list();
-            for (Utilisateur uti : userlist) 
-            {
-                System.out.println("Name : " + uti.getUtinom());
-                System.out.println("Prénom : " + uti.getUtiprenom());
-                System.out.println("Login : " + uti.getUtilogin());
-                System.out.println("MDP : " + uti.getUtimdp());
-                System.out.println("Mail : " + uti.getUtimail());
-                System.out.println("Tél : " + uti.getUtitel());
-                System.out.println("Supprimé ? : " + uti.getUtisuppr());
-                System.out.println("Date de conenxion : " + uti.getUtidtelog());
-            }
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
+//        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
+//        try 
+//        {
+//            Query query = HibernateConnection.getSession().createQuery("from Utilisateur where utiid = :utiid");
+//            query.setParameter("utiid", 1);
+//            List<Utilisateur> userlist = query.list();
+//            for (Utilisateur uti : userlist) 
+//            {
+//                System.out.println("Name : " + uti.getUtinom());
+//                System.out.println("Prénom : " + uti.getUtiprenom());
+//                System.out.println("Login : " + uti.getUtilogin());
+//                System.out.println("MDP : " + uti.getUtimdp());
+//                System.out.println("Mail : " + uti.getUtimail());
+//                System.out.println("Tél : " + uti.getUtitel());
+//                System.out.println("Supprimé ? : " + uti.getUtisuppr());
+//                System.out.println("Date de conenxion : " + uti.getUtidtelog());
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
         
         /****** EXEMPLE INSERT *****************/
 //    	try
