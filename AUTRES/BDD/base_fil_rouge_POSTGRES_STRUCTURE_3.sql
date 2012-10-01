@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  21/09/2012 07:51:55                      */
+/* Date de création :  23/09/2012 15:23:00                      */
 /*==============================================================*/
 
 
@@ -40,7 +40,7 @@ create table AGENDA (
    AGEDEB               DATE                 null,
    AGEFIN               DATE                 null,
    AGELIEU              VARCHAR(50)          null,
-   AGEDESC              VARCHAR(1)           null,
+   AGEDESC              VARCHAR(1000)        null,
    AGEETAT              BOOL                 null,
    AGESUPPR             BOOL                 null,
    constraint PK_AGENDA primary key (AGEID)
@@ -274,7 +274,7 @@ create table COMMANDE (
    COMDATE              DATE                 null,
    COMDATEPREV          DATE                 null,
    COMETAT              INT4                 null,
-   COMRESUME            VARCHAR(1)           null,
+   COMRESUME            VARCHAR(1000)        null,
    COMPRODDEB           DATE                 null,
    COMPRODFIN           DATE                 null,
    COMPRIX              INT4                 null,

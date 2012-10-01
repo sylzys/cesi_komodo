@@ -4,11 +4,11 @@
  */
 package controllers;
 
-import java.net.ConnectException;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -17,9 +17,10 @@ import org.hibernate.cfg.Configuration;
  */
 public class Connect {
     private static SessionFactory sessionFactory;
+    private String lib;
+    private String libreq;
     public boolean InitConnect()
     {
-           // Connect.sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
             try {
                 sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory() ;
              } catch (Throwable ex) {
@@ -27,5 +28,25 @@ public class Connect {
                return false;
              }
         return true;
+    }
+    public void SaveRequete(String req) throws IOException
+    {
+        try {
+           FileWriter fichier = new FileWriter("ressources/requetes.sql", true);
+           BufferedWriter bw = new BufferedWriter(fichier);
+           libreq = req.substring(0,6);
+           if("INSERT".equals(libreq))
+           {
+               lib = "Ajout|";
+           }
+           else
+           {
+               lib = "Mise à jour|" ;
+           }
+           bw.write(req +";->"+ lib);
+           bw.close();
+        } catch(IOException e) {
+           System.out.println(e);
+        }
     }
 }

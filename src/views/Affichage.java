@@ -12,11 +12,13 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
+import controllers.TableDispatcher;
 import java.lang.reflect.Array;
 import java.util.List;
 import javax.swing.JFrame;
 import models.Client;
 import models.HibernateConnection;
+import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;
 /**
@@ -52,9 +54,9 @@ public class Affichage extends KContainer {
         
         //show table
         
-        SimpleTableDemo cp = new SimpleTableDemo();
+        TableDispatcher cp = new TableDispatcher();
         //;
-        content.add(cp.showtable(), BorderLayout.SOUTH);
+        content.add(cp.showtable(ModelesTables.CLIENT), BorderLayout.SOUTH);
         this.panel.add(content);
     }
     private void getCompanyList(){
