@@ -9,11 +9,16 @@ import instances.ClientInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.HibernateConnection;
 import org.hibernate.Query;
@@ -48,10 +53,21 @@ public class ClientDetail extends KContainer {
 
     @Override
     protected void initPanel() {
-        JPanel content = new JPanel();
+        JPanel content = new JPanel(),
+                cliInfos = new JPanel(),
+                top = new JPanel(),
+                bottom = new JPanel(),
+                cliDetail = new JPanel(),
+                cliButtons = new JPanel();
+        JButton addContact = new JButton("Ajouter"),
+                contact1 = new JButton("+"),
+                contact2 = new JButton("+"),
+                contact3 = new JButton("+");
+
         Client cli = null;
         content.setLayout(new BorderLayout());
-        content.add(title, BorderLayout.CENTER);
+        // content.add(title);
+        content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
         HibernateConnection connection = HibernateConnection.getInstance();
         try
@@ -66,26 +82,96 @@ public class ClientDetail extends KContainer {
         {
             System.out.println(e.getMessage());
         }
-        JPanel cliInfos = new JPanel();
+
+        top.setBackground(Color.white);
+        top.setLayout(new BorderLayout());
+
         cliInfos.setBackground(Color.white);
-        cliInfos.setPreferredSize(new Dimension(120, 100));
-        JLabel cli_nom = new JLabel(cli.getClinom());
-        JLabel cli_crea = new JLabel(Integer.toString(cli.getUti_utiid()));
-        JLabel cli_date = new JLabel(cli.getClidteadd().toString());
-        cliInfos.add(cli_nom);
-        cliInfos.add(cli_crea);
-        cliInfos.add(cli_date);
-        
-        cliInfos.setBorder(BorderFactory.createTitledBorder("Infos Société"));
-        content.add(cliInfos, BorderLayout.SOUTH);
-//        System.out.println("LISTING CLIENT IN DETAIL");
-//        System.out.println("Sté : " + cli.getClinom());
-//        System.out.println("createur : " + cli.getUti_utiid());
-//        System.out.println("createur : " + cli.getClidteadd());
-        // ClientInstance CliInstance = ClientInstance.getInstance();
+        cliDetail.setPreferredSize(new Dimension(800, 150));
+        //adresse, raison sociale etc
+
+        cliDetail.setBackground(Color.white);
+        cliDetail.setLayout(new BorderLayout());
+        cliInfos.setLayout(new FlowLayout(0, 50, 0));
+
+        //adresse
+        JPanel cliAddr = new JPanel();
+        cliAddr.setBackground(Color.white);
+        JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
+                + cli.getClicp() + "<br>"
+                + cli.getCliville() + "<br>"
+                + cli.getClipays() + "</html>");
+        cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
+        cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+        cliAddr.add(addr);
+        cliInfos.add(cliAddr);
+
+        //contacts
+        JPanel cliContact = new JPanel();
+        cliContact.setBackground(Color.white);
+        JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
+                + cli.getClifax() + "<br>Mail: "
+                + cli.getClimail() + "<br>Web Site: "
+                + cli.getClisite() + "</html>");
+        cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
+        cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+        cliContact.add(contact);
+        cliInfos.add(cliContact);
+
+        //raison sociale
+        JPanel cliRS = new JPanel();
+        cliRS.setBackground(Color.white);
+        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
+                + cli.getCliactivite() + "<br>SIRET: "
+                + cli.getClisiret() + "<br>CA: "
+                + Integer.toString(cli.getClica()) + "</html>");
+        cliRS.add(RS);
+        cliInfos.add(cliRS);
+
+        //Boutons contact
+        cliButtons.setBackground(Color.white);
+        cliButtons.setLayout(new FlowLayout());
+        cliButtons.add(addContact);
+
+
+        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
+
+        //adding panels
+        cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
+        cliDetail.add(cliInfos, BorderLayout.CENTER);
+        cliDetail.add(cliButtons, BorderLayout.SOUTH);
+        top.add(cliDetail, BorderLayout.WEST);
+        content.add(top, BorderLayout.NORTH);
+
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        //suivi satisfaction
+        JPanel suivi_satisfaction = new JPanel();
+        suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
+        suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
+        bottom.add(suivi_satisfaction);
+        bottom.add(Box.createVerticalStrut(10));
+//        content.add(suivi_satisfaction, BorderLayout.CENTER);
+//        
+//        //alertes
+        JPanel alertes = new JPanel();
+        alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
+        alertes.setPreferredSize(new Dimension(120, 50));
+        bottom.add(alertes);
+        bottom.add(Box.createVerticalStrut(10));
+        //content.add(alertes, BorderLayout.SOUTH);
+
+//        //Reporting
+        JPanel reporting = new JPanel();
+        reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
+        reporting.setPreferredSize(new Dimension(120, 50));
+        bottom.add(reporting);
+        bottom.add(Box.createVerticalStrut(10));
+
+        content.add(bottom, BorderLayout.CENTER);
+
+        //refresh de la fenetre
         Fenetre fen = Fenetre.getInstance();
         fen.conteneur.setVisible(false);
-        System.out.println("RECUP INSTANCE " + fen);
         fen.RenewContener(this.getPanel());
         fen.conteneur.setVisible(true);
     }
