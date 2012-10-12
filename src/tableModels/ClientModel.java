@@ -6,6 +6,7 @@ package tableModels;
 
 import instances.ClientInstance;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Client;
@@ -26,7 +27,9 @@ public class ClientModel extends AbstractTableModel {
     public ClientModel() {
         super();
         ClientInstance CliInstance = ClientInstance.getInstance();
-        clients = CliInstance.GetClients();
+        Hashtable h = new Hashtable();
+        h.put("utiid", 1);
+        clients = CliInstance.GetClients("where utiid = :utiid", h);
     }
 
     @Override
