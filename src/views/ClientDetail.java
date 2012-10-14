@@ -6,12 +6,17 @@ package views;
 
 import controllers.UserActif;
 import instances.ClientInstance;
+import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
+import models.DetailCommande;
 import models.HibernateConnection;
 import org.hibernate.Query;
 
@@ -34,12 +40,17 @@ public class ClientDetail extends KContainer {
 
     JLabel title = new JLabel("PANNEAU CLIENT DETAIL");
     int cli_id;
-    private Fenetre fen;
+    private Fenetre fen = Fenetre.getInstance();
+    ;
+    private List<DetailCommande> detail;
+    private JComboBox cb_demande = new JComboBox(),
+            cb_commande = new JComboBox();
 
     public ClientDetail(int id) {
         super();
         cli_id = id;
         initPanel();
+
     }
 
     @Override
@@ -62,9 +73,9 @@ public class ClientDetail extends KContainer {
                 newDemand = new JButton("Creer une demande"),
                 validateDmd = new JButton("Valider D"),
                 validateCmd = new JButton("Valider C");
-        //JComboBox
-        JComboBox cb_demande = new JComboBox(),
-                cb_commande = new JComboBox();
+//        //JComboBox
+//        JComboBox cb_demande = new JComboBox(),
+//                cb_commande = new JComboBox();
 
 
         Client cli = null;
@@ -164,8 +175,24 @@ public class ClientDetail extends KContainer {
         JPanel comboCmd_panel = new JPanel();
         comboCmd_panel.setBackground(Color.white);
         comboCmd_panel.setLayout(new FlowLayout());
+
+        //get detail cde
+        DetailCdeInstance dc = DetailCdeInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", 1);
+        detail = dc.GetDetailcde("where cliid = :cliid", h);
+
         cb_commande.addItem("Commandes");
-        cb_commande.addItem("hello");
+        for (DetailCommande dcc : detail)
+        {
+            System.out.println("Name : " + dcc.getInternom());
+            System.out.println("Prénom : " + dcc.getInteprenom());
+            System.out.println("Prix : " + dcc.getComprix());
+            System.out.println("Etat : " + dcc.getCometat());
+            System.out.println("date ?  : " + dcc.getComdate());
+            cb_commande.addItem(dcc.getComid());
+        }
+
         comboCmd_panel.add(cb_commande);
         comboCmd_panel.add(validateCmd);
 
@@ -211,8 +238,9 @@ public class ClientDetail extends KContainer {
 
         content.add(bottom, BorderLayout.CENTER);
 
+
         //refresh de la fenetre
-        fen = Fenetre.getInstance();
+
         fen.conteneur.setVisible(false);
         fen.RenewContener(this.getPanel());
         fen.conteneur.setVisible(true);
@@ -230,29 +258,36 @@ public class ClientDetail extends KContainer {
         }
     }
 
-    private static class validateCmdListener implements ActionListener {
+    private class validateCmdListener implements ActionListener {
 
         public validateCmdListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane jop4 = new JOptionPane();
-            jop4.showMessageDialog(null, "Affichage commande séléctionnée", "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+            //Fenetre fen = Fenetre.getInstance();
+            //JOptionPane jop4 = new JOptionPane();
+            //jop4.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("type :" + (cb_commande.getSelectedItem()).getClass());
+            // CommandeDetail cd = new CommandeDetail(user, cli_id, (Integer)(cb_commande.getSelectedItem()));
+            CommandeDetail cd = new CommandeDetail((Integer) (cb_commande.getSelectedItem()));
+            fen.RenewContener(cd.getPanel());
         }
     }
 
-    private static class validateDmdListener implements ActionListener {
+    private class validateDmdListener implements ActionListener {
 
         public validateDmdListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
             JOptionPane jop4 = new JOptionPane();
             jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
     private static class newDmdListener implements ActionListener {
 
         public newDmdListener() {
