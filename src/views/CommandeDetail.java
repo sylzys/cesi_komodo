@@ -12,6 +12,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -52,10 +54,10 @@ public class CommandeDetail extends KContainer {
                 bottom_right = new JPanel();
 
         content.setLayout(new FlowLayout());
-        content.setPreferredSize(new Dimension(1000, 768));
-       // listeCmd.setPreferredSize(new Dimension(500, 768));
-        detailCmd.setPreferredSize(new Dimension(450, 768));
-        
+        content.setPreferredSize(new Dimension(1000, 750));
+        // listeCmd.setPreferredSize(new Dimension(500, 768));
+        detailCmd.setPreferredSize(new Dimension(450, 700));
+
         //get cmd-detail from DB
         DetailCdeInstance CmdInstance = DetailCdeInstance.getInstance();
         Hashtable h = new Hashtable();
@@ -66,26 +68,38 @@ public class CommandeDetail extends KContainer {
         TableDispatcher cp = new TableDispatcher();
         content.setBackground(Color.white);
         listeCmd.setBackground(Color.white);
-        listeCmd.setBorder(new EmptyBorder(0, 0, 0, 20));
+        // listeCmd.setBorder(new EmptyBorder(0, 0, 0, 20));
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
         listeCmd.add(cp.showtable(ModelesTables.COMMANDE));
         content.add(listeCmd);
         //detail commandes, panneau de droite
-        detailCmd.setBackground(Color.white);
+        detailCmd.setBackground(Color.green);
         detailCmd.setLayout(new BoxLayout(detailCmd, BoxLayout.Y_AXIS));
-        
+
         top_right.setLayout(new FlowLayout());
-        top_right.add(new JLabel("> "+cd.get(0).getClirais()));
+        top_right.add(new JLabel("<html>> " + cd.get(0).getClirais() + "<br />Créee le " + cd.get(0).getComdate() + " par " + cd.get(0).getInternom() + "</html>"));
         top_right.add(new JButton("Retour à la société"));
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
         progressBar.setValue(Integer.valueOf(cd.get(0).getCometat()));
-        progressBar.setString(cd.get(0).getCometat()+ "%");
+        progressBar.setString(cd.get(0).getCometat() + "%");
         progressBar.setStringPainted(true);
         center_right.add(progressBar);
+        bottom_right.setBackground(Color.white);
+        bottom_right.setLayout(new GridBagLayout());
+        JLabel comm = new JLabel("<html><b>Commentaires</b><br />Powder gingerbread cheesecake wafer. "
+                + "I love sugar plum chocolate cake pudding dragée macaroon. Gingerbread wafer dragée pie. "
+                + "Fruitcake I love candy canes jelly beans cupcake I love applicake. Dessert I love jelly powder jelly. "
+                + "Cookie cookie wypas tootsie roll I love.");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        bottom_right.add(comm, gbc);
         detailCmd.add(top_right);
         detailCmd.add((center_right));
+        detailCmd.add((bottom_right));
         content.add(detailCmd);
         this.panel.add(content);
     }
