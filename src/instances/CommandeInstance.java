@@ -6,20 +6,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
+import models.Commande;
 import models.HibernateConnection;
 import org.hibernate.Query;
 
-public class ClientInstance {
+public class CommandeInstance {
 
-    private static ClientInstance instance;
-    private List<Client> clients;
+    private static CommandeInstance instance;
+    private List<Commande> commandes;
     private String where;
     private Hashtable h;
 
     /**
      * Constructeur prive
      */
-    private ClientInstance() {
+    private CommandeInstance() {
         super();
     }
 
@@ -28,20 +29,20 @@ public class ClientInstance {
      *
      * @return
      */
-    public static synchronized ClientInstance getInstance() {
+    public static synchronized CommandeInstance getInstance() {
         if (instance == null)
         {
-            instance = new ClientInstance();
+            instance = new CommandeInstance();
         }
 
         return instance;
     }
 
-    public synchronized List<Client> GetClients(String where, Hashtable h) {
+    public synchronized List<Commande> GetCommandes(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();
-        return clients;
+        return commandes;
     }
 
     /**
@@ -51,18 +52,18 @@ public class ClientInstance {
      */
     private void chargerDepuisBaseDeDonnees() {
 
-        if (clients == null)
+        if (commandes == null)
         {
             //return;
-            clients = new ArrayList<Client>();
+            commandes = new ArrayList<Commande>();
         }
         else
         {
-            clients.clear();
+            commandes.clear();
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from Client ";
+        String sql = "from Commande ";
         if (!where.isEmpty())
         {
             sql += where;
@@ -84,7 +85,7 @@ public class ClientInstance {
                 }
             }
             
-            this.clients = query.list();
+            this.commandes = query.list();
         }
         catch (Exception e)
         {

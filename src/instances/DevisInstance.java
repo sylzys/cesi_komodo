@@ -5,21 +5,21 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.Client;
+import models.Devis;
 import models.HibernateConnection;
 import org.hibernate.Query;
 
-public class ClientInstance {
+public class DevisInstance {
 
-    private static ClientInstance instance;
-    private List<Client> clients;
+    private static DevisInstance instance;
+    private List<Devis> devis;
     private String where;
     private Hashtable h;
 
     /**
      * Constructeur prive
      */
-    private ClientInstance() {
+    private DevisInstance() {
         super();
     }
 
@@ -28,20 +28,20 @@ public class ClientInstance {
      *
      * @return
      */
-    public static synchronized ClientInstance getInstance() {
+    public static synchronized DevisInstance getInstance() {
         if (instance == null)
         {
-            instance = new ClientInstance();
+            instance = new DevisInstance();
         }
 
         return instance;
     }
 
-    public synchronized List<Client> GetClients(String where, Hashtable h) {
+    public synchronized List<Devis> Getdeviss(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();
-        return clients;
+        return devis;
     }
 
     /**
@@ -51,18 +51,18 @@ public class ClientInstance {
      */
     private void chargerDepuisBaseDeDonnees() {
 
-        if (clients == null)
+        if (devis == null)
         {
             //return;
-            clients = new ArrayList<Client>();
+            devis = new ArrayList<Devis>();
         }
         else
         {
-            clients.clear();
+            devis.clear();
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from Client ";
+        String sql = "from devis ";
         if (!where.isEmpty())
         {
             sql += where;
@@ -70,7 +70,7 @@ public class ClientInstance {
 
         try
         {
-            Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
+            Query query = connection.getSession().createQuery(sql);//"from devis where utiid = :utiid");
             //query.setParameter("utiid", 1);
             if (!h.isEmpty())
             {
@@ -84,7 +84,7 @@ public class ClientInstance {
                 }
             }
             
-            this.clients = query.list();
+            this.devis = query.list();
         }
         catch (Exception e)
         {

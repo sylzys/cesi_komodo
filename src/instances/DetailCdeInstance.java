@@ -5,21 +5,21 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.Client;
+import models.DetailCommande;
 import models.HibernateConnection;
 import org.hibernate.Query;
 
-public class ClientInstance {
+public class DetailCdeInstance {
 
-    private static ClientInstance instance;
-    private List<Client> clients;
+    private static DetailCdeInstance instance;
+    private List<DetailCommande> clients;
     private String where;
     private Hashtable h;
 
     /**
      * Constructeur prive
      */
-    private ClientInstance() {
+    private DetailCdeInstance() {
         super();
     }
 
@@ -28,16 +28,16 @@ public class ClientInstance {
      *
      * @return
      */
-    public static synchronized ClientInstance getInstance() {
+    public static synchronized DetailCdeInstance getInstance() {
         if (instance == null)
         {
-            instance = new ClientInstance();
+            instance = new DetailCdeInstance();
         }
 
         return instance;
     }
 
-    public synchronized List<Client> GetClients(String where, Hashtable h) {
+    public synchronized List<DetailCommande> GetDetailcde(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();
@@ -54,7 +54,7 @@ public class ClientInstance {
         if (clients == null)
         {
             //return;
-            clients = new ArrayList<Client>();
+            clients = new ArrayList<DetailCommande>();
         }
         else
         {
@@ -62,7 +62,7 @@ public class ClientInstance {
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from Client ";
+        String sql = "from detailcommande ";
         if (!where.isEmpty())
         {
             sql += where;
@@ -70,7 +70,7 @@ public class ClientInstance {
 
         try
         {
-            Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
+            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
             //query.setParameter("utiid", 1);
             if (!h.isEmpty())
             {

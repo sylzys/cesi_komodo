@@ -6,20 +6,29 @@ package views;
 
 import controllers.UserActif;
 import instances.ClientInstance;
+import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
+import models.DetailCommande;
 import models.HibernateConnection;
 import org.hibernate.Query;
 
@@ -31,44 +40,50 @@ public class ClientDetail extends KContainer {
 
     JLabel title = new JLabel("PANNEAU CLIENT DETAIL");
     int cli_id;
+    private Fenetre fen = Fenetre.getInstance();
+    ;
+    private List<DetailCommande> detail;
+    private JComboBox cb_demande = new JComboBox(),
+            cb_commande = new JComboBox();
 
     public ClientDetail(int id) {
         super();
         cli_id = id;
-        System.out.println("IN CLIENT DETAIL");
-//    this.user = user;
-//         Fenetre fen = Fenetre.getInstance();
-//        System.out.println("RECUP INSTANCE " +fen);
-//        fen.conteneur.removeAll();
-        //      Erase();//RenewContener(this.getPanel());
         initPanel();
-//        JOptionPane jop = new JOptionPane();
-//        jop.showMessageDialog(null, "Fonction de déconnexion", "LOGOUT", JOptionPane.INFORMATION_MESSAGE);
-//        Fenetre fen = Fenetre.getInstance();
-//        System.out.println("RECUP INSTANCE " +fen);
-//        fen.conteneur.setVisible(false);
-//        fen.Erase();//RenewContener(this.getPanel());
-//        System.exit(0);
+
     }
 
     @Override
     protected void initPanel() {
+
+        //JPANELS
         JPanel content = new JPanel(),
                 cliInfos = new JPanel(),
                 top = new JPanel(),
                 bottom = new JPanel(),
                 cliDetail = new JPanel(),
-                cliButtons = new JPanel();
+                cliButtons = new JPanel(),
+                comboPanel = new JPanel();
+
+        //JBUTTONS
         JButton addContact = new JButton("Ajouter"),
                 contact1 = new JButton("+"),
                 contact2 = new JButton("+"),
-                contact3 = new JButton("+");
+                contact3 = new JButton("+"),
+                newDemand = new JButton("Creer une demande"),
+                validateDmd = new JButton("Valider D"),
+                validateCmd = new JButton("Valider C");
+//        //JComboBox
+//        JComboBox cb_demande = new JComboBox(),
+//                cb_commande = new JComboBox();
+
 
         Client cli = null;
         content.setLayout(new BorderLayout());
-        // content.add(title);
         content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
+
+        //DB CONNECTION
         HibernateConnection connection = HibernateConnection.getInstance();
         try
         {
@@ -81,14 +96,20 @@ public class ClientDetail extends KContainer {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-        }
+        }//END DB CONNECTION
 
         top.setBackground(Color.white);
         top.setLayout(new BorderLayout());
 
         cliInfos.setBackground(Color.white);
-        cliDetail.setPreferredSize(new Dimension(800, 150));
-        //adresse, raison sociale etc
+        cliDetail.setPreferredSize(new Dimension(780, 150));
+
+        //ajout des Listeners sur les boutons
+        addContact.addActionListener(new addContactListener());
+        validateCmd.addActionListener(new validateCmdListener());
+        validateDmd.addActionListener(new validateDmdListener());
+        newDemand.addActionListener(new newDmdListener());
+        //adresse, contacts raison sociale etc
 
         cliDetail.setBackground(Color.white);
         cliDetail.setLayout(new BorderLayout());
@@ -136,7 +157,51 @@ public class ClientDetail extends KContainer {
 
         cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
-        //adding panels
+        //Panneau des combos box
+        comboPanel.setBackground(Color.white);
+        comboPanel.setLayout(new BorderLayout());
+        comboPanel.add(newDemand, BorderLayout.NORTH);
+
+        //ComboBox demandes
+        JPanel comboDmd_panel = new JPanel();
+        comboDmd_panel.setBackground(Color.white);
+        comboDmd_panel.setLayout(new FlowLayout());
+        cb_demande.addItem("Demandes");
+        cb_demande.addItem("hello");
+        comboDmd_panel.add(cb_demande);
+        comboDmd_panel.add(validateDmd);
+
+        //Combobox commandes
+        JPanel comboCmd_panel = new JPanel();
+        comboCmd_panel.setBackground(Color.white);
+        comboCmd_panel.setLayout(new FlowLayout());
+
+        //get detail cde
+        DetailCdeInstance dc = DetailCdeInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", 1);
+        detail = dc.GetDetailcde("where cliid = :cliid", h);
+
+        cb_commande.addItem("Commandes");
+        for (DetailCommande dcc : detail)
+        {
+            System.out.println("Name : " + dcc.getInternom());
+            System.out.println("Prénom : " + dcc.getInteprenom());
+            System.out.println("Prix : " + dcc.getComprix());
+            System.out.println("Etat : " + dcc.getCometat());
+            System.out.println("date ?  : " + dcc.getComdate());
+            cb_commande.addItem(dcc.getComid());
+        }
+
+        comboCmd_panel.add(cb_commande);
+        comboCmd_panel.add(validateCmd);
+
+        //ajout des combobox a droite
+        comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
+        comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
+
+        //ajout des panels au JPanel principal
+        top.add(comboPanel, BorderLayout.EAST);
         cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
         cliDetail.add(cliInfos, BorderLayout.CENTER);
         cliDetail.add(cliButtons, BorderLayout.SOUTH);
@@ -144,24 +209,28 @@ public class ClientDetail extends KContainer {
         content.add(top, BorderLayout.NORTH);
 
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+
+        //JPanel pour accordeons
+
         //suivi satisfaction
         JPanel suivi_satisfaction = new JPanel();
+        suivi_satisfaction.setBackground(Color.white);
         suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
         suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
         bottom.add(suivi_satisfaction);
         bottom.add(Box.createVerticalStrut(10));
-//        content.add(suivi_satisfaction, BorderLayout.CENTER);
-//        
-//        //alertes
+
+        //alertes
         JPanel alertes = new JPanel();
+        alertes.setBackground(Color.white);
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
         alertes.setPreferredSize(new Dimension(120, 50));
         bottom.add(alertes);
         bottom.add(Box.createVerticalStrut(10));
-        //content.add(alertes, BorderLayout.SOUTH);
 
-//        //Reporting
+        //Reporting
         JPanel reporting = new JPanel();
+        reporting.setBackground(Color.white);
         reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
         reporting.setPreferredSize(new Dimension(120, 50));
         bottom.add(reporting);
@@ -169,10 +238,65 @@ public class ClientDetail extends KContainer {
 
         content.add(bottom, BorderLayout.CENTER);
 
+
         //refresh de la fenetre
-        Fenetre fen = Fenetre.getInstance();
+
         fen.conteneur.setVisible(false);
         fen.RenewContener(this.getPanel());
         fen.conteneur.setVisible(true);
+    }
+
+    private static class addContactListener implements ActionListener {
+
+        public addContactListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane jop4 = new JOptionPane();
+            jop4.showMessageDialog(null, "Ajout contact", "AddContact", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class validateCmdListener implements ActionListener {
+
+        public validateCmdListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //Fenetre fen = Fenetre.getInstance();
+            //JOptionPane jop4 = new JOptionPane();
+            //jop4.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("type :" + (cb_commande.getSelectedItem()).getClass());
+            // CommandeDetail cd = new CommandeDetail(user, cli_id, (Integer)(cb_commande.getSelectedItem()));
+            CommandeDetail cd = new CommandeDetail((Integer) (cb_commande.getSelectedItem()));
+            fen.RenewContener(cd.getPanel());
+        }
+    }
+
+    private class validateDmdListener implements ActionListener {
+
+        public validateDmdListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            JOptionPane jop4 = new JOptionPane();
+            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private static class newDmdListener implements ActionListener {
+
+        public newDmdListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane jop4 = new JOptionPane();
+            jop4.showMessageDialog(null, "creation nouvelle demmande", "NewDmd", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

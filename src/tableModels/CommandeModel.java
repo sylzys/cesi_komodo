@@ -5,31 +5,32 @@
 package tableModels;
 
 import instances.ClientInstance;
+import instances.CommandeInstance;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Client;
+import models.Commande;
 
 /**
  *
  * @author sylv
  */
-public class ClientModel extends AbstractTableModel {
+public class CommandeModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Nom", "Créateur", "Date de création"
+        "Commande", "Date", "Créateur", "Etat"
     };
-    
-    private List<Client> clients;
+    private List<Commande> commandes;
 
-    public ClientModel() {
+    public CommandeModel() {
         super();
-        ClientInstance CliInstance = ClientInstance.getInstance();
+        CommandeInstance CmdInstance = CommandeInstance.getInstance();
         Hashtable h = new Hashtable();
-        h.put("utiid", 1);
-        clients = CliInstance.GetClients("where utiid = :utiid", h);
+        h.put("comid", 1);
+        commandes = CmdInstance.GetCommandes("where comid = :comid", h);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class ClientModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return clients.size();
+        return commandes.size();
     }
 
     @Override
@@ -54,20 +55,24 @@ public class ClientModel extends AbstractTableModel {
 
             case 0:
                 // Nom
-                System.out.println("Nom:" + clients.get(rowIndex).getClinom());
-                return clients.get(rowIndex).getClinom();
+                System.out.println("Desc:" + commandes.get(rowIndex).getComdesc());
+                return commandes.get(rowIndex).getComdesc();
 
             case 1:
-                System.out.println("Créateur:" + clients.get(rowIndex).getUti_utiid());
-                return clients.get(rowIndex).getUti_utiid();
+                System.out.println("Date:" + commandes.get(rowIndex).getComdate());
+                return commandes.get(rowIndex).getComdate();
 
             case 2:
-                System.out.println("Date:" + clients.get(rowIndex).getClidteadd());
-                return clients.get(rowIndex).getClidteadd();
-                
+                System.out.println("Créateur:" + commandes.get(rowIndex).getComtitre());
+                return commandes.get(rowIndex).getComtitre();
+
+            case 3:
+                System.out.println("Etat:" + commandes.get(rowIndex).getCometat());
+                return commandes.get(rowIndex).getCometat();
+
             case 999:
-                return clients.get(rowIndex).getCliid();
-                
+                return commandes.get(rowIndex).getComid();
+
             default:
                 throw new IllegalArgumentException();
         }
@@ -79,16 +84,18 @@ public class ClientModel extends AbstractTableModel {
         {
 
             case 0:
-            case 1:
+            case 3:
                 return String.class;
-            case 2:
+            case 1:
                 return Date.class;
+            case 2:
+                return Integer.class;
             default:
                 return Object.class;
         }
     }
 
-    public List<Client> getClients() {
-        return clients;
+    public List<Commande> getCommandes() {
+        return commandes;
     }
 }
