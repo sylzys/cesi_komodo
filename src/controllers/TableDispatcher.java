@@ -29,7 +29,8 @@ public class TableDispatcher extends JPanel {
     public TableDispatcher(ModelesTables mt) {
         super(new GridLayout(1, 0));
         modeleTable = mt;
-        //get table model
+        //selon la constante, on prépare le modèle qu'on utilisera pour mapper à la table
+        //cf les declarations de constantes dans ModelesTables.java
         System.out.println("MODELE UTILISE = " + mt);
         switch (mt)
         {
@@ -41,12 +42,15 @@ public class TableDispatcher extends JPanel {
                 break;
         }
 
+        //on lie notre table à notre modèle générique
         final JTable table = new JTable(model);
+        //tri des colonnes
         table.setAutoCreateRowSorter(true);
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
         table.setRowSorter(sorter);
         table.setPreferredScrollableViewportSize(new Dimension(500, 270));
         table.setFillsViewportHeight(true);
+        //gestion du double click
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if (e.getClickCount() == 2)
@@ -58,27 +62,26 @@ public class TableDispatcher extends JPanel {
                     int row = target.rowAtPoint(p);
                     int column = target.convertColumnIndexToModel(target.columnAtPoint(p));
                     TableModel tm = table.getModel();
+                    //on renvoie la valeur liée à l'id 999
                     Object value = tm.getValueAt(row, 999); //999 = id dans le model
                     System.out.println("Selection : " + value);
                     System.out.println("DOUBLE CLICKED " + row + "/" + column + "->" + value);
                     switch (modeleTable)
                     {
+                        //on récupère la valeur correspondant au bon modèle
                         case CLIENT:
                             ClientDetail cd = new ClientDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case COMMANDE:
                             CommandeDetail cmd = new CommandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
-                
-
-                      
               }
           }
         }
       });
       JScrollPane scrollPane = new JScrollPane(table);
 
-        add(scrollPane);
+       add(scrollPane);
     }
 
     /**
@@ -95,21 +98,12 @@ public class TableDispatcher extends JPanel {
         cp.setOpaque(true); //content panes must be opaque
         frame.add(cp);
 
-        //Display the window.
-        // frame.pack();
-//        frame.setVisible(true);
+        //on renvoie la frame contenant la table
         return (frame);
     }
 
     public JPanel showtable(ModelesTables mt) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                this.modelesTables = mt;
-//                System.out.println("====>"+this.modelesTables);
-        return createAndShowGUI(mt);
-//            }
-//        });
+       return createAndShowGUI(mt);
+
     }
 }

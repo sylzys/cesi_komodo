@@ -25,7 +25,7 @@ public class CommandeInstance {
     }
 
     /**
-     * Singleton
+     * Singleton de Commande
      *
      * @return
      */
@@ -41,29 +41,29 @@ public class CommandeInstance {
     public synchronized List<Commande> GetCommandes(String where, Hashtable h) {
         this.where = where;
         this.h = h;
+        //on récupère le "where", et les paramètres
         chargerDepuisBaseDeDonnees();
+        //on retourne la liste correspondant à la requete
         return commandes;
     }
 
-    /**
-     * Bouchon.
-     *
-     * Dans un vrai programme, ces donnees seraient chargees depuis la base.
-     */
+    
     private void chargerDepuisBaseDeDonnees() {
 
         if (commandes == null)
         {
-            //return;
+            //si pas déjà fait de requetes, on crée une liste vide
             commandes = new ArrayList<Commande>();
         }
-        else
+        else //sinon on vide la liste déjà créee
         {
             commandes.clear();
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
+        //requete de base pour hibernate
         String sql = "from Commande ";
+        //ajout du where si non vide
         if (!where.isEmpty())
         {
             sql += where;
@@ -73,6 +73,7 @@ public class CommandeInstance {
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
             //query.setParameter("utiid", 1);
+            //on parse les parametres pour creer le query.setParameters
             if (!h.isEmpty())
             {
                 Set<String> set = h.keySet();
@@ -84,7 +85,7 @@ public class CommandeInstance {
                     query.setParameter(str, h.get(str));
                 }
             }
-            
+            //on met le resultat dans la liste renvoyée
             this.commandes = query.list();
         }
         catch (Exception e)

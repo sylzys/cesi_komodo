@@ -18,7 +18,7 @@ import models.Commande;
  * @author sylv
  */
 public class CommandeModel extends AbstractTableModel {
-
+    //intitulé des colonnes
     private final String[] entetes =
     {
         "Commande", "Date", "Créateur", "Etat"
@@ -27,9 +27,13 @@ public class CommandeModel extends AbstractTableModel {
 
     public CommandeModel() {
         super();
+        //on recupère l'instance correspondante
         CommandeInstance CmdInstance = CommandeInstance.getInstance();
+        //on prépare une hashtable pour accueillir le couple 'paramètre/valeur'
         Hashtable h = new Hashtable();
+        //on ajoute nos couples paramètres/valeur'
         h.put("comid", 1);
+        //on récupère la liste des Commandes correspondant à la requete
         commandes = CmdInstance.GetCommandes("where comid = :comid", h);
     }
 
@@ -52,7 +56,7 @@ public class CommandeModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex)
         {
-
+            //définit quel attribut de l'objet est affiché à la colonne d'index X 
             case 0:
                 // Nom
                 System.out.println("Desc:" + commandes.get(rowIndex).getComdesc());
@@ -69,7 +73,7 @@ public class CommandeModel extends AbstractTableModel {
             case 3:
                 System.out.println("Etat:" + commandes.get(rowIndex).getCometat());
                 return commandes.get(rowIndex).getCometat();
-
+                //spécificité de l'index 999: sert à définir ce qui est envoyé lors du double click sur une ligne du tableau
             case 999:
                 return commandes.get(rowIndex).getComid();
 
@@ -79,6 +83,7 @@ public class CommandeModel extends AbstractTableModel {
     }
 
     @Override
+    //indique le type d'objet selon chaque index de colonne défini au dessus
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex)
         {
