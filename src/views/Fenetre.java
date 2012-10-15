@@ -39,42 +39,43 @@ public class Fenetre extends JFrame {
 
     public Fenetre() {
         this.setTitle("Plast'Prod");
-        this.setSize(1024, 768);
+        this.setSize(1024, 750);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         boolean login_ok = false;
 
-        while (!login_ok)
-        {
-            loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
-            getLoginInfos zInfos = zd.showZDialog();
-            JOptionPane jop = new JOptionPane();
-            System.out.println(zInfos.toString());
-            if ("-NA-".equals(zInfos.toString()))
-            {
-                System.exit(0);
-            }
-            String[] login = zInfos.toString().split("#");
-            if (!login[0].isEmpty() && !login[1].isEmpty())
-            {
-                user = new UserActif(login[0]);
-                if (user.verify(login[1]))
-                {
-                    break;
-                }
-                else
-                {
-                    JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            else
-            {
-                JOptionPane jop4 = new JOptionPane();
-                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+//        while (!login_ok)
+//        {
+//            loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
+//            getLoginInfos zInfos = zd.showZDialog();
+//            JOptionPane jop = new JOptionPane();
+//            System.out.println(zInfos.toString());
+//            if ("-NA-".equals(zInfos.toString()))
+//            {
+//                System.exit(0);
+//            }
+//            String[] login = zInfos.toString().split("#");
+//            if (!login[0].isEmpty() && !login[1].isEmpty())
+//            {
+//                user = new UserActif(login[0]);
+//                if (user.verify(login[1]))
+//                {
+//                    break;
+//                }
+//                else
+//                {
+//                    JOptionPane jop3 = new JOptionPane();
+//                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//            else
+//            {
+//                JOptionPane jop4 = new JOptionPane();
+//                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+//            }
+//        }
         //menu
+        user = new UserActif("admin");
         afficher.addActionListener(new DisplayListener());
         this.societes.add(afficher);
         creer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
