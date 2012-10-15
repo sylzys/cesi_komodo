@@ -36,16 +36,24 @@ public class Alertes extends KContainer{
         listScroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
         listScroller.setPreferredSize(new Dimension(800, 600));
         listScroller.setBackground(new java.awt.Color(255, 255, 255));
+        listScroller.getVerticalScrollBar().setUnitIncrement(10);
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
         buttonPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         buttonPane.setBackground(new java.awt.Color(255, 255, 255));
-        buttonPane.add(new JLabel("foo"));
-        buttonPane.add(new JLabel("bar"));
-        buttonPane.add(new JButton("slop"));
+        
         JPanel jp = new JPanel();
         jp.setPreferredSize(new Dimension(730, 70));
+        jp.setMinimumSize(new Dimension(730, 70));
         jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        //jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
+        Box kikoo = Box.createHorizontalBox();
+        kikoo.add(new JLabel("foo"));
+        kikoo.add(Box.createHorizontalStrut(25));
+        kikoo.add(new JLabel("bar"));
+        kikoo.add(Box.createHorizontalStrut(25));
+        kikoo.add(new JButton("slop"));
+        jp.add(kikoo);
         JPanel jp2 = new JPanel();
         jp2.setPreferredSize(new Dimension(730, 70));
         jp2.setBorder(javax.swing.BorderFactory.createEtchedBorder());

@@ -85,6 +85,8 @@ public class Fenetre extends JFrame {
         this.menu.add(societes);
         evenements.addActionListener(new EvenementListener());
         this.menu.add(evenements);
+        alertes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
         alertes.addActionListener(new AlertListener());
         this.menu.add(alertes);
         synchro.addActionListener(new SynchroListener());
