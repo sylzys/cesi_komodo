@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.ButtonData;
 import controllers.UserActif;
 import instances.AlerteInstance;
 import java.awt.Dimension;
@@ -13,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import models.Suivdossier;
@@ -63,7 +65,17 @@ public class Alertes extends KContainer{
             kikoo.add(Box.createHorizontalStrut(25));
             kikoo.add(new JLabel(tmp.getSuivdoscom()));
             kikoo.add(Box.createHorizontalStrut(25));
-            kikoo.add(new JButton("details"));
+            ButtonData details = new ButtonData("details");
+            details.putData("alert", tmp);
+            details.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    ButtonData btn_tmp = (ButtonData)evt.getSource();
+                    Suivdossier alert_tmp = (Suivdossier)btn_tmp.getDataByKey("alert");
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, "Details de l'alerte : interid=>" + alert_tmp.getInterid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
+                }
+            });
+            kikoo.add(details);
             jp.add(kikoo);        
             PanelListPane.add(jp);
             PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
