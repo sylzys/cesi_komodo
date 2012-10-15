@@ -8,22 +8,22 @@ public class Suivdossier {
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int suivdosid;
+    private Integer suivdosid;
     
     @Column(name="comid", columnDefinition="INTEGER", nullable=true)
-    private int comid ;
+    private Integer comid ;
 
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
-    private int interid ;
+    private Integer interid ;
 
     @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
-    private int demandeid ;
+    private Integer demandeid ;
 
     @Column(name="devid", columnDefinition="INTEGER", nullable=true)
-    private int devid ;
+    private Integer devid ;
 
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-    private int utiid ;
+    private Integer utiid ;
 
     @Column(name="suivdoscom", columnDefinition="VARCHAR(1000)", nullable=true)
     private String suivdoscom ;
@@ -33,54 +33,54 @@ public class Suivdossier {
     private Date suivdosdate ;
     
     @Column(name="suivdossuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean suivdossuppr ;
+    private Boolean suivdossuppr ;
 
      
-   public int getSuivdosid() {
+   public Integer getSuivdosid() {
         return suivdosid;
     }
 
-    public void setSuivdosid(int suivdosid) {
+    public void setSuivdosid(Integer suivdosid) {
         this.suivdosid = suivdosid;
     }
 
-    public int getComid() {
+    public Integer getComid() {
         return comid;
     }
 
-    public void setComid(int comid) {
+    public void setComid(Integer comid) {
         this.comid = comid;
     }
 
-    public int getInterid() {
+    public Integer getInterid() {
         return interid;
     }
 
-    public void setInterid(int interid) {
+    public void setInterid(Integer interid) {
         this.interid = interid;
     }
 
-    public int getDemandeid() {
+    public Integer getDemandeid() {
         return demandeid;
     }
 
-    public void setDemandeid(int demandeid) {
+    public void setDemandeid(Integer demandeid) {
         this.demandeid = demandeid;
     }
 
-    public int getDevid() {
+    public Integer getDevid() {
         return devid;
     }
 
-    public void setDevid(int devid) {
+    public void setDevid(Integer devid) {
         this.devid = devid;
     }
 
-    public int getUtiid() {
+    public Integer getUtiid() {
         return utiid;
     }
 
-    public void setUtiid(int utiid) {
+    public void setUtiid(Integer utiid) {
         this.utiid = utiid;
     }
 
@@ -100,11 +100,11 @@ public class Suivdossier {
         this.suivdosdate = suivdosdate;
     }
 
-    public boolean isSuivdossuppr() {
+    public Boolean isSuivdossuppr() {
         return suivdossuppr;
     }
 
-    public void setSuivdossuppr(boolean suivdossuppr) {
+    public void setSuivdossuppr(Boolean suivdossuppr) {
         this.suivdossuppr = suivdossuppr;
     }
 }
