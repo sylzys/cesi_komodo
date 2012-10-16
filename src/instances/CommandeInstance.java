@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import models.Client;
 import models.Commande;
-import models.HibernateConnection;
 import org.hibernate.Query;
 
 public class CommandeInstance {

@@ -29,7 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.DetailCommande;
-import models.HibernateConnection;
+import instances.HibernateConnection;
 import org.hibernate.Query;
 
 /**

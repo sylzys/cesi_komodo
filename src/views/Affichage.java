@@ -17,7 +17,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 import javax.swing.JFrame;
 import models.Client;
-import models.HibernateConnection;
+import instances.HibernateConnection;
 import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;

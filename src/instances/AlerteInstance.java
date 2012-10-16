@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.HibernateConnection;
 import models.Suivdossier;
 import org.hibernate.Query;
 

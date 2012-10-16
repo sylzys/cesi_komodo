@@ -6,7 +6,7 @@ package cesi_komodo;
 import controllers.Connect;
 import java.io.IOException;
 import views.Fenetre;
-import models.HibernateConnection;
+import instances.HibernateConnection;
 import models.Utilisateur;
 import org.hibernate.*;
 import java.util.List;
@@ -47,26 +47,27 @@ public class Cesi_komodo {
 //        }
         
         /****** EXEMPLE INSERT *****************/
-//    	try
-//        {            
-//            Transaction tx = HibernateConnection.getSession().beginTransaction();
-//            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-//            Utilisateur uti = new Utilisateur();
-//            uti.setUtinom("testecrirereq");
-//            HibernateConnection.getSession().save(uti); 		  
-//            tx.commit();
-//            System.out.println("Insertion de l'enregistrement terminé");
-//            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-//            if(HibernateConnection.online == false)
-//            {
-//                  Connect writereq = new Connect();
-//                  writereq.SaveRequete("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
-//            }
-//        }
-//        catch(HibernateException | IOException e)
-//        {
-//            System.out.println(e.getMessage());
-//        }
+    	try
+        {            
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+            Utilisateur uti = new Utilisateur();
+            uti.setUtinom("testecrirereq");
+            HibernateConnection.getSession().save(uti);
+            //System.out.println(tx.wasCommitted());       
+            //tx.commit();
+            //System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if(HibernateConnection.online == false)
+            {
+                  Connect writereq = new Connect();
+                  writereq.SaveRequete("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
+            }
+        }
+        catch(HibernateException | IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
 		
 		
 		/******EXEMPLE UPDATE*****************/

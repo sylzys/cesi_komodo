@@ -1,4 +1,4 @@
-package models;
+package instances;
 
 import controllers.Connect;
 import java.io.File;

@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.DetailCommande;
-import models.HibernateConnection;
 import org.hibernate.Query;
 
 public class DetailCdeInstance {
