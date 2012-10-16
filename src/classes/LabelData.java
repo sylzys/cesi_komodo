@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
 import java.util.Hashtable;
@@ -19,7 +15,22 @@ public class LabelData extends JLabel {
         super();
     }
 
-    public int getId() {
+   
+    public LabelData(String label) {
+        super(label);
+    }
+    
+    public LabelData(String label, Integer id) {
+        super(label);
+        Id = id;
+    }
+    
+    public LabelData(String label, Hashtable<String, Object> data) {
+        super(label);
+        Data = data;
+    }
+
+     public int getId() {
         return Id;
     }
 
@@ -27,15 +38,7 @@ public class LabelData extends JLabel {
         this.Id = Id;
     }
     
-    public LabelData(String text) {
-        super(text);
-    }
     
-    public LabelData(String text, Hashtable<String, Object> data) {
-        super(text);
-        Data = data;
-    }
-
     public Hashtable<String, Object> getData() {
         return Data;
     }

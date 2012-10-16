@@ -6,18 +6,15 @@ package views;
 
 import classes.ButtonData;
 import classes.LabelData;
+import classes.LinkLabelData;
 import controllers.UserActif;
 import instances.AlerteInstance;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -66,26 +63,8 @@ public class Alertes extends KContainer{
             jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             //jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
             Box containerSte = Box.createHorizontalBox();
-            LabelData LblSte = new LabelData("Societe foobar");
-            LblSte.setId(tmp.getInterid());
-            LblSte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            LblSte.setFont(new java.awt.Font("Tahoma", 1, 12));
-            //Map attr = LblSte.getFont().getAttributes();
-            //attr.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-            //LblSte.setFont(new Font(attr));
+            LinkLabelData LblSte = new LinkLabelData("Societe foobar", tmp.getInterid());
             LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
-                Font original;
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    original = e.getComponent().getFont();
-                    Map attributes = original.getAttributes();
-                    attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-                    e.getComponent().setFont(original.deriveFont(attributes));
-                }
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    e.getComponent().setFont(original);
-                }
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     openSte(evt);

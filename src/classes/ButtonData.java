@@ -13,26 +13,31 @@ import javax.swing.JButton;
  */
 public class ButtonData extends JButton {
     Hashtable<String, Object> Data;
-    int id = -1;
+    int Id = -1;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public ButtonData() {
         super();
     }
     
-    public ButtonData(String text) {
-        super(text);
+    public ButtonData(String label) {
+        super(label);
     }
     
-    public ButtonData(String text, Hashtable<String, Object> data) {
-        super(text);
+    public ButtonData(String label, Integer id) {
+        super(label);
+        Id = id;
+    }
+    
+    public ButtonData(String label, Hashtable<String, Object> data) {
+        super(label);
         Data = data;
     }
 
