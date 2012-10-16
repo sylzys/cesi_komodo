@@ -5,33 +5,33 @@
 package classes;
 
 import java.util.Hashtable;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
  * @author BoBo
  */
-public class ButtonData extends JButton {
+public class LabelData extends JLabel {
     Hashtable<String, Object> Data;
-    int id = -1;
+    int Id = -1;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public ButtonData() {
+    public LabelData() {
         super();
     }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
     
-    public ButtonData(String text) {
+    public LabelData(String text) {
         super(text);
     }
     
-    public ButtonData(String text, Hashtable<String, Object> data) {
+    public LabelData(String text, Hashtable<String, Object> data) {
         super(text);
         Data = data;
     }
