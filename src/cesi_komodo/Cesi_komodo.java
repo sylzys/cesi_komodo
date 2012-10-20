@@ -7,9 +7,12 @@ import controllers.Connect;
 import java.io.IOException;
 import views.Fenetre;
 import instances.HibernateConnection;
+import instances.ThreadOnline;
 import models.Utilisateur;
 import org.hibernate.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import org.hibernate.cfg.AnnotationConfiguration;
 /**
  *
@@ -21,6 +24,7 @@ public class Cesi_komodo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        HibernateConnection hc = HibernateConnection.getInstance();
         Fenetre fen = Fenetre.getInstance();
         
 //        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
@@ -47,27 +51,27 @@ public class Cesi_komodo {
 //        }
         
         /****** EXEMPLE INSERT *****************/
-    	try
-        {            
-            Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-            Utilisateur uti = new Utilisateur();
-            uti.setUtinom("testecrirereq");
-            HibernateConnection.getSession().save(uti);
-            //System.out.println(tx.wasCommitted());       
-            //tx.commit();
-            //System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if(HibernateConnection.online == false)
-            {
-                  Connect writereq = new Connect();
-                  writereq.SaveRequete("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
-            }
-        }
-        catch(HibernateException | IOException e)
-        {
-            System.out.println(e.getMessage());
-        }
+//    	try
+//        {            
+//            Transaction tx = HibernateConnection.getSession().beginTransaction();
+//            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+//            Utilisateur uti = new Utilisateur();
+//            uti.setUtinom("testecrirereq");
+//            HibernateConnection.getSession().save(uti);
+//            //System.out.println(tx.wasCommitted());       
+//            //tx.commit();
+//            //System.out.println("Insertion de l'enregistrement terminé");
+//            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+//            if(HibernateConnection.online == false)
+//            {
+//                  Connect writereq = new Connect();
+//                  writereq.SaveReq("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
+//            }
+//        }
+//        catch(HibernateException | IOException e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
 		
 		
 		/******EXEMPLE UPDATE*****************/

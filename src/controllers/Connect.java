@@ -29,7 +29,7 @@ public class Connect {
              }
         return true;
     }
-    public void SaveRequete(String req) throws IOException
+    public void SaveReq(String req) throws IOException
     {
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.sql", true);

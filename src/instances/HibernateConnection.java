@@ -3,6 +3,8 @@ package instances;
 import controllers.Connect;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -25,12 +27,33 @@ public class HibernateConnection {
 
 	private HibernateConnection()
 	{
+            Logger log = Logger.getLogger("org.hibernate");
+            log.setLevel(Level.WARNING);
             Connect connect = new Connect();
             boolean status = connect.InitConnect();
             if(status == true)
             {
                 online = true;
                 confHib = "/config/online.xml";
+                if(HibernateConnection.online == true)
+                {
+                    ThreadOnline thread = new ThreadOnline();
+                    // Activation du Thread
+                    thread.start();
+                    // tant que le thread est en vie...
+                   if(thread.isAlive() == false) 
+                    {
+                      // faire un traitement...
+                      System.out.println("Fin du thread");
+//                      try {
+//                        // et faire une pause
+//                        Thread.sleep(1000);
+//                      }
+//                      catch (InterruptedException ex) { 
+//                          System.out.println(ex.toString());
+//                      }
+                    }
+                }
             }
             else
             {
@@ -73,5 +96,4 @@ public class HibernateConnection {
 		HibernateConnection.session.flush();
 		HibernateConnection.session.close();
 	}
-
 }
