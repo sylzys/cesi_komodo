@@ -215,6 +215,16 @@ public class Fenetre extends JFrame {
         conteneur.add(panel, BorderLayout.CENTER);
         conteneur.revalidate();
     }
+    public void RenewSnchro() {
+            user = new UserActif("admin");
+            Synchro sy = new Synchro(user);
+            RenewContener(sy.getPanel());
+    }
+    public void RenewAccueil() {
+            user = new UserActif("admin");
+            Accueil ac = new Accueil(user);
+            RenewContener(ac.getPanel());
+    }
     public void Erase(){
          conteneur.removeAll();
          conteneur.revalidate();

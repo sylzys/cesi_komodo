@@ -19,13 +19,16 @@ import java.util.logging.Logger;
  * @author sylv
  */
 public class Cesi_komodo {
-
     /**
      * @param args the command line arguments
      */
+    public static Fenetre fenetre;
     public static void main(String[] args) {
         HibernateConnection hc = HibernateConnection.getInstance();
-        Fenetre fen = Fenetre.getInstance();
+        ThreadOnline thread = new ThreadOnline();
+        // Activation du Thread
+        thread.start();
+        fenetre.getInstance();
         
 //        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
 //        try 

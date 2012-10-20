@@ -8,6 +8,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -22,11 +24,17 @@ public class Connect {
     public boolean InitConnect()
     {
             try {
+            //Désactivation du log Warning hibernate
+            Logger log = Logger.getLogger("org.hibernate");
+            log.setLevel(Level.OFF);
                 sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory() ;
              } catch (Throwable ex) {
-                System.err.println("SessionFactory non créée. " + ex.getMessage ()) ;
+               Logger log = Logger.getLogger("org.hibernate");
+               log.setLevel(Level.WARNING);  
                return false;
              }
+        Logger log = Logger.getLogger("org.hibernate");
+        log.setLevel(Level.WARNING);  
         return true;
     }
     public void SaveReq(String req) throws IOException
@@ -47,6 +55,24 @@ public class Connect {
            bw.close();
         } catch(IOException e) {
            System.out.println(e);
+        }
+    }
+    public boolean emptyFic()
+    {
+        try {
+            File fich = new File("ressources/requetes.sql");
+            if(fich.length() != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;   
+            }
+        }
+        catch(Exception e) {
+           System.out.println(e);
+           return false;
         }
     }
 }
