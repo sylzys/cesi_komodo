@@ -4,16 +4,8 @@
  */
 package instances;
 
-import controllers.Connect;
-import controllers.UserActif;
-import javax.swing.JPanel;
-import sun.applet.Main;
-import views.Accueil;
+import controllers.Synchro;
 import views.Fenetre;
-import views.Synchro;
-import cesi_komodo.Cesi_komodo;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author suly
@@ -24,7 +16,7 @@ public class ThreadOnline extends Thread
     private boolean statusBcl;
     public void run() 
     {
-        Connect connect = new Connect();
+        Synchro connect = new Synchro();
         status = connect.InitConnect();
         do {
             //Test connection
@@ -38,7 +30,6 @@ public class ThreadOnline extends Thread
             }
          }while(status == statusBcl);
         Fenetre fen = Fenetre.getInstance();
-        fen.setVisible(false);
         if(statusBcl == false)
         {
             System.out.println("Nouvelle connection hors ligne");
@@ -60,9 +51,8 @@ public class ThreadOnline extends Thread
                 fen.RenewAccueil();
             }
         } 
-        fen.setVisible(true);
         //Reload thread
         ThreadOnline th = new ThreadOnline();
         th.run();
-     }	
+     }
 }

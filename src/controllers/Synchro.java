@@ -4,20 +4,26 @@
  */
 package controllers;
 
+import instances.HibernateConnection;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import views.Fenetre;
 
 /**
  *
  * @author lavie
  */
-public class Connect {
+public class Synchro {
     private static SessionFactory sessionFactory;
     private String lib;
     private String libreq;
@@ -35,6 +41,7 @@ public class Connect {
              }
         Logger log = Logger.getLogger("org.hibernate");
         log.setLevel(Level.WARNING);  
+        sessionFactory.close();
         return true;
     }
     public void SaveReq(String req) throws IOException
@@ -74,5 +81,52 @@ public class Connect {
            System.out.println(e);
            return false;
         }
+    }
+    public void repBdd()
+    {
+        System.out.println("Réplication de la BDD"); 
+//        Runtime runtime = Runtime.getRuntime();
+//        try{
+//           Process p = runtime.exec("\"C:\\replicationBDD\\pg_dump.exe\" -h 192.168.1.45 -p 5432 -U cesi -Fc -f \"C:\\replicationBDD\\save.bak\" projetcesi");
+//           try{
+//               p.waitFor();
+//           }
+//           catch(InterruptedException e)
+//           {
+//               System.out.println(e);
+//           }
+//           p = runtime.exec("\"C:\\replicationBDD\\dropdb.exe\" -h localhost -p 5432 -U cesi projetcesi");
+//            try{
+//               p.waitFor();
+//           }
+//           catch(InterruptedException e)
+//           {
+//               System.out.println(e);
+//           }
+//           
+//           p = runtime.exec("\"C:\\replicationBDD\\createdb.exe\" -h localhost -p 5432 -U cesi projetcesi");
+//           try{
+//               p.waitFor();
+//           }
+//           catch(InterruptedException e)
+//           {
+//               System.out.println(e);
+//           }
+//           p = runtime.exec("\"C:\\replicationBDD\\pg_restore.exe\" -h localhost -p 5432 -U cesi -d \"projetcesi\" -v \"C:\\replicationBDD\\save.bak\"");
+//           try{
+//               p.waitFor();
+//           }
+//           catch(InterruptedException e)
+//           {
+//               System.out.println(e);
+//           }
+//        }
+//        catch(IOException e){
+//            System.out.println(e);
+//        }
+        //Nouvelle connection hors ligne
+        HibernateConnection.offline();
+        Fenetre fen = Fenetre.getInstance();
+        fen.RenewAccueil();
     }
 }

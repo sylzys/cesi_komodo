@@ -1,15 +1,21 @@
 package views;
 
 import controllers.UserActif;
+import controllers.Synchro;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import controllers.getLoginInfos;
 import instances.ClientInstance;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -34,12 +40,16 @@ public class Fenetre extends JFrame {
     private JToolBar toolbar = new JToolBar();
     private JButton logout = new JButton("Deconnexion");
     private JLabel username = new JLabel();
+    private ImageIcon imgOffline = new ImageIcon("ressources/images/offline.png");
+    private ImageIcon imgOnline = new ImageIcon("ressources/images/online.png");
+    private ImageIcon imgSynchro = new ImageIcon("ressources/images/synchro.png");
+    private JLabel lblReseau = new JLabel();
     //User
     public UserActif user;
 
     public Fenetre() {
         this.setTitle("Plast'Prod");
-        this.setSize(1024, 750);
+        this.setSize(1024, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         boolean login_ok = false;
@@ -108,8 +118,28 @@ public class Fenetre extends JFrame {
         //toolbar
         logout.addActionListener(new LogoutListener());
         username.setText(user.getFullName());
-        username.setBorder(new EmptyBorder(0, 0, 0, 20));
+        username.setBorder(new EmptyBorder(0, 20, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
+        if(HibernateConnection.online == false)
+        {
+            lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+            lblReseau.setToolTipText("");
+            lblReseau.setIcon(imgOffline);
+        }
+        else
+        {
+            lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            lblReseau.setToolTipText("Passer en mode hors connection");
+            lblReseau.setIcon(imgOnline);
+        }
+        lblReseau.addMouseListener(new MouseAdapter() {  
+            public void mousePressed(MouseEvent me){    
+               Synchro sync = new Synchro();   
+               sync.repBdd();
+            }  
+              
+        });
+        toolbar.add(lblReseau);
         toolbar.add(username);
         toolbar.add(logout);
         toolbar.setBackground(Color.white);
@@ -192,7 +222,7 @@ public class Fenetre extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Synchro sy = new Synchro(user);
+            SynchroView sy = new SynchroView(user);
             RenewContener(sy.getPanel());
         }
     }
@@ -217,13 +247,46 @@ public class Fenetre extends JFrame {
     }
     public void RenewSnchro() {
             user = new UserActif("admin");
-            Synchro sy = new Synchro(user);
+            if(HibernateConnection.online == false)
+            {
+                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                lblReseau.setToolTipText("");
+                lblReseau.setIcon(imgOffline);
+                lblReseau.removeMouseListener(null);
+            }
+            else
+            {
+                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                lblReseau.setToolTipText("Passer en mode hors connection");
+                lblReseau.setIcon(imgOnline);
+            }
+            SynchroView sy = new SynchroView(user);
             RenewContener(sy.getPanel());
+            username.setText(user.getFullName());
     }
     public void RenewAccueil() {
             user = new UserActif("admin");
+            if(HibernateConnection.online == false)
+            {
+                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                lblReseau.setToolTipText("");
+                lblReseau.setIcon(imgOffline);
+                lblReseau.removeMouseListener(new MouseAdapter() {  
+                public void mousePressed(MouseEvent me){    
+                   
+                }  
+
+            });
+            }
+            else
+            {
+                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                lblReseau.setToolTipText("Passer en mode hors connection");
+                lblReseau.setIcon(imgOnline);
+            }
             Accueil ac = new Accueil(user);
             RenewContener(ac.getPanel());
+            username.setText(user.getFullName());
     }
     public void Erase(){
          conteneur.removeAll();

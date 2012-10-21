@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package cesi_komodo;
-import controllers.Connect;
+import controllers.Synchro;
 import java.io.IOException;
 import views.Fenetre;
 import instances.HibernateConnection;
@@ -67,7 +67,7 @@ public class Cesi_komodo {
 //            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
 //            if(HibernateConnection.online == false)
 //            {
-//                  Connect writereq = new Connect();
+//                  Synchro writereq = new Synchro();
 //                  writereq.SaveReq("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
 //            }
 //        }

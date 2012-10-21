@@ -1,6 +1,6 @@
 package instances;
 
-import controllers.Connect;
+import controllers.Synchro;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -60,7 +60,7 @@ public class HibernateConnection {
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.WARNING);
             //Test de la connection
-            Connect connect = new Connect();
+            Synchro connect = new Synchro();
             boolean status = connect.InitConnect();
             //Si en ligne
             if(status == true)
@@ -80,7 +80,6 @@ public class HibernateConnection {
             //Ouverture de la session
             HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
 	}
-	
 	public static HibernateConnection getInstance()
 	{
                 //Si la classe n'est pas instanciée
@@ -95,6 +94,7 @@ public class HibernateConnection {
 	public static void closeConnection()
 	{
 		//Vidage mémoire
+                HibernateConnection.sessionFactory.close();
 		HibernateConnection.session.flush();
 		HibernateConnection.session.close();
 	}
@@ -117,5 +117,19 @@ public class HibernateConnection {
             }
             //Reload instance
             instance = new HibernateConnection();
+        }
+        public static void offline()
+        {
+            //On ferme la conenction
+            closeConnection();
+            //Désactivation du log Infos hibernate
+            Logger log = Logger.getLogger("org.hibernate");
+            log.setLevel(Level.WARNING);
+            connectOffline();
+            System.out.println("Hors ligne");
+            //Chargement du fichier de configuration de hibernate
+            HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
+            //Ouverture de la session
+            HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
         }
 }
