@@ -27,7 +27,7 @@ import views.ProgressBarAtt;
  *
  * @author lavie
  */
-public class Synchro extends Thread {
+public class Synchro {
     private static SessionFactory sessionFactory;
     private String lib;
     private String libreq;
@@ -85,137 +85,6 @@ public class Synchro extends Thread {
            System.out.println(e);
            return false;
         }
-    }
-    public void repBdd()
-    {
-        Fenetre fen = Fenetre.getInstance();
-        System.out.println("Réplication de la BDD"); 
-        List<String> commd = new ArrayList<String>();
-                            commd.add("C:\\replicationBDD\\pg_dump.exe");
-                            commd.add("-i"); // IGNORE la version
-                            commd.add("-h"); // adresse du serveur de bdd
-                            commd.add("192.168.1.45");
-                            commd.add("-p"); // port du serveur de bdd
-                            commd.add("5432");
-                            commd.add("-Fc"); // recreer toutes les TABLES pour backup
-                            commd.add("-U"); // utilisateur
-                            commd.add("cesi");
-                            commd.add("-f"); // fichier
-                            commd.add("C:\\replicationBDD\\save.bak");
-                            commd.add("projetcesi");//Nom de la base
-        ProcessBuilder PrcBld = new ProcessBuilder(commd);
-        try {
-                Process process = PrcBld.start();
-                BufferedReader r = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = r.readLine();
-                while (line != null) {
-                        System.err.println(line);
-                        line = r.readLine();
-                }
-                r.close();
-                try {
-                    final int dcertExitCode = process.waitFor();
-                }catch(InterruptedException i)
-                {
-                    System.out.println(i);
-                }
-        }catch(IOException e)
-        {
-            System.out.println(e);
-        }
-        commd = new ArrayList<String>();
-                commd.add("C:\\replicationBDD\\dropdb.exe");
-                commd.add("-h"); // adresse du serveur de bdd
-                commd.add("127.0.0.1");
-                commd.add("-p"); // port du serveur de bdd
-                commd.add("5432");
-                commd.add("-U"); // utilisateur
-                commd.add("cesi");
-                commd.add("projetcesi");//Nom de la base
-        PrcBld = new ProcessBuilder(commd);
-        try {
-                Process process = PrcBld.start();
-                BufferedReader r = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = r.readLine();
-                while (line != null) {
-                        System.err.println(line);
-                        line = r.readLine();
-                }
-                r.close();
-                try {
-                    final int dcertExitCode = process.waitFor();
-                }catch(InterruptedException i)
-                {
-                    System.out.println(i);
-                }
-        }catch(IOException e)
-        {
-            System.out.println(e);
-        }
-        commd = new ArrayList<String>();
-                commd.add("C:\\replicationBDD\\createdb.exe");
-                commd.add("-h"); // adresse du serveur de bdd
-                commd.add("127.0.0.1");
-                commd.add("-p"); // port du serveur de bdd
-                commd.add("5432");
-                commd.add("-U"); // utilisateur
-                commd.add("cesi");
-                commd.add("projetcesi");//Nom de la base
-        PrcBld = new ProcessBuilder(commd);
-        try {
-                Process process = PrcBld.start();
-                BufferedReader r = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = r.readLine();
-                while (line != null) {
-                        System.err.println(line);
-                        line = r.readLine();
-                }
-                r.close();
-                try {
-                    final int dcertExitCode = process.waitFor();
-                }catch(InterruptedException i)
-                {
-                    System.out.println(i);
-                }
-        }catch(IOException e)
-        {
-            System.out.println(e);
-        }
-        commd = new ArrayList<String>();
-                commd.add("C:\\replicationBDD\\pg_restore.exe");
-                commd.add("-i"); // IGNORE la version
-                commd.add("-h"); // adresse du serveur de bdd
-                commd.add("127.0.0.1");
-                commd.add("-p"); // port du serveur de bdd
-                commd.add("5432");
-                commd.add("-d"); // nom de la base de données
-                commd.add("projetcesi");
-                commd.add("-U"); // utilisateur
-                commd.add("cesi");
-                commd.add("C:\\replicationBDD\\save.bak");
-        PrcBld = new ProcessBuilder(commd);
-        try {
-                Process process = PrcBld.start();
-                BufferedReader r = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                String line = r.readLine();
-                while (line != null) {
-                        System.err.println(line);
-                        line = r.readLine();
-                }
-                r.close();
-                try {
-                    final int dcertExitCode = process.waitFor();
-                }catch(InterruptedException i)
-                {
-                    System.out.println(i);
-                }
-        }catch(IOException e)
-        {
-            System.out.println(e);
-        }
-        //Nouvelle connection hors ligne
-        HibernateConnection.offline();
-        fen.RenewAccueil();
     }
     public void onlinemod()
     {

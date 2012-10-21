@@ -1,5 +1,6 @@
 package views;
 
+import controllers.Replication;
 import controllers.UserActif;
 import controllers.Synchro;
 import java.awt.Toolkit;
@@ -119,16 +120,15 @@ public class Fenetre extends JFrame {
         username.setText(user.getFullName());
         username.setBorder(new EmptyBorder(0, 20, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
-        lblOnline.setToolTipText("Passer en mode connecté");
+        lblOnline.setToolTipText("Passer en mode hors ligne");
         lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblOnline.addMouseListener(new MouseAdapter() {  
            public void mousePressed(MouseEvent me){    
-               RenewSnchro();
-               Synchro sync = new Synchro();
-               sync.repBdd();
-              }    
+               Replication rep = new Replication();
+               rep.start();
+              }
         });
-        lblOffline.setToolTipText("Passer en mode connecté");
+        lblOffline.setToolTipText("Passer en mode en ligne");
         lblOffline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblOffline.addMouseListener(new MouseAdapter() {  
            public void mousePressed(MouseEvent me){    
@@ -299,5 +299,10 @@ public class Fenetre extends JFrame {
     {
         ProgressBarAtt pb = new ProgressBarAtt();
         RenewContener(pb.getPanel());
+    }
+    public void rep(int value, String title)
+    {
+        ProgressBarAtt pb = new ProgressBarAtt();
+        RenewContener(pb.stateChanged(value, title));
     }
 }
