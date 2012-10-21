@@ -22,7 +22,14 @@ public class Replication extends Thread {
     {
         Fenetre fen = Fenetre.getInstance();
         fen.progBar();
-        fen.rep(1,"Sauvegarde de la base en ligne");
+        fen.rep(0,"Sauvegarde de la base en ligne");
+        try {
+                // pause
+                Thread.sleep(1500);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+        }
         System.out.println("Réplication de la BDD"); 
         List<String> commd = new ArrayList<String>();
                             commd.add("C:\\replicationBDD\\pg_dump.exe");
@@ -58,6 +65,13 @@ public class Replication extends Thread {
             fen.rep(1,"Erreur lors de la sauvegarde de la base en ligne");
         }
        fen.rep(25,"Suppression de la base locale");
+       try {
+                // pause
+                Thread.sleep(1500);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+        }
         commd = new ArrayList<String>();
                 commd.add("C:\\replicationBDD\\dropdb.exe");
                 commd.add("-h"); // adresse du serveur de bdd
@@ -117,7 +131,7 @@ public class Replication extends Thread {
         {
             fen.rep(50,"Erreur lors de la création de la base locale");
         }
-        fen.rep(75,"Restauration de la base");
+        fen.rep(75,"Restauration de la base en local");
         commd = new ArrayList<String>();
                 commd.add("C:\\replicationBDD\\pg_restore.exe");
                 commd.add("-i"); // IGNORE la version
@@ -150,9 +164,16 @@ public class Replication extends Thread {
         {
             fen.rep(75,"Erreur lors de la restauration");
         }
-        fen.rep(1,"Fin de la réplication");
+        fen.rep(100,"Fin de la réplication ... Redirection vers l'accueil");
         //Nouvelle connection hors ligne
         HibernateConnection.offline();
+        try {
+                // pause
+                Thread.sleep(2500);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+        }
         fen.RenewAccueil();
     }
 }
