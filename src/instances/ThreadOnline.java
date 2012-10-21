@@ -16,14 +16,16 @@ public class ThreadOnline extends Thread
     private boolean statusBcl;
     public void run() 
     {
+        
         Synchro connect = new Synchro();
         status = connect.InitConnect();
         do {
+            System.out.println("Thread test connection");
             //Test connection
             statusBcl = connect.InitConnect();
             try {
                 // pause
-                Thread.sleep(6000);
+                Thread.sleep(3000);
             }
             catch (InterruptedException ex) {
                 System.out.println(ex.toString());

@@ -8,6 +8,7 @@ import instances.HibernateConnection;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -18,6 +19,9 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import views.Fenetre;
+import java.util.*;
+import javax.swing.JFrame;
+import views.ProgressBarAtt;
 
 /**
  *
@@ -82,50 +86,10 @@ public class Synchro {
            return false;
         }
     }
-    public void repBdd()
+    public void onlinemod()
     {
-        System.out.println("Réplication de la BDD"); 
-//        Runtime runtime = Runtime.getRuntime();
-//        try{
-//           Process p = runtime.exec("\"C:\\replicationBDD\\pg_dump.exe\" -h 192.168.1.45 -p 5432 -U cesi -Fc -f \"C:\\replicationBDD\\save.bak\" projetcesi");
-//           try{
-//               p.waitFor();
-//           }
-//           catch(InterruptedException e)
-//           {
-//               System.out.println(e);
-//           }
-//           p = runtime.exec("\"C:\\replicationBDD\\dropdb.exe\" -h localhost -p 5432 -U cesi projetcesi");
-//            try{
-//               p.waitFor();
-//           }
-//           catch(InterruptedException e)
-//           {
-//               System.out.println(e);
-//           }
-//           
-//           p = runtime.exec("\"C:\\replicationBDD\\createdb.exe\" -h localhost -p 5432 -U cesi projetcesi");
-//           try{
-//               p.waitFor();
-//           }
-//           catch(InterruptedException e)
-//           {
-//               System.out.println(e);
-//           }
-//           p = runtime.exec("\"C:\\replicationBDD\\pg_restore.exe\" -h localhost -p 5432 -U cesi -d \"projetcesi\" -v \"C:\\replicationBDD\\save.bak\"");
-//           try{
-//               p.waitFor();
-//           }
-//           catch(InterruptedException e)
-//           {
-//               System.out.println(e);
-//           }
-//        }
-//        catch(IOException e){
-//            System.out.println(e);
-//        }
-        //Nouvelle connection hors ligne
-        HibernateConnection.offline();
+        System.out.println("Passage en mode connecté"); 
+        HibernateConnection.online();
         Fenetre fen = Fenetre.getInstance();
         fen.RenewAccueil();
     }
