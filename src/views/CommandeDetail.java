@@ -58,18 +58,23 @@ public class CommandeDetail extends KContainer {
         // listeCmd.setPreferredSize(new Dimension(500, 768));
         detailCmd.setPreferredSize(new Dimension(450, 700));
 
-        //get cmd-detail from DB
-        DetailCdeInstance CmdInstance = DetailCdeInstance.getInstance();
+        //on récupère la liste des commandes détailles dans la DB
+        DetailCdeInstance CmdInstance = DetailCdeInstance.getInstance(); //récupère l'instance
+        //prépare une hashtable si besoin
         Hashtable h = new Hashtable();
+        //le couple valeur/paramètre, à ne plus mettre en dur...
         h.put("comid", 1);
+        //récupère la liste.
         cd = CmdInstance.GetDetailcde("where comid = :comid", h);
-        //  System.out.println("CMD-ID: "+this.cmd_id);
-        //title.setText("DETAIL COMMANDE "+ this.cmd_id);
+        
+        //demande un tabledispatcher
         TableDispatcher cp = new TableDispatcher();
         content.setBackground(Color.white);
         listeCmd.setBackground(Color.white);
         // listeCmd.setBorder(new EmptyBorder(0, 0, 0, 20));
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+       
+        //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
         listeCmd.add(cp.showtable(ModelesTables.COMMANDE));
         content.add(listeCmd);
         //detail commandes, panneau de droite

@@ -1,1 +1,0 @@
-INSERT INTO utilisateur (utinom) VALUES ('testercirereq');->Ajout|

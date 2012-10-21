@@ -3,25 +3,32 @@
  * and open the template in the editor.
  */
 package cesi_komodo;
-import controllers.Connect;
+import controllers.Synchro;
 import java.io.IOException;
 import views.Fenetre;
-import models.HibernateConnection;
+import instances.HibernateConnection;
+import instances.ThreadOnline;
 import models.Utilisateur;
 import org.hibernate.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import org.hibernate.cfg.AnnotationConfiguration;
 /**
  *
  * @author sylv
  */
 public class Cesi_komodo {
-
     /**
      * @param args the command line arguments
      */
+    public static Fenetre fenetre;
     public static void main(String[] args) {
-        Fenetre fen = Fenetre.getInstance();
+        HibernateConnection hc = HibernateConnection.getInstance();
+        ThreadOnline thread = new ThreadOnline();
+        // Activation du Thread
+        thread.start();
+        fenetre.getInstance();
         
 //        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
 //        try 
@@ -53,14 +60,15 @@ public class Cesi_komodo {
 //            System.out.println("Nouvel enregistrement en cours d'insertion ...");
 //            Utilisateur uti = new Utilisateur();
 //            uti.setUtinom("testecrirereq");
-//            HibernateConnection.getSession().save(uti); 		  
-//            tx.commit();
-//            System.out.println("Insertion de l'enregistrement terminé");
+//            HibernateConnection.getSession().save(uti);
+//            //System.out.println(tx.wasCommitted());       
+//            //tx.commit();
+//            //System.out.println("Insertion de l'enregistrement terminé");
 //            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
 //            if(HibernateConnection.online == false)
 //            {
-//                  Connect writereq = new Connect();
-//                  writereq.SaveRequete("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
+//                  Synchro writereq = new Synchro();
+//                  writereq.SaveReq("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
 //            }
 //        }
 //        catch(HibernateException | IOException e)

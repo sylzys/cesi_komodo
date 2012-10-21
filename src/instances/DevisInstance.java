@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Devis;
-import models.HibernateConnection;
 import org.hibernate.Query;
 
 public class DevisInstance {

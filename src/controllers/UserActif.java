@@ -6,7 +6,7 @@ package controllers;
 
 import java.util.Date;
 import java.util.List;
-import models.HibernateConnection;
+import instances.HibernateConnection;
 import models.Utilisateur;
 import org.hibernate.Query;
 

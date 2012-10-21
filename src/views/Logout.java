@@ -5,6 +5,7 @@
 package views;
 
 import controllers.UserActif;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class Logout extends KContainer {
 //    initPanel();
     JOptionPane jop = new JOptionPane();
     jop.showMessageDialog(null, "Fonction de déconnexion", "LOGOUT", JOptionPane.INFORMATION_MESSAGE);
+    HibernateConnection.closeConnection();
     System.exit(0);
     }
 

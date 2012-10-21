@@ -13,9 +13,9 @@ import javax.swing.JPanel;
  *
  * @author sylv
  */
-public class Synchro extends KContainer {
+public class SynchroView extends KContainer {
     JLabel title = new JLabel ("PANNEAU SYNCHRO");
-    public Synchro(UserActif user) {
+    public SynchroView(UserActif user) {
     super();
     this.user = user;
     initPanel();

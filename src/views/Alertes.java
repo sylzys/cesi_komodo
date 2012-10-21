@@ -4,22 +4,32 @@
  */
 package views;
 
+import classes.ButtonData;
+import classes.LabelData;
+import classes.LinkLabelData;
 import controllers.UserActif;
-import java.awt.BorderLayout;
+import instances.AlerteInstance;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.util.Hashtable;
+import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import models.Suivdossier;
 
 /**
  *
  * @author sylv
  */
 public class Alertes extends KContainer{
+    
     JLabel title = new JLabel ("PANNEAU ALERTES");
+    List<Suivdossier> l_alerts;
+    
     public Alertes (UserActif user) {
         super();
         this.user = user;
@@ -36,28 +46,70 @@ public class Alertes extends KContainer{
         listScroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
         listScroller.setPreferredSize(new Dimension(800, 600));
         listScroller.setBackground(new java.awt.Color(255, 255, 255));
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
-        buttonPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        buttonPane.setBackground(new java.awt.Color(255, 255, 255));
-        buttonPane.add(new JLabel("foo"));
-        buttonPane.add(new JLabel("bar"));
-        buttonPane.add(new JButton("slop"));
-        JPanel jp = new JPanel();
-        jp.setPreferredSize(new Dimension(730, 70));
-        jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        JPanel jp2 = new JPanel();
-        jp2.setPreferredSize(new Dimension(730, 70));
-        jp2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        buttonPane.add(jp);
-        buttonPane.add(Box.createRigidArea(new Dimension(0, 20)));
-        buttonPane.add(jp2);
-        buttonPane.add(Box.createRigidArea(new Dimension(10, 600)));
-        buttonPane.add(new JLabel("kikoo lol"));
+        listScroller.getVerticalScrollBar().setUnitIncrement(10);
+        JPanel PanelListPane = new JPanel();
+        PanelListPane.setLayout(new BoxLayout(PanelListPane, BoxLayout.Y_AXIS));
+        PanelListPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        PanelListPane.setBackground(new java.awt.Color(255, 255, 255));
         
-        listScroller.setViewportView(buttonPane);
+        // get alertes
+        AlerteInstance AlertInstance = AlerteInstance.getInstance();
+        l_alerts = AlertInstance.GetAlertes("", new Hashtable());
+        System.out.println("nb_alerts : " + l_alerts.size());
+        for (Suivdossier tmp : l_alerts) {
+            JPanel jp = new JPanel();
+            jp.setPreferredSize(new Dimension(730, 70));
+            jp.setMinimumSize(new Dimension(730, 70));
+            jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            //jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
+            Box containerSte = Box.createHorizontalBox();
+            LinkLabelData LblSte = new LinkLabelData("Societe foobar", tmp.getInterid());
+            LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    openSte(evt);
+                }
+            });
+            containerSte.add(LblSte);
+            containerSte.add(Box.createHorizontalStrut(5));
+            containerSte.add(new JLabel(">"));
+            containerSte.add(Box.createHorizontalStrut(5));
+            containerSte.add(new JLabel(tmp.getSuivdosdate().toString()));
+            containerSte.add(Box.createHorizontalStrut(5));
+            containerSte.add(new JLabel(tmp.getSuivdosdate().toString()));
+            containerSte.add(Box.createHorizontalStrut(25));
+            containerSte.add(new JLabel(tmp.getSuivdoscom()));
+            containerSte.add(Box.createHorizontalStrut(25));
+            ButtonData details = new ButtonData("details");
+            details.putData("alert", tmp);
+            details.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    openKikoo(evt);
+                }
+            });
+            containerSte.add(details);
+            jp.add(containerSte);
+            PanelListPane.add(jp);
+            PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
+        }
+        
+        listScroller.setViewportView(PanelListPane);
         //listPane.add(listScroller, BorderLayout.PAGE_START);
-        
         this.panel.add(listScroller);
     }
+    
+    private void openSte(MouseEvent evt) {
+        LabelData lbl_tmp = (LabelData)evt.getComponent();
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "ouverture de la page societe id => " + lbl_tmp.getId(), "Ouverture page societe", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void openKikoo(MouseEvent evt) {
+        ButtonData btn_tmp = (ButtonData)evt.getSource();
+        Suivdossier alert_tmp = (Suivdossier)btn_tmp.getDataByKey("alert");
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getSuivdosid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
 }
