@@ -41,7 +41,7 @@ public class Fenetre extends JFrame {
     private JToolBar toolbar = new JToolBar();
     private JButton logout = new JButton("Deconnexion");
     private JLabel username = new JLabel();
-    private ImageIcon imgSynchro = new ImageIcon("ressources/images/synchro.png");
+    private JLabel lblAccueil = new JLabel(new ImageIcon("ressources/images/accueil.png"));
     private JLabel lblOnline = new JLabel(new ImageIcon("ressources/images/online.png"));
     private JLabel lblOffline = new JLabel(new ImageIcon("ressources/images/offline.png"));
     //User
@@ -148,6 +148,15 @@ public class Fenetre extends JFrame {
             lblOnline.setVisible(true);
             lblOffline.setVisible(false);
         }
+        lblAccueil.setBorder(new EmptyBorder(0, 20, 0, 0));
+        lblAccueil.setToolTipText("Accueil");
+        lblAccueil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblAccueil.addMouseListener(new MouseAdapter() {  
+           public void mousePressed(MouseEvent me){    
+              RenewAccueil();
+              }    
+        });
+        toolbar.add(lblAccueil);
         toolbar.add(username);
         toolbar.add(logout);
         toolbar.setBackground(Color.white);

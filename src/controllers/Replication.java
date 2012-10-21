@@ -29,8 +29,7 @@ public class Replication extends Thread {
             }
             catch (InterruptedException ex) {
                 System.out.println(ex.toString());
-        }
-        System.out.println("Réplication de la BDD"); 
+        } 
         List<String> commd = new ArrayList<String>();
                             commd.add("C:\\replicationBDD\\pg_dump.exe");
                             commd.add("-i"); // IGNORE la version
