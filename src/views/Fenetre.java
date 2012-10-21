@@ -40,10 +40,9 @@ public class Fenetre extends JFrame {
     private JToolBar toolbar = new JToolBar();
     private JButton logout = new JButton("Deconnexion");
     private JLabel username = new JLabel();
-    private ImageIcon imgOffline = new ImageIcon("ressources/images/offline.png");
-    private ImageIcon imgOnline = new ImageIcon("ressources/images/online.png");
     private ImageIcon imgSynchro = new ImageIcon("ressources/images/synchro.png");
-    private JLabel lblReseau = new JLabel();
+    private JLabel lblOnline = new JLabel(new ImageIcon("ressources/images/online.png"));
+    private JLabel lblOffline = new JLabel(new ImageIcon("ressources/images/offline.png"));
     //User
     public UserActif user;
 
@@ -120,26 +119,35 @@ public class Fenetre extends JFrame {
         username.setText(user.getFullName());
         username.setBorder(new EmptyBorder(0, 20, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
+        lblOnline.setToolTipText("Passer en mode connecté");
+        lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblOnline.addMouseListener(new MouseAdapter() {  
+           public void mousePressed(MouseEvent me){    
+               RenewSnchro();
+               Synchro sync = new Synchro();
+               sync.repBdd();
+              }    
+        });
+        lblOffline.setToolTipText("Passer en mode connecté");
+        lblOffline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblOffline.addMouseListener(new MouseAdapter() {  
+           public void mousePressed(MouseEvent me){    
+              Synchro sync = new Synchro();   
+              sync.onlinemod();
+              }    
+        });
+        toolbar.add(lblOffline);
+        toolbar.add(lblOnline);
         if(HibernateConnection.online == false)
-        {
-            lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            lblReseau.setToolTipText("");
-            lblReseau.setIcon(imgOffline);
+        {         
+            lblOnline.setVisible(false);
+            lblOffline.setVisible(true);
         }
         else
         {
-            lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            lblReseau.setToolTipText("Passer en mode hors connection");
-            lblReseau.setIcon(imgOnline);
+            lblOnline.setVisible(true);
+            lblOffline.setVisible(false);
         }
-        lblReseau.addMouseListener(new MouseAdapter() {  
-            public void mousePressed(MouseEvent me){    
-               Synchro sync = new Synchro();   
-               sync.repBdd();
-            }  
-              
-        });
-        toolbar.add(lblReseau);
         toolbar.add(username);
         toolbar.add(logout);
         toolbar.setBackground(Color.white);
@@ -246,43 +254,30 @@ public class Fenetre extends JFrame {
         conteneur.revalidate();
     }
     public void RenewSnchro() {
-            user = new UserActif("admin");
             if(HibernateConnection.online == false)
-            {
-                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                lblReseau.setToolTipText("");
-                lblReseau.setIcon(imgOffline);
-                lblReseau.removeMouseListener(null);
+            {         
+                lblOnline.setVisible(false);
+                lblOffline.setVisible(true);
             }
             else
             {
-                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                lblReseau.setToolTipText("Passer en mode hors connection");
-                lblReseau.setIcon(imgOnline);
+                lblOnline.setVisible(true);
+                lblOffline.setVisible(false);
             }
             SynchroView sy = new SynchroView(user);
             RenewContener(sy.getPanel());
             username.setText(user.getFullName());
     }
     public void RenewAccueil() {
-            user = new UserActif("admin");
             if(HibernateConnection.online == false)
-            {
-                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                lblReseau.setToolTipText("");
-                lblReseau.setIcon(imgOffline);
-                lblReseau.removeMouseListener(new MouseAdapter() {  
-                public void mousePressed(MouseEvent me){    
-                   
-                }  
-
-            });
+            {         
+                lblOnline.setVisible(false);
+                lblOffline.setVisible(true);
             }
             else
             {
-                lblReseau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                lblReseau.setToolTipText("Passer en mode hors connection");
-                lblReseau.setIcon(imgOnline);
+                lblOnline.setVisible(true);
+                lblOffline.setVisible(false);
             }
             Accueil ac = new Accueil(user);
             RenewContener(ac.getPanel());
@@ -299,5 +294,10 @@ public class Fenetre extends JFrame {
         }
         System.out.println("INSTANCE :"+instance);
         return instance;
+    }
+    public void progBar()
+    {
+        ProgressBarAtt pb = new ProgressBarAtt();
+        RenewContener(pb.getPanel());
     }
 }

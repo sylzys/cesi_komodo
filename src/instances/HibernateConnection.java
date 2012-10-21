@@ -132,4 +132,18 @@ public class HibernateConnection {
             //Ouverture de la session
             HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
         }
+        public static void online()
+        {
+            //On ferme la conenction
+            closeConnection();
+            //Désactivation du log Infos hibernate
+            Logger log = Logger.getLogger("org.hibernate");
+            log.setLevel(Level.WARNING);
+            connectOnline();
+            System.out.println("En ligne");
+            //Chargement du fichier de configuration de hibernate
+            HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
+            //Ouverture de la session
+            HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
+        }
 }
