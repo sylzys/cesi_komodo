@@ -51,17 +51,39 @@ public class Replication extends Thread {
                 while (line != null) {
                         System.err.println(line);
                         line = r.readLine();
+                        fen.rep(1,"Erreur lors de la sauvegarde de la base en ligne");
+                        try {
+                            // pause
+                            Thread.sleep(2000);
+                        }
+                        catch (InterruptedException ex) {
+                            System.out.println(ex.toString());
+                        } 
                 }
                 r.close();
                 try {
                     final int dcertExitCode = process.waitFor();
                 }catch(InterruptedException i)
                 {
-                    System.out.println(i);
+                    fen.rep(1,"Erreur lors de la sauvegarde de la base en ligne");
+                    try {
+                        // pause
+                        Thread.sleep(2000);
+                    }
+                    catch (InterruptedException ex) {
+                        System.out.println(ex.toString());
+                    } 
                 }
         }catch(IOException e)
         {
             fen.rep(1,"Erreur lors de la sauvegarde de la base en ligne");
+            try {
+                // pause
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+            } 
         }
        fen.rep(25,"Suppression de la base locale");
        try {
@@ -88,17 +110,39 @@ public class Replication extends Thread {
                 while (line != null) {
                         System.err.println(line);
                         line = r.readLine();
+                        fen.rep(25,"Erreur lors de la suppression de la base locale");
+                        try {
+                           // pause
+                           Thread.sleep(2000);
+                        }
+                        catch (InterruptedException ex) {
+                            System.out.println(ex.toString());
+                        }
                 }
                 r.close();
                 try {
                     final int dcertExitCode = process.waitFor();
                 }catch(InterruptedException i)
                 {
-                    System.out.println(i);
+                    fen.rep(25,"Erreur lors de la suppression de la base locale");
+                    try {
+                       // pause
+                       Thread.sleep(2000);
+                    }
+                    catch (InterruptedException ex) {
+                        System.out.println(ex.toString());
+                    }
                 }
         }catch(IOException e)
         {
             fen.rep(25,"Erreur lors de la suppression de la base locale");
+             try {
+                // pause
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+            } 
         }
         fen.rep(50,"Création de la base local");
         commd = new ArrayList<String>();
@@ -118,17 +162,39 @@ public class Replication extends Thread {
                 while (line != null) {
                         System.err.println(line);
                         line = r.readLine();
+                        fen.rep(50,"Erreur lors de la création de la base locale");
+                        try {
+                           // pause
+                           Thread.sleep(2000);
+                        }
+                        catch (InterruptedException ex) {
+                            System.out.println(ex.toString());
+                        }
                 }
                 r.close();
                 try {
                     final int dcertExitCode = process.waitFor();
                 }catch(InterruptedException i)
                 {
-                    System.out.println(i);
+                    fen.rep(50,"Erreur lors de la création de la base locale");
+                    try {
+                       // pause
+                       Thread.sleep(2000);
+                    }
+                    catch (InterruptedException ex) {
+                        System.out.println(ex.toString());
+                    }
                 }
         }catch(IOException e)
         {
             fen.rep(50,"Erreur lors de la création de la base locale");
+             try {
+                // pause
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+            } 
         }
         fen.rep(75,"Restauration de la base en local");
         commd = new ArrayList<String>();
@@ -151,17 +217,39 @@ public class Replication extends Thread {
                 while (line != null) {
                         System.err.println(line);
                         line = r.readLine();
+                        fen.rep(75,"Erreur lors de la restauration");
+                        try {
+                           // pause
+                           Thread.sleep(2000);
+                        }
+                        catch (InterruptedException ex) {
+                            System.out.println(ex.toString());
+                        }
                 }
                 r.close();
                 try {
                     final int dcertExitCode = process.waitFor();
                 }catch(InterruptedException i)
                 {
-                    System.out.println(i);
+                    fen.rep(75,"Erreur lors de la restauration");
+                    try {
+                       // pause
+                       Thread.sleep(2000);
+                    }
+                    catch (InterruptedException ex) {
+                        System.out.println(ex.toString());
+                    }
                 }
         }catch(IOException e)
         {
             fen.rep(75,"Erreur lors de la restauration");
+             try {
+                // pause
+                Thread.sleep(2000);
+            }
+            catch (InterruptedException ex) {
+                System.out.println(ex.toString());
+            }
         }
         fen.rep(100,"Fin de la réplication ... Redirection vers l'accueil");
         //Nouvelle connection hors ligne

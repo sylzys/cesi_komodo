@@ -10,22 +10,20 @@ import views.Fenetre;
  *
  * @author suly
  */
-public class ThreadOnline extends Thread 
+public class ThreadOnline extends Thread
 {
     private boolean status;
     private boolean statusBcl;
-    public void run() 
+    public void run()
     {
-        
         Synchro connect = new Synchro();
         status = connect.InitConnect();
         do {
-            System.out.println("Thread test connection");
             //Test connection
             statusBcl = connect.InitConnect();
             try {
                 // pause
-                Thread.sleep(3000);
+                Thread.sleep(60000);
             }
             catch (InterruptedException ex) {
                 System.out.println(ex.toString());
@@ -36,7 +34,7 @@ public class ThreadOnline extends Thread
         {
             System.out.println("Nouvelle connection hors ligne");
             HibernateConnection.newConnect(false);
-            fen.RenewAccueil();  
+            fen.RenewAccueil();
         }
         else
         {

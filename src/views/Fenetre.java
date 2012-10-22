@@ -10,7 +10,6 @@ import controllers.getLoginInfos;
 import instances.ClientInstance;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -18,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 /**
  *
@@ -44,6 +44,7 @@ public class Fenetre extends JFrame {
     private JLabel lblAccueil = new JLabel(new ImageIcon("ressources/images/accueil.png"));
     private JLabel lblOnline = new JLabel(new ImageIcon("ressources/images/online.png"));
     private JLabel lblOffline = new JLabel(new ImageIcon("ressources/images/offline.png"));
+    private JLabel lblReseau = new JLabel();
     //User
     public UserActif user;
 
@@ -116,26 +117,48 @@ public class Fenetre extends JFrame {
         this.conteneur.add(toolbar, BorderLayout.NORTH);
 
         //toolbar
+
         logout.addActionListener(new LogoutListener());
         username.setText(user.getFullName());
         username.setBorder(new EmptyBorder(0, 20, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
         lblOnline.setToolTipText("Passer en mode hors ligne");
         lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblReseau.setText("Vous n'êtes pas connecté");
         lblOnline.addMouseListener(new MouseAdapter() {  
-           public void mousePressed(MouseEvent me){    
-               Replication rep = new Replication();
-               rep.start();
+           public void mousePressed(MouseEvent me){
+               if(HibernateConnection.online == true)
+               {
+                    Replication rep = new Replication();
+                    rep.start();
+               }
+               else
+               {
+                    lblReseau.setVisible(true);
+                    
+               }
               }
         });
+        lblReseau.setVisible(false);
+        lblReseau.setBorder(new EmptyBorder(0, 0, 0, 20));
+        lblReseau.setForeground(Color.red);
         lblOffline.setToolTipText("Passer en mode en ligne");
         lblOffline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblOffline.addMouseListener(new MouseAdapter() {  
-           public void mousePressed(MouseEvent me){    
-              Synchro sync = new Synchro();   
-              sync.onlinemod();
+           public void mousePressed(MouseEvent me){
+               System.out.println(HibernateConnection.online);
+               if(HibernateConnection.online == true)
+               {
+                    Synchro sync = new Synchro();   
+                    sync.onlinemod();
+               }
+               else
+               {
+                   lblReseau.setVisible(true);                  
+               }
               }    
         });
+        toolbar.add(lblReseau);
         toolbar.add(lblOffline);
         toolbar.add(lblOnline);
         if(HibernateConnection.online == false)
@@ -273,24 +296,26 @@ public class Fenetre extends JFrame {
                 lblOnline.setVisible(true);
                 lblOffline.setVisible(false);
             }
+            username.setText(user.getFullName());
             SynchroView sy = new SynchroView(user);
             RenewContener(sy.getPanel());
-            username.setText(user.getFullName());
     }
     public void RenewAccueil() {
             if(HibernateConnection.online == false)
             {         
                 lblOnline.setVisible(false);
                 lblOffline.setVisible(true);
+                //HibernateConnection.newConnect(false);
             }
             else
             {
                 lblOnline.setVisible(true);
                 lblOffline.setVisible(false);
+                //HibernateConnection.newConnect(false);
             }
+            username.setText(user.getFullName());
             Accueil ac = new Accueil(user);
             RenewContener(ac.getPanel());
-            username.setText(user.getFullName());
     }
     public void Erase(){
          conteneur.removeAll();
