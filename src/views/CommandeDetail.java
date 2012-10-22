@@ -46,6 +46,8 @@ public class CommandeDetail extends KContainer {
 
     @Override
     protected void initPanel() {
+//        ClientDetail cd_ = ClientDetail.getThis();
+//        System.out.println ("GETTIN LAST USED ID : " + cd_.cli_id);
         JPanel content = new JPanel(),
                 listeCmd = new JPanel(),
                 detailCmd = new JPanel(),

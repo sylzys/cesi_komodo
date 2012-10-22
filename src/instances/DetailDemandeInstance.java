@@ -62,7 +62,7 @@ public class DetailDemandeInstance {
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from detaildemande ";
+        String sql = "from demande ";
         if (!where.isEmpty())
         {
             sql += where;

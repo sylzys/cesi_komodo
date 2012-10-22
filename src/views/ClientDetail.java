@@ -180,7 +180,7 @@ public class ClientDetail extends KContainer {
         for (DetailDemande dddd : detaildemande)
         {
             System.out.println("Etat : " + dddd.getDemandeetat());
-            cb_demande.addItem(String.valueOf(dddd.getDemandeid()));
+            cb_demande.addItem((dddd.getDemandeid()));
         }
 
         comboDmd_panel.add(cb_demande);
@@ -304,7 +304,7 @@ public class ClientDetail extends KContainer {
 //            JOptionPane jop4 = new JOptionPane();
 //            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("type :" + (cb_demande.getSelectedItem()).getClass());
-            DemandeDetail demande = new DemandeDetail((Integer) (cb_demande.getSelectedItem()));
+            DemandeDetail demande = new DemandeDetail((Integer)cb_demande.getSelectedItem());
             fen.RenewContener(demande.getPanel());
         }
     }

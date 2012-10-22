@@ -238,8 +238,8 @@ public class Fenetre extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Evenement ev = new Evenement(user);
-            RenewContener(ev.getPanel());
+         //   Evenement ev = new Evenement(user);
+           // RenewContener(ev.getPanel());
         }
     }
 
