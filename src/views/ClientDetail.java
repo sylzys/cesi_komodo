@@ -6,6 +6,7 @@ package views;
 
 import controllers.UserActif;
 import instances.ClientInstance;
+import instances.DetailDemandeInstance;
 import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.DetailCommande;
+import models.DetailDemande;
 import instances.HibernateConnection;
 import org.hibernate.Query;
 
@@ -43,6 +45,7 @@ public class ClientDetail extends KContainer {
     private Fenetre fen = Fenetre.getInstance();
     ;
     private List<DetailCommande> detail;
+    private List<DetailDemande> detaildemande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
 
@@ -166,21 +169,36 @@ public class ClientDetail extends KContainer {
         JPanel comboDmd_panel = new JPanel();
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
+        
+         //get detail demande
+        DetailDemandeInstance dd = DetailDemandeInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", 1);
+        detaildemande = dd.GetDetaildemande("where cliid = :cliid", h);
+
         cb_demande.addItem("Demandes");
-        cb_demande.addItem("hello");
+        for (DetailDemande dddd : detaildemande)
+        {
+            System.out.println("Etat : " + dddd.getDemandeetat());
+            cb_demande.addItem(String.valueOf(dddd.getDemandeid()));
+        }
+
         comboDmd_panel.add(cb_demande);
         comboDmd_panel.add(validateDmd);
 
+        
+        
+        
         //Combobox commandes
         JPanel comboCmd_panel = new JPanel();
         comboCmd_panel.setBackground(Color.white);
         comboCmd_panel.setLayout(new FlowLayout());
-
+        
         //get detail cde
         DetailCdeInstance dc = DetailCdeInstance.getInstance();
-        Hashtable h = new Hashtable();
-        h.put("cliid", 1);
-        detail = dc.GetDetailcde("where cliid = :cliid", h);
+        Hashtable hh = new Hashtable();
+        hh.put("cliid", 1);
+        detail = dc.GetDetailcde("where cliid = :cliid", hh);
 
         cb_commande.addItem("Commandes");
         for (DetailCommande dcc : detail)
@@ -283,8 +301,11 @@ public class ClientDetail extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            JOptionPane jop4 = new JOptionPane();
-            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane jop4 = new JOptionPane();
+//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("type :" + (cb_demande.getSelectedItem()).getClass());
+            DemandeDetail demande = new DemandeDetail((Integer) (cb_demande.getSelectedItem()));
+            fen.RenewContener(demande.getPanel());
         }
     }
 

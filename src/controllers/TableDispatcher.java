@@ -14,8 +14,10 @@ import javax.swing.table.TableRowSorter;
 import models.ModelesTables;
 import tableModels.ClientModel;
 import tableModels.CommandeModel;
+import tableModels.DemandeModel;
 import views.ClientDetail;
 import views.CommandeDetail;
+import views.DemandeDetail;
 import views.Logout;
 
 public class TableDispatcher extends JPanel {
@@ -39,6 +41,9 @@ public class TableDispatcher extends JPanel {
                 break;
             case COMMANDE:
                 model = new CommandeModel();
+                break;
+            case DEMANDE:
+                model = new DemandeModel();
                 break;
         }
 
@@ -74,6 +79,9 @@ public class TableDispatcher extends JPanel {
                             break;
                         case COMMANDE:
                             CommandeDetail cmd = new CommandeDetail((Integer) tm.getValueAt(row, 999));
+                            break;
+                        case DEMANDE:
+                            DemandeDetail dmd = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
               }
           }
