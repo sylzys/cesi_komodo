@@ -88,7 +88,6 @@ public class Synchro {
     }
     public void onlinemod()
     {
-        System.out.println("Passage en mode connecté"); 
         HibernateConnection.online();
         Fenetre fen = Fenetre.getInstance();
         fen.RenewAccueil();

@@ -102,31 +102,34 @@ public class HibernateConnection {
         //Nouvelle connection
         public static void newConnect(boolean bool)
         {
-            //On ferme la conenction
+            //On ferme la connection
             closeConnection();
             //Si on veut une connection en ligne
             if(bool == true)
             {
                 connectOnline();
+                HibernateConnection.online = true;
             }
             //Sinon
             else
             {
                 //Connection hors ligne
                 connectOffline();
+                HibernateConnection.online = false;
             }
             //Reload instance
             instance = new HibernateConnection();
         }
         public static void offline()
         {
-            //On ferme la conenction
+            HibernateConnection.online = false;
+            //On ferme la connection
             closeConnection();
             //Désactivation du log Infos hibernate
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.WARNING);
             connectOffline();
-            System.out.println("Hors ligne");
+            System.out.println("Mode hors ligne connecté");
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session
@@ -134,13 +137,14 @@ public class HibernateConnection {
         }
         public static void online()
         {
-            //On ferme la conenction
+            HibernateConnection.online = true;
+            //On ferme la connection
             closeConnection();
             //Désactivation du log Infos hibernate
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.WARNING);
             connectOnline();
-            System.out.println("En ligne");
+            System.out.println("Mode en ligne connecté");
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session

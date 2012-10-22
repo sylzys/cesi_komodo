@@ -61,9 +61,9 @@ public class Cesi_komodo {
 //            Utilisateur uti = new Utilisateur();
 //            uti.setUtinom("testecrirereq");
 //            HibernateConnection.getSession().save(uti);
-//            //System.out.println(tx.wasCommitted());       
-//            //tx.commit();
-//            //System.out.println("Insertion de l'enregistrement terminé");
+//            System.out.println(tx.wasCommitted());       
+//            tx.commit();
+//            System.out.println("Insertion de l'enregistrement terminé");
 //            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
 //            if(HibernateConnection.online == false)
 //            {
