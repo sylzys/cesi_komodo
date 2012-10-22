@@ -135,12 +135,18 @@ public class Fenetre extends JFrame {
                else
                {
                     lblReseau.setVisible(true);
+                    java.util.Timer t = new java.util.Timer();
+                    t.schedule(new java.util.TimerTask() {
+                    public void run() {        
+                    lblReseau.setVisible(false);
+                    }
+                    }, 2500);  
                     
                }
               }
         });
         lblReseau.setVisible(false);
-        lblReseau.setBorder(new EmptyBorder(0, 0, 0, 20));
+        lblReseau.setBorder(new EmptyBorder(0, 0, 0, 45));
         lblReseau.setForeground(Color.red);
         lblOffline.setToolTipText("Passer en mode en ligne");
         lblOffline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -154,7 +160,13 @@ public class Fenetre extends JFrame {
                }
                else
                {
-                   lblReseau.setVisible(true);                  
+                    lblReseau.setVisible(true);
+                    java.util.Timer t = new java.util.Timer();
+                    t.schedule(new java.util.TimerTask() {
+                    public void run() {        
+                    lblReseau.setVisible(false);
+                    }
+                    }, 2500);                  
                }
               }    
         });
