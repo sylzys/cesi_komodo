@@ -54,11 +54,11 @@ public class DemandeModel extends AbstractTableModel {
         {
 
             case 0:
-                System.out.println("Date:" + demandes.get(rowIndex).getDemandedteadd());
+                //System.out.println("Date:" + demandes.get(rowIndex).getDemandedteadd());
                 return demandes.get(rowIndex).getDemandedteadd();
 
             case 1:
-                System.out.println("Etat:" + demandes.get(rowIndex).getDemandeetat());
+                //System.out.println("Etat:" + demandes.get(rowIndex).getDemandeetat());
                 return demandes.get(rowIndex).getDemandeetat();
 
             case 999:
