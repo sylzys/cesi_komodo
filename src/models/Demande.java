@@ -2,8 +2,7 @@ package models;
 
 import java.util.Date;
 import javax.persistence.*;
-@Entity
-@Table(name="demande")
+@Entity(name="demande")
 public class Demande {
 	
     @Id
@@ -25,6 +24,8 @@ public class Demande {
     
     @Column(name="demandesuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean demandesuppr ;
+
+  
 
     public int getDemandeid() {
         return demandeid;

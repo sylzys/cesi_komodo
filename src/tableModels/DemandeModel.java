@@ -28,6 +28,7 @@ public class DemandeModel extends AbstractTableModel {
     public DemandeModel() {
         super();
         DemandeInstance DmdInstance = DemandeInstance.getInstance();
+        System.out.println("in model");
         Hashtable h = new Hashtable();
         h.put("demandeid", 1);
         demandes = DmdInstance.GetDemandes("where demandeid = :demandeid", h);
@@ -54,11 +55,11 @@ public class DemandeModel extends AbstractTableModel {
         {
 
             case 0:
-                //System.out.println("Date:" + demandes.get(rowIndex).getDemandedteadd());
+                System.out.println("Date:" + demandes.get(rowIndex).getDemandedteadd());
                 return demandes.get(rowIndex).getDemandedteadd();
 
             case 1:
-                //System.out.println("Etat:" + demandes.get(rowIndex).getDemandeetat());
+                System.out.println("Etat:" + demandes.get(rowIndex).getDemandeetat());
                 return demandes.get(rowIndex).getDemandeetat();
 
             case 999:
