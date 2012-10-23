@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import models.Demande;
 import models.ModelesTables;
 import tableModels.ClientModel;
 import tableModels.CommandeModel;
@@ -44,6 +45,7 @@ public class TableDispatcher extends JPanel {
                 break;
             case DEMANDE:
                 model = new DemandeModel();
+                System.out.println("GETTINGMODEL");
                 break;
         }
 
@@ -81,6 +83,7 @@ public class TableDispatcher extends JPanel {
                             CommandeDetail cmd = new CommandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEMANDE:
+                            System.out.println("GETTIN DBL CLIC DEMANDE");
                             DemandeDetail dmd = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
               }

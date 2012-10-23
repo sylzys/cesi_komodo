@@ -7,7 +7,7 @@ package views;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.DemandeInstance;
-import instances.DetailDemandeInstance;
+import instances.DetailDdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
-import models.DetailDemande;
+import models.Demande;
 import models.ModelesTables;
 
 /**
@@ -32,7 +32,7 @@ import models.ModelesTables;
  */
 public class DemandeDetail extends KContainer {
 
-    List<DetailDemande> demande;
+    List<Demande> demande;
     int demande_id;
     JLabel title = new JLabel();
     private JProgressBar progressBar;
@@ -59,7 +59,7 @@ public class DemandeDetail extends KContainer {
         detailDmd.setPreferredSize(new Dimension(450, 700));
 
         //get cmd-detail from DB
-        DetailDemandeInstance DemandeInstance = DetailDemandeInstance.getInstance();
+        DetailDdeInstance DemandeInstance = DetailDdeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("demandeid", 1);
         demande = DemandeInstance.GetDetaildemande("where demandeid = :demandeid", h);

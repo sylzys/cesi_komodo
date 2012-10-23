@@ -5,20 +5,20 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.DetailDemande;
+import models.Demande;
 import org.hibernate.Query;
 
-public class DetailDemandeInstance {
+public class DetailDdeInstance {
 
-    private static DetailDemandeInstance instance;
-    private List<DetailDemande> clients;
+    private static DetailDdeInstance instance;
+    private List<Demande> clients;
     private String where;
     private Hashtable h;
 
     /**
      * Constructeur prive
      */
-    private DetailDemandeInstance() {
+    private DetailDdeInstance() {
         super();
     }
 
@@ -27,19 +27,20 @@ public class DetailDemandeInstance {
      *
      * @return
      */
-    public static synchronized DetailDemandeInstance getInstance() {
+    public static synchronized DetailDdeInstance getInstance() {
         if (instance == null)
         {
-            instance = new DetailDemandeInstance();
+            instance = new DetailDdeInstance();
         }
 
         return instance;
     }
 
     
-      public List<DetailDemande> GetDetaildemande(String where, Hashtable h) {
+      public List<Demande> GetDetaildemande(String where, Hashtable h) {
          this.where = where;
         this.h = h;
+        System.out.println("CHARGER DPS BDD");
         chargerDepuisBaseDeDonnees();
         return clients;
     }
@@ -54,14 +55,15 @@ public class DetailDemandeInstance {
         if (clients == null)
         {
             //return;
-            clients = new ArrayList<DetailDemande>();
+            clients = new ArrayList<Demande>();
         }
         else
         {
             clients.clear();
         }
-
+System.out.println("INSTANCE");
         HibernateConnection connection = HibernateConnection.getInstance();
+        System.out.println("INSTANCE OK");
         String sql = "from demande ";
         if (!where.isEmpty())
         {
@@ -70,8 +72,10 @@ public class DetailDemandeInstance {
 
         try
         {
+            System.out.println("GETTING SESSION");
             Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
             //query.setParameter("utiid", 1);
+           System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {
                 Set<String> set = h.keySet();
@@ -79,11 +83,11 @@ public class DetailDemandeInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
+                    System.out.println("PARAIMS " + str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
-            
+            System.out.println("GETTING SQL RESULTS");
             this.clients = query.list();
         }
         catch (Exception e)
