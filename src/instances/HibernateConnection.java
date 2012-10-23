@@ -17,6 +17,9 @@ public class HibernateConnection {
 	private static SessionFactory sessionFactory;
         private static String confHib;
         public static boolean online;
+        private static boolean status;
+        public static boolean savereseau;
+        private static int nbInstances;
 	
 	public static Session getSession() 
         {
@@ -61,24 +64,23 @@ public class HibernateConnection {
             log.setLevel(Level.WARNING);
             //Test de la connection
             Synchro connect = new Synchro();
-            boolean status = connect.InitConnect();
+            status = connect.InitConnect();
             //Si en ligne
             if(status == true)
             {
-                //On charge la config online.xml
-               connectOnline();
-               System.out.println("En ligne");
+                   //On charge la config online.xml
+                   connectOnline();
             }
             else
             {
                 //On charge le fichier offline.xml
                connectOffline();
-               System.out.println("Hors ligne");
             }
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session
             HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
+            nbInstances = nbInstances + 1;
 	}
 	public static HibernateConnection getInstance()
 	{
@@ -102,34 +104,29 @@ public class HibernateConnection {
         //Nouvelle connection
         public static void newConnect(boolean bool)
         {
-            //On ferme la connection
-            closeConnection();
             //Si on veut une connection en ligne
             if(bool == true)
             {
                 connectOnline();
-                HibernateConnection.online = true;
+                online();
             }
             //Sinon
             else
             {
                 //Connection hors ligne
                 connectOffline();
-                HibernateConnection.online = false;
+                offline();
             }
-            //Reload instance
-            instance = new HibernateConnection();
         }
         public static void offline()
         {
-            HibernateConnection.online = false;
             //On ferme la connection
             closeConnection();
+            HibernateConnection.online = false;
             //Désactivation du log Infos hibernate
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.WARNING);
             connectOffline();
-            System.out.println("Mode hors ligne connecté");
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session
@@ -137,14 +134,13 @@ public class HibernateConnection {
         }
         public static void online()
         {
-            HibernateConnection.online = true;
             //On ferme la connection
             closeConnection();
+            HibernateConnection.online = true;
             //Désactivation du log Infos hibernate
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.WARNING);
             connectOnline();
-            System.out.println("Mode en ligne connecté");
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session

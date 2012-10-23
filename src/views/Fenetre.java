@@ -127,7 +127,9 @@ public class Fenetre extends JFrame {
         lblReseau.setText("Vous n'êtes pas connecté");
         lblOnline.addMouseListener(new MouseAdapter() {  
            public void mousePressed(MouseEvent me){
-               if(HibernateConnection.online == true)
+               Synchro connect = new Synchro();
+               boolean status = connect.InitConnect();
+               if(HibernateConnection.online == true|| status== true)
                {
                     Replication rep = new Replication();
                     rep.start();
@@ -152,8 +154,9 @@ public class Fenetre extends JFrame {
         lblOffline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblOffline.addMouseListener(new MouseAdapter() {  
            public void mousePressed(MouseEvent me){
-               System.out.println(HibernateConnection.online);
-               if(HibernateConnection.online == true)
+               Synchro connect = new Synchro();
+               boolean status = connect.InitConnect();
+               if(HibernateConnection.online == true|| status== true)
                {
                     Synchro sync = new Synchro();   
                     sync.onlinemod();
@@ -297,7 +300,8 @@ public class Fenetre extends JFrame {
         conteneur.add(panel, BorderLayout.CENTER);
         conteneur.revalidate();
     }
-    public void RenewSnchro() {
+    public void RenewSnchro() {            
+            user = new UserActif("admin");
             if(HibernateConnection.online == false)
             {         
                 lblOnline.setVisible(false);
@@ -307,23 +311,25 @@ public class Fenetre extends JFrame {
             {
                 lblOnline.setVisible(true);
                 lblOffline.setVisible(false);
-            }
+            }            
+
             username.setText(user.getFullName());
             SynchroView sy = new SynchroView(user);
             RenewContener(sy.getPanel());
     }
     public void RenewAccueil() {
+            user = new UserActif("admin");
             if(HibernateConnection.online == false)
             {         
                 lblOnline.setVisible(false);
                 lblOffline.setVisible(true);
-                //HibernateConnection.newConnect(false);
+                HibernateConnection.newConnect(false);
             }
             else
             {
                 lblOnline.setVisible(true);
                 lblOffline.setVisible(false);
-                //HibernateConnection.newConnect(false);
+                HibernateConnection.newConnect(true);
             }
             username.setText(user.getFullName());
             Accueil ac = new Accueil(user);
@@ -338,7 +344,7 @@ public class Fenetre extends JFrame {
         {
             instance = new Fenetre();
         }
-        System.out.println("INSTANCE :"+instance);
+        //System.out.println("INSTANCE :"+instance);
         return instance;
     }
     public void progBar()

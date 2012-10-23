@@ -13,17 +13,29 @@ import views.Fenetre;
 public class ThreadOnline extends Thread
 {
     private boolean status;
+    public static  boolean change;
     private boolean statusBcl;
     public void run()
     {
         Synchro connect = new Synchro();
         status = connect.InitConnect();
         do {
+            if(change == true)
+            {
+                try {
+                // pause
+                Thread.sleep(900000);
+                }
+                catch (InterruptedException ex) {
+                    System.out.println(ex.toString());
+                }
+                change = false;
+            }
             //Test connection
             statusBcl = connect.InitConnect();
             try {
                 // pause
-                Thread.sleep(60000);
+                Thread.sleep(6000);
             }
             catch (InterruptedException ex) {
                 System.out.println(ex.toString());
@@ -32,7 +44,6 @@ public class ThreadOnline extends Thread
         Fenetre fen = Fenetre.getInstance();
         if(statusBcl == false)
         {
-            System.out.println("Nouvelle connection hors ligne");
             HibernateConnection.newConnect(false);
             fen.RenewAccueil();
         }
@@ -40,7 +51,6 @@ public class ThreadOnline extends Thread
         {
             //Nouvelle connection en ligne
             HibernateConnection.newConnect(true);
-            System.out.println("Nouvelle connection en ligne lancement de la page synchro");
             boolean fich = connect.emptyFic();
             if(fich == true)
             {

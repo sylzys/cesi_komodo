@@ -22,17 +22,18 @@ public class ProgressBarAtt extends KContainer {
     {
         JPanel content = new JPanel();
         JLabel icon = new JLabel(new ImageIcon("ressources/images/replic.png"));
-        JLabel lbl = new JLabel(title);
+        JLabel lblTitle = new JLabel("<html><center><h2>Réplication de la base de données</h2><br><br><br><p color=blue>"+title+"</p></center></html>");
+        lblTitle.setBorder(new EmptyBorder(0, 0, 20, 0));
         maBarre = new JProgressBar(0,100);
         maBarre.setString("Progression : "+value+"%");
         maBarre.setStringPainted(true);
+        icon.setBorder(new EmptyBorder(40, 0, 0, 0));
         content.setBackground(Color.white);
         content.setLayout(new BorderLayout());
-        content.add(lbl, BorderLayout.NORTH); 
+        content.add(lblTitle, BorderLayout.NORTH); 
         content.add(maBarre, BorderLayout.CENTER);
         content.add(icon, BorderLayout.SOUTH); 
-        maBarre.setValue(value);
-        
+        maBarre.setValue(value);    
         this.panel.removeAll();
         this.panel.add(content);
         return panel;
@@ -40,14 +41,20 @@ public class ProgressBarAtt extends KContainer {
     @Override
     protected void initPanel() {
         JPanel content = new JPanel();
-        maBarre = new JProgressBar(0,99);
-        maBarre.setSize(1000, 500);
-        maBarre.setString("Progression : ");
+        JLabel icon = new JLabel(new ImageIcon("ressources/images/replic.png"));
+        JLabel lblTitle = new JLabel("<html><center><h2>Réplication de la base de données</h2><br><br><br><p color=blue>Lancement de la réplication</p></center></html>");
+        maBarre = new JProgressBar(0,100);
+        lblTitle.setBorder(new EmptyBorder(0, 0, 20, 0));
+        maBarre.setString("Progression : 0%");
         maBarre.setStringPainted(true);
+        icon.setBorder(new EmptyBorder(40, 0, 0, 0));
         content.setBackground(Color.white);
         content.setLayout(new BorderLayout());
-        content.add(maBarre, BorderLayout.CENTER); 
-        maBarre.setValue(0);
+        content.add(lblTitle, BorderLayout.NORTH); 
+        content.add(maBarre, BorderLayout.CENTER);
+        content.add(icon, BorderLayout.SOUTH); 
+        maBarre.setValue(0);    
+        this.panel.removeAll();
         this.panel.add(content);
     }
 }

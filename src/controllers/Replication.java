@@ -4,7 +4,9 @@
  */
 package controllers;
 
+import com.sun.servicetag.SystemEnvironment;
 import instances.HibernateConnection;
+import instances.ThreadOnline;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -261,6 +263,7 @@ public class Replication extends Thread {
             catch (InterruptedException ex) {
                 System.out.println(ex.toString());
         }
+        ThreadOnline.change = true;
         fen.RenewAccueil();
     }
 }
