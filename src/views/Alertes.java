@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import models.Suivdossier;
+import models.GetAlerte;
 
 /**
  *
@@ -28,7 +28,7 @@ import models.Suivdossier;
 public class Alertes extends KContainer{
     
     JLabel title = new JLabel ("PANNEAU ALERTES");
-    List<Suivdossier> l_alerts;
+    List<GetAlerte> l_alerts;
     
     public Alertes (UserActif user) {
         super();
@@ -56,14 +56,14 @@ public class Alertes extends KContainer{
         AlerteInstance AlertInstance = AlerteInstance.getInstance();
         l_alerts = AlertInstance.GetAlertes("", new Hashtable());
         System.out.println("nb_alerts : " + l_alerts.size());
-        for (Suivdossier tmp : l_alerts) {
+        for (GetAlerte tmp : l_alerts) {
             JPanel jp = new JPanel();
             jp.setPreferredSize(new Dimension(730, 70));
             jp.setMinimumSize(new Dimension(730, 70));
             jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             //jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
             Box containerSte = Box.createHorizontalBox();
-            LinkLabelData LblSte = new LinkLabelData("Societe foobar", tmp.getInterid());
+            LinkLabelData LblSte = new LinkLabelData("Societe " + tmp.getClinom(), tmp.getCliid());
             LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -107,9 +107,9 @@ public class Alertes extends KContainer{
     
     private void openKikoo(MouseEvent evt) {
         ButtonData btn_tmp = (ButtonData)evt.getSource();
-        Suivdossier alert_tmp = (Suivdossier)btn_tmp.getDataByKey("alert");
+        GetAlerte alert_tmp = (GetAlerte)btn_tmp.getDataByKey("alert");
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getSuivdosid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getCliid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
     }
     
 }

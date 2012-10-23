@@ -11,10 +11,10 @@ public class GetAlerte {
     private int idgetalerte;
     
     @Column(name="comid", columnDefinition="INTEGER", nullable=true)
-    private String comid;
+    private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
-    private String interid;
+    private Integer interid;
     
     @Column(name="internom", columnDefinition="VARCHAR(50)", nullable=true)
     private String internom;
@@ -23,7 +23,7 @@ public class GetAlerte {
     private String interprenom;
     
     @Column(name="cliid", columnDefinition="INTEGER", nullable=true)
-    private String cliid;
+    private Integer cliid;
     
     @Column(name="clinom", columnDefinition="VARCHAR(50)", nullable=true)
     private String clinom;
@@ -36,7 +36,7 @@ public class GetAlerte {
     private Date suivdosdate;    
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-    private String utiid;
+    private Integer utiid;
 
     public int getIdgetalerte() {
         return idgetalerte;
@@ -46,19 +46,19 @@ public class GetAlerte {
         this.idgetalerte = idgetalerte;
     }
 
-    public String getComid() {
+    public Integer getComid() {
         return comid;
     }
 
-    public void setComid(String comid) {
+    public void setComid(Integer comid) {
         this.comid = comid;
     }
 
-    public String getInterid() {
+    public Integer getInterid() {
         return interid;
     }
 
-    public void setInterid(String interid) {
+    public void setInterid(Integer interid) {
         this.interid = interid;
     }
 
@@ -78,11 +78,11 @@ public class GetAlerte {
         this.interprenom = interprenom;
     }
 
-    public String getCliid() {
+    public Integer getCliid() {
         return cliid;
     }
 
-    public void setCliid(String cliid) {
+    public void setCliid(Integer cliid) {
         this.cliid = cliid;
     }
 
@@ -110,13 +110,12 @@ public class GetAlerte {
         this.suivdosdate = suivdosdate;
     }
 
-    public String getUtiid() {
+    public Integer getUtiid() {
         return utiid;
     }
 
-    public void setUtiid(String utiid) {
+    public void setUtiid(Integer utiid) {
         this.utiid = utiid;
     }
-    
     
 }
