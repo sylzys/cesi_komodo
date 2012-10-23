@@ -9,6 +9,7 @@ import classes.LabelData;
 import classes.LinkLabelData;
 import controllers.UserActif;
 import instances.AlerteInstance;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
@@ -61,8 +62,10 @@ public class Alertes extends KContainer{
             jp.setPreferredSize(new Dimension(730, 70));
             jp.setMinimumSize(new Dimension(730, 70));
             jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-            //jp.setLayout(new BoxLayout(jp, BoxLayout.X_AXIS));
+            Box containerAlert = Box.createVerticalBox();
+            //jp.setLayout(new BoxLayout(containerAlert, BoxLayout.X_AXIS));
             Box containerSte = Box.createHorizontalBox();
+            // creation label societe
             LinkLabelData LblSte = new LinkLabelData("Societe " + tmp.getClinom(), tmp.getCliid());
             LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
@@ -70,16 +73,39 @@ public class Alertes extends KContainer{
                     openSte(evt);
                 }
             });
+            // creation label inter
+            LinkLabelData LblInter = new LinkLabelData(tmp.getInterprenom() + " " + tmp.getInternom(), tmp.getInterid());
+            LblInter.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    openInter(evt);
+                }
+            });
+            // creation label num commande
+            LinkLabelData LblCmd = new LinkLabelData("Commande n. " + tmp.getComid(), tmp.getComid());
+            LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    openCmd(evt);
+                }
+            });
             containerSte.add(LblSte);
             containerSte.add(Box.createHorizontalStrut(5));
             containerSte.add(new JLabel(">"));
             containerSte.add(Box.createHorizontalStrut(5));
-            containerSte.add(new JLabel(tmp.getSuivdosdate().toString()));
+            containerSte.add(LblInter);
             containerSte.add(Box.createHorizontalStrut(5));
-            containerSte.add(new JLabel(tmp.getSuivdosdate().toString()));
-            containerSte.add(Box.createHorizontalStrut(25));
-            containerSte.add(new JLabel(tmp.getSuivdoscom()));
-            containerSte.add(Box.createHorizontalStrut(25));
+            containerSte.add(new JLabel(">"));
+            containerSte.add(Box.createHorizontalStrut(5));
+            containerSte.add(LblCmd);
+            
+            containerAlert.add(containerSte);
+            Box containerCom = Box.createHorizontalBox();
+            containerCom.add(Box.createHorizontalStrut(5));
+            containerCom.add(new JLabel(tmp.getSuivdosdate().toString()));
+            containerCom.add(Box.createHorizontalStrut(25));
+            containerCom.add(new JLabel(tmp.getSuivdoscom()));
+            containerCom.add(Box.createHorizontalStrut(25));
             ButtonData details = new ButtonData("details");
             details.putData("alert", tmp);
             details.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -88,8 +114,9 @@ public class Alertes extends KContainer{
                     openKikoo(evt);
                 }
             });
-            containerSte.add(details);
-            jp.add(containerSte);
+            containerCom.add(details);
+            containerAlert.add(containerCom);
+            jp.add(containerAlert);
             PanelListPane.add(jp);
             PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
         }
@@ -100,16 +127,28 @@ public class Alertes extends KContainer{
     }
     
     private void openSte(MouseEvent evt) {
-        LabelData lbl_tmp = (LabelData)evt.getComponent();
+        LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
         JOptionPane jop = new JOptionPane();
         jop.showMessageDialog(null, "ouverture de la page societe id => " + lbl_tmp.getId(), "Ouverture page societe", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void openKikoo(MouseEvent evt) {
-        ButtonData btn_tmp = (ButtonData)evt.getSource();
-        GetAlerte alert_tmp = (GetAlerte)btn_tmp.getDataByKey("alert");
+    private void openInter(MouseEvent evt) {
+        LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
         JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getCliid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
+        jop.showMessageDialog(null, "ouverture de l'inter id => " + lbl_tmp.getId(), "Ouverture page inter", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void openCmd(MouseEvent evt) {
+        LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
+        JOptionPane jop = new JOptionPane();
+        jop.showMessageDialog(null, "ouverture de la commande id/num => " + lbl_tmp.getId(), "Ouverture page commande", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void openKikoo(MouseEvent evt) {
+        //ButtonData btn_tmp = (ButtonData)evt.getSource();
+        //GetAlerte alert_tmp = (GetAlerte)btn_tmp.getDataByKey("alert");
+        //JOptionPane jop = new JOptionPane();
+        //jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getCliid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
     }
     
 }
