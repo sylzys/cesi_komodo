@@ -32,8 +32,8 @@ public class Suivdossier {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date suivdosdate ;
     
-    @Column(name="suivdossuppr", columnDefinition="BOOLEAN", nullable=true)
-    private Boolean suivdossuppr ;
+    @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
+    private Boolean suividossuppr ;
 
      
    public Integer getSuivdosid() {
@@ -100,12 +100,12 @@ public class Suivdossier {
         this.suivdosdate = suivdosdate;
     }
 
-    public Boolean isSuivdossuppr() {
-        return suivdossuppr;
+    public Boolean isSuividossuppr() {
+        return suividossuppr;
     }
 
-    public void setSuivdossuppr(Boolean suivdossuppr) {
-        this.suivdossuppr = suivdossuppr;
+    public void setSuividossuppr(Boolean suivdossuppr) {
+        this.suividossuppr = suivdossuppr;
     }
 }
 
