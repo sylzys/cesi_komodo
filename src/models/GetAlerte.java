@@ -8,9 +8,6 @@ public class GetAlerte {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int idgetalerte;
-    
-    @Column(name="comid", columnDefinition="INTEGER", nullable=true)
     private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
@@ -37,14 +34,6 @@ public class GetAlerte {
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private Integer utiid;
-
-    public int getIdgetalerte() {
-        return idgetalerte;
-    }
-
-    public void setIdgetalerte(int idgetalerte) {
-        this.idgetalerte = idgetalerte;
-    }
 
     public Integer getComid() {
         return comid;
