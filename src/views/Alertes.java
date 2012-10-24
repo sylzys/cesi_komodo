@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import models.GetAlerte;
 
 /**
@@ -63,6 +64,7 @@ public class Alertes extends KContainer{
             jp.setMinimumSize(new Dimension(730, 70));
             jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             Box containerAlert = Box.createVerticalBox();
+            containerAlert.add(Box.createVerticalStrut(5));
             //jp.setLayout(new BoxLayout(containerAlert, BoxLayout.X_AXIS));
             Box containerSte = Box.createHorizontalBox();
             // creation label societe
@@ -98,23 +100,14 @@ public class Alertes extends KContainer{
             containerSte.add(new JLabel(">"));
             containerSte.add(Box.createHorizontalStrut(5));
             containerSte.add(LblCmd);
-            
             containerAlert.add(containerSte);
+            containerAlert.add(Box.createVerticalStrut(15));
+            // infos commentaire
             Box containerCom = Box.createHorizontalBox();
             containerCom.add(Box.createHorizontalStrut(5));
             containerCom.add(new JLabel(tmp.getSuivdosdate().toString()));
             containerCom.add(Box.createHorizontalStrut(25));
             containerCom.add(new JLabel(tmp.getSuivdoscom()));
-            containerCom.add(Box.createHorizontalStrut(25));
-            ButtonData details = new ButtonData("details");
-            details.putData("alert", tmp);
-            details.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    openKikoo(evt);
-                }
-            });
-            containerCom.add(details);
             containerAlert.add(containerCom);
             jp.add(containerAlert);
             PanelListPane.add(jp);
