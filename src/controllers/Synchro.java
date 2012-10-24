@@ -90,6 +90,14 @@ public class Synchro {
     {
         HibernateConnection.online();
         Fenetre fen = Fenetre.getInstance();
-        fen.RenewAccueil();
+        boolean fic = emptyFic();
+        if(fic == true)
+        {
+            fen.RenewSnchro();
+        }
+        else
+        {
+            fen.RenewAccueil();
+        }
     }
 }
