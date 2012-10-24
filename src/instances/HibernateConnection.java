@@ -38,7 +38,7 @@ public class HibernateConnection {
                 //Création du fichier pour enregistrer les requetes
                 try
                 {
-                    File fichier = new java.io.File("ressources/requetes.sql");
+                    File fichier = new java.io.File("ressources/requetes.txt");
                     if(fichier.exists() == false)
                     {
                         fichier.createNewFile();
