@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -23,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import models.CurrentDatas;
 import models.DetailCommande;
 import models.ModelesTables;
 
@@ -40,7 +43,6 @@ public class CommandeDetail extends KContainer {
     public CommandeDetail(int id) {
         super();
         this.cmd_id = id;
-
         initPanel();
     }
 
@@ -68,14 +70,14 @@ public class CommandeDetail extends KContainer {
         h.put("comid", 1);
         //récupère la liste.
         cd = CmdInstance.GetDetailcde("where comid = :comid", h);
-        
+
         //demande un tabledispatcher
         TableDispatcher cp = new TableDispatcher();
         content.setBackground(Color.white);
         listeCmd.setBackground(Color.white);
         // listeCmd.setBorder(new EmptyBorder(0, 0, 0, 20));
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-       
+
         //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
         listeCmd.add(cp.showtable(ModelesTables.COMMANDE));
         content.add(listeCmd);
@@ -85,7 +87,9 @@ public class CommandeDetail extends KContainer {
 
         top_right.setLayout(new FlowLayout());
         top_right.add(new JLabel("<html>> " + cd.get(0).getClirais() + "<br />Créee le " + cd.get(0).getComdate() + " par " + cd.get(0).getInternom() + "</html>"));
-        top_right.add(new JButton("Retour à la société"));
+        JButton retour = new JButton("Retour à la société");
+        retour.addActionListener(new RetourListener());
+        top_right.add(retour);
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
@@ -102,12 +106,25 @@ public class CommandeDetail extends KContainer {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
         bottom_right.add(comm, gbc);
         detailCmd.add(top_right);
         detailCmd.add((center_right));
         detailCmd.add((bottom_right));
         content.add(detailCmd);
         this.panel.add(content);
+    }
+
+    private static class RetourListener implements ActionListener {
+
+        public RetourListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           // System.out.println("RETOUR");
+            CurrentDatas cur = CurrentDatas.getInstance();
+            ClientDetail cd = new ClientDetail(cur.getSoc_id());
+        }
     }
 }

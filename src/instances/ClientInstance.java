@@ -1,12 +1,16 @@
 package instances;
 
+import controllers.Synchro;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 public class ClientInstance {
 
@@ -14,7 +18,7 @@ public class ClientInstance {
     private List<Client> clients;
     private String where;
     private Hashtable h;
-
+    private Client client;
     /**
      * Constructeur prive
      */
@@ -42,12 +46,11 @@ public class ClientInstance {
         chargerDepuisBaseDeDonnees();
         return clients;
     }
+    
+    public synchronized void setClient(Client cli) {      
+       this.client = cli;
+    }
 
-    /**
-     * Bouchon.
-     *
-     * Dans un vrai programme, ces donnees seraient chargees depuis la base.
-     */
     private void chargerDepuisBaseDeDonnees() {
 
         if (clients == null)
@@ -90,5 +93,28 @@ public class ClientInstance {
             System.out.println(e.getMessage());
         }
 
+    }
+    
+    public void ajouterDansBaseDeDonnées(){
+            	try
+        {            
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+            
+            HibernateConnection.getSession().save(this.client);
+           // System.out.println(tx.wasCommitted());       
+            tx.commit();
+            System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if(HibernateConnection.online == false)
+            {
+                  Synchro writereq = new Synchro();
+                  writereq.SaveReq("INSERT INTO client (clinom) VALUES ('"+ this.client.getClinom() +"')");
+            }
+        }
+        catch(HibernateException | IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

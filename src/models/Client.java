@@ -81,6 +81,28 @@ public class Client {
     @Column(name="clidteadd", columnDefinition="DATE", nullable=true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date clidteadd ;
+    
+    @Column(name="clinaf", columnDefinition="VARCHAR(50)", nullable=true)
+    private String clinaf ;
+    
+    @Column(name="clisiren", columnDefinition="VARCHAR(50)", nullable=true)
+    private String clisiren ;
+
+    public String getClinaf() {
+        return clinaf;
+    }
+
+    public void setClinaf(String clinaf) {
+        this.clinaf = clinaf;
+    }
+
+    public String getClisiren() {
+        return clisiren;
+    }
+
+    public void setClisiren(String clisiren) {
+        this.clisiren = clisiren;
+    }
 
     public int getCliid() {
         return cliid;

@@ -14,6 +14,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -23,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import models.CurrentDatas;
 import models.Demande;
 import models.ModelesTables;
 
@@ -39,12 +42,13 @@ public class DemandeDetail extends KContainer {
 
     public DemandeDetail(int id) {
         super();
-        this.demande_id = id;
-
+        demande_id = id;
+        CurrentDatas cur = CurrentDatas.getInstance();
+        cur.setSoc_id(demande_id);
         initPanel();
     }
 
-    @Override
+   // @Override
     protected void initPanel() {
         JPanel content = new JPanel(),
                 listeDmd = new JPanel(),
@@ -78,7 +82,9 @@ public class DemandeDetail extends KContainer {
 
         top_right.setLayout(new FlowLayout());
         top_right.add(new JLabel("<html>> " + demande.get(0).getCliid() + "<br />Créee le " + demande.get(0).getDemandeetat() + " par " + demande.get(0).getDemandedteadd() + "</html>"));
-        top_right.add(new JButton("Retour à la société"));
+        JButton retour = new JButton("Retour à la société");
+        retour.addActionListener(new RetourListener());
+        top_right.add(retour);
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
@@ -102,5 +108,17 @@ public class DemandeDetail extends KContainer {
         detailDmd.add((bottom_right));
         content.add(detailDmd);
         this.panel.add(content);
+    }
+
+    private static class RetourListener implements ActionListener {
+
+        public RetourListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            CurrentDatas cur = CurrentDatas.getInstance();
+            ClientDetail cd = new ClientDetail(cur.getSoc_id());
+        }
     }
 }
