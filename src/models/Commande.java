@@ -3,7 +3,14 @@ package models;
 
 import java.util.Date;
 import javax.persistence.*;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 @Entity
+@Indexed
 @Table(name="commande")
 public class Commande {
 	
@@ -53,6 +60,7 @@ public class Commande {
         this.comid = comid;
     }
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     public String getComtitre() {
         return comtitre;
     }
@@ -61,6 +69,7 @@ public class Commande {
         this.comtitre = comtitre;
     }
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     public String getComdesc() {
         return comdesc;
     }
@@ -133,4 +142,3 @@ public class Commande {
         this.comsuppr = comsuppr;
     }
 }
-
