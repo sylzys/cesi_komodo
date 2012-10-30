@@ -8,8 +8,7 @@ import classes.LinkLabelData;
 import controllers.UserActif;
 import controllers.getInterlocuteurInfos;
 import instances.ClientInstance;
-import instances.DemandeInstance;
-import instances.DetailDmdInstance;
+import instances.DetailDdeInstance;
 import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -33,16 +32,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.DetailCommande;
-import models.DetailDmd;
+import models.Demande;
 import instances.HibernateConnection;
 import instances.InterlocuteurInstance;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import models.CurrentDatas;
-
-import models.Demande;
-import models.Interlocuteur;
-
 import models.Interlocuteur;
 import org.hibernate.Query;
 
@@ -56,7 +51,7 @@ public class ClientDetail extends KContainer {
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
     private List<DetailCommande> detail;
-    private List<Demande> demande;
+    private List<Demande> detaildemande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
     private InterlocuteurInstance interInstance;
@@ -215,11 +210,6 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
 
-          DemandeInstance dd = DemandeInstance.getInstance();
-        Hashtable h = new Hashtable();
-        h.put("cliid", 1);
-        demande = dd.GetDemandes("where cliid = :cliid", h);
-
         //get detail demande
         DetailDdeInstance dd = DetailDdeInstance.getInstance();
         Hashtable hh = new Hashtable();
@@ -227,13 +217,11 @@ public class ClientDetail extends KContainer {
         detaildemande = dd.GetDetaildemande("where cliid = :cliid", hh);
 
         cb_demande.addItem("Demandes");
-        for (Demande dddd : demande)
+        for (Demande dddd : detaildemande)
         {
             System.out.println("Etat : " + dddd.getDemandeetat());
             cb_demande.addItem((dddd.getDemandeid()));
         }
-        
-        
 
         comboDmd_panel.add(cb_demande);
         comboDmd_panel.add(validateDmd);
