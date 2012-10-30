@@ -92,7 +92,7 @@ public class Recherche extends KContainer {
         btnSearch.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                  Session session = HibernateConnection.getSession();
+            Session session = HibernateConnection.getSession();
             FullTextSession fullTextSession = Search.getFullTextSession(session);
 
             QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();

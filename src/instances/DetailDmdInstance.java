@@ -63,20 +63,20 @@ public class DetailDmdInstance {
         }
         System.out.println("INSTANCE");
         HibernateConnection connection = HibernateConnection.getInstance();
-        System.out.println("INSTANCE OK");
+        System.out.println("INSTANCE OK");        
         String sql = " from detailsdemande ";
         if (!where.isEmpty())
         {
             sql += where;
         }
-        where = "where demandeid = 2";
+
         try
         {
 //            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
 //            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
 //            query.setParameter("utiid", 1);
               Query query = HibernateConnection.getSession().createQuery("from detailsdemande where demandeid = :demandeid");
-              query.setParameter("demandeid", 1);
+              query.setParameter("demandeid", where);
               System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {
