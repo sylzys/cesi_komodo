@@ -29,9 +29,9 @@ import models.Client;
  *
  * @author sylv
  */
-public class Creation extends KContainer {
+public class NouvelleDemande extends KContainer {
 
-    JLabel title = new JLabel("PANNEAU CREATION");
+    JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
     JPanel left = new JPanel(),
             right = new JPanel();
     JTextField cli_nom = new JTextField(),
@@ -61,7 +61,7 @@ public class Creation extends KContainer {
             lbl_clisiren = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
 
-    public Creation(UserActif user) {
+    public NouvelleDemande(UserActif user) {
         super();
         this.user = user;
         initPanel();
@@ -238,9 +238,8 @@ public class Creation extends KContainer {
                 jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);            
             }
         }
-    }
 
-    private void add_customer() {
+        private void add_customer() {
             //remplir client
             Client cli = new Client();
             cli.setClinom(cli_nom.getText());
@@ -256,17 +255,15 @@ public class Creation extends KContainer {
             cli.setClisiren(cli_siren.getText());
             cli.setClisiret(cli_siret.getText());
             cli.setCliactivite(cli_act.getText());
-            cli.setUtiid(this.user.getId());
-            cli.setUti_utiid(this.user.getId());
-            if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
-                cli.setClica(Integer.parseInt(cli_ca.getText()));
+            cli.setClica(Integer.parseInt(cli_ca.getText()));
             
             ClientInstance cli_inst = ClientInstance.getInstance();
             cli_inst.setClient(cli);
             //inserer client
             cli_inst.ajouterDansBaseDeDonnées();
         }
-    
+    }
+
     private String check_fields() {
         String str = "";
         System.out.println("NOM -> " + cli_nom.getText());

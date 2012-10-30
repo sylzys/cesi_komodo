@@ -33,6 +33,7 @@ import models.Client;
 import models.DetailCommande;
 import models.Demande;
 import instances.HibernateConnection;
+import models.CurrentDatas;
 import org.hibernate.Query;
 
 /**
@@ -44,7 +45,6 @@ public class ClientDetail extends KContainer {
     JLabel title = new JLabel("PANNEAU CLIENT DETAIL");
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
-    ;
     private List<DetailCommande> detail;
     private List<Demande> detaildemande;
     private JComboBox cb_demande = new JComboBox(),
@@ -53,11 +53,13 @@ public class ClientDetail extends KContainer {
     public ClientDetail(int id) {
         super();
         cli_id = id;
+        CurrentDatas cur = CurrentDatas.getInstance();
+        cur.setSoc_id(cli_id);
         initPanel();
 
     }
 
-    @Override
+    //@Override
     protected void initPanel() {
 
         //JPANELS
@@ -170,9 +172,9 @@ public class ClientDetail extends KContainer {
         JPanel comboDmd_panel = new JPanel();
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
-        
-         //get detail demande
-        DemandeInstance dd = DemandeInstance.getInstance();
+
+        //get detail demande
+        DetailDdeInstance dd = DetailDdeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
         detaildemande = dd.GetDemandes("where cliid = :cliid", h);
@@ -187,14 +189,11 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.add(cb_demande);
         comboDmd_panel.add(validateDmd);
 
-        
-        
-        
         //Combobox commandes
         JPanel comboCmd_panel = new JPanel();
         comboCmd_panel.setBackground(Color.white);
         comboCmd_panel.setLayout(new FlowLayout());
-        
+
         //get detail cde
         DetailCdeInstance dc = DetailCdeInstance.getInstance();
         Hashtable hh = new Hashtable();
@@ -305,20 +304,20 @@ public class ClientDetail extends KContainer {
 //            JOptionPane jop4 = new JOptionPane();
 //            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
             System.out.println("type :" + (cb_demande.getSelectedItem()).getClass());
-            DemandeDetail demande = new DemandeDetail((Integer)cb_demande.getSelectedItem());
+            DemandeDetail demande = new DemandeDetail((Integer) cb_demande.getSelectedItem());
             fen.RenewContener(demande.getPanel());
         }
     }
 
-    private static class newDmdListener implements ActionListener {
+    private class newDmdListener implements ActionListener {
 
         public newDmdListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane jop4 = new JOptionPane();
-            jop4.showMessageDialog(null, "creation nouvelle demmande", "NewDmd", JOptionPane.INFORMATION_MESSAGE);
+            NouvelleDemande nd = new NouvelleDemande(user);
+            fen.RenewContener(nd.getPanel());
         }
     }
 }

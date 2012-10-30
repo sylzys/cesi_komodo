@@ -5,53 +5,53 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.GetAlerte;
+import models.Suivdossier;
 import org.hibernate.Query;
 
 /**
  *
  * @author BoBo
  */
-public class AlerteInstance {
-    private static AlerteInstance instance;
-    private List<GetAlerte> alertes;
+public class SuivDossierInstance {
+    private static SuivDossierInstance instance;
+    private List<Suivdossier> suivdossier;
     private String where;
     private Hashtable h;
     
-    private AlerteInstance() {
+    private SuivDossierInstance() {
         super();
     }
     
-    public static synchronized AlerteInstance getInstance() {
+    public static synchronized SuivDossierInstance getInstance() {
         if (instance == null)
         {
-            instance = new AlerteInstance();
+            instance = new SuivDossierInstance();
         }
 
         return instance;
     }
 
-    public synchronized List<GetAlerte> GetAlertes(String where, Hashtable h) {
+    public synchronized List<Suivdossier> GetSuivDossier(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();
-        return alertes;
+        return suivdossier;
     }
     
     private void chargerDepuisBaseDeDonnees() {
 
-        if (alertes == null)
+        if (suivdossier == null)
         {
             //return;
-            alertes = new ArrayList<GetAlerte>();
+            suivdossier = new ArrayList<Suivdossier>();
         }
         else
         {
-            alertes.clear();
+            suivdossier.clear();
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from getalerte ";
+        String sql = "from Suivdossier ";
         if (!where.isEmpty())
         {
             sql += where;
@@ -73,7 +73,7 @@ public class AlerteInstance {
                 }
             }
             
-            this.alertes = query.list();
+            this.suivdossier = query.list();
         }
         catch (Exception e)
         {

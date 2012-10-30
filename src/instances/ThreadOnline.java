@@ -23,8 +23,8 @@ public class ThreadOnline extends Thread
             if(change == true)
             {
                 try {
-                // pause
-                Thread.sleep(900000);
+                    // pause
+                    Thread.sleep(900000);
                 }
                 catch (InterruptedException ex) {
                     System.out.println(ex.toString());

@@ -21,6 +21,6 @@
   <mapping class="models.Devis"/>
   <mapping class="models.Commande"/>
   <mapping class="models.DetailCommande"/>
-  <mapping class="models.DetailDmd"/>
+  <mapping class="models.GetAlerte"/>
 </session-factory>
 </hibernate-configuration>

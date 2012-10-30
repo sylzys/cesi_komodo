@@ -13,6 +13,7 @@ import org.hibernate.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Client;
 //import org.hibernate.cfg.AnnotationConfiguration;
 /**
  *
@@ -58,9 +59,11 @@ public class Cesi_komodo {
 //        {            
 //            Transaction tx = HibernateConnection.getSession().beginTransaction();
 //            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-//            Utilisateur uti = new Utilisateur();
-//            uti.setUtinom("testecrirereq");
-//            HibernateConnection.getSession().save(uti);
+//            Client cli = new Client();
+//            cli.setClinom("testecrirereq");
+//            cli.setUtiid(1);
+//            cli.setUti_utiid(1);
+//            HibernateConnection.getSession().save(cli);
 //            System.out.println(tx.wasCommitted());       
 //            tx.commit();
 //            System.out.println("Insertion de l'enregistrement terminé");
@@ -68,7 +71,7 @@ public class Cesi_komodo {
 //            if(HibernateConnection.online == false)
 //            {
 //                  Synchro writereq = new Synchro();
-//                  writereq.SaveReq("INSERT INTO utilisateur (utinom) VALUES ('testercirereq')");
+//                  writereq.SaveReq("INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)");
 //            }
 //        }
 //        catch(HibernateException | IOException e)
