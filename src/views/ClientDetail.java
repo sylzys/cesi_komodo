@@ -34,6 +34,7 @@ import models.DetailCommande;
 import models.DetailDmd;
 import instances.HibernateConnection;
 import models.CurrentDatas;
+import models.Demande;
 import org.hibernate.Query;
 
 /**
@@ -46,7 +47,7 @@ public class ClientDetail extends KContainer {
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
     private List<DetailCommande> detail;
-    private List<DetailDmd> detaildemande;
+    private List<Demande> demande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
 
@@ -173,18 +174,20 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
 
-        //get detail demande
-        DetailDmdInstance dd = DetailDmdInstance.getInstance();
+        
+          DemandeInstance dd = DemandeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
-        detaildemande = dd.GetDetaildemande("where cliid = :cliid", h);
+        demande = dd.GetDemandes("where cliid = :cliid", h);
 
         cb_demande.addItem("Demandes");
-        for (DetailDmd dddd : detaildemande)
+        for (Demande dddd : demande)
         {
             System.out.println("Etat : " + dddd.getDemandeetat());
             cb_demande.addItem((dddd.getDemandeid()));
         }
+        
+        
 
         comboDmd_panel.add(cb_demande);
         comboDmd_panel.add(validateDmd);
