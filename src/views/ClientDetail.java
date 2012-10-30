@@ -39,11 +39,11 @@ import instances.InterlocuteurInstance;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import models.CurrentDatas;
-<<<<<<< Updated upstream
+
 import models.Demande;
-=======
 import models.Interlocuteur;
->>>>>>> Stashed changes
+
+import models.Interlocuteur;
 import org.hibernate.Query;
 
 /**
@@ -215,19 +215,16 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
 
-<<<<<<< Updated upstream
-        
           DemandeInstance dd = DemandeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
         demande = dd.GetDemandes("where cliid = :cliid", h);
-=======
+
         //get detail demande
         DetailDdeInstance dd = DetailDdeInstance.getInstance();
         Hashtable hh = new Hashtable();
         hh.put("cliid", 1);
         detaildemande = dd.GetDetaildemande("where cliid = :cliid", hh);
->>>>>>> Stashed changes
 
         cb_demande.addItem("Demandes");
         for (Demande dddd : demande)
