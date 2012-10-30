@@ -81,7 +81,7 @@ public class DemandeDetail extends KContainer {
 
         top_right.setLayout(new FlowLayout());
         top_right.add(new JLabel("<html>> " + dd.get(0).getCliid() + "<br />Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtiprenom() + " pour l'entreprise " +dd.get(0).getClinom() + "</html>"));
-//        top_right.add(new JButton("Retour à la société"));
+//top_right.add(new JButton("Retour à la société"));
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);

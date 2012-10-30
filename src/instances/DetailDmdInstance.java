@@ -72,10 +72,12 @@ public class DetailDmdInstance {
         where = "where demandeid = 2";
         try
         {
-            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
-            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
-            //query.setParameter("utiid", 1);
-           System.out.println("GETTING SESSION OK");
+//            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
+//            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
+//            query.setParameter("utiid", 1);
+              Query query = HibernateConnection.getSession().createQuery("from detailsdemande where demandeid = :demandeid");
+              query.setParameter("demandeid", 1);
+              System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {
                 Set<String> set = h.keySet();
