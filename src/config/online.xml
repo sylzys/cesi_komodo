@@ -23,5 +23,6 @@
   <mapping class="models.DetailCommande"/>
   <mapping class="models.GetAlerte"/>
   <mapping class="models.Interlocuteur"/>
+  <mapping class="models.DetailDmd"/>
 </session-factory>
 </hibernate-configuration>

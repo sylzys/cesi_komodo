@@ -23,7 +23,7 @@ public class Demande {
     private Date demandedteadd ; 
     
     @Column(name="demandesuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean demandesuppr ;
+    private Boolean demandesuppr ;
 
   
 

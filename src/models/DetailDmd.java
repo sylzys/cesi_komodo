@@ -3,7 +3,7 @@ package models;
 
 import java.util.Date;
 import javax.persistence.*;
-@Entity(name="detaildmd")
+@Entity(name="detailsdemande")
 public class DetailDmd {
 	
     @Id
