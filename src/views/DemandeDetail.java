@@ -6,8 +6,7 @@ package views;
 
 import controllers.TableDispatcher;
 import controllers.UserActif;
-import instances.DemandeInstance;
-import instances.DetailDdeInstance;
+import instances.DetailDmdInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,7 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
-import models.Demande;
+import models.DetailDmd;
 import models.ModelesTables;
 
 /**
@@ -32,7 +31,7 @@ import models.ModelesTables;
  */
 public class DemandeDetail extends KContainer {
 
-    List<Demande> demande;
+    List<DetailDmd> dd;
     int demande_id;
     JLabel title = new JLabel();
     private JProgressBar progressBar;
@@ -59,10 +58,10 @@ public class DemandeDetail extends KContainer {
         detailDmd.setPreferredSize(new Dimension(450, 700));
 
         //get cmd-detail from DB
-        DetailDdeInstance DemandeInstance = DetailDdeInstance.getInstance();
+        DetailDmdInstance DetailDdeInstance = DetailDmdInstance.getInstance();
         Hashtable h = new Hashtable();
-        h.put("demandeid", 1);
-        demande = DemandeInstance.GetDetaildemande("where demandeid = :demandeid", h);
+        h.put("demandeid", 2);
+        dd = DetailDdeInstance.GetDetaildemande("where demandeid = 2", h);
         //  System.out.println("CMD-ID: "+this.demande_id);
         //title.setText("DETAIL COMMANDE "+ this.demande_id);
         TableDispatcher cp = new TableDispatcher();
@@ -77,26 +76,24 @@ public class DemandeDetail extends KContainer {
         detailDmd.setLayout(new BoxLayout(detailDmd, BoxLayout.Y_AXIS));
 
         top_right.setLayout(new FlowLayout());
-        top_right.add(new JLabel("<html>> " + demande.get(0).getCliid() + "<br />Créee le " + demande.get(0).getDemandeetat() + " par " + demande.get(0).getDemandedteadd() + "</html>"));
-        top_right.add(new JButton("Retour à la société"));
+//        top_right.add(new JLabel("<html>> " + dd.get(0).getCliid() + "<br />Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtiprenom() + " pour l'entreprise " +dd.get(0).getClinom() + "</html>"));
+//        top_right.add(new JButton("Retour à la société"));
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(Integer.valueOf(demande.get(0).getDemandeetat()));
-        progressBar.setString(demande.get(0).getDemandeetat() + "%");
+     //   progressBar.setValue(Integer.valueOf(dd.get(0).getDemandeetat()));
+    //    progressBar.setString(dd.get(0).getDemandeetat() + "%");
         progressBar.setStringPainted(true);
         center_right.add(progressBar);
         bottom_right.setBackground(Color.white);
         bottom_right.setLayout(new GridBagLayout());
-        JLabel comm = new JLabel("<html><b>Commentaires</b><br />Powder gingerbread cheesecake wafer. "
-                + "I love sugar plum chocolate cake pudding dragée macaroon. Gingerbread wafer dragée pie. "
-                + "Fruitcake I love candy canes jelly beans cupcake I love applicake. Dessert I love jelly powder jelly. "
-                + "Cookie cookie wypas tootsie roll I love.");
+        System.out.println("DD: "+dd);
+     //   JLabel comm = new JLabel("<html><b>"+dd.get(0).getSuivdoscom()+"</b></html>");
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
-        bottom_right.add(comm, gbc);
+  //      bottom_right.add(comm, gbc);
         detailDmd.add(top_right);
         detailDmd.add((center_right));
         detailDmd.add((bottom_right));

@@ -6,7 +6,8 @@ package views;
 
 import controllers.UserActif;
 import instances.ClientInstance;
-import instances.DetailDdeInstance;
+import instances.DemandeInstance;
+import instances.DetailDmdInstance;
 import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -171,10 +172,10 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setLayout(new FlowLayout());
         
          //get detail demande
-        DetailDdeInstance dd = DetailDdeInstance.getInstance();
+        DemandeInstance dd = DemandeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
-        detaildemande = dd.GetDetaildemande("where cliid = :cliid", h);
+        detaildemande = dd.GetDemandes("where cliid = :cliid", h);
 
         cb_demande.addItem("Demandes");
         for (Demande dddd : detaildemande)

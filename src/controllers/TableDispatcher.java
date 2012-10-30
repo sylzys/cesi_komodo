@@ -48,7 +48,7 @@ public class TableDispatcher extends JPanel {
                 System.out.println("GETTINGMODEL");
                 break;
         }
-
+System.out.println("Here?");
         //on lie notre table à notre modèle générique
         final JTable table = new JTable(model);
         //tri des colonnes
@@ -57,6 +57,7 @@ public class TableDispatcher extends JPanel {
         table.setRowSorter(sorter);
         table.setPreferredScrollableViewportSize(new Dimension(500, 270));
         table.setFillsViewportHeight(true);
+        System.out.println("Or here?");
         //gestion du double click
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {

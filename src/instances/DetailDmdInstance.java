@@ -5,20 +5,20 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.Demande;
+import models.DetailDmd;
 import org.hibernate.Query;
 
-public class DetailDdeInstance {
+public class DetailDmdInstance {
 
-    private static DetailDdeInstance instance;
-    private List<Demande> clients;
+    private static DetailDmdInstance instance;
+    private List<DetailDmd> clients;
     private String where;
     private Hashtable h;
 
     /**
      * Constructeur prive
      */
-    private DetailDdeInstance() {
+    private DetailDmdInstance() {
         super();
     }
 
@@ -27,20 +27,20 @@ public class DetailDdeInstance {
      *
      * @return
      */
-    public static synchronized DetailDdeInstance getInstance() {
+    public static synchronized DetailDmdInstance getInstance() {
         if (instance == null)
         {
-            instance = new DetailDdeInstance();
+            instance = new DetailDmdInstance();
         }
 
         return instance;
     }
 
     
-      public List<Demande> GetDetaildemande(String where, Hashtable h) {
+      public List<DetailDmd> GetDetaildemande(String where, Hashtable h) {
          this.where = where;
         this.h = h;
-        System.out.println("CHARGER DPS BDD");
+        System.out.println("CHARGER DPS BDD"+h+" --- "+where);
         chargerDepuisBaseDeDonnees();
         return clients;
     }
@@ -55,24 +55,24 @@ public class DetailDdeInstance {
         if (clients == null)
         {
             //return;
-            clients = new ArrayList<Demande>();
+            clients = new ArrayList<DetailDmd>();
         }
         else
         {
             clients.clear();
         }
-System.out.println("INSTANCE");
+        System.out.println("INSTANCE");
         HibernateConnection connection = HibernateConnection.getInstance();
         System.out.println("INSTANCE OK");
-        String sql = "from demande ";
+        String sql = " from detailsdemande ";
         if (!where.isEmpty())
         {
             sql += where;
         }
-
+        where = "where demandeid = 2";
         try
         {
-            System.out.println("GETTING SESSION");
+            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
             Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
             //query.setParameter("utiid", 1);
            System.out.println("GETTING SESSION OK");
