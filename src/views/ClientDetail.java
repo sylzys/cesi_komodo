@@ -8,7 +8,7 @@ import classes.LinkLabelData;
 import controllers.UserActif;
 import controllers.getInterlocuteurInfos;
 import instances.ClientInstance;
-import instances.DetailDdeInstance;
+import instances.DemandeInstance;
 import instances.DetailCdeInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,6 +38,7 @@ import instances.InterlocuteurInstance;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import models.CurrentDatas;
+import models.DetailDmd;
 import models.Interlocuteur;
 import org.hibernate.Query;
 
@@ -51,7 +52,7 @@ public class ClientDetail extends KContainer {
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
     private List<DetailCommande> detail;
-    private List<Demande> detaildemande;
+    private List<Demande> demande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
     private InterlocuteurInstance interInstance;
@@ -211,13 +212,13 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setLayout(new FlowLayout());
 
         //get detail demande
-        DetailDdeInstance dd = DetailDdeInstance.getInstance();
+        DemandeInstance dd = DemandeInstance.getInstance();
         Hashtable hh = new Hashtable();
         hh.put("cliid", 1);
-        detaildemande = dd.GetDetaildemande("where cliid = :cliid", hh);
+        demande = dd.GetDemandes("where cliid = :cliid", hh);
 
         cb_demande.addItem("Demandes");
-        for (Demande dddd : detaildemande)
+        for (Demande dddd : demande)
         {
             System.out.println("Etat : " + dddd.getDemandeetat());
             cb_demande.addItem((dddd.getDemandeid()));
