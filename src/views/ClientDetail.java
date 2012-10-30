@@ -177,7 +177,7 @@ public class ClientDetail extends KContainer {
             System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
             LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
             LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
-            
+
             LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -195,7 +195,7 @@ public class ClientDetail extends KContainer {
 //        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
 //        LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
-        
+
         cliButtons.add(addContact);
 
 
@@ -358,9 +358,11 @@ public class ClientDetail extends KContainer {
             //  fen.RenewContener(nd.getPanel());
         }
     }
+
     private void showInterlocuteur(int id) {
-              InterlocuteurDialog interd = new InterlocuteurDialog(null, "Veuillez vous connecter", true);
-            getInterlocuteurInfos interInfos = interd.showZDialog();
-            JOptionPane jop = new JOptionPane();
-                }
+        InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, id);
+        System.out.println("SHOWING INTER ID "+ id);
+        getInterlocuteurInfos interInfos = interd.showZDialog(id);
+        JOptionPane jop = new JOptionPane();
+    }
 }

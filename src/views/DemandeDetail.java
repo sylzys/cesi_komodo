@@ -85,8 +85,8 @@ public class DemandeDetail extends KContainer {
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
-     //   progressBar.setValue(Integer.valueOf(dd.get(0).getDemandeetat()));
-    //    progressBar.setString(dd.get(0).getDemandeetat() + "%");
+        progressBar.setValue(Integer.valueOf(dd.get(0).getDemandeetat()));
+        progressBar.setString(dd.get(0).getDemandeetat() + "%");
         progressBar.setStringPainted(true);
         center_right.add(progressBar);
         bottom_right.setBackground(Color.white);
