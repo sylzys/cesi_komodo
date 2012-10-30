@@ -26,6 +26,7 @@ import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
 import models.DetailDmd;
 import models.ModelesTables;
+import models.CurrentDatas;
 
 /**
  *

@@ -22,5 +22,6 @@
   <mapping class="models.Commande"/>
   <mapping class="models.DetailCommande"/>
   <mapping class="models.DetailDmd"/>
+  <mapping class="models.DetailDmd"/>
 </session-factory>
 </hibernate-configuration>

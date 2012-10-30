@@ -31,7 +31,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.DetailCommande;
-import models.Demande;
+import models.DetailDmd;
 import instances.HibernateConnection;
 import models.CurrentDatas;
 import org.hibernate.Query;
@@ -46,7 +46,7 @@ public class ClientDetail extends KContainer {
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
     private List<DetailCommande> detail;
-    private List<Demande> detaildemande;
+    private List<DetailDmd> detaildemande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
 
@@ -174,13 +174,13 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setLayout(new FlowLayout());
 
         //get detail demande
-        DetailDdeInstance dd = DetailDdeInstance.getInstance();
+        DetailDmdInstance dd = DetailDmdInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
-        detaildemande = dd.GetDemandes("where cliid = :cliid", h);
+        detaildemande = dd.GetDetaildemande("where cliid = :cliid", h);
 
         cb_demande.addItem("Demandes");
-        for (Demande dddd : detaildemande)
+        for (DetailDmd dddd : detaildemande)
         {
             System.out.println("Etat : " + dddd.getDemandeetat());
             cb_demande.addItem((dddd.getDemandeid()));
