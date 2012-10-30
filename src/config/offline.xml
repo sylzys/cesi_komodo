@@ -21,7 +21,12 @@
   <mapping class="models.Devis"/>
   <mapping class="models.Commande"/>
   <mapping class="models.DetailCommande"/>
+<<<<<<< Updated upstream
   <mapping class="models.DetailDmd"/>
   <mapping class="models.DetailDmd"/>
+=======
+  <mapping class="models.GetAlerte"/>
+  <mapping class="models.Interlocuteur"/>
+>>>>>>> Stashed changes
 </session-factory>
 </hibernate-configuration>

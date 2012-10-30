@@ -4,7 +4,9 @@
  */
 package views;
 
+import classes.LinkLabelData;
 import controllers.UserActif;
+import controllers.getInterlocuteurInfos;
 import instances.ClientInstance;
 import instances.DemandeInstance;
 import instances.DetailDmdInstance;
@@ -33,8 +35,15 @@ import models.Client;
 import models.DetailCommande;
 import models.DetailDmd;
 import instances.HibernateConnection;
+import instances.InterlocuteurInstance;
+import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import models.CurrentDatas;
+<<<<<<< Updated upstream
 import models.Demande;
+=======
+import models.Interlocuteur;
+>>>>>>> Stashed changes
 import org.hibernate.Query;
 
 /**
@@ -50,6 +59,8 @@ public class ClientDetail extends KContainer {
     private List<Demande> demande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
+    private InterlocuteurInstance interInstance;
+    private List<Interlocuteur> inter;
 
     public ClientDetail(int id) {
         super();
@@ -157,8 +168,38 @@ public class ClientDetail extends KContainer {
         cliInfos.add(cliRS);
 
         //Boutons contact
+
         cliButtons.setBackground(Color.white);
         cliButtons.setLayout(new FlowLayout());
+        cliButtons.add(new JLabel("Contacts : "));
+        interInstance = InterlocuteurInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", cli_id);
+        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", h);
+        for (Interlocuteur in : inter)
+        {
+            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
+            LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
+            LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+            
+            LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    getInterId(evt);
+                }
+
+                private void getInterId(MouseEvent evt) {
+                    LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+                    showInterlocuteur(lbl_tmp.getId());
+                }
+            });
+            cliButtons.add(LblCmd);
+            cliButtons.add(Box.createHorizontalStrut(5));
+        }
+//        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
+//        LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+
+        
         cliButtons.add(addContact);
 
 
@@ -174,11 +215,19 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.setBackground(Color.white);
         comboDmd_panel.setLayout(new FlowLayout());
 
+<<<<<<< Updated upstream
         
           DemandeInstance dd = DemandeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
         demande = dd.GetDemandes("where cliid = :cliid", h);
+=======
+        //get detail demande
+        DetailDdeInstance dd = DetailDdeInstance.getInstance();
+        Hashtable hh = new Hashtable();
+        hh.put("cliid", 1);
+        detaildemande = dd.GetDetaildemande("where cliid = :cliid", hh);
+>>>>>>> Stashed changes
 
         cb_demande.addItem("Demandes");
         for (Demande dddd : demande)
@@ -199,9 +248,9 @@ public class ClientDetail extends KContainer {
 
         //get detail cde
         DetailCdeInstance dc = DetailCdeInstance.getInstance();
-        Hashtable hh = new Hashtable();
-        hh.put("cliid", 1);
-        detail = dc.GetDetailcde("where cliid = :cliid", hh);
+        Hashtable hhh = new Hashtable();
+        hhh.put("cliid", 1);
+        detail = dc.GetDetailcde("where cliid = :cliid", hhh);
 
         cb_commande.addItem("Commandes");
         for (DetailCommande dcc : detail)
@@ -319,8 +368,13 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            NouvelleDemande nd = new NouvelleDemande(user);
-            fen.RenewContener(nd.getPanel());
+            //NouvelleDemande nd = new NouvelleDemande(user);
+            //  fen.RenewContener(nd.getPanel());
         }
     }
+    private void showInterlocuteur(int id) {
+              InterlocuteurDialog interd = new InterlocuteurDialog(null, "Veuillez vous connecter", true);
+            getInterlocuteurInfos interInfos = interd.showZDialog();
+            JOptionPane jop = new JOptionPane();
+                }
 }
