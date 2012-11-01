@@ -32,7 +32,7 @@ public class InterlocuteurDialog extends JDialog {
             btn_cancel = new JButton("Annuler");
 
     public InterlocuteurDialog(JFrame parent, String title, boolean modal, int id) {
-        super(parent, title);
+        super(parent, title, modal);
         this.setSize(650, 500);
         this.setLocationRelativeTo(null);
         this.inter_id = id;
