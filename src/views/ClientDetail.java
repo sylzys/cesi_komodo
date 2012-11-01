@@ -363,6 +363,7 @@ public class ClientDetail extends KContainer {
         InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, id);
         System.out.println("SHOWING INTER ID "+ id);
         getInterlocuteurInfos interInfos = interd.showZDialog(id);
-        JOptionPane jop = new JOptionPane();
+        //JOptionPane jop = new JOptionPane();
+        ClientDetail cd = new ClientDetail(cli_id);
     }
 }

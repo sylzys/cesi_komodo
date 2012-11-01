@@ -9,6 +9,10 @@ import models.Client;
 import models.Commande;
 import models.Interlocuteur;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.classic.Session;
 
 public class InterlocuteurInstance {
 
@@ -16,6 +20,7 @@ public class InterlocuteurInstance {
     private List<Interlocuteur> inter;
     private String where;
     private Hashtable h;
+    private Session session;
 
     /**
      * Constructeur prive
@@ -86,12 +91,37 @@ public class InterlocuteurInstance {
             }
             //on met le resultat dans la liste renvoyée
             this.inter = query.list();
-           
+
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public synchronized void insererEnBaseDeDonnées(Interlocuteur inter) {
+        Transaction tx = null;
+
+        try
+        {
+//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
+//            session = sessionFactory.openSession();
+//            tx = session.beginTransaction();
+            tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+//			  Utilisateur uti = new Utilisateur();
+//			  .setUtiid(10);
+//			  uti.setUtinom("test");
+            //session.update(inter);
+            HibernateConnection.getSession().update(inter); 
+            tx.commit();
+            System.out.println("Done");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
