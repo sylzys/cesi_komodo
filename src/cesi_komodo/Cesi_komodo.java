@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Client;
+import models.Interlocuteur;
 //import org.hibernate.cfg.AnnotationConfiguration;
 /**
  *
@@ -31,22 +32,22 @@ public class Cesi_komodo {
         thread.start();
         fenetre.getInstance();
         
-//        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
+        /****** EXEMPLE SELECT AVEC CLAUSE WHERE *****************/
 //        try 
 //        {
-//            Query query = HibernateConnection.getSession().createQuery("from Utilisateur where utiid = :utiid");
-//            query.setParameter("utiid", 1);
-//            List<Utilisateur> userlist = query.list();
-//            for (Utilisateur uti : userlist) 
+//            Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
+//            query.setParameter("interid", 1);
+//            List<Interlocuteur> interlist = query.list();
+//            for (Interlocuteur inter : interlist) 
 //            {
-//                System.out.println("Name : " + uti.getUtinom());
-//                System.out.println("Prénom : " + uti.getUtiprenom());
-//                System.out.println("Login : " + uti.getUtilogin());
-//                System.out.println("MDP : " + uti.getUtimdp());
-//                System.out.println("Mail : " + uti.getUtimail());
-//                System.out.println("Tél : " + uti.getUtitel());
-//                System.out.println("Supprimé ? : " + uti.getUtisuppr());
-//                System.out.println("Date de conenxion : " + uti.getUtidtelog());
+//                System.out.println("Name : " + inter.getInternom());
+////                System.out.println("Prénom : " + uti.getUtiprenom());
+////                System.out.println("Login : " + uti.getUtilogin());
+////                System.out.println("MDP : " + uti.getUtimdp());
+////                System.out.println("Mail : " + uti.getUtimail());
+////                System.out.println("Tél : " + uti.getUtitel());
+////                System.out.println("Supprimé ? : " + uti.getUtisuppr());
+////                System.out.println("Date de conenxion : " + uti.getUtidtelog());
 //            }
 //        }
 //        catch(Exception e)
@@ -71,7 +72,8 @@ public class Cesi_komodo {
 //            if(HibernateConnection.online == false)
 //            {
 //                  Synchro writereq = new Synchro();
-//                  writereq.SaveReq("INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)");
+//                  //Requete en sql + id de l'interlocuteur (interid) si client concerné sinon mettre -1
+//                  writereq.SaveReq("UPDATE FROM commande WHERE utiid = 1", 1);
 //            }
 //        }
 //        catch(HibernateException | IOException e)

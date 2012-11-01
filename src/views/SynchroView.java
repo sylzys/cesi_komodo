@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -42,6 +43,7 @@ public class SynchroView extends KContainer {
         JPanel center = new JPanel();
         JPanel titre = new JPanel();
         JPanel pnlbtn = new JPanel();
+        JCheckBox chkreq = new JCheckBox();
         JButton button = new JButton("Synchroniser"); 
         JLabel lblSynchro = new JLabel(new ImageIcon("ressources/images/synchro.png"));
         Synchro sync = new Synchro();        
@@ -55,21 +57,13 @@ public class SynchroView extends KContainer {
             StringTokenizer strtok = new StringTokenizer(fic, "||");
             while (strtok.hasMoreTokens()) {
                 req = strtok.nextToken();
-                libreq = req.substring(0,6);
-                if("INSERT".equals(libreq))
-                {
-                    libreq = "Ajout";
-                }
-                else
-                {
-                    libreq = "Mise à jour" ;
-                } 
-                if(req.indexOf("client") != -1)
-                {
-                    String table = "Client";
-                    //String name[] = req.split("VALUES('");
-                    //clinom = name[];
-                }
+                String[] inter = req.split("interlocuteur:");
+                int interid = Integer.parseInt(inter[1]);
+                String[] action = sync.readReq(req, interid);
+                
+                System.out.println(action[0]);
+                System.out.println(action[1]);
+                System.out.println(action[2] + "-----");
             }        
             title.setPreferredSize(new Dimension(420,100)); 
             title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=green>Sélectionnez "
@@ -81,6 +75,7 @@ public class SynchroView extends KContainer {
             center.setBackground(Color.white);
             center.setLayout(new BorderLayout());
             center.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+            center.add(chkreq,BorderLayout.CENTER);
             pnlbtn.setBackground(Color.white);
             pnlbtn.add(button, BorderLayout.CENTER);
             pnlbtn.add(lblSynchro, BorderLayout.EAST);

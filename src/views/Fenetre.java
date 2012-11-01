@@ -344,7 +344,6 @@ public class Fenetre extends JFrame {
         {
             instance = new Fenetre();
         }
-        //System.out.println("INSTANCE :"+instance);
         return instance;
     }
     public void progBar()
