@@ -28,10 +28,10 @@ public class DemandelistModel extends AbstractTableModel {
     public DemandelistModel() {
         super();
         DetailDmdInstance DmdInstance = DetailDmdInstance.getInstance();
-        System.out.println("in model");
+        System.out.println("in model list");
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
-        demandes = DmdInstance.GetDetaildemande("cliid",1, h);
+        demandes = DmdInstance.GetDetaildemande("cliid", 1, h);
     }
 
     @Override

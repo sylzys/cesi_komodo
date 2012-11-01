@@ -75,8 +75,7 @@ public class DemandeDetail extends KContainer {
         listeDmd.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
         
         listeDmd.setLayout(new BoxLayout(listeDmd, BoxLayout.LINE_AXIS));
-        listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
-        content.add(listeDmd);
+       
         //detail commandes, panneau de droite
         detailDmd.setBackground(Color.green);
         detailDmd.setLayout(new BoxLayout(detailDmd, BoxLayout.Y_AXIS));
@@ -110,6 +109,9 @@ public class DemandeDetail extends KContainer {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+         listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
+        content.add(listeDmd);
         
         bottom_right.add(comm, gbc);
         detailDmd.add(top_right);
