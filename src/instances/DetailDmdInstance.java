@@ -78,10 +78,9 @@ public class DetailDmdInstance {
 //            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
 //            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
 //            query.setParameter("utiid", 1);
-            System.out.println(sql);
               Query query = connection.getSession().createQuery(sql);
-              System.out.println(sql);
               query.setParameter(clause, where);
+              //System.out.println(query);
               System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {

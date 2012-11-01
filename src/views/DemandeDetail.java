@@ -85,8 +85,8 @@ public class DemandeDetail extends KContainer {
         //get cmd-detail from DB
         DetailDmdInstance DetailDdeInstance = DetailDmdInstance.getInstance();
         Hashtable h = new Hashtable();
-        h.put("demandeid", 2);
-        dd = DetailDdeInstance.GetDetaildemande("demandeid",2, h);
+        h.put("demandeid", demande_id);
+        dd = DetailDdeInstance.GetDetaildemande("demandeid",demande_id, h);
 
         top_right.setLayout(new FlowLayout());
         top_right.add(new JLabel("<html><b>> Demande n°" + dd.get(0).getDemandeid() + "</b><br />Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtinom() + " le " +dd.get(0).getSuivdosdate() + "</html>"));
