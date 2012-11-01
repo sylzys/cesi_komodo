@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import models.Client;
 import models.Devis;
 import org.hibernate.Query;
 
@@ -36,7 +37,7 @@ public class DevisInstance {
         return instance;
     }
 
-    public synchronized List<Devis> Getdeviss(String where, Hashtable h) {
+    public synchronized List<Devis> Getdevis(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();

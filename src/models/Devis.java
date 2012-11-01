@@ -9,7 +9,7 @@ public class Devis {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int deviid;
+    private int devid;
 
     @Column(name="devetat", columnDefinition="VARCHAR(50)", nullable=true)
     private String devetat ;
@@ -23,14 +23,19 @@ public class Devis {
     
     @Column(name="devsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean devsuppr ;
+    
+    @Column(name="deviid", columnDefinition="INTEGER", nullable=true)
+    private int deviid ;
 
-    public int getDeviid() {
-        return deviid;
+    public int getDevid() {
+        return devid;
     }
 
-    public void setDeviid(int deviid) {
-        this.deviid = deviid;
+    public void setDevid(int devid) {
+        this.devid = devid;
     }
+
+    
 
     public String getDevetat() {
         return devetat;
@@ -63,5 +68,15 @@ public class Devis {
     public void setDevsuppr(boolean devsuppr) {
         this.devsuppr = devsuppr;
     }
+
+    public int getDeviid() {
+        return deviid;
+    }
+
+    public void setDeviid(int deviid) {
+        this.deviid = deviid;
+    }
+    
+    
 }
 
