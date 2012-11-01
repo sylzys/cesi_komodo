@@ -27,11 +27,11 @@ public class DevislistModel extends AbstractTableModel {
 
     public DevislistModel() {
         super();
-        DevisInstance DevisInstance = DevisInstance.getInstance();
+        DevisInstance DvsInstance = DevisInstance.getInstance();
         System.out.println("in model list");
         Hashtable h = new Hashtable();
         h.put("devid", 2);
-        devis = DevisInstance.Getdevis("devid", h);
+        devis = DvsInstance.Getdevis("devid", h);
     }
 
     @Override
