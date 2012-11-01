@@ -130,6 +130,11 @@ public class Synchro {
     
     public String[] readReq(String req, int interid)
     {
+        nameclient = "";
+        table = ""; 
+        libreq = "";
+        name = null;
+        decTable = null;
         libreq = req.substring(0,6);
         if("INSERT".equals(libreq))
         {

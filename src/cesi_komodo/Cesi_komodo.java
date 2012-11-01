@@ -73,7 +73,7 @@ public class Cesi_komodo {
 //            {
 //                  Synchro writereq = new Synchro();
 //                  //Requete en sql + id de l'interlocuteur (interid) si client concerné sinon mettre -1
-//                  writereq.SaveReq("UPDATE FROM commande WHERE utiid = 1", 1);
+//                  writereq.SaveReq("UPDATE commande SET cometat=80 WHERE utiid = 1", 1);
 //            }
 //        }
 //        catch(HibernateException | IOException e)

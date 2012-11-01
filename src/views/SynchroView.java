@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Rectangle;
 import java.util.StringTokenizer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import org.jdesktop.swingx.auth.JAASLoginService;
@@ -44,6 +46,7 @@ public class SynchroView extends KContainer {
     void initPanel() {
         JPanel content = new JPanel();
         JPanel center = new JPanel();
+        JScrollPane scroll = new JScrollPane(center);
         JPanel titre = new JPanel();
         JPanel pnlbtn = new JPanel();
         JButton button = new JButton("Synchroniser"); 
@@ -53,10 +56,10 @@ public class SynchroView extends KContainer {
         titre.add(title, BorderLayout.CENTER);
         content.setBackground(Color.white);
         content.setLayout(new BorderLayout());
-        center.setPreferredSize(new Dimension(800, 500));
         center.setBackground(Color.white);
         center.setLayout(new BorderLayout());
-        center.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+        scroll.setPreferredSize(new Dimension(800,500));
+        center.scrollRectToVisible(new Rectangle(0,center.getHeight(),10,10));
         if(sync.emptyFic() == true)
         {      
             FlowLayout flchk1 = new FlowLayout();
@@ -103,16 +106,17 @@ public class SynchroView extends KContainer {
                 lbltable.setBorder(new EmptyBorder(0, 10, 0, 0));
                 lblaction.setBorder(new EmptyBorder(0, 10, 0, 0));
                 chkbox.setBorder(new EmptyBorder(0, 10, 0, 0));
-                chkbox.setPreferredSize(new Dimension(100, 50));
-                lblclient.setPreferredSize(new Dimension(180, 50));
-                lbltable.setPreferredSize(new Dimension(150, 50));
-                lblaction.setPreferredSize(new Dimension(300, 50));
+                chkbox.setPreferredSize(new Dimension(100, 35));
+                lblclient.setPreferredSize(new Dimension(180, 35));
+                lbltable.setPreferredSize(new Dimension(150, 35));
+                lblaction.setPreferredSize(new Dimension(300, 35));
                 center.setLayout(flchk);
                 center.add(chkbox);
                 center.add(lblclient);
                 center.add(lbltable);
                 center.add(lblaction);
             }
+            center.setPreferredSize(new Dimension(750, 50 + (40 * i)));
             title.setPreferredSize(new Dimension(420,100)); 
             title.setText("<html><center><h2>Synchronisation de la base de données</h2><br><p color=green>Sélectionnez "
                     + "les actions à sauvegarder dans la base de données en ligne</p></center></html>");
@@ -123,7 +127,7 @@ public class SynchroView extends KContainer {
             pnlbtn.add(button, BorderLayout.CENTER);
             pnlbtn.add(lblSynchro, BorderLayout.EAST);
             content.add(titre, BorderLayout.NORTH);
-            content.add(center,BorderLayout.CENTER);  
+            content.add(scroll,BorderLayout.CENTER);  
             content.add(pnlbtn, BorderLayout.SOUTH);
         }
         else
