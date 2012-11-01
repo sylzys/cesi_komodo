@@ -364,6 +364,15 @@ public class ClientDetail extends KContainer {
         System.out.println("SHOWING INTER ID "+ id);
         getInterlocuteurInfos interInfos = interd.showZDialog(id);
         //JOptionPane jop = new JOptionPane();
-        ClientDetail cd = new ClientDetail(cli_id);
+       
+        if(HibernateConnection.online == false)
+            {         
+                HibernateConnection.newConnect(false);
+            }
+            else
+            {
+                HibernateConnection.newConnect(true);
+            } 
+         ClientDetail cd = new ClientDetail(cli_id);
     }
 }
