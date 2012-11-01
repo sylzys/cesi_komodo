@@ -203,8 +203,6 @@ public class InterlocuteurDialog extends JDialog {
             }
             else
             {
-                JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, "Submitted, will save the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
                 for (Interlocuteur in : inter)
                 {
                     in.setInternom(nom.getText());
@@ -227,8 +225,6 @@ public class InterlocuteurDialog extends JDialog {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane jop = new JOptionPane();
-            jop.showMessageDialog(null, "Cancelled, will reset the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
             for (Interlocuteur in : inter)
             {
                 nom.setText(in.getInternom());
