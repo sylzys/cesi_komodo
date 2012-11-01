@@ -25,17 +25,18 @@ public class InterlocuteurDialog extends JDialog {
     private JTextField tel;
     private JTextField fax;
     private JTextField mail;
-    private int inter_id;
+    private int inter_id, cli_id;
     private InterlocuteurInstance interInstance;
     private List<Interlocuteur> inter;
     private JButton btn_modif = new JButton("Modifier"),
             btn_cancel = new JButton("Annuler");
 
     public InterlocuteurDialog(JFrame parent, String title, boolean modal, int id) {
-        super(parent, title, modal);
+        super(parent, title);
         this.setSize(650, 500);
         this.setLocationRelativeTo(null);
         this.inter_id = id;
+        //this.cli_id = cli_id;
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.initComponent();
@@ -204,6 +205,15 @@ public class InterlocuteurDialog extends JDialog {
             {
                 JOptionPane jop = new JOptionPane();
                 jop.showMessageDialog(null, "Submitted, will save the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
+                for (Interlocuteur in : inter)
+                {
+                    in.setInternom(nom.getText());
+                    in.setInterprenom(prenom.getText());
+                    in.setIntertel(tel.getText());
+                    //in.setInter(nom.getText());
+                    in.setIntermail(mail.getText());
+                    interInstance.insererEnBaseDeDonnées(in);
+                }
                 disable_all();
                 btn_modif.setText("Modifier");
             }
@@ -219,7 +229,15 @@ public class InterlocuteurDialog extends JDialog {
         public void actionPerformed(ActionEvent e) {
             JOptionPane jop = new JOptionPane();
             jop.showMessageDialog(null, "Cancelled, will reset the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
-            disable_all();
+            for (Interlocuteur in : inter)
+            {
+                nom.setText(in.getInternom());
+                prenom.setText(in.getInterprenom());
+                tel.setText(in.getIntertel());
+                fax.setText(in.getIntertel());
+                mail.setText(in.getIntermail());
+                disable_all();
+            }
             btn_modif.setText("Modifier");
         }
     }
