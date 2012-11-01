@@ -16,6 +16,7 @@ import models.ModelesTables;
 import tableModels.ClientModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
+import tableModels.DemandelistModel;
 import views.ClientDetail;
 import views.CommandeDetail;
 import views.DemandeDetail;
@@ -45,6 +46,10 @@ public class TableDispatcher extends JPanel {
                 break;
             case DEMANDE:
                 model = new DemandeModel();
+                System.out.println("GETTINGMODEL");
+                break;
+            case DEMANDELIST:
+                model = new DemandelistModel();
                 System.out.println("GETTINGMODEL");
                 break;
         }
@@ -86,6 +91,10 @@ System.out.println("Here?");
                         case DEMANDE:
                             System.out.println("GETTIN DBL CLIC DEMANDE");
                             DemandeDetail dmd = new DemandeDetail((Integer) tm.getValueAt(row, 999));
+                            break;
+                        case DEMANDELIST:
+                            System.out.println("GETTIN DBL CLIC DEMANDELIST");
+                            DemandeDetail dmdlist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
               }
           }

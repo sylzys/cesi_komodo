@@ -9,5 +9,5 @@ package models;
  * @author sylv
  */
 public enum ModelesTables {
-    CLIENT, COMMANDE, DEMANDE;
+    CLIENT, COMMANDE, DEMANDE, DEMANDELIST;
 }
