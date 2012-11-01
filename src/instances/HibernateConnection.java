@@ -88,12 +88,8 @@ public class HibernateConnection {
 		if(instance == null)
 		{			
 			instance = new HibernateConnection();
-                        System.out.println("hibernate1");
 		}
                 //On renvoie l'instance
-                
-                        System.out.println("hibernate2");
-                        System.out.println(instance);
 		return instance;
 	}
         

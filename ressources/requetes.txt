@@ -1,1 +1,1 @@
-INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)||INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)||INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)||
+INSERT INTO client (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)interlocuteur:1||INSERT INTO commande (clinom, utiid, uti_utiid) VALUES ('new', 1, 1)interlocuteur:1||DELETE FROM commande WHERE utiid= 1interlocuteur:1||UPDATE commande SET utiid = 1 WHERE utisuppr = falseinterlocuteur:1||UPDATE commande SET cometat = 100 WHERE utiid = 1interlocuteur:1||

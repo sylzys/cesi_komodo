@@ -2,14 +2,18 @@ package views;
 
 import controllers.getInterlocuteurInfos;
 import controllers.getLoginInfos;
+import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import models.Interlocuteur;
 
 public class InterlocuteurDialog extends JDialog {
 
@@ -21,39 +25,45 @@ public class InterlocuteurDialog extends JDialog {
     private JTextField tel;
     private JTextField fax;
     private JTextField mail;
+    private int inter_id;
+    private InterlocuteurInstance interInstance;
+    private List<Interlocuteur> inter;
+    private JButton btn_modif = new JButton("Modifier"),
+            btn_cancel = new JButton("Annuler");
 
-    public InterlocuteurDialog(JFrame parent, String title, boolean modal) {
+    public InterlocuteurDialog(JFrame parent, String title, boolean modal, int id) {
         super(parent, title, modal);
-        this.setSize(550, 270);
+        this.setSize(650, 500);
         this.setLocationRelativeTo(null);
+        this.inter_id = id;
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.initComponent();
     }
 
-    public getInterlocuteurInfos showZDialog() {
+    public getInterlocuteurInfos showZDialog(int id) {
         this.sendData = false;
         this.setVisible(true);
         return this.zInfo;
     }
 
     private void initComponent() {
-    
+
         JPanel panInfos = new JPanel();
         panInfos.setBackground(Color.white);
-        panInfos.setPreferredSize(new Dimension(620, 500));
+        panInfos.setPreferredSize(new Dimension(620, 600));
         panInfos.setLayout(new BoxLayout(panInfos, BoxLayout.Y_AXIS));
         panInfos.setBorder(BorderFactory.createLineBorder(Color.black));
         nom = new JTextField();
-        nom.setPreferredSize(new Dimension(450, 25));
+        nom.setPreferredSize(new Dimension(250, 25));
         prenom = new JTextField();
         prenom.setPreferredSize(new Dimension(250, 25));
         tel = new JTextField();
-        tel.setPreferredSize(new Dimension(450, 25));
+        tel.setPreferredSize(new Dimension(250, 25));
         fax = new JTextField();
-        fax.setPreferredSize(new Dimension(450, 25));
+        fax.setPreferredSize(new Dimension(250, 25));
         mail = new JTextField();
-        mail.setPreferredSize(new Dimension(450, 25));
+        mail.setPreferredSize(new Dimension(250, 25));
         // panInfos.setBorder(new EmptyBorder(60, 60, 60, 60) );
         panInfos.setBorder(BorderFactory.createTitledBorder("Informations interlocuteur"));
         JPanel name = new JPanel();
@@ -61,36 +71,46 @@ public class InterlocuteurDialog extends JDialog {
         name.setBackground(Color.white);
         name.add(new JLabel("Nom :"));
         name.add(nom);
-        
+
         JPanel firstname = new JPanel();
         firstname.setBackground(Color.white);
         firstname.setLayout(new FlowLayout());
         firstname.add(new JLabel("Prénom :"));
-        name.add(prenom);
-        
+        firstname.add(prenom);
+
         JPanel phone = new JPanel();
         phone.setLayout(new FlowLayout());
         phone.setBackground(Color.white);
         phone.add(new JLabel("Tel :"));
         phone.add(tel);
-        
+
         JPanel Fax = new JPanel();
         Fax.setLayout(new FlowLayout());
         Fax.setBackground(Color.white);
         Fax.add(new JLabel("Fax :"));
         Fax.add(fax);
-        
+
         JPanel email = new JPanel();
         email.setLayout(new FlowLayout());
         email.setBackground(Color.white);
         email.add(new JLabel("Email :"));
         email.add(mail);
-        
+
+        JPanel modif = new JPanel();
+        modif.setLayout(new FlowLayout());
+        modif.setBackground(Color.white);
+
+        btn_modif.addActionListener(new modifListener());
+        btn_cancel.addActionListener(new cancelListener());
+        modif.add(btn_modif);
+        modif.add(btn_cancel);
+        btn_cancel.setEnabled(false);
         panInfos.add(name);
         panInfos.add(firstname);
         panInfos.add(phone);
         panInfos.add(Fax);
         panInfos.add(email);
+        panInfos.add(modif);
 
 
         JPanel content = new JPanel();
@@ -102,18 +122,30 @@ public class InterlocuteurDialog extends JDialog {
 
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
-
+        //recupere infos BDD
+        System.out.println("DIALOG SHOWING INTER ID " + inter_id);
+        interInstance = InterlocuteurInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("interid", inter_id);
+        inter = interInstance.GetInterlocuteurs("where interid = :interid", h);
+        for (Interlocuteur in : inter)
+        {
+            nom.setText(in.getInternom());
+            prenom.setText(in.getInterprenom());
+            tel.setText(in.getIntertel());
+            fax.setText(in.getIntertel());
+            mail.setText(in.getIntermail());
+            disable_all();
+        }
         okBouton.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent arg0) {
-               // zInfo = new getInterlocuteurInfos(login.getText(), pass.getText());
+                // zInfo = new getInterlocuteurInfos(login.getText(), pass.getText());
                 setVisible(false);
             }
         });
 
         JButton cancelBouton = new JButton("Annuler");
         cancelBouton.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent arg0) {
                 setVisible(false);
             }
@@ -124,5 +156,71 @@ public class InterlocuteurDialog extends JDialog {
 
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
+    }
+
+    private void disable_all() {
+        nom.setDisabledTextColor(Color.black);
+        nom.setEnabled(false);
+        prenom.setDisabledTextColor(Color.black);
+        prenom.setEnabled(false);
+        tel.setDisabledTextColor(Color.black);
+        tel.setEnabled(false);
+        fax.setDisabledTextColor(Color.black);
+        fax.setEnabled(false);
+        mail.setDisabledTextColor(Color.black);
+        mail.setEnabled(false);
+        btn_cancel.setEnabled(false);
+    }
+
+    private void enable_all() {
+        nom.setDisabledTextColor(Color.black);
+        nom.setEnabled(true);
+        prenom.setDisabledTextColor(Color.black);
+        prenom.setEnabled(true);
+        tel.setDisabledTextColor(Color.black);
+        tel.setEnabled(true);
+        fax.setDisabledTextColor(Color.black);
+        fax.setEnabled(true);
+        mail.setDisabledTextColor(Color.black);
+        mail.setEnabled(true);
+        btn_cancel.setEnabled(true);
+    }
+
+    private class modifListener implements ActionListener {
+
+        public modifListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String buttonText = ((JButton) e.getSource()).getText();
+            System.out.println("Button is : " + buttonText);
+            if ("Modifier".equals(buttonText))
+            {
+                enable_all();
+                btn_modif.setText("Valider");
+            }
+            else
+            {
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "Submitted, will save the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
+                disable_all();
+                btn_modif.setText("Modifier");
+            }
+        }
+    }
+
+    private class cancelListener implements ActionListener {
+
+        public cancelListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane jop = new JOptionPane();
+            jop.showMessageDialog(null, "Cancelled, will reset the infos", "infos", JOptionPane.INFORMATION_MESSAGE);
+            disable_all();
+            btn_modif.setText("Modifier");
+        }
     }
 }

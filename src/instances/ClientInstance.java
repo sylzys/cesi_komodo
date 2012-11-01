@@ -109,7 +109,7 @@ public class ClientInstance {
             if(HibernateConnection.online == false)
             {
                   Synchro writereq = new Synchro();
-                  writereq.SaveReq("INSERT INTO client (clinom) VALUES ('"+ this.client.getClinom() +"')");
+                  writereq.SaveReq("INSERT INTO client (clinom) VALUES ('"+ this.client.getClinom() +"')", -1);
             }
         }
         catch(HibernateException | IOException e)

@@ -17,8 +17,12 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import org.jdesktop.swingx.auth.JAASLoginService;
 
 /**
  *
@@ -49,38 +53,72 @@ public class SynchroView extends KContainer {
         titre.add(title, BorderLayout.CENTER);
         content.setBackground(Color.white);
         content.setLayout(new BorderLayout());
+        center.setPreferredSize(new Dimension(800, 500));
+        center.setBackground(Color.white);
+        center.setLayout(new BorderLayout());
+        center.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
         if(sync.emptyFic() == true)
         {      
+            FlowLayout flchk1 = new FlowLayout();
+            JCheckBox chkbox1 = new JCheckBox();
+            JLabel lbl1 = new JLabel("<html><p color=blue>CLIENT</p></html>");
+            JLabel lbl2 = new JLabel("<html><p color=blue>TABLE</p></html>");
+            JLabel lbl3 = new JLabel("<html><p color=blue>ACTION</p></html>");
+            lbl1.setBorder(new EmptyBorder(0, 10, 0, 0));
+            lbl2.setBorder(new EmptyBorder(0, 10, 0, 0));
+            lbl3.setBorder(new EmptyBorder(0, 10, 0, 0));
+            chkbox1.setBorder(new EmptyBorder(0, 10, 0, 0));
+            chkbox1.setBackground(Color.lightGray);
+            lbl1.setOpaque(true);
+            lbl1.setBackground(Color.lightGray);
+            lbl2.setOpaque(true);
+            lbl2.setBackground(Color.lightGray);
+            lbl3.setOpaque(true);
+            lbl3.setBackground(Color.lightGray);
+            chkbox1.setPreferredSize(new Dimension(100, 20));
+            lbl1.setPreferredSize(new Dimension(180, 20));
+            lbl2.setPreferredSize(new Dimension(150, 20));
+            lbl3.setPreferredSize(new Dimension(300, 20));
+            center.setLayout(flchk1);
+            center.add(chkbox1);
+            center.add(lbl1);
+            center.add(lbl2);
+            center.add(lbl3);
             fic = sync.readFic();
             StringTokenizer strtok = new StringTokenizer(fic, "||");
+            int i = 0;
             while (strtok.hasMoreTokens()) {
+                i = i + 1;
                 req = strtok.nextToken();
-                libreq = req.substring(0,6);
-                if("INSERT".equals(libreq))
-                {
-                    libreq = "Ajout";
-                }
-                else
-                {
-                    libreq = "Mise à jour" ;
-                } 
-                if(req.indexOf("client") != -1)
-                {
-                    String table = "Client";
-                    //String name[] = req.split("VALUES('");
-                    //clinom = name[];
-                }
-            }        
+                String[] inter = req.split("interlocuteur:");
+                int interid = Integer.parseInt(inter[1]);
+                String[] action = sync.readReq(req, interid);
+                FlowLayout flchk = new FlowLayout();
+                JCheckBox chkbox = new JCheckBox();
+                JLabel lblclient = new JLabel(action[0]);
+                JLabel lbltable = new JLabel(action[1].toUpperCase());
+                JLabel lblaction = new JLabel(action[2]);
+                chkbox.setBackground(Color.white);
+                lblclient.setBorder(new EmptyBorder(0, 10, 0, 0));
+                lbltable.setBorder(new EmptyBorder(0, 10, 0, 0));
+                lblaction.setBorder(new EmptyBorder(0, 10, 0, 0));
+                chkbox.setBorder(new EmptyBorder(0, 10, 0, 0));
+                chkbox.setPreferredSize(new Dimension(100, 50));
+                lblclient.setPreferredSize(new Dimension(180, 50));
+                lbltable.setPreferredSize(new Dimension(150, 50));
+                lblaction.setPreferredSize(new Dimension(300, 50));
+                center.setLayout(flchk);
+                center.add(chkbox);
+                center.add(lblclient);
+                center.add(lbltable);
+                center.add(lblaction);
+            }
             title.setPreferredSize(new Dimension(420,100)); 
-            title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=green>Sélectionnez "
-                    + "les actions à sauvegarder dans la base de données en ligne</p><center></html>");
+            title.setText("<html><center><h2>Synchronisation de la base de données</h2><br><p color=green>Sélectionnez "
+                    + "les actions à sauvegarder dans la base de données en ligne</p></center></html>");
             lblSynchro.setVisible(false);
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            button.setPreferredSize(new Dimension(120,35));
-            center.setPreferredSize(new Dimension(800, 500));
-            center.setBackground(Color.white);
-            center.setLayout(new BorderLayout());
-            center.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
+            button.setPreferredSize(new Dimension(120,35));          
             pnlbtn.setBackground(Color.white);
             pnlbtn.add(button, BorderLayout.CENTER);
             pnlbtn.add(lblSynchro, BorderLayout.EAST);

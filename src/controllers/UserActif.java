@@ -29,7 +29,7 @@ public class UserActif {
     public UserActif(String login, String pass) {
         this.login = login;
         this.pass = pass;
-        System.out.println("New user: " + this.login + "/" + this.pass);
+        //System.out.println("New user: " + this.login + "/" + this.pass);
     }
 
     public boolean verify(String pass) {

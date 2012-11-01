@@ -22,8 +22,11 @@ import org.hibernate.cfg.Configuration;
 import views.Fenetre;
 import java.util.*;
 import javax.swing.JFrame;
+import models.Client;
 import models.Commande;
+import models.Interlocuteur;
 import views.ProgressBarAtt;
+import java.util.List;
 
 /**
  *
@@ -34,6 +37,10 @@ public class Synchro {
     private String lib;
     private String libreq;
     private String req;
+    private String table;
+    private String[] name;
+    private String[] decTable;
+    private String nameclient;
     public boolean InitConnect()
     {
             try {
@@ -51,12 +58,12 @@ public class Synchro {
         sessionFactory.close();
         return true;
     }
-    public void SaveReq(String req) throws IOException
+    public void SaveReq(String req, int interid) throws IOException
     {
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
            BufferedWriter bw = new BufferedWriter(fichier);
-           bw.write(req + "||");
+           bw.write(req + "interlocuteur:" + interid + "||");
            bw.close();
         } catch(IOException e) {
            System.out.println(e);
@@ -119,5 +126,87 @@ public class Synchro {
             System.out.println("Erreur --" + ioe.toString());
         }
         return req;
+    }
+    
+    public String[] readReq(String req, int interid)
+    {
+        libreq = req.substring(0,6);
+        if("INSERT".equals(libreq))
+        {
+            libreq = "Ajout"; 
+            name = req.split("INSERT INTO");
+            table = name[1];
+            decTable = table.split("\\(");
+            table = decTable[0].replaceAll(" ", "");
+        }
+        else
+        {
+            if(req.indexOf("suppr") != -1)
+            {
+                name = req.split("UPDATE");
+                table = name[1];
+                decTable = table.split("SET");
+                table = decTable[0].replaceAll(" ", "");
+                libreq = "Supression";
+            }
+            else if("DELETE".equals(libreq))
+            {
+                name = req.split("FROM");
+                table = name[1];
+                decTable = table.split("WHERE");
+                table = decTable[0].replaceAll(" ", "");
+                libreq = "Supression";
+            }
+            else
+            {
+                name = req.split("UPDATE");
+                table = name[1];
+                decTable = table.split("SET");
+                table = decTable[0].replaceAll(" ", "");
+                libreq = "Mise à jour" ;
+            }    
+        } 
+        if(interid != -1 && table.equals("client") == false)
+        {
+            int clientid = 0;
+            try 
+            {
+                Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
+                query.setParameter("interid", 1);
+                List<Interlocuteur> interlist = query.list();
+                for (Interlocuteur inter : interlist) 
+                {
+                    clientid = inter.getCliid();
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+            try 
+            {
+                Query query = HibernateConnection.getSession().createQuery("from Client where cliid = :cliid");
+                query.setParameter("cliid", clientid);
+                List<Client> clilist = query.list();
+                for (Client client : clilist) 
+                {
+                    nameclient = client.getClinom();
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println(e.getMessage());
+            }  
+        }
+        else if(table.equals("client") == true)
+        {
+            nameclient = "Client en cours concerné";
+        }
+        else
+        {
+            nameclient = "Aucun client concerné"; 
+        }
+        String action[] = {nameclient, table, libreq};
+        return action;
     }
 }
