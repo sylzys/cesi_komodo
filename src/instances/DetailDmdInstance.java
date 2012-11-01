@@ -12,7 +12,8 @@ public class DetailDmdInstance {
 
     private static DetailDmdInstance instance;
     private List<DetailDmd> clients;
-    private String where;
+    private int where;
+    private String clause;
     private Hashtable h;
 
     /**
@@ -37,8 +38,10 @@ public class DetailDmdInstance {
     }
 
     
-      public List<DetailDmd> GetDetaildemande(String where, Hashtable h) {
-         this.where = where;
+      public List<DetailDmd> GetDetaildemande(String clause, int demandeid, Hashtable h) {
+          this.where = 0;
+         this.where = demandeid;
+         this.clause = clause;
         this.h = h;
         System.out.println("CHARGER DPS BDD"+h+" --- "+where);
         chargerDepuisBaseDeDonnees();
@@ -65,9 +68,9 @@ public class DetailDmdInstance {
         HibernateConnection connection = HibernateConnection.getInstance();
         System.out.println("INSTANCE OK");        
         String sql = " from detailsdemande ";
-        if (!where.isEmpty())
+        if (where != 0)
         {
-            sql += where;
+            sql += "where "+clause+"= :"+clause;
         }
 
         try
@@ -78,7 +81,7 @@ public class DetailDmdInstance {
             System.out.println(sql);
               Query query = connection.getSession().createQuery(sql);
               System.out.println(sql);
-         //     query.setParameter("demandeid", where);
+              query.setParameter(clause, where);
               System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {

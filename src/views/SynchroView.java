@@ -7,6 +7,7 @@ package views;
 import classes.LinkLabelData;
 import controllers.Synchro;
 import controllers.UserActif;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -24,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import org.hibernate.Hibernate;
+import org.hibernate.tool.hbm2x.HibernateConfigurationExporter;
 import org.jdesktop.swingx.auth.JAASLoginService;
 
 /**
@@ -60,7 +63,14 @@ public class SynchroView extends KContainer {
         center.setLayout(new BorderLayout());
         scroll.setPreferredSize(new Dimension(800,500));
         center.scrollRectToVisible(new Rectangle(0,center.getHeight(),10,10));
-        if(sync.emptyFic() == true)
+        if(HibernateConnection.online == false)
+        {
+            title.setPreferredSize(new Dimension(350,100));
+            title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=red>"
+                    + "Vous ne pouvez pas synchroniser hors ligne</p><center></html>");
+            content.add(titre, BorderLayout.NORTH);
+        }
+        else if(sync.emptyFic() == true)
         {      
             FlowLayout flchk1 = new FlowLayout();
             JCheckBox chkbox1 = new JCheckBox();

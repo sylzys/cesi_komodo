@@ -31,7 +31,7 @@ public class DemandelistModel extends AbstractTableModel {
         System.out.println("in model");
         Hashtable h = new Hashtable();
         h.put("cliid", 1);
-        demandes = DmdInstance.GetDetaildemande("where cliid = :cliid", h);
+        demandes = DmdInstance.GetDetaildemande("cliid",1, h);
     }
 
     @Override
