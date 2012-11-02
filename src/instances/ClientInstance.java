@@ -67,31 +67,43 @@ public class ClientInstance {
             clients.clear();
         }
 
-        HibernateConnection connection = HibernateConnection.getInstance();
+       // HibernateConnection connection = HibernateConnection.getInstance();
         String sql = "from Client ";
         if (!where.isEmpty())
         {
             sql += where;
         }
 
-        try
-        {
-            Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
+//        try
+//        {
+            //Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
             //query.setParameter("utiid", 1);
-            if (!h.isEmpty())
-            {
-                 System.out.println("got parameters");
-                Set<String> set = h.keySet();
-                Iterator<String> itr = set.iterator();
-                while (itr.hasNext())
-                {
-                    String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
-                    query.setParameter(str, h.get(str));
-                    System.out.println("setting params");
-                }
-            }
-            System.out.println("QUERY : " +query.toString());
+            try
+        {
+            if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }   
+           Transaction tx = HibernateConnection.getSession().beginTransaction();
+            Query query = HibernateConnection.getSession().createQuery("from Client where cliid = 1");
+//            if (!h.isEmpty())
+//            {
+//                 System.out.println("got parameters");
+//                Set<String> set = h.keySet();
+//                Iterator<String> itr = set.iterator();
+//                while (itr.hasNext())
+//                {
+//                    String str = itr.next();
+//                    System.out.println(str + ": " + h.get(str));
+//                    query.setParameter(str, h.get(str));
+//                    System.out.println("setting params");
+//                }
+//            }
+            System.out.println("QUERY : " +query.getQueryString());// query.toString());
             this.clients = query.list();
         }
         catch (Exception e)

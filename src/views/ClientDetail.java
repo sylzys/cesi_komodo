@@ -97,215 +97,216 @@ public class ClientDetail extends KContainer {
         content.setLayout(new BorderLayout());
         content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
-        
+
         //DB CONNECTION
-//        HibernateConnection connection = HibernateConnection.getInstance();
-//        try
-//        {
-//            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
-//            query.setParameter("cliid", cli_id);
-//            //  query.setParameter("utiid", this.user.getId());
-//            cli = (Client) query.uniqueResult();
-//            
-//            System.out.println("CLIENT USED : " +cli);
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println(e.getMessage());
-//        }//END DB CONNECTION
-        ClientInstance ci = ClientInstance.getInstance();
-        Hashtable h = new Hashtable();
-        h.put("cliid", cli_id);
-        //récupère la liste.
-        ci.GetClients("where cliid = :cliid", h);;
-        top.setBackground(Color.white);
-        top.setLayout(new BorderLayout());
-
-        cliInfos.setBackground(Color.white);
-        cliDetail.setPreferredSize(new Dimension(780, 150));
-
-        //ajout des Listeners sur les boutons
-        addContact.addActionListener(new addContactListener());
-        validateCmd.addActionListener(new validateCmdListener());
-        validateDmd.addActionListener(new validateDmdListener());
-        newDemand.addActionListener(new newDmdListener());
-        //adresse, contacts raison sociale etc
-
-        cliDetail.setBackground(Color.white);
-        cliDetail.setLayout(new BorderLayout());
-        cliInfos.setLayout(new FlowLayout(0, 50, 0));
-
-        //adresse
-        JPanel cliAddr = new JPanel();
-        cliAddr.setBackground(Color.white);
-        JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
-                + cli.getClicp() + "<br>"
-                + cli.getCliville() + "<br>"
-                + cli.getClipays() + "</html>");
-        cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
-        cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-        cliAddr.add(addr);
-        cliInfos.add(cliAddr);
-
-        //contacts
-        JPanel cliContact = new JPanel();
-        cliContact.setBackground(Color.white);
-        JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
-                + cli.getClifax() + "<br>Mail: "
-                + cli.getClimail() + "<br>Web Site: "
-                + cli.getClisite() + "</html>");
-        cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
-        cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-        cliContact.add(contact);
-        cliInfos.add(cliContact);
-
-        //raison sociale
-        JPanel cliRS = new JPanel();
-        cliRS.setBackground(Color.white);
-        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
-                + cli.getCliactivite() + "<br>SIRET: "
-                + cli.getClisiret() + "<br>CA: "
-                + Integer.toString(cli.getClica()) + "</html>");
-        cliRS.add(RS);
-        cliInfos.add(cliRS);
-
-        //Boutons contact
-
-        cliButtons.setBackground(Color.white);
-        cliButtons.setLayout(new FlowLayout());
-        cliButtons.add(new JLabel("Contacts : "));
-        interInstance = InterlocuteurInstance.getInstance();
-        Hashtable hh = new Hashtable();
-        h.put("cliid", cli_id);
-        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
-        for (Interlocuteur in : inter)
+        HibernateConnection connection = HibernateConnection.getInstance();
+        try
         {
-            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
-            LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
-            LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
+            query.setParameter("cliid", cli_id);
+            //  query.setParameter("utiid", this.user.getId());
+            cli = (Client) query.uniqueResult();
 
-            LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    getInterId(evt);
-                }
-
-                private void getInterId(MouseEvent evt) {
-                    LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
-                    showInterlocuteur(lbl_tmp.getId());
-                }
-            });
-            cliButtons.add(LblCmd);
-            cliButtons.add(Box.createHorizontalStrut(5));
+            System.out.println("CLIENT USED : " + cli);
         }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+//        }//END DB CONNECTION
+            ClientInstance ci = ClientInstance.getInstance();
+            Hashtable h = new Hashtable();
+            h.put("cliid", cli_id);
+            //récupère la liste.
+            ci.GetClients("where cliid = :cliid", h);;
+            top.setBackground(Color.white);
+            top.setLayout(new BorderLayout());
+
+            cliInfos.setBackground(Color.white);
+            cliDetail.setPreferredSize(new Dimension(780, 150));
+
+            //ajout des Listeners sur les boutons
+            addContact.addActionListener(new addContactListener());
+            validateCmd.addActionListener(new validateCmdListener());
+            validateDmd.addActionListener(new validateDmdListener());
+            newDemand.addActionListener(new newDmdListener());
+            //adresse, contacts raison sociale etc
+
+            cliDetail.setBackground(Color.white);
+            cliDetail.setLayout(new BorderLayout());
+            cliInfos.setLayout(new FlowLayout(0, 50, 0));
+
+            //adresse
+            JPanel cliAddr = new JPanel();
+            cliAddr.setBackground(Color.white);
+            JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
+                    + cli.getClicp() + "<br>"
+                    + cli.getCliville() + "<br>"
+                    + cli.getClipays() + "</html>");
+            cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
+            cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+            cliAddr.add(addr);
+            cliInfos.add(cliAddr);
+
+            //contacts
+            JPanel cliContact = new JPanel();
+            cliContact.setBackground(Color.white);
+            JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
+                    + cli.getClifax() + "<br>Mail: "
+                    + cli.getClimail() + "<br>Web Site: "
+                    + cli.getClisite() + "</html>");
+            cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
+            cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+            cliContact.add(contact);
+            cliInfos.add(cliContact);
+
+            //raison sociale
+            JPanel cliRS = new JPanel();
+            cliRS.setBackground(Color.white);
+            JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
+                    + cli.getCliactivite() + "<br>SIRET: "
+                    + cli.getClisiret() + "<br>CA: "
+                    + Integer.toString(cli.getClica()) + "</html>");
+            cliRS.add(RS);
+            cliInfos.add(cliRS);
+
+            //Boutons contact
+
+            cliButtons.setBackground(Color.white);
+            cliButtons.setLayout(new FlowLayout());
+            cliButtons.add(new JLabel("Contacts : "));
+            interInstance = InterlocuteurInstance.getInstance();
+            Hashtable hh = new Hashtable();
+            hh.put("cliid", cli_id);
+            inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
+            for (Interlocuteur in : inter)
+            {
+                System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
+                LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
+                LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+
+                LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        getInterId(evt);
+                    }
+
+                    private void getInterId(MouseEvent evt) {
+                        LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+                        showInterlocuteur(lbl_tmp.getId());
+                    }
+                });
+                cliButtons.add(LblCmd);
+                cliButtons.add(Box.createHorizontalStrut(5));
+            }
 //        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
 //        LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
 
-        cliButtons.add(addContact);
+            cliButtons.add(addContact);
 
 
-        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
+            cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
-        //Panneau des combos box
-        comboPanel.setBackground(Color.white);
-        comboPanel.setLayout(new BorderLayout());
-        comboPanel.add(newDemand, BorderLayout.NORTH);
+            //Panneau des combos box
+            comboPanel.setBackground(Color.white);
+            comboPanel.setLayout(new BorderLayout());
+            comboPanel.add(newDemand, BorderLayout.NORTH);
 
-        //ComboBox demandes
-        JPanel comboDmd_panel = new JPanel();
-        comboDmd_panel.setBackground(Color.white);
-        comboDmd_panel.setLayout(new FlowLayout());
+            //ComboBox demandes
+            JPanel comboDmd_panel = new JPanel();
+            comboDmd_panel.setBackground(Color.white);
+            comboDmd_panel.setLayout(new FlowLayout());
 
-        //get detail demande
-        DemandeInstance dd = DemandeInstance.getInstance();
-        Hashtable hhh = new Hashtable();
-        hh.put("cliid", 1);
-        demande = dd.GetDemandes("where cliid = :cliid", hhh);
+            //get detail demande
+            DemandeInstance dd = DemandeInstance.getInstance();
+            Hashtable hhh = new Hashtable();
+            hhh.put("cliid", 1);
+            demande = dd.GetDemandes("where cliid = :cliid", hhh);
 
-        cb_demande.addItem("Demandes");
-        for (Demande dddd : demande)
-        {
-            System.out.println("Etat : " + dddd.getDemandeetat());
-            cb_demande.addItem((dddd.getDemandeid()));
+            cb_demande.addItem("Demandes");
+            for (Demande dddd : demande)
+            {
+                System.out.println("Etat : " + dddd.getDemandeetat());
+                cb_demande.addItem((dddd.getDemandeid()));
+            }
+
+            comboDmd_panel.add(cb_demande);
+            comboDmd_panel.add(validateDmd);
+
+            //Combobox commandes
+            JPanel comboCmd_panel = new JPanel();
+            comboCmd_panel.setBackground(Color.white);
+            comboCmd_panel.setLayout(new FlowLayout());
+
+            //get detail cde
+            DetailCdeInstance dc = DetailCdeInstance.getInstance();
+            Hashtable hhhh = new Hashtable();
+            hhhh.put("cliid", 1);
+            detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
+
+            cb_commande.addItem("Commandes");
+            for (DetailCommande dcc : detail)
+            {
+                System.out.println("Name : " + dcc.getInternom());
+                System.out.println("Prénom : " + dcc.getInteprenom());
+                System.out.println("Prix : " + dcc.getComprix());
+                System.out.println("Etat : " + dcc.getCometat());
+                System.out.println("date ?  : " + dcc.getComdate());
+                cb_commande.addItem(dcc.getComid());
+            }
+
+            comboCmd_panel.add(cb_commande);
+            comboCmd_panel.add(validateCmd);
+
+            //ajout des combobox a droite
+            comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
+            comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
+
+            //ajout des panels au JPanel principal
+            top.add(comboPanel, BorderLayout.EAST);
+            cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
+            cliDetail.add(cliInfos, BorderLayout.CENTER);
+            cliDetail.add(cliButtons, BorderLayout.SOUTH);
+            top.add(cliDetail, BorderLayout.WEST);
+            content.add(top, BorderLayout.NORTH);
+
+            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+
+            //JPanel pour accordeons
+
+            //suivi satisfaction
+            JPanel suivi_satisfaction = new JPanel();
+            suivi_satisfaction.setBackground(Color.white);
+            suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
+            suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
+            bottom.add(suivi_satisfaction);
+            bottom.add(Box.createVerticalStrut(10));
+
+            //alertes
+            JPanel alertes = new JPanel();
+            alertes.setBackground(Color.white);
+            alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
+            alertes.setPreferredSize(new Dimension(120, 50));
+            bottom.add(alertes);
+            bottom.add(Box.createVerticalStrut(10));
+
+            //Reporting
+            JPanel reporting = new JPanel();
+            reporting.setBackground(Color.white);
+            reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
+            reporting.setPreferredSize(new Dimension(120, 50));
+            bottom.add(reporting);
+            bottom.add(Box.createVerticalStrut(10));
+
+            content.add(bottom, BorderLayout.CENTER);
+
+
+            //refresh de la fenetre
+
+            fen.conteneur.setVisible(false);
+            fen.RenewContener(this.getPanel());
+            fen.conteneur.setVisible(true);
         }
-
-        comboDmd_panel.add(cb_demande);
-        comboDmd_panel.add(validateDmd);
-
-        //Combobox commandes
-        JPanel comboCmd_panel = new JPanel();
-        comboCmd_panel.setBackground(Color.white);
-        comboCmd_panel.setLayout(new FlowLayout());
-
-        //get detail cde
-        DetailCdeInstance dc = DetailCdeInstance.getInstance();
-        Hashtable hhhh = new Hashtable();
-        hhh.put("cliid", 1);
-        detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
-
-        cb_commande.addItem("Commandes");
-        for (DetailCommande dcc : detail)
-        {
-            System.out.println("Name : " + dcc.getInternom());
-            System.out.println("Prénom : " + dcc.getInteprenom());
-            System.out.println("Prix : " + dcc.getComprix());
-            System.out.println("Etat : " + dcc.getCometat());
-            System.out.println("date ?  : " + dcc.getComdate());
-            cb_commande.addItem(dcc.getComid());
-        }
-
-        comboCmd_panel.add(cb_commande);
-        comboCmd_panel.add(validateCmd);
-
-        //ajout des combobox a droite
-        comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
-        comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
-
-        //ajout des panels au JPanel principal
-        top.add(comboPanel, BorderLayout.EAST);
-        cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
-        cliDetail.add(cliInfos, BorderLayout.CENTER);
-        cliDetail.add(cliButtons, BorderLayout.SOUTH);
-        top.add(cliDetail, BorderLayout.WEST);
-        content.add(top, BorderLayout.NORTH);
-
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
-
-        //JPanel pour accordeons
-
-        //suivi satisfaction
-        JPanel suivi_satisfaction = new JPanel();
-        suivi_satisfaction.setBackground(Color.white);
-        suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-        suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
-        bottom.add(suivi_satisfaction);
-        bottom.add(Box.createVerticalStrut(10));
-
-        //alertes
-        JPanel alertes = new JPanel();
-        alertes.setBackground(Color.white);
-        alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
-        alertes.setPreferredSize(new Dimension(120, 50));
-        bottom.add(alertes);
-        bottom.add(Box.createVerticalStrut(10));
-
-        //Reporting
-        JPanel reporting = new JPanel();
-        reporting.setBackground(Color.white);
-        reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
-        reporting.setPreferredSize(new Dimension(120, 50));
-        bottom.add(reporting);
-        bottom.add(Box.createVerticalStrut(10));
-
-        content.add(bottom, BorderLayout.CENTER);
-
-
-        //refresh de la fenetre
-
-        fen.conteneur.setVisible(false);
-        fen.RenewContener(this.getPanel());
-        fen.conteneur.setVisible(true);
     }
 
     private class addContactListener implements ActionListener {
@@ -361,7 +362,7 @@ public class ClientDetail extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
             NouvelleDemande nd = new NouvelleDemande(user);
-              fen.RenewContener(nd.getPanel());
+            fen.RenewContener(nd.getPanel());
         }
     }
 

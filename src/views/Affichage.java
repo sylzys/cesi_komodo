@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import models.Client;
 import instances.HibernateConnection;
+import instances.clientCommInstance;
 import models.ClientComm;
 import models.ModelesTables;
 import models.Utilisateur;
@@ -61,17 +62,18 @@ public class Affichage extends KContainer {
         this.panel.add(content);
     }
     private void getCompanyList(){
-        
-       HibernateConnection connection = HibernateConnection.getInstance();
-        try {
-                Query query = connection.getSession().createQuery("from Client_comm where utiid = :utiid");
-                //query.setParameter("utiid", 1);
-                query.setParameter("utiid", this.user.getId());
-               this.liste = query.list();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
+        clientCommInstance cci = clientCommInstance.getInstance();
+        this.liste = cci.GetClients("", null);
+//       HibernateConnection connection = HibernateConnection.getInstance();
+//        try {
+//                Query query = connection.getSession().createQuery("from Client_comm where utiid = :utiid");
+//                //query.setParameter("utiid", 1);
+//                query.setParameter("utiid", this.user.getId());
+//               this.liste = query.list();
+//        }catch(Exception e){
+           System.out.println("OK, GOT COMPANY LIST");
+//        }
+   }
        
 }
 

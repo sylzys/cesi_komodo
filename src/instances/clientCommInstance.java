@@ -73,6 +73,7 @@ public class clientCommInstance {
 
         try
         {
+            
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
             //query.setParameter("utiid", 1);
             if (!h.isEmpty())
