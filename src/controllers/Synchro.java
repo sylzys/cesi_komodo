@@ -58,12 +58,19 @@ public class Synchro {
         sessionFactory.close();
         return true;
     }
-    public void SaveReq(String req, int interid) throws IOException
+    public void SaveReq(String req, int interid, String nomclient) throws IOException
     {
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
            BufferedWriter bw = new BufferedWriter(fichier);
-           bw.write(req + "interlocuteur:" + interid + "||");
+           if(!nomclient.equals(""))
+           {
+               bw.write(req + "client:" + nomclient + "||");
+           }
+           else
+           {
+               bw.write(req + "interlocuteur:" + interid + "||");
+           }
            bw.close();
         } catch(IOException e) {
            System.out.println(e);
@@ -128,7 +135,7 @@ public class Synchro {
         return req;
     }
     
-    public String[] readReq(String req, int interid)
+    public String[] readReq(String req, int interid, String nomclient)
     {
         nameclient = "";
         table = ""; 
@@ -205,7 +212,7 @@ public class Synchro {
         }
         else if(table.equals("client") == true)
         {
-            nameclient = "Client en cours concerné";
+            nameclient = nomclient;
         }
         else
         {
