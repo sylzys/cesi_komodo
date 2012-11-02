@@ -72,6 +72,10 @@ public class TableDispatcher extends JPanel {
         table.setFillsViewportHeight(true);
         
         
+<<<<<<< .merge_file_W5Vycp
+=======
+        
+>>>>>>> .merge_file_yehrra
         switch (mt)
         {
             case CLIENT:
