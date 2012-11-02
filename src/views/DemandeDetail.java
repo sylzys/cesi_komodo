@@ -116,7 +116,9 @@ public class DemandeDetail extends KContainer {
         jLabel5.setText("<html><h1><b>> Demande n°" + dd.get(0).getDemandeid() + "</b></h1><small>Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtinom() + " le " +dd.get(0).getSuivdosdate() + "</small></html>");
         jLabel5.setPreferredSize(new Dimension(250, 100));
         top_right.add(jLabel5);
-        top_right.add(new JButton("Retour à la société"));
+        JButton retour = new JButton("Retour à la société");
+        retour.addActionListener(new DemandeDetail.RetourListenerDmd());
+        top_right.add(retour);
         JPanel ab5 = new JPanel();
         ab5.setLayout(new BoxLayout(ab5, BoxLayout.LINE_AXIS));
         ab5.setPreferredSize(new Dimension(400,30));
@@ -198,9 +200,9 @@ public class DemandeDetail extends KContainer {
         this.panel.add(content);
     }
 
-    private static class RetourListener implements ActionListener {
+    private static class RetourListenerDmd implements ActionListener {
 
-        public RetourListener() {
+        public RetourListenerDmd() {
         }
 
         @Override
