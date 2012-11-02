@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import models.Demande;
@@ -18,7 +19,7 @@ import tableModels.ClientCommModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
-import tableModels.DevislistModel;
+import tableModels.DevisModel;
 import views.ClientDetail;
 import views.CommandeDetail;
 import views.DemandeDetail;
@@ -50,8 +51,8 @@ public class TableDispatcher extends JPanel {
                 model = new DemandeModel();
                 System.out.println("GETTINGMODEL");
                 break;
-            case DEVISLIST:
-                model = new DevislistModel();
+            case DEVIS:
+                model = new DevisModel();
                 System.out.println("GETTINGMODEL");
                 break;
             case DEMANDELIST:
@@ -69,7 +70,67 @@ public class TableDispatcher extends JPanel {
         table.setRowSorter(sorter);
         table.setPreferredScrollableViewportSize(new Dimension(500, 270));
         table.setFillsViewportHeight(true);
-
+        
+        
+        switch (mt)
+        {
+            case CLIENT:
+                break;
+            case COMMANDE:
+                break;
+            case DEMANDE:
+                break;
+            case DEVIS:
+                // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(320, 150));
+                // on definit l'index de la colonne et la largeur sohaitée
+                int colIndex = 0;
+                int colWidth = 80;
+                TableColumn col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                int colIndex2 = 1;
+                int colWidth2 = 120;
+                TableColumn col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                int colIndex3 = 2;
+                int colWidth3 = 80;
+                TableColumn col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                int colIndex4 = 3;
+                int colWidth4 = 40;
+                TableColumn col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
+                break;
+            case DEMANDELIST:
+                // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(320, 550));
+                // on definit l'index de la colonne et la largeur sohaitée
+                 colIndex = 0;
+                 colWidth = 80;
+                 col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                 colIndex2 = 1;
+                 colWidth2 = 120;
+                 col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                 colIndex3 = 2;
+                 colWidth3 = 80;
+                 col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
+                break;
+            
+        }
+        
+        
+        System.out.println("Or here?");
         //gestion du double click
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -104,7 +165,7 @@ public class TableDispatcher extends JPanel {
                             System.out.println("GETTIN DBL CLIC DEMANDELIST");
                             DemandeDetail dmdlist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
-                        case DEVISLIST:
+                        case DEVIS:
                             System.out.println("GETTIN DBL CLIC DEVISLIST");
                             DemandeDetail devislist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
@@ -128,6 +189,7 @@ public class TableDispatcher extends JPanel {
 
         //Create and set up the content pane.
         TableDispatcher cp = new TableDispatcher(mt);
+        
         cp.setOpaque(true); //content panes must be opaque
         frame.add(cp);
 
