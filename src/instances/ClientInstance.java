@@ -19,6 +19,7 @@ public class ClientInstance {
     private String where;
     private Hashtable h;
     private Client client;
+
     /**
      * Constructeur prive
      */
@@ -43,23 +44,26 @@ public class ClientInstance {
     public synchronized List<Client> GetClients(String where, Hashtable h) {
         this.where = where;
         this.h = h;
+        System.out.println("Loading from DB");
         chargerDepuisBaseDeDonnees();
         return clients;
     }
-    
-    public synchronized void setClient(Client cli) {      
-       this.client = cli;
+
+    public synchronized void setClient(Client cli) {
+        this.client = cli;
     }
 
-    private void chargerDepuisBaseDeDonnees() {
+    public void chargerDepuisBaseDeDonnees() {
 
         if (clients == null)
         {
             //return;
+            System.out.println("new client");
             clients = new ArrayList<Client>();
         }
         else
         {
+            System.out.println("clearing client");
             clients.clear();
         }
 
@@ -76,6 +80,7 @@ public class ClientInstance {
             //query.setParameter("utiid", 1);
             if (!h.isEmpty())
             {
+                 System.out.println("got parameters");
                 Set<String> set = h.keySet();
                 Iterator<String> itr = set.iterator();
                 while (itr.hasNext())
@@ -83,9 +88,10 @@ public class ClientInstance {
                     String str = itr.next();
                     System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
+                    System.out.println("setting params");
                 }
             }
-            
+            System.out.println("QUERY : " +query.toString());
             this.clients = query.list();
         }
         catch (Exception e)
@@ -94,25 +100,25 @@ public class ClientInstance {
         }
 
     }
-    
-    public void ajouterDansBaseDeDonnées(){
-            	try
-        {            
+
+    public void ajouterDansBaseDeDonnées() {
+        try
+        {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
             System.out.println("Nouvel enregistrement en cours d'insertion ...");
-            
+
             HibernateConnection.getSession().save(this.client);
-           // System.out.println(tx.wasCommitted());       
+            // System.out.println(tx.wasCommitted());       
             tx.commit();
             System.out.println("Insertion de l'enregistrement terminé");
             //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if(HibernateConnection.online == false)
+            if (HibernateConnection.online == false)
             {
-                  Synchro writereq = new Synchro();
-                  writereq.SaveReq("INSERT INTO client (clinom) VALUES ('"+ this.client.getClinom() +"')", -1, this.client.getClinom());
+                Synchro writereq = new Synchro();
+                writereq.SaveReq("INSERT INTO client (clinom) VALUES ('" + this.client.getClinom() + "')", -1, this.client.getClinom());
             }
         }
-        catch(HibernateException | IOException e)
+        catch (HibernateException | IOException e)
         {
             System.out.println(e.getMessage());
         }

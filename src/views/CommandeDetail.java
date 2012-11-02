@@ -67,7 +67,7 @@ public class CommandeDetail extends KContainer {
         //prépare une hashtable si besoin
         Hashtable h = new Hashtable();
         //le couple valeur/paramètre, à ne plus mettre en dur...
-        h.put("comid", 1);
+        h.put("comid", this.cmd_id);
         //récupère la liste.
         cd = CmdInstance.GetDetailcde("where comid = :comid", h);
 

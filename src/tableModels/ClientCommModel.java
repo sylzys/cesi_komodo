@@ -5,31 +5,33 @@
 package tableModels;
 
 import instances.ClientInstance;
+import instances.clientCommInstance;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Client;
+import models.ClientComm;
 
 /**
  *
  * @author sylv
  */
-public class ClientModel extends AbstractTableModel {
+public class ClientCommModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
         "Nom", "Créateur", "Date de création"
     };
     
-    private List<Client> clients;
+    private List<ClientComm> clients;
 
-    public ClientModel() {
+    public ClientCommModel() {
         super();
-        ClientInstance CliInstance = ClientInstance.getInstance();
+        clientCommInstance CliCommInstance = clientCommInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("utiid", 1);
-        clients = CliInstance.GetClients("where utiid = :utiid", h);
+        clients = CliCommInstance.GetClients("where utiid = :utiid", h);
     }
 
     @Override
@@ -58,8 +60,8 @@ public class ClientModel extends AbstractTableModel {
                 return clients.get(rowIndex).getClinom();
 
             case 1:
-                System.out.println("Créateur:" + clients.get(rowIndex).getUti_utiid());
-                return clients.get(rowIndex).getUti_utiid();
+                System.out.println("Créateur:" + clients.get(rowIndex).getUtinom());
+                return clients.get(rowIndex).getUtiprenom() + " "+ clients.get(rowIndex).getUtinom() ;
 
             case 2:
                 System.out.println("Date:" + clients.get(rowIndex).getClidteadd());
@@ -88,7 +90,7 @@ public class ClientModel extends AbstractTableModel {
         }
     }
 
-    public List<Client> getClients() {
+    public List<ClientComm> getClients() {
         return clients;
     }
 }

@@ -16,6 +16,7 @@
   <property name="hibernate.hbm2ddl.auto">update</property>
   <mapping class="models.Utilisateur"/>
   <mapping class="models.Client"/>
+  <mapping class="models.ClientComm"/>
   <mapping class="models.Suivdossier"/>
   <mapping class="models.Demande"/>
   <mapping class="models.Devis"/>

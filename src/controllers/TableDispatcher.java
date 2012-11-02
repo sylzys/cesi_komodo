@@ -14,7 +14,7 @@ import javax.swing.table.TableRowSorter;
 import models.Demande;
 import models.Devis;
 import models.ModelesTables;
-import tableModels.ClientModel;
+import tableModels.ClientCommModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
@@ -41,7 +41,7 @@ public class TableDispatcher extends JPanel {
         switch (mt)
         {
             case CLIENT:
-                model = new ClientModel();
+                model = new ClientCommModel();
                 break;
             case COMMANDE:
                 model = new CommandeModel();
@@ -60,7 +60,7 @@ public class TableDispatcher extends JPanel {
                 break;
             
         }
-System.out.println("Here?");
+
         //on lie notre table à notre modèle générique
         final JTable table = new JTable(model);
         //tri des colonnes
@@ -69,7 +69,7 @@ System.out.println("Here?");
         table.setRowSorter(sorter);
         table.setPreferredScrollableViewportSize(new Dimension(500, 270));
         table.setFillsViewportHeight(true);
-        System.out.println("Or here?");
+
         //gestion du double click
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -90,6 +90,7 @@ System.out.println("Here?");
                     {
                         //on récupère la valeur correspondant au bon modèle
                         case CLIENT:
+                            System.out.println("GETTIN DBL CLIC CLIENT : " + tm.getValueAt(row, 999));
                             ClientDetail cd = new ClientDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case COMMANDE:

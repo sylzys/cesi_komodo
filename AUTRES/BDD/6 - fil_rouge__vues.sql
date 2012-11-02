@@ -19,9 +19,7 @@ CREATE OR REPLACE VIEW calcultempsnom AS
 SELECT c.comid, c.comqte, n.nomid, n.nomtemps FROM comnom c, nomenclature n WHERE c.nomid = n.nomid;
 
 CREATE OR REPLACE VIEW client_comm AS 
-SELECT c.cliid, c.utiid, c.clirais, c.clinom, c.cliadresse, c.clicp, c.cliville, c.clisuppr, u.utinom, u.utiprenom
-FROM client c, utilisateur u
-WHERE c.utiid = u.utiid;
+ SELECT c.cliid, c.utiid, c.clirais, c.clinom, c.clidteadd, C.cliacces, c.cliadresse, c.clicp, c.cliville, c.clisuppr, u.utinom, u.utiprenom FROM client c, utilisateur u WHERE c.utiid = u.utiid;
 
 CREATE OR REPLACE VIEW actctrl AS
 SELECT c.ctrlid, p.profid, c.ctrlnom, c.ctrllib, a.actionid, a.actionnom, a.actionlib FROM profil as p, controller as c, action as a, profaction as s WHERE p.profid=s.profid AND a.actionid = s.actionid AND a.ctrlid = c.ctrlid AND c.ctrlsuppr = false AND a.actionsuppr = false;

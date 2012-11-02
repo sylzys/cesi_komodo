@@ -93,26 +93,31 @@ public class ClientDetail extends KContainer {
 //                cb_commande = new JComboBox();
 
 
-        Client cli = null;
+        Client cli = new Client();
         content.setLayout(new BorderLayout());
         content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
-
+        
         //DB CONNECTION
-        HibernateConnection connection = HibernateConnection.getInstance();
-        try
-        {
-            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
-            query.setParameter("cliid", cli_id);
-            //  query.setParameter("utiid", this.user.getId());
-            cli = (Client) query.uniqueResult();
-            System.out.println(cli);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }//END DB CONNECTION
-
+//        HibernateConnection connection = HibernateConnection.getInstance();
+//        try
+//        {
+//            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
+//            query.setParameter("cliid", cli_id);
+//            //  query.setParameter("utiid", this.user.getId());
+//            cli = (Client) query.uniqueResult();
+//            
+//            System.out.println("CLIENT USED : " +cli);
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }//END DB CONNECTION
+        ClientInstance ci = ClientInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", cli_id);
+        //récupère la liste.
+        ci.GetClients("where cliid = :cliid", h);;
         top.setBackground(Color.white);
         top.setLayout(new BorderLayout());
 
@@ -170,9 +175,9 @@ public class ClientDetail extends KContainer {
         cliButtons.setLayout(new FlowLayout());
         cliButtons.add(new JLabel("Contacts : "));
         interInstance = InterlocuteurInstance.getInstance();
-        Hashtable h = new Hashtable();
+        Hashtable hh = new Hashtable();
         h.put("cliid", cli_id);
-        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", h);
+        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
         for (Interlocuteur in : inter)
         {
             System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
@@ -214,9 +219,9 @@ public class ClientDetail extends KContainer {
 
         //get detail demande
         DemandeInstance dd = DemandeInstance.getInstance();
-        Hashtable hh = new Hashtable();
+        Hashtable hhh = new Hashtable();
         hh.put("cliid", 1);
-        demande = dd.GetDemandes("where cliid = :cliid", hh);
+        demande = dd.GetDemandes("where cliid = :cliid", hhh);
 
         cb_demande.addItem("Demandes");
         for (Demande dddd : demande)
@@ -235,9 +240,9 @@ public class ClientDetail extends KContainer {
 
         //get detail cde
         DetailCdeInstance dc = DetailCdeInstance.getInstance();
-        Hashtable hhh = new Hashtable();
+        Hashtable hhhh = new Hashtable();
         hhh.put("cliid", 1);
-        detail = dc.GetDetailcde("where cliid = :cliid", hhh);
+        detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
 
         cb_commande.addItem("Commandes");
         for (DetailCommande dcc : detail)
@@ -310,18 +315,8 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            JOptionPane jop4 = new JOptionPane();
-//            jop4.showMessageDialog(null, "Ajout contact", "AddContact", JOptionPane.INFORMATION_MESSAGE);
             addInterlocuteur(cli_id);
-//            if(HibernateConnection.online == false)
-//            {         
-//                HibernateConnection.newConnect(false);
-//            }
-//            else
-//            {
-//                HibernateConnection.newConnect(true);
-//            } 
-//         ClientDetail cd = new ClientDetail(cli_id);
+
         }
     }
 
@@ -365,8 +360,8 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //NouvelleDemande nd = new NouvelleDemande(user);
-            //  fen.RenewContener(nd.getPanel());
+            NouvelleDemande nd = new NouvelleDemande(user);
+              fen.RenewContener(nd.getPanel());
         }
     }
 

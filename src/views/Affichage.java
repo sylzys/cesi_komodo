@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import models.Client;
 import instances.HibernateConnection;
+import models.ClientComm;
 import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;
@@ -27,7 +28,7 @@ import org.hibernate.Query;
  */
 public class Affichage extends KContainer {
     JLabel title = new JLabel ("PANNEAU AFFICHAGE");
-    public List<Client> liste;
+    public List<ClientComm> liste;
     
     public Affichage(UserActif user) {
     super();
@@ -44,13 +45,13 @@ public class Affichage extends KContainer {
         content.add(title, BorderLayout.CENTER);      
         
         getCompanyList();
-        for (Client cli : this.liste) 
-        {   
-            System.out.println("LISTING CLIENT");
-            System.out.println("Sté : " + cli.getClinom());
-            System.out.println("createur : " + cli.getUti_utiid());
-            System.out.println("createur : " + cli.getClidteadd());
-        }
+//        for (ClientComm cli : this.liste) 
+//        {   
+//            System.out.println("LISTING CLIENT");
+//            System.out.println("Sté : " + cli.getClinom());
+//            System.out.println("createur : " + cli.getUti_utiid());
+//            System.out.println("createur : " + cli.getClidteadd());
+//        }
         
         //show table
         
@@ -63,7 +64,7 @@ public class Affichage extends KContainer {
         
        HibernateConnection connection = HibernateConnection.getInstance();
         try {
-                Query query = connection.getSession().createQuery("from Client where utiid = :utiid");
+                Query query = connection.getSession().createQuery("from Client_comm where utiid = :utiid");
                 //query.setParameter("utiid", 1);
                 query.setParameter("utiid", this.user.getId());
                this.liste = query.list();
