@@ -160,10 +160,11 @@ public class DemandeDetail extends KContainer {
         Font f = new Font("Euphemia", Font.PLAIN, 14);
         JLabel comm = new JLabel("<html><b>Commentaires : </b><br />"+dd.get(0).getSuivdoscom()+"</html>");
         comm.setFont(f); 
+
 //        GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.weightx = 1.0;
 //        gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
         
          listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
         content.add(listeDmd);
