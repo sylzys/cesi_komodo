@@ -35,6 +35,7 @@ import models.DetailCommande;
 import models.Demande;
 import instances.HibernateConnection;
 import instances.InterlocuteurInstance;
+import java.awt.Button;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import models.CurrentDatas;
@@ -302,15 +303,25 @@ public class ClientDetail extends KContainer {
         fen.conteneur.setVisible(true);
     }
 
-    private static class addContactListener implements ActionListener {
+    private class addContactListener implements ActionListener {
 
         public addContactListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane jop4 = new JOptionPane();
-            jop4.showMessageDialog(null, "Ajout contact", "AddContact", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane jop4 = new JOptionPane();
+//            jop4.showMessageDialog(null, "Ajout contact", "AddContact", JOptionPane.INFORMATION_MESSAGE);
+            addInterlocuteur(cli_id);
+//            if(HibernateConnection.online == false)
+//            {         
+//                HibernateConnection.newConnect(false);
+//            }
+//            else
+//            {
+//                HibernateConnection.newConnect(true);
+//            } 
+//         ClientDetail cd = new ClientDetail(cli_id);
         }
     }
 
@@ -361,18 +372,50 @@ public class ClientDetail extends KContainer {
 
     private void showInterlocuteur(int id) {
         InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, id);
-        System.out.println("SHOWING INTER ID "+ id);
+        System.out.println("SHOWING INTER ID " + id);
         getInterlocuteurInfos interInfos = interd.showZDialog(id);
         //JOptionPane jop = new JOptionPane();
-       
-        if(HibernateConnection.online == false)
-            {         
+
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        ClientDetail cd = new ClientDetail(cli_id);
+    }
+
+    private void addInterlocuteur(int cli_id) {
+
+        addInterlocuteurDialog addInter = new addInterlocuteurDialog(null, "Ajouter un interlocuteur", true, cli_id);
+
+        getInterlocuteurInfos interInfos = addInter.showZDialog(cli_id);
+        // JOptionPane jop = new JOptionPane();
+        System.out.println(interInfos.toString());
+
+        if ("N/A" != interInfos.toString())
+        {
+            String[] infos = interInfos.toString().split("#-#");
+            System.out.println("add inter with cli_id : " + cli_id);
+            Interlocuteur i = new Interlocuteur();
+            i.setCliid(cli_id);
+            i.setInternom(infos[0]);
+            i.setInterprenom(infos[1]);
+            i.setIntertel(infos[2]);
+            i.setIntermail(infos[3]);
+            InterlocuteurInstance is = InterlocuteurInstance.getInstance();
+            is.insererEnBaseDeDonnées(i);
+            if (HibernateConnection.online == false)
+            {
                 HibernateConnection.newConnect(false);
             }
             else
             {
                 HibernateConnection.newConnect(true);
-            } 
-         ClientDetail cd = new ClientDetail(cli_id);
+            }
+            ClientDetail cd = new ClientDetail(cli_id);
+        }
     }
 }

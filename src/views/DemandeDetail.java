@@ -147,25 +147,30 @@ public class DemandeDetail extends KContainer {
         ab8.add(jLabel15);
         center_right.add(ab8);
         
-        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         
         bottom_right.setBackground(Color.white);
+        bottom_right.setLayout(new BorderLayout());
+       bottom_right.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
         bottom_right.setLayout(new GridBagLayout());
-   //     bottom_right.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
+    //    bottom_right.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
         
         Font f = new Font("Euphemia", Font.PLAIN, 14);
         JLabel comm = new JLabel("<html><b>Commentaires : </b><br />"+dd.get(0).getSuivdoscom()+"</html>");
         comm.setFont(f); 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.weightx = 1.0;
+//        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
         
          listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
         content.add(listeDmd);
         
         
         
-        bottom_right.add(comm, gbc);
+        bottom_right.add(comm);
         detailDmd.add(top_right);
         detailDmd.add(centertop_right);
         detailDmd.add((center_right));

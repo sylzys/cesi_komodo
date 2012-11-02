@@ -4,7 +4,6 @@
  */
 package views;
 
-import classes.LinkLabelData;
 import controllers.Synchro;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -15,20 +14,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.util.StringTokenizer;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import org.hibernate.Hibernate;
-import org.hibernate.tool.hbm2x.HibernateConfigurationExporter;
-import org.jdesktop.swingx.auth.JAASLoginService;
-
 /**
  *
  * @author sylv
@@ -89,6 +81,7 @@ public class SynchroView extends KContainer {
             lbl3.setOpaque(true);
             lbl3.setBackground(Color.lightGray);
             chkbox1.setPreferredSize(new Dimension(100, 20));
+            chkbox1.setSelected(true);
             lbl1.setPreferredSize(new Dimension(180, 20));
             lbl2.setPreferredSize(new Dimension(150, 20));
             lbl3.setPreferredSize(new Dimension(300, 20));
@@ -98,16 +91,31 @@ public class SynchroView extends KContainer {
             center.add(lbl2);
             center.add(lbl3);
             fic = sync.readFic();
+            String chkname = "";
             StringTokenizer strtok = new StringTokenizer(fic, "||");
             int i = 0;
             while (strtok.hasMoreTokens()) {
                 i = i + 1;
                 req = strtok.nextToken();
                 String[] inter = req.split("interlocuteur:");
-                int interid = Integer.parseInt(inter[1]);
-                String[] action = sync.readReq(req, interid);
+                int interid = -1;
+                if(inter.length > 1)
+                {
+                    chkname = i + ":" + inter[0];
+                    interid = Integer.parseInt(inter[1]);
+                }
+                String[] cli = req.split("client:");
+                String nomclient = "";
+                if(cli.length > 1)
+                {
+                    chkname = i + ":" + cli[0];
+                    nomclient = cli[1];
+                }
+                String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 JCheckBox chkbox = new JCheckBox();
+                chkbox.setName(chkname);
+                chkbox.setSelected(true);
                 JLabel lblclient = new JLabel(action[0]);
                 JLabel lbltable = new JLabel(action[1].toUpperCase());
                 JLabel lblaction = new JLabel(action[2]);

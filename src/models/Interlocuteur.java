@@ -9,16 +9,16 @@ public class Interlocuteur {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int interid;
+    private Integer interid;
 
     @Column(name="fourid", columnDefinition="INTEGER", nullable=true)
     private Integer fourid ;
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-    private int utiid ;
+    private Integer utiid ;
     
     @Column(name="cliid", columnDefinition="INTEGER", nullable=true)
-    private int cliid ;
+    private Integer cliid ;
     
     @Column(name="internom", columnDefinition="VARCHAR(50)", nullable=true)
     private String internom ;

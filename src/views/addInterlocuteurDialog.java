@@ -15,7 +15,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.Interlocuteur;
 
-public class InterlocuteurDialog extends JDialog {
+public class addInterlocuteurDialog extends JDialog {
 
     private getInterlocuteurInfos zInfo = new getInterlocuteurInfos();
     private boolean sendData;
@@ -31,7 +31,7 @@ public class InterlocuteurDialog extends JDialog {
     private JButton btn_modif = new JButton("Modifier"),
             btn_cancel = new JButton("Annuler");
 
-    public InterlocuteurDialog(JFrame parent, String title, boolean modal, int id) {
+    public addInterlocuteurDialog(JFrame parent, String title, boolean modal, int id) {
         super(parent, title, modal);
         this.setSize(650, 500);
         this.setLocationRelativeTo(null);
@@ -97,21 +97,20 @@ public class InterlocuteurDialog extends JDialog {
         email.add(new JLabel("Email :"));
         email.add(mail);
 
-        JPanel modif = new JPanel();
-        modif.setLayout(new FlowLayout());
-        modif.setBackground(Color.white);
+//        JPanel modif = new JPanel();
+//        modif.setLayout(new FlowLayout());
+//        modif.setBackground(Color.white);
 
-        btn_modif.addActionListener(new modifListener());
-        btn_cancel.addActionListener(new cancelListener());
-        modif.add(btn_modif);
-        modif.add(btn_cancel);
+//        btn_modif.addActionListener(new InterlocuteurDialog.modifListener());
+//        btn_cancel.addActionListener(new InterlocuteurDialog.cancelListener());
+//        modif.add(btn_modif);
+//        modif.add(btn_cancel);
         btn_cancel.setEnabled(false);
         panInfos.add(name);
         panInfos.add(firstname);
         panInfos.add(phone);
-        panInfos.add(Fax);
         panInfos.add(email);
-        panInfos.add(modif);
+        // panInfos.add(modif);
 
 
         JPanel content = new JPanel();
@@ -129,25 +128,26 @@ public class InterlocuteurDialog extends JDialog {
         Hashtable h = new Hashtable();
         h.put("interid", inter_id);
         inter = interInstance.GetInterlocuteurs("where interid = :interid", h);
-        for (Interlocuteur in : inter)
-        {
-            nom.setText(in.getInternom());
-            prenom.setText(in.getInterprenom());
-            tel.setText(in.getIntertel());
-            fax.setText(in.getIntertel());
-            mail.setText(in.getIntermail());
-            disable_all();
-        }
+
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                // zInfo = new getInterlocuteurInfos(login.getText(), pass.getText());
-                setVisible(false);
+                zInfo = new getInterlocuteurInfos(nom.getText(), prenom.getText(), tel.getText(), mail.getText());
+                if (!zInfo.is_ok())
+                {
+                    JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    addToDataBase();
+                    setVisible(false);
+                }
             }
         });
 
         JButton cancelBouton = new JButton("Annuler");
         cancelBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+                zInfo = new getInterlocuteurInfos();
                 setVisible(false);
             }
         });
@@ -186,55 +186,15 @@ public class InterlocuteurDialog extends JDialog {
         mail.setEnabled(true);
         btn_cancel.setEnabled(true);
     }
-
-    private class modifListener implements ActionListener {
-
-        public modifListener() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String buttonText = ((JButton) e.getSource()).getText();
-            System.out.println("Button is : " + buttonText);
-            if ("Modifier".equals(buttonText))
-            {
-                enable_all();
-                btn_modif.setText("Valider");
-            }
-            else
-            {
-                for (Interlocuteur in : inter)
-                {
-                    in.setInternom(nom.getText());
-                    in.setInterprenom(prenom.getText());
-                    in.setIntertel(tel.getText());
-                    //in.setInter(nom.getText());
-                    in.setIntermail(mail.getText());
-                    interInstance.updaterBaseDeDonnées(in);
-                }
-                disable_all();
-                btn_modif.setText("Modifier");
-            }
-        }
-    }
-
-    private class cancelListener implements ActionListener {
-
-        public cancelListener() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            for (Interlocuteur in : inter)
-            {
-                nom.setText(in.getInternom());
-                prenom.setText(in.getInterprenom());
-                tel.setText(in.getIntertel());
-                fax.setText(in.getIntertel());
-                mail.setText(in.getIntermail());
-                disable_all();
-            }
-            btn_modif.setText("Modifier");
-        }
+    
+    private void addToDataBase() {
+//        InterlocuteurInstance is = InterlocuteurInstance.getInstance();
+//        Interlocuteur i = new Interlocuteur();
+//        i.setCliid(cli_id);
+//        i.setInternom(nom.getText());
+//        i.setInterprenom(prenom.getText());
+//        i.setIntertel(tel.getText());
+//        i.setIntermail(mail.getText());
+//        is.insererEnBaseDeDonnées(i);
     }
 }

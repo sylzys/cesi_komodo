@@ -100,7 +100,7 @@ public class InterlocuteurInstance {
 
     }
 
-    public synchronized void insererEnBaseDeDonnées(Interlocuteur inter) {
+    public synchronized void updaterBaseDeDonnées(Interlocuteur inter) {
         Transaction tx = null;
 
         try
@@ -116,6 +116,25 @@ public class InterlocuteurInstance {
             //session.update(inter);
             HibernateConnection.getSession().update(inter); 
             tx.commit();
+            System.out.println("Done");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public synchronized void insererEnBaseDeDonnées(Interlocuteur inter) {
+        Transaction tx = null;
+        System.out.println("Inserting Record");
+        try
+        {
+            tx = HibernateConnection.getSession().beginTransaction();            
+
+           HibernateConnection.getSession().save(inter);
+           System.out.println("COMMIT : " + tx.wasCommitted());       
+           tx.commit();
             System.out.println("Done");
 
         }
