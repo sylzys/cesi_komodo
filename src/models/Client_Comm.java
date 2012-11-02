@@ -4,10 +4,11 @@ package models;
 import java.util.Date;
 import javax.persistence.*;
 @Entity(name="client_comm")
-public class ClientComm {
+public class Client_Comm {
 	
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="cliid")
     private int cliid;
 
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)

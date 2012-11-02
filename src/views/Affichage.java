@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 import models.Client;
 import instances.HibernateConnection;
 import instances.clientCommInstance;
-import models.ClientComm;
+import models.Client_Comm;
 import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;
@@ -29,7 +29,7 @@ import org.hibernate.Query;
  */
 public class Affichage extends KContainer {
     JLabel title = new JLabel ("PANNEAU AFFICHAGE");
-    public List<ClientComm> liste;
+    public List<Client_Comm> liste;
     
     public Affichage(UserActif user) {
     super();
@@ -46,7 +46,7 @@ public class Affichage extends KContainer {
         content.add(title, BorderLayout.CENTER);      
         
         getCompanyList();
-//        for (ClientComm cli : this.liste) 
+//        for (Client_Comm cli : this.liste) 
 //        {   
 //            System.out.println("LISTING CLIENT");
 //            System.out.println("Sté : " + cli.getClinom());

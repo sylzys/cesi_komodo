@@ -4,7 +4,7 @@ package models;
 import java.util.Date;
 import javax.persistence.*;
 @Entity
-@Table(name="client_comm")
+@Table(name="client")
 public class Client {
 	
     @Id

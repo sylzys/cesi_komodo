@@ -43,11 +43,7 @@ public class DetailCdeInstance {
         return clients;
     }
 
-    /**
-     * Bouchon.
-     *
-     * Dans un vrai programme, ces donnees seraient chargees depuis la base.
-     */
+    
     private void chargerDepuisBaseDeDonnees() {
 
         if (clients == null)

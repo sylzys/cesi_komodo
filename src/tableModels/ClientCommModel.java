@@ -11,7 +11,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Client;
-import models.ClientComm;
+import models.Client_Comm;
 
 /**
  *
@@ -24,7 +24,7 @@ public class ClientCommModel extends AbstractTableModel {
         "Nom", "Créateur", "Date de création"
     };
     
-    private List<ClientComm> clients;
+    private List<Client_Comm> clients;
 
     public ClientCommModel() {
         super();
@@ -90,7 +90,7 @@ public class ClientCommModel extends AbstractTableModel {
         }
     }
 
-    public List<ClientComm> getClients() {
+    public List<Client_Comm> getClients() {
         return clients;
     }
 }

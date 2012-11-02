@@ -62,6 +62,7 @@ public class ClientDetail extends KContainer {
     public ClientDetail(int id) {
         super();
         cli_id = id;
+        System.out.println("IN client detail");
         CurrentDatas cur = CurrentDatas.getInstance();
         cur.setSoc_id(cli_id);
         initPanel();
@@ -93,7 +94,7 @@ public class ClientDetail extends KContainer {
 //                cb_commande = new JComboBox();
 
 
-        Client cli = new Client();
+        Client cli = null;
         content.setLayout(new BorderLayout());
         content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
@@ -112,12 +113,12 @@ public class ClientDetail extends KContainer {
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-//        }//END DB CONNECTION
-            ClientInstance ci = ClientInstance.getInstance();
-            Hashtable h = new Hashtable();
-            h.put("cliid", cli_id);
-            //récupère la liste.
-            ci.GetClients("where cliid = :cliid", h);;
+        }//END DB CONNECTION
+//            ClientInstance ci = ClientInstance.getInstance();
+//            Hashtable h = new Hashtable();
+//            h.put("cliid", cli_id);
+//            //récupère la liste.
+//            cli.GetClients("where cliid = :cliid", h);
             top.setBackground(Color.white);
             top.setLayout(new BorderLayout());
 
@@ -302,11 +303,12 @@ public class ClientDetail extends KContainer {
 
 
             //refresh de la fenetre
+          //JOptionPane.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
 
             fen.conteneur.setVisible(false);
             fen.RenewContener(this.getPanel());
             fen.conteneur.setVisible(true);
-        }
+       // }
     }
 
     private class addContactListener implements ActionListener {

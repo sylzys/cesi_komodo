@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
-import models.ClientComm;
+import models.Client_Comm;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
 public class clientCommInstance {
 
     private static clientCommInstance instance;
-    private List<ClientComm> clients;
+    private List<Client_Comm> clients;
     private String where;
     private Hashtable h;
     private Client client;
@@ -41,7 +41,7 @@ public class clientCommInstance {
         return instance;
     }
 
-    public synchronized List<ClientComm> GetClients(String where, Hashtable h) {
+    public synchronized List<Client_Comm> GetClients(String where, Hashtable h) {
         this.where = where;
         this.h = h;
         chargerDepuisBaseDeDonnees();
@@ -57,7 +57,7 @@ public class clientCommInstance {
         if (clients == null)
         {
             //return;
-            clients = new ArrayList<ClientComm>();
+            clients = new ArrayList<Client_Comm>();
         }
         else
         {
