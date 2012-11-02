@@ -21,7 +21,7 @@ public class DevisModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Id Devis", "Créateur", "Date",  "Etat"
+        "Id Devis", "Etat", "Date",  "Prix"
     };
     private List<Devis> devis;
 
@@ -30,8 +30,8 @@ public class DevisModel extends AbstractTableModel {
         DevisInstance DvsInstance = DevisInstance.getInstance();
         System.out.println("in model list");
         Hashtable h = new Hashtable();
-        h.put("devid", 2);
-        devis = DvsInstance.Getdevis("devid", h);
+        h.put("deviid", 2);
+        devis = DvsInstance.Getdevis("where deviid = :deviid", h);
     }
 
     @Override

@@ -62,7 +62,7 @@ public class DevisInstance {
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from devis ";
+        String sql = "from Devis ";
         if (!where.isEmpty())
         {
             sql += where;
