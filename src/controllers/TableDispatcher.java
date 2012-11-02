@@ -71,11 +71,6 @@ public class TableDispatcher extends JPanel {
         table.setPreferredScrollableViewportSize(new Dimension(500, 270));
         table.setFillsViewportHeight(true);
         
-        
-<<<<<<< .merge_file_W5Vycp
-=======
-        
->>>>>>> .merge_file_yehrra
         switch (mt)
         {
             case CLIENT:
