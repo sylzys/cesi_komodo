@@ -19,7 +19,7 @@ import tableModels.ClientModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
-import tableModels.DevislistModel;
+import tableModels.DevisModel;
 import views.ClientDetail;
 import views.CommandeDetail;
 import views.DemandeDetail;
@@ -51,8 +51,8 @@ public class TableDispatcher extends JPanel {
                 model = new DemandeModel();
                 System.out.println("GETTINGMODEL");
                 break;
-            case DEVISLIST:
-                model = new DevislistModel();
+            case DEVIS:
+                model = new DevisModel();
                 System.out.println("GETTINGMODEL");
                 break;
             case DEMANDELIST:
@@ -81,13 +81,11 @@ System.out.println("Here?");
                 break;
             case DEMANDE:
                 break;
-            case DEVISLIST:
-                break;
-            case DEMANDELIST:
+            case DEVIS:
                 // Desactive la taille automatique des colonnes
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 // Fixe la dimension du tableau
-                table.setPreferredScrollableViewportSize(new Dimension(320, 550));
+                table.setPreferredScrollableViewportSize(new Dimension(320, 150));
                 // on definit l'index de la colonne et la largeur sohaitée
                 int colIndex = 0;
                 int colWidth = 80;
@@ -104,6 +102,29 @@ System.out.println("Here?");
                 int colIndex4 = 3;
                 int colWidth4 = 40;
                 TableColumn col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
+                break;
+            case DEMANDELIST:
+                // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(320, 550));
+                // on definit l'index de la colonne et la largeur sohaitée
+                 colIndex = 0;
+                 colWidth = 80;
+                 col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                 colIndex2 = 1;
+                 colWidth2 = 120;
+                 col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                 colIndex3 = 2;
+                 colWidth3 = 80;
+                 col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
                 col4.setPreferredWidth(colWidth4);
                 break;
             
@@ -144,7 +165,7 @@ System.out.println("Here?");
                             System.out.println("GETTIN DBL CLIC DEMANDELIST");
                             DemandeDetail dmdlist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
-                        case DEVISLIST:
+                        case DEVIS:
                             System.out.println("GETTIN DBL CLIC DEVISLIST");
                             DemandeDetail devislist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;

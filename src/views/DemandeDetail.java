@@ -62,7 +62,8 @@ public class DemandeDetail extends KContainer {
                 top_right = new JPanel(),
                 centertop_right = new JPanel(),
                 center_right = new JPanel(),
-                bottom_right = new JPanel();
+                bottom_right = new JPanel(),
+                bottom_bottom = new JPanel();
         JLabel jLabel4 = new javax.swing.JLabel();
     JLabel jLabel5 = new javax.swing.JLabel();
     JLabel jLabel6 = new javax.swing.JLabel();
@@ -75,8 +76,7 @@ public class DemandeDetail extends KContainer {
 
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
-         listeDmd.setPreferredSize(new Dimension(320, 550));
-        detailDmd.setPreferredSize(new Dimension(600, 750));
+        detailDmd.setPreferredSize(new Dimension(650, 750));
         detailDmd.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.DARK_GRAY));
         //  System.out.println("CMD-ID: "+this.demande_id);
         //title.setText("DETAIL COMMANDE "+ this.demande_id);
@@ -86,24 +86,33 @@ public class DemandeDetail extends KContainer {
          * fixer la largeur de la première colonne à 200 pixels
          */
         
-        
-        
         content.setBackground(Color.white);
-        listeDmd.setBackground(Color.white);
         top_right.setBackground(Color.white);
+        center_right.setBackground(Color.white);
+        listeDmd.setBackground(Color.white);
         listeDevis.setBackground(Color.white);
-        centertop_right.setBackground(Color.white);
-     //   listeDmd.setPreferredSize(new Dimension(500, 200));
+        right.setBackground(Color.white);
+        bottom_right.setBackground(Color.white);
+        detailDmd.setBackground(Color.white);
+        bottom_bottom.setBackground(Color.white);
+        
+        listeDevis.setPreferredSize(new Dimension(330, 260));
+        bottom_bottom.setPreferredSize(new Dimension(600, 300));
+        
+        
+        
+        
         listeDmd.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-        listeDevis.setPreferredSize(new Dimension(450, 200));
         listeDevis.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
         
-        listeDevis.setLayout(new BoxLayout(listeDevis, BoxLayout.LINE_AXIS));
         listeDmd.setLayout(new BoxLayout(listeDmd, BoxLayout.LINE_AXIS));
-       
-        //detail commandes, panneau de droite
-        detailDmd.setBackground(Color.green);
+        top_right.setLayout(new FlowLayout());
+        right.setLayout(new BoxLayout(right, BoxLayout.LINE_AXIS));
+        
+        
         detailDmd.setLayout(new BoxLayout(detailDmd, BoxLayout.Y_AXIS));
+        listeDevis.setLayout(new BorderLayout());
+        bottom_bottom.setLayout(new BoxLayout(bottom_bottom, BoxLayout.LINE_AXIS));
         
         
         //get cmd-detail from DB
@@ -112,42 +121,38 @@ public class DemandeDetail extends KContainer {
         h.put("demandeid", demande_id);
         dd = DetailDdeInstance.GetDetaildemande("demandeid",demande_id, h);
 
-        top_right.setLayout(new FlowLayout());
         jLabel5.setText("<html><h1><b>> Demande n°" + dd.get(0).getDemandeid() + "</b></h1><small>Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtinom() + " le " +dd.get(0).getSuivdosdate() + "</small></html>");
-        jLabel5.setPreferredSize(new Dimension(250, 100));
+        jLabel5.setPreferredSize(new Dimension(450, 100));
         top_right.add(jLabel5);
         JButton retour = new JButton("Retour à la société");
         retour.addActionListener(new DemandeDetail.RetourListenerDmd());
         top_right.add(retour);
         JPanel ab5 = new JPanel();
         ab5.setLayout(new BoxLayout(ab5, BoxLayout.LINE_AXIS));
-        ab5.setPreferredSize(new Dimension(400,30));
+        ab5.setPreferredSize(new Dimension(600,30));
         ab5.setBackground(Color.white);
         
         newDevisBtn.setText("Créer un devis");
         JPanel ab7 = new JPanel();
         ab7.setLayout(new BoxLayout(ab7, BoxLayout.LINE_AXIS));
-        ab7.setPreferredSize(new Dimension(400,60));
+        ab7.setPreferredSize(new Dimension(600,60));
         ab7.setBackground(Color.white);
-     //   ab7.add(newDevisBtn);
-    //    center_right.add(ab7);
         
         JLabel jLabel14 = new javax.swing.JLabel();
-        jLabel14.setPreferredSize(new Dimension(400, 60));
+        jLabel14.setPreferredSize(new Dimension(600, 60));
         ab5.add(newDevisBtn);
         ab5.add(jLabel14);
         ab5.add(new JButton("Valider la commande"));
         center_right.add(ab5);
         
-        center_right.setPreferredSize(new Dimension(300,300));
+        center_right.setPreferredSize(new Dimension(500,150));
         
         JPanel ab6 = new JPanel();
         ab6.setLayout(new BoxLayout(ab6, BoxLayout.LINE_AXIS));
-        ab6.setPreferredSize(new Dimension(400,30));
+        ab6.setPreferredSize(new Dimension(600,30));
         ab6.setBackground(Color.white);
         ab6.add(new JLabel("Avancement de la demande :"));
         center_right.add(ab6);
-        center_right.setBackground(Color.white);
         
         progressBar = new JProgressBar(0, 100);
         progressBar.setValue(Integer.valueOf(dd.get(0).getDemandeetat()));
@@ -156,46 +161,44 @@ public class DemandeDetail extends KContainer {
         progressBar.setPreferredSize(new Dimension(200,20));
         JPanel ab8 = new JPanel();
         ab8.setLayout(new BoxLayout(ab8, BoxLayout.LINE_AXIS));
-        ab8.setPreferredSize(new Dimension(400,40));
+        ab8.setPreferredSize(new Dimension(600,40));
         ab8.setBackground(Color.white);
         ab8.add(progressBar);
         JLabel jLabel15 = new javax.swing.JLabel();
-        jLabel15.setPreferredSize(new Dimension(200, 20));
+        jLabel15.setPreferredSize(new Dimension(400, 20));
         ab8.add(jLabel15);
         center_right.add(ab8);
         
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.weightx = 1.0;
-//        gbc.fill = GridBagConstraints.BOTH;
         
-        bottom_right.setBackground(Color.white);
-        bottom_right.setLayout(new BorderLayout());
         
-        ld.setPreferredSize(new Dimension(450, 200));
-        bottom_right.setPreferredSize(new Dimension(500, 400));
-    //   bottom_right.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
-    //    bottom_right.setLayout(new GridBagLayout());
-    //    bottom_right.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
         
         Font f = new Font("Euphemia", Font.PLAIN, 14);
         JLabel comm = new JLabel("<html><b>Commentaires : </b><br />"+dd.get(0).getSuivdoscom()+"</html>");
         comm.setFont(f); 
-
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.weightx = 1.0;
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        listeDevis.add(ld.showtable(ModelesTables.DEVISLIST), BorderLayout.CENTER);
+        comm.setVerticalTextPosition(0);
+        comm.setPreferredSize(new Dimension(600, 200));
+        
+        centertop_right.setBackground(Color.white);
+        ld.setPreferredSize(new Dimension(320, 240));
+         listeDevis.setPreferredSize(new Dimension(320, 240));
+        listeDevis.add(ld.showtable(ModelesTables.DEVIS), BorderLayout.CENTER);
          listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
-        content.add(listeDmd);
+        right.setLayout(new BorderLayout());
         
+        right.setPreferredSize(new Dimension(600, 250));
+        centertop_right.setPreferredSize(new Dimension(320, 240));
+        centertop_right.add(listeDevis);
+        right.add(centertop_right);
         
-        bottom_right.add(comm);
+        bottom_right.setPreferredSize(new Dimension(600, 200));
+        bottom_right.add(comm, BorderLayout.NORTH);
+        
         detailDmd.add(top_right);
-        detailDmd.add(centertop_right);
         detailDmd.add((center_right));
-        detailDmd.add((listeDevis));
+        detailDmd.add(right);
         detailDmd.add((bottom_right));
+        detailDmd.add((bottom_bottom));
+        content.add(listeDmd);
         content.add(detailDmd);
         this.panel.add(content);
     }

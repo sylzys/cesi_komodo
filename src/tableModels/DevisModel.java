@@ -17,7 +17,7 @@ import models.Devis;
  *
  * @author sylv
  */
-public class DevislistModel extends AbstractTableModel {
+public class DevisModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
@@ -25,7 +25,7 @@ public class DevislistModel extends AbstractTableModel {
     };
     private List<Devis> devis;
 
-    public DevislistModel() {
+    public DevisModel() {
         super();
         DevisInstance DvsInstance = DevisInstance.getInstance();
         System.out.println("in model list");
