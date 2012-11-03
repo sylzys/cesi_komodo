@@ -23,7 +23,7 @@ public abstract class KContainer {
         this.panel.setBackground(Color.WHITE);
     }
 
-    protected JPanel getPanel() {
+    public JPanel getPanel() {
         return this.panel;
     }
     protected abstract void initPanel() ;
