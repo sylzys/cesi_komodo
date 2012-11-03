@@ -98,7 +98,7 @@ public class SuivDossierInstance {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
             System.out.println("Nouvel enregistrement en cours d'insertion ...");
 
-            HibernateConnection.getSession().save(this.suivdoss);
+            HibernateConnection.getSession().save(suivdoss);
             // System.out.println(tx.wasCommitted());       
             tx.commit();
             System.out.println("Insertion de l'enregistrement terminé");

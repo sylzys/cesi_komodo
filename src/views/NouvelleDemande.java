@@ -39,16 +39,20 @@ import models.Demande;
 import models.Interlocuteur;
 import models.Suivdossier;
 import controllers.getLoginInfos;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import org.hibernate.Hibernate;
+import org.hibernate.Transaction;
 
 public class NouvelleDemande extends JDialog {
 
@@ -137,11 +141,11 @@ public class NouvelleDemande extends JDialog {
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
         //recupere infos BDD
-        System.out.println("DIALOG SHOWING INTER ID " + dmd_id);
-        DemandeInstance dmdInstance = DemandeInstance.getInstance();
-        Hashtable h = new Hashtable();
-        h.put("interid", dmd_id);
-        dmd = dmdInstance.GetDemandes("where demandeid = :demandeid", h);
+//        System.out.println("DIALOG SHOWING INTER ID " + dmd_id);
+//        DemandeInstance dmdInstance = DemandeInstance.getInstance();
+//        Hashtable h = new Hashtable();
+//        h.put("interid", dmd_id);
+//        dmd = dmdInstance.GetDemandes("where demandeid = :demandeid", h);
 
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -196,13 +200,13 @@ public class NouvelleDemande extends JDialog {
     
     private void addToDataBase() {
  Demande dmde = new Demande();
-            dmde.setCliid(1);
+            dmde.setCliid(dmd_id);
             dmde.setUtiid(1);
             dmde.setDemandeetat(20);
             dmde.setDemandesuppr(false);
-            
             Suivdossier svidossier = new Suivdossier();
             svidossier.setUtiid(1);
+            svidossier.setSuivdosdate(new Date());
             svidossier.setInterid(1);
             svidossier.setSuivdoscom(suivdoscom.getText());
             svidossier.setSuividossuppr(false);
@@ -210,9 +214,13 @@ public class NouvelleDemande extends JDialog {
             DemandeInstance dmd_inst = DemandeInstance.getInstance();
             SuivDossierInstance suivd_inst = SuivDossierInstance.getInstance();
             dmd_inst.setDemandes(dmde);
-            suivd_inst.setSuivDossier(svidossier);
             //inserer demande et suivi dossier
             dmd_inst.ajouterDansBaseDeDonnées();
+           HibernateConnection connection = HibernateConnection.getInstance();
+            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
+           
+            svidossier.setDemandeid(value);
+            suivd_inst.setSuivDossier(svidossier);
             suivd_inst.ajouterDansBaseDeDonnées();
     }
 }

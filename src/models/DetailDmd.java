@@ -47,15 +47,6 @@ public class DetailDmd {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date suivdosdate ;
     
-    @Column(name="devprix", columnDefinition="INTEGER", nullable=true)
-    private int devprix ;
-    
-    @Column(name="devdate", columnDefinition="DATE", nullable=true)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date devdate ;
-    
-    @Column(name="devetat", columnDefinition="VARCHAR(50)", nullable=true)
-    private String devetat ;
 
     
     
@@ -165,30 +156,6 @@ public class DetailDmd {
         this.suivdosdate = suivdosdate;
     }
 
-    public int getDevprix() {
-        return devprix;
-    }
-
-    public void setDevprix(int devprix) {
-        this.devprix = devprix;
-    }
-
-    public Date getDevdate() {
-        return devdate;
-    }
-
-    public void setDevdate(Date devdate) {
-        this.devdate = devdate;
-    }
-
-
-    public String getDevetat() {
-        return devetat;
-    }
-
-    public void setDevetat(String devetat) {
-        this.devetat = devetat;
-    }
     
    
     
