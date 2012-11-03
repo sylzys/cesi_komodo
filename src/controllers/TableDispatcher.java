@@ -42,7 +42,11 @@ public class TableDispatcher extends JPanel {
         switch (mt)
         {
             case CLIENT:
+<<<<<<< HEAD
                 model = new ClientCommModel();
+=======
+                model = new ClientModel(id);
+>>>>>>> c55e1fc788438d04f380249c1120926a2c16a9b3
                 break;
             case COMMANDE:
                 model = new CommandeModel();
