@@ -27,6 +27,8 @@ import models.Commande;
 import models.Interlocuteur;
 import views.ProgressBarAtt;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -92,6 +94,22 @@ public class Synchro {
         catch(Exception e) {
            System.out.println(e);
            return false;
+        }
+    }
+    public void eraseFic()
+    {
+        try
+        {
+            File fich = new File("ressources/requetes.txt");
+            if(fich.exists() == true)
+            {
+                fich.delete();
+                fich.createNewFile();
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
         }
     }
     public void onlinemod()
@@ -220,5 +238,40 @@ public class Synchro {
         }
         String action[] = {nameclient, table, libreq};
         return action;
+    }
+    public void record()
+    {
+        boolean empty = emptyFic();
+        if(empty == true)
+        {
+            String fic = readFic();
+            StringTokenizer strtok = new StringTokenizer(fic, "||");
+            String act = "";
+            String requete = "";
+            while (strtok.hasMoreTokens()) {
+               act = strtok.nextToken();
+               String[] inter = act.split("interlocuteur:");
+               String[] cli = act.split("client:");
+                if(inter.length > 1)
+                {
+                    requete = inter[0];
+                }
+                else
+                {
+                    requete = cli[0];
+                }
+                Transaction tx = null;
+                try {
+                    tx = HibernateConnection.getSession().beginTransaction();
+                    // Ordre Hibernate             
+                    Query q = HibernateConnection.getSession().createSQLQuery(requete);
+                    q.executeUpdate();
+                    tx.commit();
+                } catch (HibernateException ex) {
+                    System.out.println(ex.toString());
+                }  
+            }
+            eraseFic();
+        }
     }
 }

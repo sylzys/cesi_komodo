@@ -13,6 +13,10 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.StringTokenizer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -65,33 +69,31 @@ public class SynchroView extends KContainer {
         else if(sync.emptyFic() == true)
         {      
             FlowLayout flchk1 = new FlowLayout();
-            JCheckBox chkbox1 = new JCheckBox();
+            JLabel lblempty = new JLabel();
             JLabel lbl1 = new JLabel("<html><p color=blue>CLIENT</p></html>");
             JLabel lbl2 = new JLabel("<html><p color=blue>TABLE</p></html>");
             JLabel lbl3 = new JLabel("<html><p color=blue>ACTION</p></html>");
             lbl1.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbl2.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbl3.setBorder(new EmptyBorder(0, 10, 0, 0));
-            chkbox1.setBorder(new EmptyBorder(0, 10, 0, 0));
-            chkbox1.setBackground(Color.lightGray);
+            lblempty.setBorder(new EmptyBorder(0, 10, 0, 0));
+            lblempty.setBackground(Color.lightGray);
             lbl1.setOpaque(true);
             lbl1.setBackground(Color.lightGray);
             lbl2.setOpaque(true);
             lbl2.setBackground(Color.lightGray);
             lbl3.setOpaque(true);
             lbl3.setBackground(Color.lightGray);
-            chkbox1.setPreferredSize(new Dimension(100, 20));
-            chkbox1.setSelected(true);
+            lblempty.setPreferredSize(new Dimension(100, 20));
             lbl1.setPreferredSize(new Dimension(180, 20));
             lbl2.setPreferredSize(new Dimension(150, 20));
             lbl3.setPreferredSize(new Dimension(300, 20));
             center.setLayout(flchk1);
-            center.add(chkbox1);
+            center.add(lblempty);
             center.add(lbl1);
             center.add(lbl2);
             center.add(lbl3);
             fic = sync.readFic();
-            String chkname = "";
             StringTokenizer strtok = new StringTokenizer(fic, "||");
             int i = 0;
             while (strtok.hasMoreTokens()) {
@@ -101,21 +103,17 @@ public class SynchroView extends KContainer {
                 int interid = -1;
                 if(inter.length > 1)
                 {
-                    chkname = i + ":" + inter[0];
                     interid = Integer.parseInt(inter[1]);
                 }
                 String[] cli = req.split("client:");
                 String nomclient = "";
                 if(cli.length > 1)
                 {
-                    chkname = i + ":" + cli[0];
                     nomclient = cli[1];
                 }
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 JCheckBox chkbox = new JCheckBox();
-                chkbox.setName(chkname);
-                chkbox.setSelected(true);
                 JLabel lblclient = new JLabel(action[0]);
                 JLabel lbltable = new JLabel(action[1].toUpperCase());
                 JLabel lblaction = new JLabel(action[2]);
@@ -133,6 +131,12 @@ public class SynchroView extends KContainer {
                 center.add(lblclient);
                 center.add(lbltable);
                 center.add(lblaction);
+                chkbox.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println(req);
+                    }
+                });
             }
             center.setPreferredSize(new Dimension(750, 50 + (40 * i)));
             title.setPreferredSize(new Dimension(420,100)); 
@@ -140,7 +144,15 @@ public class SynchroView extends KContainer {
                     + "les actions à sauvegarder dans la base de données en ligne</p></center></html>");
             lblSynchro.setVisible(false);
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            button.setPreferredSize(new Dimension(120,35));          
+            button.setPreferredSize(new Dimension(120,35));
+            button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Synchro sync = new Synchro();
+                sync.record();
+            }
+            });
             pnlbtn.setBackground(Color.white);
             pnlbtn.add(button, BorderLayout.CENTER);
             pnlbtn.add(lblSynchro, BorderLayout.EAST);
