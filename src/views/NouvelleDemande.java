@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.BackgroundPanel;
 import com.google.common.base.Strings;
 import controllers.UserActif;
 import instances.ClientInstance;
@@ -69,7 +70,7 @@ public class NouvelleDemande extends KContainer {
 
     @Override
     protected void initPanel() {
-        LightPanel content = new LightPanel();
+        BackgroundPanel content = new BackgroundPanel();
 
         content.setLayout(new FlowLayout());
         content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
