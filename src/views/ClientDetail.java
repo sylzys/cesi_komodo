@@ -43,7 +43,7 @@ import models.CurrentDatas;
 import models.DetailDmd;
 import models.Interlocuteur;
 import org.hibernate.Query;
-import classes.LightPanel;
+import classes.WhitePanel;
 
 /**
  *
@@ -76,12 +76,12 @@ public class ClientDetail extends KContainer {
         BackgroundPanel content = new BackgroundPanel();
 
         //LightPanelS
-        LightPanel cliInfos = new LightPanel(),
-                top = new LightPanel(),
-                bottom = new LightPanel(),
-                cliDetail = new LightPanel(),
-                cliButtons = new LightPanel(),
-                comboPanel = new LightPanel();
+        WhitePanel cliInfos = new WhitePanel(),
+                top = new WhitePanel(),
+                bottom = new WhitePanel(),
+                cliDetail = new WhitePanel(),
+                cliButtons = new WhitePanel(),
+                comboPanel = new WhitePanel();
 
         //JBUTTONS
         JButton addContact = new JButton("Ajouter"),
@@ -139,7 +139,7 @@ public class ClientDetail extends KContainer {
             cliInfos.setLayout(new FlowLayout(0, 50, 0));
 
             //adresse
-            LightPanel cliAddr = new LightPanel();
+            WhitePanel cliAddr = new WhitePanel();
             //cliAddr.setBackground(Color.white);
             JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
                     + cli.getClicp() + "<br>"
@@ -151,7 +151,7 @@ public class ClientDetail extends KContainer {
             cliInfos.add(cliAddr);
 
             //contacts
-            LightPanel cliContact = new LightPanel();
+            WhitePanel cliContact = new WhitePanel();
             //cliContact.setBackground(Color.white);
             JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
                     + cli.getClifax() + "<br>Mail: "
@@ -163,7 +163,7 @@ public class ClientDetail extends KContainer {
             cliInfos.add(cliContact);
 
             //raison sociale
-            LightPanel cliRS = new LightPanel();
+            WhitePanel cliRS = new WhitePanel();
           //  cliRS.setBackground(Color.white);
             JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
                     + cli.getCliactivite() + "<br>SIRET: "
@@ -216,7 +216,7 @@ public class ClientDetail extends KContainer {
             comboPanel.add(newDemand, BorderLayout.NORTH);
 
             //ComboBox demandes
-            LightPanel comboDmd_panel = new LightPanel();
+            WhitePanel comboDmd_panel = new WhitePanel();
            // comboDmd_panel.setBackground(Color.white);
             comboDmd_panel.setLayout(new FlowLayout());
 
@@ -237,7 +237,7 @@ public class ClientDetail extends KContainer {
             comboDmd_panel.add(validateDmd);
 
             //Combobox commandes
-            LightPanel comboCmd_panel = new LightPanel();
+            WhitePanel comboCmd_panel = new WhitePanel();
            // comboCmd_panel.setBackground(Color.white);
             comboCmd_panel.setLayout(new FlowLayout());
 
@@ -265,7 +265,7 @@ public class ClientDetail extends KContainer {
             comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
             comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
 
-            //ajout des panels au LightPanel principal
+            //ajout des panels au WhitePanel principal
             top.add(comboPanel, BorderLayout.EAST);
             cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
             cliDetail.add(cliInfos, BorderLayout.CENTER);
@@ -278,7 +278,7 @@ public class ClientDetail extends KContainer {
             //LightPanel pour accordeons
 
             //suivi satisfaction
-            LightPanel suivi_satisfaction = new LightPanel();
+            WhitePanel suivi_satisfaction = new WhitePanel();
          //   suivi_satisfaction.setBackground(Color.white);
             suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
             suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
@@ -286,7 +286,7 @@ public class ClientDetail extends KContainer {
             bottom.add(Box.createVerticalStrut(10));
 
             //alertes
-            LightPanel alertes = new LightPanel();
+            WhitePanel alertes = new WhitePanel();
            // alertes.setBackground(Color.white);
             alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
             alertes.setPreferredSize(new Dimension(120, 50));
@@ -294,7 +294,7 @@ public class ClientDetail extends KContainer {
             bottom.add(Box.createVerticalStrut(10));
 
             //Reporting
-            LightPanel reporting = new LightPanel();
+            WhitePanel reporting = new WhitePanel();
            // reporting.setBackground(Color.white);
             reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
             reporting.setPreferredSize(new Dimension(120, 50));

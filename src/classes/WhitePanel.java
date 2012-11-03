@@ -3,11 +3,11 @@ package classes;
 import javax.swing.*;
 import java.awt.*;
 
-public class LightPanel extends JPanel {
+public class WhitePanel extends JPanel {
 
     Image image;
 
-    public LightPanel() {
+    public WhitePanel() {
         this.setBackground(Color.white);
     }
 }

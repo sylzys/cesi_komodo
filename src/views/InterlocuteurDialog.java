@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.Interlocuteur;
-import classes.LightPanel;
+import classes.WhitePanel;
 
 public class InterlocuteurDialog extends JDialog {
 
@@ -51,7 +51,7 @@ public class InterlocuteurDialog extends JDialog {
 
     private void initComponent() {
 
-        LightPanel panInfos = new LightPanel();
+        WhitePanel panInfos = new WhitePanel();
         panInfos.setBackground(Color.white);
         panInfos.setPreferredSize(new Dimension(620, 600));
         panInfos.setLayout(new BoxLayout(panInfos, BoxLayout.Y_AXIS));
@@ -68,37 +68,37 @@ public class InterlocuteurDialog extends JDialog {
         mail.setPreferredSize(new Dimension(250, 25));
         // panInfos.setBorder(new EmptyBorder(60, 60, 60, 60) );
         panInfos.setBorder(BorderFactory.createTitledBorder("Informations interlocuteur"));
-        LightPanel name = new LightPanel();
+        WhitePanel name = new WhitePanel();
         name.setLayout(new FlowLayout());
         name.setBackground(Color.white);
         name.add(new JLabel("Nom :"));
         name.add(nom);
 
-        LightPanel firstname = new LightPanel();
+        WhitePanel firstname = new WhitePanel();
         firstname.setBackground(Color.white);
         firstname.setLayout(new FlowLayout());
         firstname.add(new JLabel("Prénom :"));
         firstname.add(prenom);
 
-        LightPanel phone = new LightPanel();
+        WhitePanel phone = new WhitePanel();
         phone.setLayout(new FlowLayout());
         phone.setBackground(Color.white);
         phone.add(new JLabel("Tel :"));
         phone.add(tel);
 
-        LightPanel Fax = new LightPanel();
+        WhitePanel Fax = new WhitePanel();
         Fax.setLayout(new FlowLayout());
         Fax.setBackground(Color.white);
         Fax.add(new JLabel("Fax :"));
         Fax.add(fax);
 
-        LightPanel email = new LightPanel();
+        WhitePanel email = new WhitePanel();
         email.setLayout(new FlowLayout());
         email.setBackground(Color.white);
         email.add(new JLabel("Email :"));
         email.add(mail);
 
-        LightPanel modif = new LightPanel();
+        WhitePanel modif = new WhitePanel();
         modif.setLayout(new FlowLayout());
         modif.setBackground(Color.white);
 
@@ -115,14 +115,14 @@ public class InterlocuteurDialog extends JDialog {
         panInfos.add(modif);
 
 
-        LightPanel content = new LightPanel();
+        WhitePanel content = new WhitePanel();
         content.setBackground(Color.white);
         content.setBorder(new EmptyBorder(20, 30, 0, 10));
         content.setLayout(new BorderLayout());
         content.add(panInfos, BorderLayout.WEST);
 
 
-        LightPanel control = new LightPanel();
+        WhitePanel control = new WhitePanel();
         JButton okBouton = new JButton("OK");
         //recupere infos BDD
         System.out.println("DIALOG SHOWING INTER ID " + inter_id);
