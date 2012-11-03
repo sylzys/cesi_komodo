@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import models.Client;
-
+import classes.LightPanel;
 /**
  *
  * @author sylv
@@ -32,8 +32,8 @@ import models.Client;
 public class NouvelleDemande extends KContainer {
 
     JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
-    JPanel left = new JPanel(),
-            right = new JPanel();
+    LightPanel left = new LightPanel(),
+            right = new LightPanel();
     JTextField cli_nom = new JTextField(),
             cli_add = new JTextField(),
             cli_cp = new JTextField(),
@@ -69,7 +69,7 @@ public class NouvelleDemande extends KContainer {
 
     @Override
     protected void initPanel() {
-        JPanel content = new JPanel();
+        LightPanel content = new LightPanel();
 
         content.setLayout(new FlowLayout());
         content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
@@ -78,7 +78,7 @@ public class NouvelleDemande extends KContainer {
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
         left.setPreferredSize(new Dimension(400, 450));
         //nom ste
-        JPanel nom = new JPanel();
+        LightPanel nom = new LightPanel();
         nom.setBackground(Color.WHITE);
         nom.setLayout(new FlowLayout());
         nom.add(lbl_clinom);
@@ -88,7 +88,7 @@ public class NouvelleDemande extends KContainer {
         left.add(nom);
         left.add(Box.createVerticalStrut(30));
         //addr
-        JPanel addr = new JPanel();
+        LightPanel addr = new LightPanel();
         addr.setBackground(Color.WHITE);
         addr.setLayout(new FlowLayout());
         addr.add(lbl_cliadd);
@@ -97,7 +97,7 @@ public class NouvelleDemande extends KContainer {
         addr.add(cli_add);
         left.add(addr);
         //cp ville
-        JPanel cp = new JPanel();
+        LightPanel cp = new LightPanel();
         cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
         cp.add(lbl_clicp);
@@ -107,7 +107,7 @@ public class NouvelleDemande extends KContainer {
         left.add(cp);
         left.add(Box.createVerticalStrut(30));
         //tel
-        JPanel tel = new JPanel();
+        LightPanel tel = new LightPanel();
         tel.setBackground(Color.WHITE);
         tel.setLayout(new FlowLayout());
         tel.add(lbl_clitel);
@@ -116,7 +116,7 @@ public class NouvelleDemande extends KContainer {
         tel.add(cli_tel);
         left.add(tel);
         //fax
-        JPanel fax = new JPanel();
+        LightPanel fax = new LightPanel();
         fax.setBackground(Color.WHITE);
         fax.setLayout(new FlowLayout());
         fax.add(lbl_clifax);
@@ -126,7 +126,7 @@ public class NouvelleDemande extends KContainer {
         left.add(fax);
         left.add(Box.createVerticalStrut(30));
         //mail
-        JPanel mail = new JPanel();
+        LightPanel mail = new LightPanel();
         mail.setBackground(Color.WHITE);
         mail.setLayout(new FlowLayout());
         mail.add(lbl_climail);
@@ -135,7 +135,7 @@ public class NouvelleDemande extends KContainer {
         mail.add(cli_mail);
         left.add(mail);
         //fax
-        JPanel web = new JPanel();
+        LightPanel web = new LightPanel();
         web.setBackground(Color.WHITE);
         web.setLayout(new FlowLayout());
         web.add(lbl_clisite);
@@ -150,7 +150,7 @@ public class NouvelleDemande extends KContainer {
         right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
         right.setPreferredSize(new Dimension(400, 450));
         //dirigeant
-        JPanel dir = new JPanel();
+        LightPanel dir = new LightPanel();
         dir.setBackground(Color.WHITE);
         dir.setLayout(new FlowLayout());
         dir.add(lbl_clidir);
@@ -160,7 +160,7 @@ public class NouvelleDemande extends KContainer {
         right.add(dir);
         right.add(Box.createVerticalStrut(30));
         //addr
-        JPanel naf = new JPanel();
+        LightPanel naf = new LightPanel();
         naf.setBackground(Color.WHITE);
         naf.setLayout(new FlowLayout());
         naf.add(lbl_clinaf);
@@ -169,7 +169,7 @@ public class NouvelleDemande extends KContainer {
         naf.add(cli_naf);
         right.add(naf);
         //activité
-        JPanel act = new JPanel();
+        LightPanel act = new LightPanel();
         act.setBackground(Color.WHITE);
         act.setLayout(new FlowLayout());
         act.add(lbl_cliact);
@@ -179,7 +179,7 @@ public class NouvelleDemande extends KContainer {
         right.add(act);
         right.add(Box.createVerticalStrut(30));
         //siren
-        JPanel siren = new JPanel();
+        LightPanel siren = new LightPanel();
         siren.setBackground(Color.WHITE);
         siren.setLayout(new FlowLayout());
         siren.add(lbl_clisiren);
@@ -188,7 +188,7 @@ public class NouvelleDemande extends KContainer {
         siren.add(cli_siren);
         right.add(siren);
         //siret
-        JPanel siret = new JPanel();
+        LightPanel siret = new LightPanel();
         siret.setBackground(Color.WHITE);
         siret.setLayout(new FlowLayout());
         siret.add(lbl_clisiret);
@@ -198,7 +198,7 @@ public class NouvelleDemande extends KContainer {
         right.add(siret);
         right.add(Box.createVerticalStrut(30));
         //CA
-        JPanel ca = new JPanel();
+        LightPanel ca = new LightPanel();
         ca.setBackground(Color.WHITE);
         ca.setLayout(new FlowLayout());
         ca.add(lbl_clica);

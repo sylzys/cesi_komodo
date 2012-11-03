@@ -122,6 +122,7 @@ public class Fenetre extends JFrame {
         username.setText(user.getFullName());
         username.setBorder(new EmptyBorder(0, 20, 0, 20));
         toolbar.add(Box.createHorizontalGlue());
+        //toolbar.setBackground(Color.red);
         lblOnline.setToolTipText("Passer en mode hors ligne");
         lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblReseau.setText("Vous n'êtes pas connecté");
