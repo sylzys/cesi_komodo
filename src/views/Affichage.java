@@ -58,7 +58,7 @@ public class Affichage extends KContainer {
         
         TableDispatcher cp = new TableDispatcher();
         //;
-        content.add(cp.showtable(ModelesTables.CLIENT), BorderLayout.SOUTH);
+        content.add(cp.showtable(ModelesTables.CLIENT, 1), BorderLayout.SOUTH);
         this.panel.add(content);
     }
     private void getCompanyList(){

@@ -77,7 +77,7 @@ public class DemandeDetail extends KContainer {
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
         detailDmd.setPreferredSize(new Dimension(650, 750));
-        detailDmd.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.DARK_GRAY));
+        detailDmd.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
         //  System.out.println("CMD-ID: "+this.demande_id);
         //title.setText("DETAIL COMMANDE "+ this.demande_id);
         TableDispatcher cp = new TableDispatcher();
@@ -181,8 +181,8 @@ public class DemandeDetail extends KContainer {
         centertop_right.setBackground(Color.white);
         ld.setPreferredSize(new Dimension(320, 240));
          listeDevis.setPreferredSize(new Dimension(320, 240));
-        listeDevis.add(ld.showtable(ModelesTables.DEVIS), BorderLayout.CENTER);
-         listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST), BorderLayout.CENTER);
+        listeDevis.add(ld.showtable(ModelesTables.DEVIS,dd.get(0).getDemandeid()), BorderLayout.CENTER);
+         listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST,dd.get(0).getCliid()), BorderLayout.CENTER);
         right.setLayout(new BorderLayout());
         
         right.setPreferredSize(new Dimension(600, 250));

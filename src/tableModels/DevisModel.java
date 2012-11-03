@@ -25,12 +25,12 @@ public class DevisModel extends AbstractTableModel {
     };
     private List<Devis> devis;
 
-    public DevisModel() {
+    public DevisModel(int id) {
         super();
         DevisInstance DvsInstance = DevisInstance.getInstance();
         System.out.println("in model list");
         Hashtable h = new Hashtable();
-        h.put("deviid", 2);
+        h.put("deviid", id);
         devis = DvsInstance.Getdevis("where deviid = :deviid", h);
     }
 
