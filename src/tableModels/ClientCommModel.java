@@ -27,11 +27,11 @@ public class ClientCommModel extends AbstractTableModel {
     private List<Client_Comm> clients;
 
 
-    public ClientCommModel() {
+    public ClientCommModel(int id) {
         super();
         clientCommInstance CliCommInstance = clientCommInstance.getInstance();
         Hashtable h = new Hashtable();
-        h.put("utiid", 1);
+        h.put("utiid", id);
         clients = CliCommInstance.GetClients("where utiid = :utiid", h);
     }
 
