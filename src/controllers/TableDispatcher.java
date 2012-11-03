@@ -168,10 +168,8 @@ public class TableDispatcher extends JPanel {
                         case DEMANDELIST:
                             System.out.println("GETTIN DBL CLIC DEMANDELIST");
                             DemandeDetail demande = new DemandeDetail((Integer) tm.getValueAt(row, 999));
-                            
                             Fenetre fen = Fenetre.getInstance();
                             fen.RenewContener(demande.getPanel());
-                            
                         //    DemandeDetail dmdlist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEVIS:
