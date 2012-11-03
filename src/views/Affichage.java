@@ -19,7 +19,9 @@ import javax.swing.JFrame;
 import models.Client;
 import instances.HibernateConnection;
 import instances.clientCommInstance;
+import javax.swing.ImageIcon;
 import models.Client_Comm;
+import classes.BackgroundPanel;
 import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;
@@ -40,8 +42,8 @@ public class Affichage extends KContainer {
     @Override
     protected
     void initPanel() {
-        JPanel content = new JPanel();
-        
+        JPanel content = new BackgroundPanel();
+        //content.setBackground(new ImageIcon("ressources/images/komodo.gif"));
         content.setLayout(new BorderLayout());
         content.add(title, BorderLayout.CENTER);      
         
