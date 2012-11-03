@@ -26,11 +26,8 @@ public class ClientCommModel extends AbstractTableModel {
     
     private List<Client_Comm> clients;
 
-<<<<<<< HEAD:src/tableModels/ClientCommModel.java
+
     public ClientCommModel() {
-=======
-    public ClientModel(int id) {
->>>>>>> c55e1fc788438d04f380249c1120926a2c16a9b3:src/tableModels/ClientModel.java
         super();
         clientCommInstance CliCommInstance = clientCommInstance.getInstance();
         Hashtable h = new Hashtable();

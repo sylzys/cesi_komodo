@@ -46,11 +46,11 @@ public class Affichage extends KContainer {
         content.add(title, BorderLayout.CENTER);      
         
         getCompanyList();
-<<<<<<< HEAD
+
 //        for (Client_Comm cli : this.liste) 
-=======
+
 //        for (Client cli : this.liste) 
->>>>>>> c55e1fc788438d04f380249c1120926a2c16a9b3
+
 //        {   
 //            System.out.println("LISTING CLIENT");
 //            System.out.println("Sté : " + cli.getClinom());
