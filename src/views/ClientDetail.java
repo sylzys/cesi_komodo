@@ -221,7 +221,7 @@ public class ClientDetail extends KContainer {
             //get detail demande
             DemandeInstance dd = DemandeInstance.getInstance();
             Hashtable hhh = new Hashtable();
-            hhh.put("cliid", 1);
+            hhh.put("cliid", cli_id);
             demande = dd.GetDemandes("where cliid = :cliid", hhh);
 
             cb_demande.addItem("Demandes");
@@ -242,7 +242,7 @@ public class ClientDetail extends KContainer {
             //get detail cde
             DetailCdeInstance dc = DetailCdeInstance.getInstance();
             Hashtable hhhh = new Hashtable();
-            hhhh.put("cliid", 1);
+            hhhh.put("cliid", cli_id);
             detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
 
             cb_commande.addItem("Commandes");
