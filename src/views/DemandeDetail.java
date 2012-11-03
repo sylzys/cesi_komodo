@@ -46,8 +46,8 @@ public class DemandeDetail extends KContainer {
     public DemandeDetail(int id) {
         super();
         demande_id = id;
-        CurrentDatas cur = CurrentDatas.getInstance();
-        cur.setSoc_id(demande_id);
+        //CurrentDatas cur = CurrentDatas.getInstance();
+        //cur.setSoc_id(demande_id);
         initPanel();
     }
 

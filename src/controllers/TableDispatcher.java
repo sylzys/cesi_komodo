@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import models.CurrentDatas;
 import models.Demande;
 import models.Devis;
 import models.ModelesTables;
@@ -152,6 +153,8 @@ public class TableDispatcher extends JPanel {
                         //on récupère la valeur correspondant au bon modèle
                         case CLIENT:
                             System.out.println("GETTIN DBL CLIC CLIENT : " + tm.getValueAt(row, 999));
+                            CurrentDatas cur = CurrentDatas.getInstance();
+                            cur.setSoc_id((Integer) tm.getValueAt(row, 999));
                             ClientDetail cd = new ClientDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case COMMANDE:

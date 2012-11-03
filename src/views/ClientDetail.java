@@ -63,8 +63,8 @@ public class ClientDetail extends KContainer {
         super();
         cli_id = id;
         System.out.println("IN client detail");
-        CurrentDatas cur = CurrentDatas.getInstance();
-        cur.setSoc_id(cli_id);
+//        CurrentDatas cur = CurrentDatas.getInstance();
+//        cur.setSoc_id(cli_id);
         initPanel();
 
     }
