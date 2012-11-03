@@ -29,10 +29,11 @@ public class Accueil extends KContainer {
     protected
     void initPanel() {
         JPanel content = new JPanel();
+        content.setOpaque(false);
         JLabel icon = new JLabel(new ImageIcon("ressources/images/komodo.gif"));
         String name = this.user.getFullName();
         
-        content.setBackground(Color.white);
+        //content.setBackground(Color.white);
         title.setText("<html><center>Bienvenue "+name+"<br>"+
                 "Votre dernière connexion date du " +
                 this.user.getLastLogin()+"</center></html>");

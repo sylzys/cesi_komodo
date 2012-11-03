@@ -49,16 +49,6 @@ public class Affichage extends KContainer {
         
         getCompanyList();
 
-//        for (Client_Comm cli : this.liste) 
-
-//        for (Client cli : this.liste) 
-
-//        {   
-//            System.out.println("LISTING CLIENT");
-//            System.out.println("Sté : " + cli.getClinom());
-//            System.out.println("createur : " + cli.getUti_utiid());
-//            System.out.println("createur : " + cli.getClidteadd());
-//        }
         
         //show table
         
