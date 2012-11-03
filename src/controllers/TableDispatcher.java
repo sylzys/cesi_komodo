@@ -49,7 +49,7 @@ public class TableDispatcher extends JPanel {
                 model = new CommandeModel();
                 break;
             case DEMANDE:
-                model = new DemandeModel();
+                model = new DemandeModel(id);
                 System.out.println("GETTINGMODEL");
                 break;
             case DEVIS:

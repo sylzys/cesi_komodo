@@ -25,12 +25,12 @@ public class DemandeModel extends AbstractTableModel {
     };
     private List<Demande> demandes;
 
-    public DemandeModel() {
+    public DemandeModel(int id) {
         super();
         DemandeInstance DmdInstance = DemandeInstance.getInstance();
         System.out.println("in model");
         Hashtable h = new Hashtable();
-        h.put("demandeid", 1);
+        h.put("demandeid", id);
         demandes = DmdInstance.GetDemandes("where demandeid = :demandeid", h);
     }
 
