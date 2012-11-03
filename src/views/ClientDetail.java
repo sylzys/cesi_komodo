@@ -76,12 +76,12 @@ public class ClientDetail extends KContainer {
         BackgroundPanel content = new BackgroundPanel();
 
         //LightPanelS
-        BackgroundPanel cliInfos = new BackgroundPanel(),
-                top = new BackgroundPanel(),
-                bottom = new BackgroundPanel(),
-                cliDetail = new BackgroundPanel(),
-                cliButtons = new BackgroundPanel(),
-                comboPanel = new BackgroundPanel();
+        LightPanel cliInfos = new LightPanel(),
+                top = new LightPanel(),
+                bottom = new LightPanel(),
+                cliDetail = new LightPanel(),
+                cliButtons = new LightPanel(),
+                comboPanel = new LightPanel();
 
         //JBUTTONS
         JButton addContact = new JButton("Ajouter"),
