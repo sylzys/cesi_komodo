@@ -8,6 +8,6 @@ public class LightPanel extends JPanel {
     Image image;
 
     public LightPanel() {
-        //this.setBackground(Color.);
+        this.setBackground(Color.white);
     }
 }
