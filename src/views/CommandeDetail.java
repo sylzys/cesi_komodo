@@ -79,7 +79,7 @@ public class CommandeDetail extends KContainer {
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 
         //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
-        listeCmd.add(cp.showtable(ModelesTables.COMMANDE));
+        listeCmd.add(cp.showtable(ModelesTables.COMMANDE,2));
         content.add(listeCmd);
         //detail commandes, panneau de droite
         detailCmd.setBackground(Color.green);

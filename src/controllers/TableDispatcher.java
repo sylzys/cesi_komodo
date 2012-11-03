@@ -33,7 +33,7 @@ public class TableDispatcher extends JPanel {
     }
     private TableModel model;
 
-    public TableDispatcher(ModelesTables mt) {
+    public TableDispatcher(ModelesTables mt, int id) {
         super(new GridLayout(1, 0));
         modeleTable = mt;
         //selon la constante, on prépare le modèle qu'on utilisera pour mapper à la table
@@ -42,7 +42,7 @@ public class TableDispatcher extends JPanel {
         switch (mt)
         {
             case CLIENT:
-                model = new ClientModel();
+                model = new ClientModel(id);
                 break;
             case COMMANDE:
                 model = new CommandeModel();
@@ -52,11 +52,11 @@ public class TableDispatcher extends JPanel {
                 System.out.println("GETTINGMODEL");
                 break;
             case DEVIS:
-                model = new DevisModel();
+                model = new DevisModel(id);
                 System.out.println("GETTINGMODEL");
                 break;
             case DEMANDELIST:
-                model = new DemandelistModel();
+                model = new DemandelistModel(id);
                 System.out.println("GETTINGMODEL");
                 break;
             
@@ -182,13 +182,13 @@ System.out.println("Here?");
      * Create the GUI and show it. For thread safety, this method should be
      * invoked from the event-dispatching thread.
      */
-    private JPanel createAndShowGUI(ModelesTables mt) {
+    private JPanel createAndShowGUI(ModelesTables mt, int id) {
         //Create and set up the window.
         JPanel frame = new JPanel();
         //rame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        TableDispatcher cp = new TableDispatcher(mt);
+        TableDispatcher cp = new TableDispatcher(mt, id);
         
         cp.setOpaque(true); //content panes must be opaque
         frame.add(cp);
@@ -197,8 +197,8 @@ System.out.println("Here?");
         return (frame);
     }
 
-    public JPanel showtable(ModelesTables mt) {
-       return createAndShowGUI(mt);
+    public JPanel showtable(ModelesTables mt, int id) {
+       return createAndShowGUI(mt, id);
 
     }
 }

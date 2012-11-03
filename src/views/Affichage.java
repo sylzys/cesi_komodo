@@ -44,19 +44,19 @@ public class Affichage extends KContainer {
         content.add(title, BorderLayout.CENTER);      
         
         getCompanyList();
-        for (Client cli : this.liste) 
-        {   
-            System.out.println("LISTING CLIENT");
-            System.out.println("Sté : " + cli.getClinom());
-            System.out.println("createur : " + cli.getUti_utiid());
-            System.out.println("createur : " + cli.getClidteadd());
-        }
+//        for (Client cli : this.liste) 
+//        {   
+//            System.out.println("LISTING CLIENT");
+//            System.out.println("Sté : " + cli.getClinom());
+//            System.out.println("createur : " + cli.getUti_utiid());
+//            System.out.println("createur : " + cli.getClidteadd());
+//        }
         
         //show table
         
         TableDispatcher cp = new TableDispatcher();
         //;
-        content.add(cp.showtable(ModelesTables.CLIENT), BorderLayout.SOUTH);
+        content.add(cp.showtable(ModelesTables.CLIENT, 1), BorderLayout.SOUTH);
         this.panel.add(content);
     }
     private void getCompanyList(){

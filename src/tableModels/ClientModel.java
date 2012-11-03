@@ -24,7 +24,7 @@ public class ClientModel extends AbstractTableModel {
     
     private List<Client> clients;
 
-    public ClientModel() {
+    public ClientModel(int id) {
         super();
         ClientInstance CliInstance = ClientInstance.getInstance();
         Hashtable h = new Hashtable();
