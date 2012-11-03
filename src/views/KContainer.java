@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.BackgroundPanel;
 import controllers.UserActif;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -18,9 +19,9 @@ public abstract class KContainer {
     protected UserActif user;
 
     public KContainer() {
-        this.panel = new JPanel();
+        this.panel = new BackgroundPanel();
         //this.user = new UserActif();
-        this.panel.setBackground(Color.WHITE);
+       // this.panel.setBackground(Color.WHITE);
     }
 
     public JPanel getPanel() {
