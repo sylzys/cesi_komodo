@@ -8,6 +8,7 @@ import classes.BackgroundPanel;
 import classes.LinkLabelData;
 import controllers.UserActif;
 import controllers.getInterlocuteurInfos;
+import controllers.getDemandeInfos;
 import instances.ClientInstance;
 import instances.DemandeInstance;
 import instances.DetailCdeInstance;
@@ -365,8 +366,12 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            NouvelleDemande nd = new NouvelleDemande(user);
-            fen.RenewContener(nd.getPanel());
+            
+            NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
+
+        getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+            
+            
         }
     }
 

@@ -39,9 +39,12 @@ public class DemandeDetail extends KContainer {
 
     List<DetailDmd> dd;
     int demande_id;
+    private Fenetre fen = Fenetre.getInstance();
     JLabel title = new JLabel();
     private JProgressBar progressBar;
     JButton newDevisBtn = new JButton();
+    public UserActif user;
+    public int idDemande;
 
     public DemandeDetail(int id) {
         super();
@@ -133,8 +136,8 @@ public class DemandeDetail extends KContainer {
         ab5.setBackground(Color.white);
         
         newDevisBtn.setText("Créer un devis");
-        
-     //       newDevisBtn.addActionListener(new DemandeDetail.createdevisListener());
+        idDemande = dd.get(0).getDemandeid();
+            newDevisBtn.addActionListener(new DemandeDetail.createdevisListener());
         JPanel ab7 = new JPanel();
         ab7.setLayout(new BoxLayout(ab7, BoxLayout.LINE_AXIS));
         ab7.setPreferredSize(new Dimension(600,60));
@@ -203,6 +206,23 @@ public class DemandeDetail extends KContainer {
         content.add(listeDmd);
         content.add(detailDmd);
         this.panel.add(content);
+        user = new UserActif("admin");
+    }
+    
+     private class createdevisListener implements ActionListener {
+
+        public createdevisListener() {
+        }
+
+    //    @Override
+        public void actionPerformed(ActionEvent e) {
+
+//            JOptionPane jop4 = new JOptionPane();
+//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("devis pour demande n° :" + idDemande);
+            Createdevis devisForm = new Createdevis(user, idDemande);
+            fen.RenewContener(devisForm.getPanel());
+        }
     }
 
     private static class RetourListenerDmd implements ActionListener {
