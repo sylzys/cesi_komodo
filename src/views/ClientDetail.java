@@ -76,7 +76,7 @@ public class ClientDetail extends KContainer {
     protected void initPanel() {
         BackgroundPanel content = new BackgroundPanel();
 
-        //LightPanelS
+        //WhitePanelS
         WhitePanel cliInfos = new WhitePanel(),
                 top = new WhitePanel(),
                 bottom = new WhitePanel(),
@@ -276,7 +276,7 @@ public class ClientDetail extends KContainer {
 
             bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
-            //LightPanel pour accordeons
+            //WhitePanel pour accordeons
 
             //suivi satisfaction
             WhitePanel suivi_satisfaction = new WhitePanel();
