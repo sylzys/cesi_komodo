@@ -67,7 +67,7 @@ public class DemandelistModel extends AbstractTableModel {
                 return demandes.get(rowIndex).getDemandeetat();
 
             case 999:
-                return demandes.get(rowIndex).getCliid();
+                return demandes.get(rowIndex).getDemandeid();
 
             default:
                 throw new IllegalArgumentException();
