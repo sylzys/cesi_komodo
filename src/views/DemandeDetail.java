@@ -133,6 +133,8 @@ public class DemandeDetail extends KContainer {
         ab5.setBackground(Color.white);
         
         newDevisBtn.setText("Créer un devis");
+        
+     //       newDevisBtn.addActionListener(new DemandeDetail.createdevisListener());
         JPanel ab7 = new JPanel();
         ab7.setLayout(new BoxLayout(ab7, BoxLayout.LINE_AXIS));
         ab7.setPreferredSize(new Dimension(600,60));
