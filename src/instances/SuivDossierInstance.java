@@ -5,8 +5,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import models.Demande;
 import models.Suivdossier;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -17,6 +19,7 @@ public class SuivDossierInstance {
     private List<Suivdossier> suivdossier;
     private String where;
     private Hashtable h;
+    private Suivdossier suivdoss;
     
     private SuivDossierInstance() {
         super();
@@ -36,6 +39,11 @@ public class SuivDossierInstance {
         this.h = h;
         chargerDepuisBaseDeDonnees();
         return suivdossier;
+    }
+    
+    
+    public synchronized void setSuivDossier(Suivdossier suivdossier) {
+        this.suivdoss = suivdossier;
     }
     
     private void chargerDepuisBaseDeDonnees() {
@@ -80,6 +88,31 @@ public class SuivDossierInstance {
             System.out.println(e.getMessage());
         }
 
+    }
+    
+    
+    
+     public void ajouterDansBaseDeDonnées() {
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+
+            HibernateConnection.getSession().save(this.suivdoss);
+            // System.out.println(tx.wasCommitted());       
+            tx.commit();
+            System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if (HibernateConnection.online == false)
+            {
+//                Synchro writereq = new Synchro();
+//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
     
 }

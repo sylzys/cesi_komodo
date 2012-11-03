@@ -25,14 +25,47 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import models.Client;
+<<<<<<< HEAD
 import classes.WhitePanel;
 /**
  *
  * @author sylv
  */
 public class NouvelleDemande extends KContainer {
+=======
+import classes.LightPanel;
+import controllers.getDemandeInfos;
+import instances.DemandeInstance;
+import instances.InterlocuteurInstance;
+import instances.SuivDossierInstance;
+import java.util.Hashtable;
+import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.border.EmptyBorder;
+import models.Demande;
+import models.Interlocuteur;
+import models.Suivdossier;
+import controllers.getLoginInfos;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.List;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
+public class NouvelleDemande extends JDialog {
+>>>>>>> fef236312b5d561770299081268e3f4b431a8223
+
+    private getDemandeInfos zInfo = new getDemandeInfos();
+    private boolean sendData;
+    
     JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
+<<<<<<< HEAD
     WhitePanel left = new WhitePanel(),
             right = new WhitePanel();
     JTextField cli_nom = new JTextField(),
@@ -61,20 +94,45 @@ public class NouvelleDemande extends KContainer {
             lbl_clisiret = new JLabel("SIREN *"),
             lbl_clisiren = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
+=======
+    LightPanel left = new LightPanel(),
+            right = new LightPanel();
+    JTextField suivdoscom = new JTextField(),
+            suivdostitre = new JTextField(),
+            interid = new JTextField();
+          
+    JLabel lbl_titre = new JLabel("Intitulé de la demande"),
+            lbl_comm = new JLabel("Commentaire"),
+            lbl_interlo = new JLabel("Interlocuteur");
+    private int dmd_id;
+    private List<Demande> dmd;
 
-    public NouvelleDemande(UserActif user) {
-        super();
-        this.user = user;
-        initPanel();
+    public NouvelleDemande(JFrame parent, String title, boolean modal, int id) {
+        super(parent, title, modal);
+        this.setSize(650, 500);
+        this.setLocationRelativeTo(null);
+        this.dmd_id = id;
+        //this.cli_id = cli_id;
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.initComponent();
+    }
+>>>>>>> fef236312b5d561770299081268e3f4b431a8223
+
+    public getDemandeInfos showZDialog(int id) {
+        this.sendData = false;
+        this.setVisible(true);
+        return this.zInfo;
     }
 
-    @Override
-    protected void initPanel() {
-        BackgroundPanel content = new BackgroundPanel();
+    private void initComponent() {
+        
+        JPanel content = new JPanel();
+        content.setBackground(Color.white);
+        content.setPreferredSize(new Dimension(620, 600));
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        content.setLayout(new FlowLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
-        content.setBackground(Color.WHITE);
         //LEFT PANEL
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
         left.setPreferredSize(new Dimension(400, 450));
@@ -82,31 +140,32 @@ public class NouvelleDemande extends KContainer {
         WhitePanel nom = new WhitePanel();
         nom.setBackground(Color.WHITE);
         nom.setLayout(new FlowLayout());
-        nom.add(lbl_clinom);
-        cli_nom.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        cli_nom.setPreferredSize(new Dimension(200, 30));
-        nom.add(cli_nom);
+        nom.add(lbl_titre);
+        suivdostitre.setAlignmentX(Box.RIGHT_ALIGNMENT);
+        suivdostitre.setPreferredSize(new Dimension(200, 30));
+        nom.add(suivdostitre);
         left.add(nom);
         left.add(Box.createVerticalStrut(30));
         //addr
         WhitePanel addr = new WhitePanel();
         addr.setBackground(Color.WHITE);
         addr.setLayout(new FlowLayout());
-        addr.add(lbl_cliadd);
-        cli_add.setPreferredSize(new Dimension(200, 30));
-        cli_add.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        addr.add(cli_add);
+        addr.add(lbl_interlo);
+        interid.setPreferredSize(new Dimension(200, 30));
+        interid.setAlignmentX(Box.RIGHT_ALIGNMENT);
+        addr.add(interid);
         left.add(addr);
         //cp ville
         WhitePanel cp = new WhitePanel();
         cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
-        cp.add(lbl_clicp);
-        cli_cp.setPreferredSize(new Dimension(200, 30));
-        cli_cp.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        cp.add(cli_cp);
+        cp.add(lbl_comm);
+        suivdoscom.setPreferredSize(new Dimension(200, 30));
+        suivdoscom.setAlignmentX(Box.RIGHT_ALIGNMENT);
+        cp.add(suivdoscom);
         left.add(cp);
         left.add(Box.createVerticalStrut(30));
+<<<<<<< HEAD
         //tel
         WhitePanel tel = new WhitePanel();
         tel.setBackground(Color.WHITE);
@@ -144,10 +203,18 @@ public class NouvelleDemande extends KContainer {
         cli_site.setAlignmentX(Box.RIGHT_ALIGNMENT);
         web.add(cli_site);
         left.add(web);
+=======
+      
+       // panInfos.add(left);
+>>>>>>> fef236312b5d561770299081268e3f4b431a8223
+
+        content.setBackground(Color.white);
+        content.setBorder(new EmptyBorder(20, 30, 0, 10));
+        content.setLayout(new BorderLayout());
+        content.add(left, BorderLayout.WEST);
 
 
-        //RIGHT PANEL
-
+<<<<<<< HEAD
         right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
         right.setPreferredSize(new Dimension(400, 450));
         //dirigeant
@@ -213,99 +280,87 @@ public class NouvelleDemande extends KContainer {
         val.addActionListener(new saveListener());
         val.setHorizontalAlignment(SwingConstants.CENTER);
         right.add(val);
+=======
+        JPanel control = new JPanel();
+        JButton okBouton = new JButton("OK");
+        //recupere infos BDD
+        System.out.println("DIALOG SHOWING INTER ID " + dmd_id);
+        DemandeInstance dmdInstance = DemandeInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("interid", dmd_id);
+        dmd = dmdInstance.GetDemandes("where demandeid = :demandeid", h);
+>>>>>>> fef236312b5d561770299081268e3f4b431a8223
 
-        content.add(left);
-        content.add(right);
-        this.panel.add(content);
+        okBouton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+               
+                    addToDataBase();
+                    setVisible(false);
+            }
+        });
+
+        JButton cancelBouton = new JButton("Annuler");
+        cancelBouton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                zInfo = new getDemandeInfos();
+                setVisible(false);
+            }
+        });
+
+        control.add(okBouton);
+        control.add(cancelBouton);
+
+        this.getContentPane().add(content, BorderLayout.CENTER);
+        this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 
-    private class saveListener implements ActionListener {
+    private void disable_all() {
+//        nom.setDisabledTextColor(Color.black);
+//        nom.setEnabled(false);
+//        prenom.setDisabledTextColor(Color.black);
+//        prenom.setEnabled(false);
+//        tel.setDisabledTextColor(Color.black);
+//        tel.setEnabled(false);
+//        fax.setDisabledTextColor(Color.black);
+//        fax.setEnabled(false);
+//        mail.setDisabledTextColor(Color.black);
+//        mail.setEnabled(false);
+//        btn_cancel.setEnabled(false);
+    }
 
-        public saveListener() {
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String str = check_fields();
-            if (str == "")
-            {
-                add_customer();
-                
-            }
-            else
-            {
-                System.out.println("Champs NOK -> ");
-                JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);            
-            }
-        }
-
-        private void add_customer() {
-            //remplir client
-            Client cli = new Client();
-            cli.setClinom(cli_nom.getText());
-            cli.setCliadresse(cli_add.getText());
-            cli.setClicp(cli_cp.getText().substring(0,4));
-            cli.setCliville(cli_cp.getText().substring(5, cli_cp.getText().length()));
-            cli.setClitel(cli_tel.getText());
-            cli.setClifax(cli_fax.getText());
-            cli.setClimail(cli_mail.getText());
-            cli.setClisite(cli_site.getText());
-            cli.setClidg(cli_dir.getText());
-            cli.setClinaf(cli_naf.getText());
-            cli.setClisiren(cli_siren.getText());
-            cli.setClisiret(cli_siret.getText());
-            cli.setCliactivite(cli_act.getText());
-            cli.setClica(Integer.parseInt(cli_ca.getText()));
+    private void enable_all() {
+//        nom.setDisabledTextColor(Color.black);
+//        nom.setEnabled(true);
+//        prenom.setDisabledTextColor(Color.black);
+//        prenom.setEnabled(true);
+//        tel.setDisabledTextColor(Color.black);
+//        tel.setEnabled(true);
+//        fax.setDisabledTextColor(Color.black);
+//        fax.setEnabled(true);
+//        mail.setDisabledTextColor(Color.black);
+//        mail.setEnabled(true);
+//        btn_cancel.setEnabled(true);
+    }
+    
+    private void addToDataBase() {
+ Demande dmde = new Demande();
+            dmde.setCliid(1);
+            dmde.setUtiid(1);
+            dmde.setDemandeetat(20);
+            dmde.setDemandesuppr(false);
             
-            ClientInstance cli_inst = ClientInstance.getInstance();
-            cli_inst.setClient(cli);
-            //inserer client
-            cli_inst.ajouterDansBaseDeDonnées();
-        }
-    }
-
-    private String check_fields() {
-        String str = "";
-        System.out.println("NOM -> " + cli_nom.getText());
-        if (Strings.isNullOrEmpty(cli_nom.getText()) || cli_nom.getText().trim().isEmpty())
-        {
-            // System.out.println("EMPTY STRING");
-            str += "<html>Le champ <i>Nom Société</i> ne peut être vide<br />";
-        }
-        if (Strings.isNullOrEmpty(cli_add.getText()) || cli_add.getText().trim().isEmpty())
-        {
-            str += "<html>Le champ <i>N° - Rue</i> ne peut être vide<br />";
-        }
-        if (Strings.isNullOrEmpty(cli_cp.getText()) || cli_cp.getText().trim().isEmpty())
-        {
-            str += "<html>Le champ <i>CP - Ville</i> ne peut être vide<br />";
-        }
-        if (Strings.isNullOrEmpty(cli_tel.getText()) || cli_tel.getText().trim().isEmpty())
-        {
-            str += "<html>Le champ <i>Téléphone</i> ne peut être vide<br />";
-        }
-        if (Strings.isNullOrEmpty(cli_act.getText()) || cli_act.getText().trim().isEmpty())
-        {
-            str += "<html>Le champ <i>Activité</i> ne peut être vide<br />";
-        }
-        if (Strings.isNullOrEmpty(cli_siren.getText()) || cli_siren.getText().trim().isEmpty())
-        {
-            str += "<html>Le champ <i>SIREN</i> ne peut être vide<br />";
-        }
-        if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
-        {
-            try
-            {
-                double d = Double.parseDouble(cli_ca.getText());
-            }
-            catch (NumberFormatException nfe)
-            {
-                str += "<html>Le champ <i>Chiffre d'Affaire</i> doit être une valeur numérique<br />";
-            }
-        }
-       if (!Strings.isNullOrEmpty(str))
-           str += "</html>";
-        return str;
+            Suivdossier svidossier = new Suivdossier();
+            svidossier.setUtiid(1);
+            svidossier.setInterid(1);
+            svidossier.setSuivdoscom(suivdoscom.getText());
+            svidossier.setSuividossuppr(false);
+            
+            DemandeInstance dmd_inst = DemandeInstance.getInstance();
+            SuivDossierInstance suivd_inst = SuivDossierInstance.getInstance();
+            dmd_inst.setDemandes(dmde);
+            suivd_inst.setSuivDossier(svidossier);
+            //inserer demande et suivi dossier
+            dmd_inst.ajouterDansBaseDeDonnées();
+            suivd_inst.ajouterDansBaseDeDonnées();
     }
 }

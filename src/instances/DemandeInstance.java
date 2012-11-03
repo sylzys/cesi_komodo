@@ -1,5 +1,7 @@
 package instances;
 
+import controllers.Synchro;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -7,7 +9,9 @@ import java.util.List;
 import java.util.Set;
 import models.Client;
 import models.Demande;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 public class DemandeInstance {
 
@@ -15,6 +19,7 @@ public class DemandeInstance {
     private List<Demande> demandes;
     private String where;
     private Hashtable h;
+    private Demande demande;
 
     /**
      * Constructeur prive
@@ -43,6 +48,12 @@ public class DemandeInstance {
         chargerDepuisBaseDeDonnees();
         return demandes;
     }
+    
+    public synchronized void setDemandes(Demande dmd) {
+        this.demande = dmd;
+    }
+    
+    
 
     /**
      * Bouchon.
@@ -92,4 +103,32 @@ public class DemandeInstance {
         }
 
     }
+    
+    
+    public void ajouterDansBaseDeDonnées() {
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+
+            HibernateConnection.getSession().save(this.demande);
+            // System.out.println(tx.wasCommitted());       
+            tx.commit();
+            System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if (HibernateConnection.online == false)
+            {
+//                Synchro writereq = new Synchro();
+//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
+    
+    
 }
