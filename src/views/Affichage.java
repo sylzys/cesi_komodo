@@ -28,7 +28,7 @@ import org.hibernate.Query;
  * @author sylv
  */
 public class Affichage extends KContainer {
-    JLabel title = new JLabel ("PANNEAU AFFICHAGE");
+    JLabel title = new JLabel ("Liste des sociétés");
     public List<Client_Comm> liste;
     
     public Affichage(UserActif user) {
