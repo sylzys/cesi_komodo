@@ -14,16 +14,17 @@
   <property name="format_sql">true</property>
   <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
-  <mapping class="models.Utilisateur"/>
+ <mapping class="models.Utilisateur"/>
   <mapping class="models.Client"/>
-  <mapping class="models.ClientComm"/>
+  <mapping class="models.Client_Comm"/>
   <mapping class="models.Suivdossier"/>
   <mapping class="models.Demande"/>
   <mapping class="models.Devis"/>
   <mapping class="models.Commande"/>
   <mapping class="models.DetailCommande"/>
-  <mapping class="models.DetailDmd"/>
   <mapping class="models.GetAlerte"/>
+  <mapping class="models.Interlocuteur"/>
+  <mapping class="models.DetailDmd"/>
   <mapping class="models.Interlocuteur"/>
 </session-factory>
 </hibernate-configuration>
