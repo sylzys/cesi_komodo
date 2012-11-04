@@ -164,7 +164,7 @@ public class SynchroView extends KContainer {
         {
             title.setPreferredSize(new Dimension(350,100));
             title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=red>"
-                    + "Vous n'avez auncune action à sauvegarder</p><center></html>");
+                    + "Vous n'avez aucune action à sauvegarder</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
         } 
 

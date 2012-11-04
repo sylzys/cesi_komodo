@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 import models.Client;
 import models.Commande;
 import models.Interlocuteur;
-import views.ProgressBarAtt;
+import views.ReplicView;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
