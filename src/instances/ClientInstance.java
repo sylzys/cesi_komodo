@@ -128,7 +128,16 @@ Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_va
             if (HibernateConnection.online == false)
             {
                 Synchro writereq = new Synchro();
-                writereq.SaveReq("INSERT INTO client (clinom) VALUES ('" + this.client.getClinom() + "')", -1, this.client.getClinom());
+                writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
+                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren)"
+                        + " VALUES ("+this.client.getUtiid()+","+this.client.getUti_utiid()+","
+                        + "'"+this.client.getClinom()+"','"+this.client.getCliadresse()+"','"+this.client.getClicp()+"','"
+                        + ""+this.client.getClitel()+"','"+this.client.getClifax()+"','"
+                        + ""+this.client.getClimail()+"','"+this.client.getCliactivite()+"','"+this.client.getClisiret()+"',"+this.client.getClica()+",'"
+                        + ""+this.client.getClisite()+"','"+this.client.getClidg()+"',"+this.client.getClietat()+","
+                        + ""+this.client.isCliacces()+",'"+this.client.getClinaf()+"','"
+                        + ""+this.client.getClisiren()+"')"
+                        + "", -1, this.client.getClinom());
             }
         }
         catch (HibernateException | IOException e)
