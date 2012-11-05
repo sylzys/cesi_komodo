@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import models.Client;
 import models.Commande;
+import models.CurrentDatas;
 import models.Interlocuteur;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -136,7 +137,9 @@ public class InterlocuteurInstance {
            if (HibernateConnection.online == false)
             {
                 Synchro writereq = new Synchro();
-                String cliname = writereq.cliNom(inter.getCliid());
+                CurrentDatas cli = new CurrentDatas();
+                int cliid = cli.getSoc_id();
+                String cliname = writereq.cliNom(cliid);
                 writereq.SaveReq("INSERT INTO interlocuteur (utiid, cliid, internom, interprenom, intermail, intertel, "
                         + "interposte, interdteadd, intersuppr)"
                         + " VALUES ("+inter.getUtiid()+","+inter.getCliid()+",'"+inter.getInternom()+"','"
