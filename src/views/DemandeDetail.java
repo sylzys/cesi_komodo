@@ -185,7 +185,7 @@ public class DemandeDetail extends KContainer {
         
         centertop_right.setBackground(Color.white);
         ld.setPreferredSize(new Dimension(320, 240));
-         listeDevis.setPreferredSize(new Dimension(320, 240));
+         listeDevis.setPreferredSize(new Dimension(300, 240));
         listeDevis.add(ld.showtable(ModelesTables.DEVIS,dd.get(0).getDemandeid()), BorderLayout.CENTER);
          listeDmd.add(cp.showtable(ModelesTables.DEMANDELIST,dd.get(0).getCliid()), BorderLayout.CENTER);
         right.setLayout(new BorderLayout());

@@ -21,7 +21,7 @@ public class DevisModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Id Devis", "Etat", "Date",  "Prix"
+        "N°", "Etat", "Date",  "Prix"
     };
     private List<Devis> devis;
 
