@@ -4,6 +4,8 @@
  */
 package models;
 
+import controllers.UserActif;
+
 
 /**
  *
@@ -11,6 +13,9 @@ package models;
  */
 public class CurrentDatas {
     int soc_id;
+    UserActif user;
+
+    
     
    public static CurrentDatas instance;
    
@@ -33,5 +38,13 @@ public class CurrentDatas {
         }
         //System.out.println("INSTANCE :"+instance);
         return instance;
+    }
+    
+    public UserActif getUser() {
+        return user;
+    }
+
+    public void setUser(UserActif user) {
+        this.user = user;
     }
 }

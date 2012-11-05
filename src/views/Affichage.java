@@ -24,6 +24,7 @@ import models.Client_Comm;
 import classes.BackgroundPanel;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Hashtable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import models.ModelesTables;
@@ -75,7 +76,9 @@ public class Affichage extends KContainer {
     }
     private void getCompanyList(){
         clientCommInstance cci = clientCommInstance.getInstance();
-        this.liste = cci.GetClients("", null);
+        Hashtable h = new Hashtable();
+        h.put("utiid", user.getId());
+        this.liste = cci.GetClients(" where utiid = :utiid", h);
 
    }
        

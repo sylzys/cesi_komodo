@@ -401,7 +401,7 @@ public class ClientDetail extends KContainer {
     }
 
     public void addInterlocuteur(int cli_id) {
-
+        //TODO : inserer l'utiid
         addInterlocuteurDialog addInter = new addInterlocuteurDialog(null, "Ajouter un interlocuteur", true, cli_id);
 
         getInterlocuteurInfos interInfos = addInter.showZDialog(cli_id);
@@ -430,7 +430,6 @@ public class ClientDetail extends KContainer {
             }
             ClientDetail cd = new ClientDetail(cli_id);
         }
-    }
-    
+    } 
     
 }

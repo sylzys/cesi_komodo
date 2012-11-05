@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import models.CurrentDatas;
 
 /**
  *
@@ -89,6 +90,8 @@ public class Fenetre extends JFrame {
 //        }
         //menu
         user = new UserActif("admin");
+        CurrentDatas cd = CurrentDatas.getInstance();
+        cd.setUser(user);
         afficher.addActionListener(new DisplayListener());
         this.societes.add(afficher);
         creer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,

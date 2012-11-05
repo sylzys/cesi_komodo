@@ -74,7 +74,7 @@ public class ClientInstance {
         {
             sql += where;
         }
-Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
+
         try
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");

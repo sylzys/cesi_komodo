@@ -31,8 +31,8 @@ public class ClientCommModel extends AbstractTableModel {
         super();
         clientCommInstance CliCommInstance = clientCommInstance.getInstance();
         Hashtable h = new Hashtable();
-        h.put("utiid", id);
-        clients = CliCommInstance.GetClients("where utiid = :utiid", h);
+        h.put("uti_utiid", id);
+        clients = CliCommInstance.GetClients("where uti_utiid = :uti_utiid", h);
     }
 
     @Override

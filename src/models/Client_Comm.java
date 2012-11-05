@@ -14,6 +14,9 @@ public class Client_Comm {
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private int utiid ;
 
+    @Column(name="uti_utiid", columnDefinition="INTEGER", nullable=true)
+    private int uti_utiid ;
+    
     @Column(name="clirais", columnDefinition="CHAR(10)", nullable=true)
     private String clirais ;
 
@@ -141,4 +144,13 @@ public class Client_Comm {
     public void setCliacces(boolean cliacces) {
         this.cliacces = cliacces;
     }
+
+    public int getUti_utiid() {
+        return uti_utiid;
+    }
+
+    public void setUti_utiid(int uti_utiid) {
+        this.uti_utiid = uti_utiid;
+    }
+    
 }
