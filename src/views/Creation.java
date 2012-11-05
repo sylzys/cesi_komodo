@@ -4,26 +4,36 @@
  */
 package views;
 
+import classes.BackgroundPanel;
 import com.google.common.base.Strings;
 import controllers.UserActif;
 import instances.ClientInstance;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import models.Client;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 
 /**
  *
@@ -31,7 +41,7 @@ import models.Client;
  */
 public class Creation extends KContainer {
 
-    JLabel title = new JLabel("PANNEAU CREATION");
+    JLabel title = new JLabel("Créer un nouveau client");
     JPanel left = new JPanel(),
             right = new JPanel();
     JTextField cli_nom = new JTextField(),
@@ -69,17 +79,17 @@ public class Creation extends KContainer {
 
     @Override
     protected void initPanel() {
-        JPanel content = new JPanel();
+        BackgroundPanel content = new BackgroundPanel();
 
         content.setLayout(new FlowLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
-        content.setBackground(Color.WHITE);
+        //content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
+        //content.setBackground(Color.WHITE);
         //LEFT PANEL
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
         left.setPreferredSize(new Dimension(400, 450));
         //nom ste
         JPanel nom = new JPanel();
-        nom.setBackground(Color.WHITE);
+        //nom.setBackground(Color.WHITE);
         nom.setLayout(new FlowLayout());
         nom.add(lbl_clinom);
         cli_nom.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -89,7 +99,7 @@ public class Creation extends KContainer {
         left.add(Box.createVerticalStrut(30));
         //addr
         JPanel addr = new JPanel();
-        addr.setBackground(Color.WHITE);
+        //addr.setBackground(Color.WHITE);
         addr.setLayout(new FlowLayout());
         addr.add(lbl_cliadd);
         cli_add.setPreferredSize(new Dimension(200, 30));
@@ -98,7 +108,7 @@ public class Creation extends KContainer {
         left.add(addr);
         //cp ville
         JPanel cp = new JPanel();
-        cp.setBackground(Color.WHITE);
+        // cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
         cp.add(lbl_clicp);
         cli_cp.setPreferredSize(new Dimension(200, 30));
@@ -108,7 +118,7 @@ public class Creation extends KContainer {
         left.add(Box.createVerticalStrut(30));
         //tel
         JPanel tel = new JPanel();
-        tel.setBackground(Color.WHITE);
+        //tel.setBackground(Color.WHITE);
         tel.setLayout(new FlowLayout());
         tel.add(lbl_clitel);
         cli_tel.setPreferredSize(new Dimension(200, 30));
@@ -117,7 +127,7 @@ public class Creation extends KContainer {
         left.add(tel);
         //fax
         JPanel fax = new JPanel();
-        fax.setBackground(Color.WHITE);
+        // fax.setBackground(Color.WHITE);
         fax.setLayout(new FlowLayout());
         fax.add(lbl_clifax);
         cli_fax.setPreferredSize(new Dimension(200, 30));
@@ -127,7 +137,7 @@ public class Creation extends KContainer {
         left.add(Box.createVerticalStrut(30));
         //mail
         JPanel mail = new JPanel();
-        mail.setBackground(Color.WHITE);
+        // mail.setBackground(Color.WHITE);
         mail.setLayout(new FlowLayout());
         mail.add(lbl_climail);
         cli_mail.setPreferredSize(new Dimension(200, 30));
@@ -136,7 +146,7 @@ public class Creation extends KContainer {
         left.add(mail);
         //fax
         JPanel web = new JPanel();
-        web.setBackground(Color.WHITE);
+        // web.setBackground(Color.WHITE);
         web.setLayout(new FlowLayout());
         web.add(lbl_clisite);
         cli_site.setPreferredSize(new Dimension(200, 30));
@@ -151,7 +161,7 @@ public class Creation extends KContainer {
         right.setPreferredSize(new Dimension(400, 450));
         //dirigeant
         JPanel dir = new JPanel();
-        dir.setBackground(Color.WHITE);
+        //   dir.setBackground(Color.WHITE);
         dir.setLayout(new FlowLayout());
         dir.add(lbl_clidir);
         cli_dir.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -161,7 +171,7 @@ public class Creation extends KContainer {
         right.add(Box.createVerticalStrut(30));
         //addr
         JPanel naf = new JPanel();
-        naf.setBackground(Color.WHITE);
+        //  naf.setBackground(Color.WHITE);
         naf.setLayout(new FlowLayout());
         naf.add(lbl_clinaf);
         cli_naf.setPreferredSize(new Dimension(200, 30));
@@ -170,7 +180,7 @@ public class Creation extends KContainer {
         right.add(naf);
         //activité
         JPanel act = new JPanel();
-        act.setBackground(Color.WHITE);
+        // act.setBackground(Color.WHITE);
         act.setLayout(new FlowLayout());
         act.add(lbl_cliact);
         cli_act.setPreferredSize(new Dimension(200, 30));
@@ -180,7 +190,7 @@ public class Creation extends KContainer {
         right.add(Box.createVerticalStrut(30));
         //siren
         JPanel siren = new JPanel();
-        siren.setBackground(Color.WHITE);
+        // siren.setBackground(Color.WHITE);
         siren.setLayout(new FlowLayout());
         siren.add(lbl_clisiren);
         cli_siren.setPreferredSize(new Dimension(200, 30));
@@ -189,7 +199,7 @@ public class Creation extends KContainer {
         right.add(siren);
         //siret
         JPanel siret = new JPanel();
-        siret.setBackground(Color.WHITE);
+        //   siret.setBackground(Color.WHITE);
         siret.setLayout(new FlowLayout());
         siret.add(lbl_clisiret);
         cli_siret.setPreferredSize(new Dimension(200, 30));
@@ -199,7 +209,7 @@ public class Creation extends KContainer {
         right.add(Box.createVerticalStrut(30));
         //CA
         JPanel ca = new JPanel();
-        ca.setBackground(Color.WHITE);
+        // ca.setBackground(Color.WHITE);
         ca.setLayout(new FlowLayout());
         ca.add(lbl_clica);
         cli_ca.setPreferredSize(new Dimension(200, 30));
@@ -212,10 +222,19 @@ public class Creation extends KContainer {
         val.addActionListener(new saveListener());
         val.setHorizontalAlignment(SwingConstants.CENTER);
         right.add(val);
+        JLabel icon = new JLabel(new ImageIcon("ressources/images/new_client.jpg"));
+        icon.setOpaque(false);
 
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setBorder(new EmptyBorder(0, 0, 10, 0));
+        Font f = new Font("Euphemia", Font.PLAIN, 22);
+        title.setFont(f);
+        title.setPreferredSize(new Dimension(1000, 30));
+        this.panel.add(icon, BorderLayout.PAGE_START);
         content.add(left);
         content.add(right);
-        this.panel.add(content);
+        this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
+        this.panel.add(content, BorderLayout.PAGE_END);
     }
 
     private class saveListener implements ActionListener {
@@ -229,44 +248,64 @@ public class Creation extends KContainer {
             if (str == "")
             {
                 add_customer();
-                
+
             }
             else
             {
                 System.out.println("Champs NOK -> ");
                 JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);            
+                jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
 
     private void add_customer() {
-            //remplir client
-            Client cli = new Client();
-            cli.setClinom(cli_nom.getText());
-            cli.setCliadresse(cli_add.getText());
-            cli.setClicp(cli_cp.getText().substring(0,4));
-            cli.setCliville(cli_cp.getText().substring(5, cli_cp.getText().length()));
-            cli.setClitel(cli_tel.getText());
-            cli.setClifax(cli_fax.getText());
-            cli.setClimail(cli_mail.getText());
-            cli.setClisite(cli_site.getText());
-            cli.setClidg(cli_dir.getText());
-            cli.setClinaf(cli_naf.getText());
-            cli.setClisiren(cli_siren.getText());
-            cli.setClisiret(cli_siret.getText());
-            cli.setCliactivite(cli_act.getText());
-            cli.setUtiid(this.user.getId());
-            cli.setUti_utiid(this.user.getId());
-            if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
-                cli.setClica(Integer.parseInt(cli_ca.getText()));
-            
-            ClientInstance cli_inst = ClientInstance.getInstance();
-            cli_inst.setClient(cli);
-            //inserer client
-            cli_inst.ajouterDansBaseDeDonnées();
+        //remplir client
+        Client cli = new Client();
+        cli.setClinom(cli_nom.getText());
+        cli.setCliadresse(cli_add.getText());
+        cli.setClicp(cli_cp.getText().substring(0, 4));
+        cli.setCliville(cli_cp.getText().substring(5, cli_cp.getText().length()));
+        cli.setClitel(cli_tel.getText());
+        cli.setClifax(cli_fax.getText());
+        cli.setClimail(cli_mail.getText());
+        cli.setClisite(cli_site.getText());
+        cli.setClidg(cli_dir.getText());
+        cli.setClinaf(cli_naf.getText());
+        cli.setClisiren(cli_siren.getText());
+        cli.setClisiret(cli_siret.getText());
+        cli.setCliactivite(cli_act.getText());
+        cli.setUtiid(this.user.getId());
+        cli.setUti_utiid(this.user.getId());
+        cli.setClidteadd(Calendar.getInstance().getTime());
+        if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
+        {
+            cli.setClica(Integer.parseInt(cli_ca.getText()));
         }
-    
+
+        ClientInstance cli_inst = ClientInstance.getInstance();
+        cli_inst.setClient(cli);
+        //inserer client
+        Boolean is_ok = cli_inst.ajouterDansBaseDeDonnées();
+        String str = is_ok ? "L'ajout du client a été effectué" : "L'ajout du client a échoué";
+        JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.ERROR_MESSAGE);
+        HibernateConnection connection = HibernateConnection.getInstance();
+        Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
+        // System.out.println ("Recorded client ID :" + query.uniqueResult());
+        int last_value = ((BigInteger) query.uniqueResult()).intValue();
+
+        int go_to = last_value - 1;
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        ClientDetail cd = new ClientDetail(go_to);
+    }
+
     private String check_fields() {
         String str = "";
         System.out.println("NOM -> " + cli_nom.getText());
@@ -306,8 +345,10 @@ public class Creation extends KContainer {
                 str += "<html>Le champ <i>Chiffre d'Affaire</i> doit être une valeur numérique<br />";
             }
         }
-       if (!Strings.isNullOrEmpty(str))
-           str += "</html>";
+        if (!Strings.isNullOrEmpty(str))
+        {
+            str += "</html>";
+        }
         return str;
     }
 }

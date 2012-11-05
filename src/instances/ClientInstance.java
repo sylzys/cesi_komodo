@@ -78,20 +78,7 @@ Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_va
         try
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
-            //query.setParameter("utiid", 1);
-//            try
-//        {
-//            if (HibernateConnection.online == false)
-//        {
-//            HibernateConnection.newConnect(false);
-//        }
-//        else
-//        {
-//            HibernateConnection.newConnect(true);
-//        }   
-//           Transaction tx = HibernateConnection.getSession().beginTransaction();
-//            Query query = HibernateConnection.getSession().createQuery("from Client where cliid = 1");
-            if (!h.isEmpty())
+   if (!h.isEmpty())
             {
                  System.out.println("got parameters");
                 Set<String> set = h.keySet();
@@ -114,7 +101,7 @@ Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_va
 
     }
 
-    public void ajouterDansBaseDeDonnées() {
+    public Boolean ajouterDansBaseDeDonnées() {
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
@@ -139,10 +126,11 @@ Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_va
                         + ""+this.client.getClisiren()+"')"
                         + "", -1, this.client.getClinom());
             }
+            return true;
         }
         catch (HibernateException | IOException e)
         {
-            System.out.println(e.getMessage());
+            return false;
         }
     }
 }
