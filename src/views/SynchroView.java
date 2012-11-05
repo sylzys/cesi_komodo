@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -116,7 +117,7 @@ public class SynchroView extends KContainer {
                 FlowLayout flchk = new FlowLayout();
                 JCheckBox chkbox = new JCheckBox();
                 // utilisation du checkbox avec id
-                CheckBoxData chk = new CheckBoxData(42);
+                CheckBoxData chk = new CheckBoxData(42, "requete");
                 System.out.println(chk.getId());
                 // fin demo utilisation
                 JLabel lblclient = new JLabel(action[0]);

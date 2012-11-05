@@ -221,6 +221,6 @@ public class NouvelleDemande extends JDialog {
            
             svidossier.setDemandeid(value);
             suivd_inst.setSuivDossier(svidossier);
-            suivd_inst.ajouterDansBaseDeDonnées();
+            suivd_inst.add();
     }
 }

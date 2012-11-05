@@ -62,7 +62,7 @@ public class SuivDossierInstance {
         String sql = "from Suivdossier ";
         if (!where.isEmpty())
         {
-            sql += where;
+            sql += " WHERE " + where;
         }
 
         try
@@ -90,9 +90,7 @@ public class SuivDossierInstance {
 
     }
     
-    
-    
-     public void ajouterDansBaseDeDonnées() {
+    public void add() {
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
@@ -115,4 +113,29 @@ public class SuivDossierInstance {
         }
     }
     
+    public void update(Suivdossier alerte) {
+        Transaction tx = null;
+
+        try
+        {
+//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
+//            session = sessionFactory.openSession();
+//            tx = session.beginTransaction();
+            tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+//			  Utilisateur uti = new Utilisateur();
+//			  .setUtiid(10);
+//			  uti.setUtinom("test");
+            //session.update(inter);
+            HibernateConnection.getSession().update(alerte); 
+            tx.commit();
+            System.out.println("Done");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+     
 }

@@ -35,6 +35,25 @@ public class GetAlerte {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date suivdosdate;    
     
+    @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
+    private Boolean suividossuppr;
+
+    public Integer getSuivdosid() {
+        return suivdosid;
+    }
+
+    public void setSuivdosid(Integer suivdosid) {
+        this.suivdosid = suivdosid;
+    }
+
+    public Boolean getSuividossuppr() {
+        return suividossuppr;
+    }
+
+    public void setSuividossuppr(Boolean suividossuppr) {
+        this.suividossuppr = suividossuppr;
+    }
+    
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private Integer utiid;
 

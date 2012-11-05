@@ -9,12 +9,14 @@ import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import models.Commande;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -26,6 +28,8 @@ import org.hibernate.search.query.dsl.QueryBuilder;
  */
 public class Recherche extends KContainer {
     JLabel title = new JLabel ("PANNEAU RECHERCHE");
+    
+    JTextField searchTextField ;
     public Recherche(UserActif user) {
     super();
     this.user = user;
@@ -37,7 +41,7 @@ public class Recherche extends KContainer {
             FullTextSession  fullTextSession = Search.getFullTextSession(session);
             fullTextSession.createIndexer().startAndWait();
 
-            fullTextSession.close();
+            //fullTextSession.close();
         }catch(Exception e)
         {
             System.out.println(e.toString());
@@ -57,7 +61,7 @@ public class Recherche extends KContainer {
         content.add(title, BorderLayout.CENTER);      
         this.panel.add(content);
         //Création du textfield
-        JTextField searchTextField = new JTextField("Tapez un mot:");
+        searchTextField = new JTextField("Tapez un mot:");
         //ajout au panel 
         this.panel.add(searchTextField);
         
@@ -92,17 +96,46 @@ public class Recherche extends KContainer {
         btnSearch.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-            Session session = HibernateConnection.getSession();
-            FullTextSession fullTextSession = Search.getFullTextSession(session);
-
-            QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
-            org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching("plop").createQuery();
-
-            // wrap Lucene query in a javax.persistence.Query
-            org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
-         
+            
+//                try
+//                {
+//                    doIndex();
+//                }
+//                catch(Exception e)
+//                {
+//                    System.out.println(e.getStackTrace().toString());
+//                }
+//                List<Commande> result = search(searchTextField.getText());           
+//            
+//             
+//                for (Commande Commande : result) {
+//                    System.out.println(Commande.getComtitre());
+//                }             
             }            
         });
         this.panel.add(btnSearch);
     }
+//    private List<Commande> search(String query)
+//    {
+//        
+//        Session session = HibernateConnection.getSession();
+//        FullTextSession fullTextSession = Search.getFullTextSession(session);
+//
+//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
+//        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
+//
+//        // wrap Lucene query in a javax.persistence.Query
+//        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
+//        List<Commande> commandes = fullTextQuery.list();
+//        //fullTextSession.close();
+//        return commandes;
+//    }
+//    private static void doIndex() throws InterruptedException {
+//        Session session = HibernateConnection.getSession();
+//         
+//        FullTextSession fullTextSession = Search.getFullTextSession(session);
+//        fullTextSession.createIndexer().startAndWait();
+//         
+//        //fullTextSession.close();
+//    }
 }

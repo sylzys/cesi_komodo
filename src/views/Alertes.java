@@ -8,7 +8,10 @@ import classes.ButtonData;
 import classes.LabelData;
 import classes.LinkLabelData;
 import controllers.UserActif;
+import controllers.getInterlocuteurInfos;
 import instances.AlerteInstance;
+import instances.HibernateConnection;
+import instances.SuivDossierInstance;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
@@ -16,12 +19,17 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.IconUIResource;
 import models.GetAlerte;
+import models.Suivdossier;
 
 /**
  *
@@ -56,12 +64,13 @@ public class Alertes extends KContainer{
         
         // get alertes
         AlerteInstance AlertInstance = AlerteInstance.getInstance();
-        l_alerts = AlertInstance.GetAlertes("", new Hashtable());
+        l_alerts = AlertInstance.GetAlertes("suividossuppr = 'f'", new Hashtable());
         System.out.println("nb_alerts : " + l_alerts.size());
         for (GetAlerte tmp : l_alerts) {
             JPanel jp = new JPanel();
-            jp.setPreferredSize(new Dimension(730, 70));
-            jp.setMinimumSize(new Dimension(730, 70));
+            jp.setPreferredSize(new Dimension(730, 120));
+            jp.setMinimumSize(new Dimension(730, 120));
+            jp.setMaximumSize(new Dimension(730, 120));
             jp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
             Box containerAlert = Box.createVerticalBox();
             containerAlert.add(Box.createVerticalStrut(5));
@@ -91,6 +100,14 @@ public class Alertes extends KContainer{
                     openCmd(evt);
                 }
             });
+            LinkLabelData LblRead = new LinkLabelData("Marquer l'alerte comme lue", tmp.getSuivdosid());
+            LblRead.setIcon(new ImageIcon("ressources/images/check.png"));
+            LblRead.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    readCmd(evt);
+                }
+            });
             containerSte.add(LblSte);
             containerSte.add(Box.createHorizontalStrut(5));
             containerSte.add(new JLabel(">"));
@@ -109,6 +126,10 @@ public class Alertes extends KContainer{
             containerCom.add(Box.createHorizontalStrut(25));
             containerCom.add(new JLabel(tmp.getSuivdoscom()));
             containerAlert.add(containerCom);
+            containerAlert.add(Box.createVerticalStrut(15));
+            Box containerRead = Box.createHorizontalBox();
+            containerRead.add(LblRead);
+            containerAlert.add(containerRead);
             jp.add(containerAlert);
             PanelListPane.add(jp);
             PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -121,14 +142,22 @@ public class Alertes extends KContainer{
     
     private void openSte(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "ouverture de la page societe id => " + lbl_tmp.getId(), "Ouverture page societe", JOptionPane.INFORMATION_MESSAGE);
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        ClientDetail cd = new ClientDetail(lbl_tmp.getId());
     }
     
     private void openInter(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "ouverture de l'inter id => " + lbl_tmp.getId(), "Ouverture page inter", JOptionPane.INFORMATION_MESSAGE);
+        InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, lbl_tmp.getId());
+        System.out.println("SHOWING INTER ID " + lbl_tmp.getId());
+        getInterlocuteurInfos interInfos = interd.showZDialog(lbl_tmp.getId());
     }
     
     private void openCmd(MouseEvent evt) {
@@ -137,11 +166,24 @@ public class Alertes extends KContainer{
         jop.showMessageDialog(null, "ouverture de la commande id/num => " + lbl_tmp.getId(), "Ouverture page commande", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void openKikoo(MouseEvent evt) {
-        //ButtonData btn_tmp = (ButtonData)evt.getSource();
-        //GetAlerte alert_tmp = (GetAlerte)btn_tmp.getDataByKey("alert");
-        //JOptionPane jop = new JOptionPane();
-        //jop.showMessageDialog(null, "Details de l'alerte : suivdosid=>" + alert_tmp.getCliid().toString(), "Details de l'aterte", JOptionPane.INFORMATION_MESSAGE);
+    private void readCmd(MouseEvent evt) {
+        LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
+        
+        SuivDossierInstance AltInstance = SuivDossierInstance.getInstance();
+        Suivdossier alerte;
+        List<Suivdossier> alts = AltInstance.GetSuivDossier("suivdosid = " + lbl_tmp.getId(), new Hashtable());
+        alerte = alts.get(0);
+        alerte.setSuividossuppr(Boolean.TRUE);
+        AltInstance.update(alerte);
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        Fenetre.getInstance().RenewAlert();
     }
     
 }

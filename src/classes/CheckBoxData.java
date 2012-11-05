@@ -4,7 +4,6 @@
  */
 package classes;
 
-import java.util.Hashtable;
 import javax.swing.JCheckBox;
 
 /**
@@ -12,7 +11,7 @@ import javax.swing.JCheckBox;
  * @author BoBo
  */
 public class CheckBoxData extends JCheckBox {
-    Hashtable<String, Object> Data;
+    String Data;
     int Id = -1;
     
     public CheckBoxData() {
@@ -24,16 +23,22 @@ public class CheckBoxData extends JCheckBox {
         Id = id;
     }
     
-    public CheckBoxData(Hashtable<String, Object> data) {
+    public CheckBoxData(String data) {
         super();
         Data = data;
     }
 
-    public Hashtable<String, Object> getData() {
+    public CheckBoxData(Integer id, String data) {
+        super();
+        Id = id;
+        Data = data;
+    }
+
+    public String getData() {
         return Data;
     }
 
-    public void setData(Hashtable<String, Object> Data) {
+    public void setData(String Data) {
         this.Data = Data;
     }
 

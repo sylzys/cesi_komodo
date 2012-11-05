@@ -27,6 +27,7 @@ import models.Commande;
 import models.Interlocuteur;
 import views.ReplicView;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
@@ -249,6 +250,7 @@ public class Synchro {
     //Envoi des requete dans la base en ligne
     public void record()
     {
+        boolean test = false;
         boolean empty = emptyFic();
         if(empty == true)
         {
@@ -275,11 +277,24 @@ public class Synchro {
                     Query q = HibernateConnection.getSession().createSQLQuery(requete);
                     q.executeUpdate();
                     tx.commit();
+                    eraseFic();   
+                    test = true;
+                    Fenetre fen = Fenetre.getInstance();
+                    fen.RenewAccueil();
                 } catch (HibernateException ex) {
-                    System.out.println(ex.toString());
+                    test = false;
+                    System.out.println(ex.toString());                    
                 }  
             }
-            eraseFic();
+            JOptionPane jop = new JOptionPane();
+            if(test == true)
+            {
+                jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation", "Erreur", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 }

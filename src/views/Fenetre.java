@@ -301,6 +301,10 @@ public class Fenetre extends JFrame {
         conteneur.add(panel, BorderLayout.CENTER);
         conteneur.revalidate();
     }
+    public void RenewAlert() {
+        Alertes alt = new Alertes(user);
+        RenewContener(alt.getPanel());
+    }
     public void RenewSnchro() {            
             user = new UserActif("admin");
             if(HibernateConnection.online == false)
