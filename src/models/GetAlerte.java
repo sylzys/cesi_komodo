@@ -8,6 +8,9 @@ public class GetAlerte {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer suivdosid;
+    
+    @Column(name="comid", columnDefinition="INTEGER", nullable=true)
     private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
