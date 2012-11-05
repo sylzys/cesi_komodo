@@ -68,8 +68,8 @@ public class Creation extends KContainer {
             lbl_clidir = new JLabel("Dirigeant"),
             lbl_clinaf = new JLabel("Code NAF"),
             lbl_cliact = new JLabel("Activité *"),
-            lbl_clisiret = new JLabel("SIREN *"),
-            lbl_clisiren = new JLabel("SIRET"),
+            lbl_clisiren = new JLabel("SIREN *"),
+            lbl_clisiret = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
 
     public Creation(UserActif user) {

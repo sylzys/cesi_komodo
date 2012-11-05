@@ -410,6 +410,7 @@ public class ClientDetail extends KContainer {
 
         if ("N/A" != interInfos.toString())
         {
+            CurrentDatas cd = CurrentDatas.getInstance();
             String[] infos = interInfos.toString().split("#-#");
             System.out.println("add inter with cli_id : " + cli_id);
             Interlocuteur i = new Interlocuteur();
@@ -418,6 +419,7 @@ public class ClientDetail extends KContainer {
             i.setInterprenom(infos[1]);
             i.setIntertel(infos[2]);
             i.setIntermail(infos[3]);
+            i.setUtiid(cd.getUser().getId());
             InterlocuteurInstance is = InterlocuteurInstance.getInstance();
             is.insererEnBaseDeDonnées(i);
             if (HibernateConnection.online == false)
@@ -428,7 +430,7 @@ public class ClientDetail extends KContainer {
             {
                 HibernateConnection.newConnect(true);
             }
-            ClientDetail cd = new ClientDetail(cli_id);
+            new ClientDetail(cli_id);
         }
     } 
     
