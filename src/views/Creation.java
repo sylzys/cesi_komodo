@@ -306,8 +306,8 @@ public class Creation extends KContainer {
         }
         CurrentDatas cur_dat = CurrentDatas.getInstance();
         cur_dat.setSoc_id(last_value);
-      //  ClientDetail.addin
         ClientDetail cd = new ClientDetail(last_value);
+        cd.addInterlocuteur(last_value);
     }
 
     private String check_fields() {
