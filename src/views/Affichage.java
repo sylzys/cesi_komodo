@@ -22,6 +22,10 @@ import instances.clientCommInstance;
 import javax.swing.ImageIcon;
 import models.Client_Comm;
 import classes.BackgroundPanel;
+import java.awt.Dimension;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import models.ModelesTables;
 import models.Utilisateur;
 import org.hibernate.Query;
@@ -55,20 +59,24 @@ public class Affichage extends KContainer {
         TableDispatcher cp = new TableDispatcher();
         //;
         content.add(cp.showtable(ModelesTables.CLIENT, 1), BorderLayout.SOUTH);
-        this.panel.add(content);
+         title.setHorizontalAlignment(SwingConstants.CENTER);  
+        title.setBorder(new EmptyBorder(0, 0, 10, 0));
+        Font f = new Font("Euphemia", Font.PLAIN, 22);
+        title.setFont(f); 
+        title.setPreferredSize(new Dimension(1000, 40));
+        
+        JLabel icon = new JLabel(new ImageIcon("ressources/images/liste_client.jpg"));
+        
+        
+        this.panel.add(icon, BorderLayout.PAGE_START);
+        this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
+        this.panel.add(content, BorderLayout.PAGE_END);
+       
     }
     private void getCompanyList(){
         clientCommInstance cci = clientCommInstance.getInstance();
         this.liste = cci.GetClients("", null);
-//       HibernateConnection connection = HibernateConnection.getInstance();
-//        try {
-//                Query query = connection.getSession().createQuery("from Client_comm where utiid = :utiid");
-//                //query.setParameter("utiid", 1);
-//                query.setParameter("utiid", this.user.getId());
-//               this.liste = query.list();
-//        }catch(Exception e){
-           System.out.println("OK, GOT COMPANY LIST");
-//        }
+
    }
        
 }

@@ -294,7 +294,7 @@ public class Creation extends KContainer {
         // System.out.println ("Recorded client ID :" + query.uniqueResult());
         int last_value = ((BigInteger) query.uniqueResult()).intValue();
 
-        int go_to = last_value - 1;
+        
         if (HibernateConnection.online == false)
         {
             HibernateConnection.newConnect(false);
@@ -303,7 +303,7 @@ public class Creation extends KContainer {
         {
             HibernateConnection.newConnect(true);
         }
-        ClientDetail cd = new ClientDetail(go_to);
+        ClientDetail cd = new ClientDetail(last_value);
     }
 
     private String check_fields() {
