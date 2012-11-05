@@ -54,7 +54,7 @@ public class AlerteInstance {
         String sql = "from getalerte ";
         if (!where.isEmpty())
         {
-            sql += where;
+            sql += " WHERE " + where;
         }
 
         try
