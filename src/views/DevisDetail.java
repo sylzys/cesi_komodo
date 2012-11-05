@@ -7,6 +7,8 @@ package views;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.DetailDmdInstance;
+import instances.DevisInstance;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,10 +29,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
+import models.Client;
 import models.DetailDmd;
 import models.ModelesTables;
 import models.CurrentDatas;
 import models.Devis;
+import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -42,10 +47,12 @@ public class DevisDetail extends KContainer {
     int devis_id;
     int demandeId;
     private Fenetre fen = Fenetre.getInstance();
-    JLabel title = new JLabel();
+    JLabel title = new JLabel(), statut_lbl, prix_lbl, date_lbl;
     JButton validate = new JButton();
     JButton refuse = new JButton();
+    JButton Retour = new JButton();
     public UserActif user;
+    public int idDemande;
 
     public DevisDetail(int id) {
         super();
@@ -55,118 +62,137 @@ public class DevisDetail extends KContainer {
         initPanel();
     }
 
-   // @Override
+    // @Override
     protected void initPanel() {
         JPanel content = new JPanel(),
                 listeDmd = new JPanel(),
                 listeDevis = new JPanel(),
                 detailDmd = new JPanel(),
-                left = new JPanel(),
-                right = new JPanel(),
-                top_right = new JPanel(),
-                centertop_right = new JPanel(),
+                top = new JPanel(),
+                middle = new JPanel(),
+                bottom = new JPanel(),
+                container = new JPanel(),
                 center_right = new JPanel(),
                 bottom_right = new JPanel(),
                 bottom_bottom = new JPanel();
-        JLabel jLabel4 = new javax.swing.JLabel();
-    JLabel jLabel5 = new javax.swing.JLabel();
-    JLabel jLabel6 = new javax.swing.JLabel();
-    JLabel jLabel7 = new javax.swing.JLabel();
-    JLabel jLabel8 = new javax.swing.JLabel();
-    JLabel jLabel9 = new javax.swing.JLabel();
-    JLabel jLabel10 = new javax.swing.JLabel();
-    JLabel jLabel11 = new javax.swing.JLabel();
-    JLabel jLabel12 = new javax.swing.JLabel();
 
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
-        detailDmd.setPreferredSize(new Dimension(650, 750));
-        detailDmd.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
+        container.setPreferredSize(new Dimension(700, 500));
+
         //  System.out.println("CMD-ID: "+this.demande_id);
         //title.setText("DETAIL COMMANDE "+ this.demande_id);
-        TableDispatcher cp = new TableDispatcher();
-        TableDispatcher ld = new TableDispatcher();
+        TableDispatcher nom_tblDis = new TableDispatcher();
         /**
          * fixer la largeur de la première colonne à 200 pixels
          */
-        
         content.setBackground(Color.white);
-        top_right.setBackground(Color.white);
-        center_right.setBackground(Color.white);
-        listeDmd.setBackground(Color.white);
-        listeDevis.setBackground(Color.white);
-        right.setBackground(Color.white);
-        bottom_right.setBackground(Color.white);
-        detailDmd.setBackground(Color.white);
-        bottom_bottom.setBackground(Color.white);
-        
-        listeDevis.setPreferredSize(new Dimension(330, 260));
-        bottom_bottom.setPreferredSize(new Dimension(600, 300));
-        
-        
-        
-        
+
+        top.setPreferredSize(new Dimension(700, 100));
+        middle.setPreferredSize(new Dimension(700, 350));
+        bottom.setPreferredSize(new Dimension(700, 50));
+
         listeDmd.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
         listeDevis.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-        
-        listeDmd.setLayout(new BoxLayout(listeDmd, BoxLayout.LINE_AXIS));
-        top_right.setLayout(new FlowLayout());
-        right.setLayout(new BoxLayout(right, BoxLayout.LINE_AXIS));
-        
-        
-        detailDmd.setLayout(new BoxLayout(detailDmd, BoxLayout.Y_AXIS));
-        listeDevis.setLayout(new BorderLayout());
-        bottom_bottom.setLayout(new BoxLayout(bottom_bottom, BoxLayout.LINE_AXIS));
-        
-        
-        detailDmd.add(top_right);
-        detailDmd.add((center_right));
-        detailDmd.add(right);
-        detailDmd.add((bottom_right));
-        detailDmd.add((bottom_bottom));
-        content.add(listeDmd);
-        content.add(detailDmd);
+
+        top.setLayout(new BoxLayout(top, BoxLayout.LINE_AXIS));
+        middle.setLayout(new BoxLayout(middle, BoxLayout.LINE_AXIS));
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.LINE_AXIS));
+
+
+        Devis dvis = null;
+        HibernateConnection connection = HibernateConnection.getInstance();
+        try {
+            Query query = connection.getSession().createQuery("from Devis where devid = :devid");
+            query.setParameter("devid", devis_id);
+            //  query.setParameter("utiid", this.user.getId());
+            dvis = (Devis) query.uniqueResult();
+
+            System.out.println("Devis USED : " + devis_id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+        String etat = dvis.getDevetat();
+        title.setText("<html><h1>Détails du devis n°" + dvis.getDevid() + " <br /></h1>Statut du devis : " + etat + " <br />Montant total : " + dvis.getDevprix() + "€<br /> Créé le : " + dvis.getDevdate() + "</html>");
+
+        refuse.setText("Refus du devis");
+        validate.setText("Validation du devis");
+        Retour.setText("Retour à la demande");
+        refuse.addActionListener(new DevisDetail.refuseListener());
+        validate.addActionListener(new DevisDetail.validateListener());
+        Retour.addActionListener(new DevisDetail.RetourListener());
+
+        top.add(title, BorderLayout.CENTER);
+
+        if (etat.equals("En cours")) {
+            bottom.add(validate, BorderLayout.CENTER);
+            bottom.add(refuse, BorderLayout.CENTER);
+        } else {
+            bottom.add(new JLabel("Ce devis a été " + dvis.getDevetat()), BorderLayout.CENTER);
+        }
+        bottom.add(Retour, BorderLayout.CENTER);
+        idDemande = dvis.getDeviid();
+
+        container.add(top);
+        container.add((middle));
+        container.add((bottom));
+        content.add(container);
         this.panel.add(content);
-        user = new UserActif("admin");
     }
-    
-     private class validateListener implements ActionListener {
+
+    private class validateListener implements ActionListener {
 
         public validateListener() {
         }
 
-    //    @Override
+        //    @Override
         public void actionPerformed(ActionEvent e) {
 
-//            JOptionPane jop4 = new JOptionPane();
-//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider" );
+            System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider");
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+            Devis dvs = new Devis();
+            dvs.setDevid(devis_id);
+            dvs.setDevetat("Accepté");
+            HibernateConnection.getSession().update(dvs);
+            tx.commit();
+            System.out.println("Done");
         }
     }
-     
-     private class refuseListener implements ActionListener {
+
+    private class refuseListener implements ActionListener {
 
         public refuseListener() {
         }
 
-    //    @Override
+        //    @Override
         public void actionPerformed(ActionEvent e) {
 
-//            JOptionPane jop4 = new JOptionPane();
-//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("update devis pour devis n° :" + devis_id + " valeur : refuser" );
+            System.out.println("update devis pour devis n° :" + devis_id + " valeur : refuser");
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+            Devis dvs = new Devis();
+            dvs.setDevetat("Refusé");
+            HibernateConnection.getSession().update(dvs);
+            tx.commit();
+            System.out.println("Done");
         }
     }
 
-    private static class RetourListenerDmd implements ActionListener {
+    private class RetourListener implements ActionListener {
 
-        public RetourListenerDmd() {
+        public RetourListener() {
         }
 
-        @Override
+        //       @Override
         public void actionPerformed(ActionEvent e) {
             CurrentDatas cur = CurrentDatas.getInstance();
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
+            DemandeDetail devisForm = new DemandeDetail(idDemande);
+            fen.RenewContener(devisForm.getPanel());
         }
     }
 }

@@ -67,7 +67,7 @@ public class DevisModel extends AbstractTableModel {
                 return devis.get(rowIndex).getDevprix();
 
             case 999:
-                return devis.get(rowIndex).getDeviid();
+                return devis.get(rowIndex).getDevid();
 
             default:
                 throw new IllegalArgumentException();
@@ -83,7 +83,7 @@ public class DevisModel extends AbstractTableModel {
                 return Integer.class;
             
             case 1:
-                return Integer.class;
+                return String.class;
             case 2:
                 return Date.class;
             case 3:
