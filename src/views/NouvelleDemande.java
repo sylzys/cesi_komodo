@@ -216,7 +216,7 @@ public class NouvelleDemande extends JDialog {
             dmd_inst.setDemandes(dmde);
             //inserer demande et suivi dossier
             dmd_inst.ajouterDansBaseDeDonnées();
-           HibernateConnection connection = HibernateConnection.getInstance();
+            HibernateConnection connection = HibernateConnection.getInstance();
             Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
            
             svidossier.setDemandeid(value);
