@@ -39,19 +39,38 @@ public class Alertes extends KContainer{
     
     JLabel title = new JLabel ("PANNEAU ALERTES");
     List<GetAlerte> l_alerts;
+    Boolean histo = false;
+    Integer filter_ste = -1;
     
     public Alertes (UserActif user) {
+        // pour affichage nouvelles alertes
         super();
         this.user = user;
         initPanel();
     }   
+    
+    public Alertes (UserActif user, Boolean histo) {
+        // pour affichage histo alertes
+        super();
+        this.user = user;
+        this.histo = histo;
+        initPanel();
+    }
+    
+    public Alertes (UserActif user, Integer id_ste) {
+        // pour affichage alerte d'une societe (nouvelles et histo)
+        super();
+        this.user = user;
+        this.filter_ste = id_ste;
+        initPanel();
+    }
+    
 
     @Override
     protected
     void initPanel() {
         JPanel listPane = new JPanel();
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-        
         JScrollPane listScroller = new JScrollPane();
         listScroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
         listScroller.setPreferredSize(new Dimension(800, 600));
@@ -62,9 +81,7 @@ public class Alertes extends KContainer{
         PanelListPane.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         PanelListPane.setBackground(new java.awt.Color(255, 255, 255));
         
-        // get alertes
-        AlerteInstance AlertInstance = AlerteInstance.getInstance();
-        l_alerts = AlertInstance.GetAlertes("suividossuppr = 'f'", new Hashtable());
+        l_alerts = this.getAlertes();
         System.out.println("nb_alerts : " + l_alerts.size());
         for (GetAlerte tmp : l_alerts) {
             JPanel jp = new JPanel();
@@ -127,29 +144,47 @@ public class Alertes extends KContainer{
             containerCom.add(new JLabel(tmp.getSuivdoscom()));
             containerAlert.add(containerCom);
             containerAlert.add(Box.createVerticalStrut(15));
-            Box containerRead = Box.createHorizontalBox();
-            containerRead.add(LblRead);
-            containerAlert.add(containerRead);
+            if (!tmp.getSuividossuppr()) {
+                Box containerRead = Box.createHorizontalBox();
+                containerRead.add(LblRead);
+                containerAlert.add(containerRead);
+            }
             jp.add(containerAlert);
             PanelListPane.add(jp);
             PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
         }
-        
+        if (this.filter_ste > -1) {
+            JButton btn_return = new JButton("Retour a la fiche societe");
+            btn_return.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    ClientDetail cd = new ClientDetail(filter_ste);
+                }
+            });
+            PanelListPane.add(btn_return, Box.CENTER_ALIGNMENT);
+        }
         listScroller.setViewportView(PanelListPane);
         //listPane.add(listScroller, BorderLayout.PAGE_START);
         this.panel.add(listScroller);
     }
     
+    private List<GetAlerte> getAlertes() {
+        // get alertes
+        AlerteInstance AlertInstance = AlerteInstance.getInstance();
+        String where = "";
+        if (this.filter_ste > -1) {
+            where = "cliid=" + this.filter_ste;
+        } else if (this.histo) {
+            where = "suividossuppr = 't' AND utiid=" + this.user.getId();
+        } else {
+            where = "suividossuppr = 'f' AND utiid=" + this.user.getId();
+        }
+        return AlertInstance.GetAlertes(where, new Hashtable());
+    }
+    
+    
     private void openSte(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        if (HibernateConnection.online == false)
-        {
-            HibernateConnection.newConnect(false);
-        }
-        else
-        {
-            HibernateConnection.newConnect(true);
-        }
         ClientDetail cd = new ClientDetail(lbl_tmp.getId());
     }
     
@@ -162,8 +197,7 @@ public class Alertes extends KContainer{
     
     private void openCmd(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "ouverture de la commande id/num => " + lbl_tmp.getId(), "Ouverture page commande", JOptionPane.INFORMATION_MESSAGE);
+        Fenetre.getInstance().RenewCmd(lbl_tmp.getId());
     }
     
     private void readCmd(MouseEvent evt) {

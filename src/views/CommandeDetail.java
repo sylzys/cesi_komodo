@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.border.EmptyBorder;
+import models.Client;
+import models.Commande;
 import models.CurrentDatas;
 import models.DetailCommande;
 import models.ModelesTables;
@@ -34,15 +36,15 @@ import models.ModelesTables;
  * @author sylv
  */
 public class CommandeDetail extends KContainer {
-
-    List<DetailCommande> cd;
     int cmd_id;
     JLabel title = new JLabel();
     private JProgressBar progressBar;
+    DetailCommande details;
 
     public CommandeDetail(int id) {
         super();
         this.cmd_id = id;
+        this.recupDetails();
         initPanel();
     }
 
@@ -62,15 +64,6 @@ public class CommandeDetail extends KContainer {
         // listeCmd.setPreferredSize(new Dimension(500, 768));
         detailCmd.setPreferredSize(new Dimension(450, 700));
 
-        //on récupère la liste des commandes détailles dans la DB
-        DetailCdeInstance CmdInstance = DetailCdeInstance.getInstance(); //récupère l'instance
-        //prépare une hashtable si besoin
-        Hashtable h = new Hashtable();
-        //le couple valeur/paramètre, à ne plus mettre en dur...
-        h.put("comid", this.cmd_id);
-        //récupère la liste.
-        cd = CmdInstance.GetDetailcde("where comid = :comid", h);
-
         //demande un tabledispatcher
         TableDispatcher cp = new TableDispatcher();
         content.setBackground(Color.white);
@@ -86,15 +79,15 @@ public class CommandeDetail extends KContainer {
         detailCmd.setLayout(new BoxLayout(detailCmd, BoxLayout.Y_AXIS));
 
         top_right.setLayout(new FlowLayout());
-        top_right.add(new JLabel("<html>> " + cd.get(0).getClirais() + "<br />Créee le " + cd.get(0).getComdate() + " par " + cd.get(0).getInternom() + "</html>"));
+        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créee le " + details.getComdate() + " par " + details.getInternom() + "</html>"));
         JButton retour = new JButton("Retour à la société");
         retour.addActionListener(new RetourListener());
         top_right.add(retour);
         center_right.setBackground(Color.white);
         center_right.add(new JLabel("Avancement :"));
         progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(Integer.valueOf(cd.get(0).getCometat()));
-        progressBar.setString(cd.get(0).getCometat() + "%");
+        progressBar.setValue(Integer.valueOf(details.getCometat()));
+        progressBar.setString(details.getCometat() + "%");
         progressBar.setStringPainted(true);
         center_right.add(progressBar);
         bottom_right.setBackground(Color.white);
@@ -126,5 +119,13 @@ public class CommandeDetail extends KContainer {
             CurrentDatas cur = CurrentDatas.getInstance();
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
         }
+    }
+    
+    private void recupDetails() {
+        DetailCdeInstance cmdInstance = DetailCdeInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("comid", this.cmd_id);
+        List<DetailCommande> cmds = cmdInstance.GetDetailcde("WHERE comid=:comid", h);
+        this.details = cmds.get(0);
     }
 }

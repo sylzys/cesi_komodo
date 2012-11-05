@@ -54,7 +54,6 @@ public class Recherche extends KContainer {
     @Override
     protected
     void initPanel() {
-        ;
         
         JPanel content = new JPanel();
         content.setLayout(new BorderLayout());
@@ -97,45 +96,45 @@ public class Recherche extends KContainer {
 
             public void actionPerformed(ActionEvent arg0) {
             
-//                try
-//                {
-//                    doIndex();
-//                }
-//                catch(Exception e)
-//                {
-//                    System.out.println(e.getStackTrace().toString());
-//                }
-//                List<Commande> result = search(searchTextField.getText());           
-//            
-//             
-//                for (Commande Commande : result) {
-//                    System.out.println(Commande.getComtitre());
-//                }             
+                try
+                {
+                    doIndex();
+                }
+                catch(Exception e)
+                {
+                    System.out.println(e.getStackTrace().toString());
+                }
+                List<Commande> result = search(searchTextField.getText());           
+            
+             
+                for (Commande Commande : result) {
+                    System.out.println(Commande.getComtitre());
+                }             
             }            
         });
         this.panel.add(btnSearch);
     }
-//    private List<Commande> search(String query)
-//    {
-//        
-//        Session session = HibernateConnection.getSession();
-//        FullTextSession fullTextSession = Search.getFullTextSession(session);
-//
-//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
-//        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
-//
-//        // wrap Lucene query in a javax.persistence.Query
-//        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
-//        List<Commande> commandes = fullTextQuery.list();
-//        //fullTextSession.close();
-//        return commandes;
-//    }
-//    private static void doIndex() throws InterruptedException {
-//        Session session = HibernateConnection.getSession();
-//         
-//        FullTextSession fullTextSession = Search.getFullTextSession(session);
-//        fullTextSession.createIndexer().startAndWait();
-//         
-//        //fullTextSession.close();
-//    }
+    private List<Commande> search(String query)
+    {
+        
+        Session session = HibernateConnection.getSession();
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
+
+        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
+        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
+
+        // wrap Lucene query in a javax.persistence.Query
+        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
+        List<Commande> commandes = fullTextQuery.list();
+        //fullTextSession.close();
+        return commandes;
+    }
+    private static void doIndex() throws InterruptedException {
+        Session session = HibernateConnection.getSession();
+         
+        FullTextSession fullTextSession = Search.getFullTextSession(session);
+        fullTextSession.createIndexer().startAndWait();
+         
+        //fullTextSession.close();
+    }
 }

@@ -29,12 +29,14 @@ public class Fenetre extends JFrame {
     //menu
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menu = new JMenu("Menu"),
+            alertes = new JMenu("Alertes"),
             societes = new JMenu("Sociétés");
     private JMenuItem evenements = new JMenuItem("Evenements"),
-            alertes = new JMenuItem("Alertes"),
             synchro = new JMenuItem("Synchronisation"),
             recherche = new JMenuItem("Recherche"),
             sortie = new JMenuItem("Quitter"),
+            alertes_new = new JMenuItem("Nouvelles"),
+            alertes_histo = new JMenuItem("Historique"),
             afficher = new JMenuItem("Afficher"),
             creer = new JMenuItem("Creer");
     //toolbar
@@ -96,9 +98,14 @@ public class Fenetre extends JFrame {
         this.menu.add(societes);
         evenements.addActionListener(new EvenementListener());
         this.menu.add(evenements);
-        alertes.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+        alertes_new.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
                 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-        alertes.addActionListener(new AlertListener());
+        alertes_new.addActionListener(new AlertNewListener());
+        alertes_histo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
+                Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        alertes_histo.addActionListener(new AlertHistoListener());
+        this.alertes.add(alertes_new);
+        this.alertes.add(alertes_histo);
         this.menu.add(alertes);
         synchro.addActionListener(new SynchroListener());
         this.menu.add(synchro);
@@ -211,14 +218,25 @@ public class Fenetre extends JFrame {
     }
 
     //LISTENERS
-    private class AlertListener implements ActionListener {
+    private class AlertNewListener implements ActionListener {
 
-        public AlertListener() {
+        public AlertNewListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Alertes al = new Alertes(user);
+            RenewContener(al.getPanel());
+        }
+    }
+    private class AlertHistoListener implements ActionListener {
+
+        public AlertHistoListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Alertes al = new Alertes(user, true);
             RenewContener(al.getPanel());
         }
     }
@@ -304,6 +322,14 @@ public class Fenetre extends JFrame {
     public void RenewAlert() {
         Alertes alt = new Alertes(user);
         RenewContener(alt.getPanel());
+    }
+    public void RenewAlert(Integer cli_id) {
+        Alertes alt = new Alertes(user, cli_id);
+        RenewContener(alt.getPanel());
+    }
+    public void RenewCmd(Integer cmd_id) {
+        CommandeDetail cmd = new CommandeDetail(cmd_id);
+        RenewContener(cmd.getPanel());
     }
     public void RenewSnchro() {            
             user = new UserActif("admin");

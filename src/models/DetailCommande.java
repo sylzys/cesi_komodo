@@ -41,6 +41,17 @@ public class DetailCommande {
     @Column(name="clirais", columnDefinition="VARCHAR(10)", nullable=true)
     private String clirais ;
     
+    @Column(name="clinom", columnDefinition="VARCHAR(50)", nullable=true)
+    private String clinom;
+
+    public String getClinom() {
+        return clinom;
+    }
+
+    public void setClinom(String clinom) {
+        this.clinom = clinom;
+    }
+    
     @Column(name="cliadresse", columnDefinition="VARCHAR(250)", nullable=true)
     private String cliadresse ;
     

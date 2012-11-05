@@ -1,5 +1,6 @@
 package instances;
 
+import controllers.Synchro;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -127,16 +128,23 @@ public class InterlocuteurInstance {
     
     public synchronized void insererEnBaseDeDonnées(Interlocuteur inter) {
         Transaction tx = null;
-        System.out.println("Inserting Record");
         try
         {
-            tx = HibernateConnection.getSession().beginTransaction();            
-
-           HibernateConnection.getSession().save(inter);
-           System.out.println("COMMIT : " + tx.wasCommitted());       
+           tx = HibernateConnection.getSession().beginTransaction();            
+           HibernateConnection.getSession().save(inter);     
            tx.commit();
-            System.out.println("Done");
-
+           if (HibernateConnection.online == false)
+            {
+                Synchro writereq = new Synchro();
+                String cliname = writereq.cliNom(inter.getCliid());
+                writereq.SaveReq("INSERT INTO interlocuteur (utiid, cliid, internom, interprenom, intermail, intertel, "
+                        + "interposte, interdteadd, intersuppr)"
+                        + " VALUES ("+inter.getUtiid()+","+inter.getCliid()+",'"+inter.getInternom()+"','"
+                        +inter.getInterprenom()+"','"+inter.getIntermail()+"','"+inter.getIntertel()+"','"
+                        +inter.getInterposte()+"','"+inter.getInterdteadd()+"',"
+                        + "'f')"
+                        + "", -1, cliname);
+            }
         }
         catch (Exception e)
         {
