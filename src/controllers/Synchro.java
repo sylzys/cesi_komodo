@@ -297,4 +297,23 @@ public class Synchro {
             }
         }
     }
+    public String cliNom(int cliid)
+    {
+        String cliNom = "";
+        try 
+        {
+            Query query = HibernateConnection.getSession().createQuery("from Client where cliid = :cliid");
+            query.setParameter("cliid", cliid);
+            List<Client> clilist = query.list();
+            for (Client client : clilist) 
+            {
+                nameclient = client.getClinom();
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }  
+        return cliNom;
+    }
 }

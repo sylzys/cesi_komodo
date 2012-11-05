@@ -110,7 +110,6 @@ Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_va
             HibernateConnection.getSession().save(this.client);
             // System.out.println(tx.wasCommitted());       
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
             //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
             if (HibernateConnection.online == false)
             {

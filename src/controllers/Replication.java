@@ -86,7 +86,7 @@ public class Replication extends Thread {
             {
                 System.err.println(line);
                 line = r.readLine();
-                fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne: line null");
+                fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne");
                 try
                 {
                     // pause
@@ -104,7 +104,7 @@ public class Replication extends Thread {
             }
             catch (InterruptedException i)
             {
-                fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne: inter ex");
+                fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne");
                 try
                 {
                     // pause
@@ -118,7 +118,7 @@ public class Replication extends Thread {
         }
         catch (IOException e)
         {
-            fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne: io ex");
+            fen.rep(1, "Erreur lors de la sauvegarde de la base en ligne");
             try
             {
                 // pause
