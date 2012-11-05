@@ -35,6 +35,7 @@ import models.ModelesTables;
 import models.CurrentDatas;
 import models.Devis;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
@@ -152,14 +153,17 @@ public class DevisDetail extends KContainer {
         public void actionPerformed(ActionEvent e) {
 
             System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider");
-            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            Transaction tx3 = HibernateConnection.getSession().beginTransaction();
+            Session session = HibernateConnection.getSession();
+            Devis dvs = (Devis) session.get(Devis.class, devis_id);
             System.out.println("Updating Record");
-            Devis dvs = new Devis();
             dvs.setDevid(devis_id);
             dvs.setDevetat("Accepté");
-            HibernateConnection.getSession().update(dvs);
-            tx.commit();
+            session.update(dvs);
+            tx3.commit();
             System.out.println("Done");
+            DemandeDetail devisForm = new DemandeDetail(idDemande);
+            fen.RenewContener(devisForm.getPanel());
         }
     }
 
@@ -170,15 +174,18 @@ public class DevisDetail extends KContainer {
 
         //    @Override
         public void actionPerformed(ActionEvent e) {
-
-            System.out.println("update devis pour devis n° :" + devis_id + " valeur : refuser");
-            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider");
+            Transaction tx3 = HibernateConnection.getSession().beginTransaction();
+            Session session = HibernateConnection.getSession();
+            Devis dvs = (Devis) session.get(Devis.class, devis_id);
             System.out.println("Updating Record");
-            Devis dvs = new Devis();
+            dvs.setDevid(devis_id);
             dvs.setDevetat("Refusé");
-            HibernateConnection.getSession().update(dvs);
-            tx.commit();
+            session.update(dvs);
+            tx3.commit();
             System.out.println("Done");
+            DemandeDetail devisForm = new DemandeDetail(idDemande);
+            fen.RenewContener(devisForm.getPanel());
         }
     }
 
