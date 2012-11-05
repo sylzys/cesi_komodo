@@ -24,12 +24,13 @@ SELECT
 "public".client.cliactivite,
 "public".client.clica,
 "public".suivdossier.suivdoscom,
-"public".suivdossier.suivdosdate,
-"public".devis.devprix,
-"public".devis.devdate,
-"public".devis.devetat
-FROM ((((client JOIN demande ON ((demande.cliid = client.cliid))) JOIN suivdossier ON ((suivdossier.demandeid = demande.demandeid))) JOIN utilisateur ON ((client.utiid = utilisateur.utiid))) JOIN devis ON ((suivdossier.devid = devis.devid)));
-
+"public".suivdossier.suivdosdate
+FROM
+(((("public".client
+JOIN "public".demande ON (("public".demande.cliid = "public".client.cliid)))
+JOIN "public".suivdossier ON (("public".suivdossier.demandeid = "public".demande.demandeid)))
+JOIN "public".utilisateur ON (("public".client.utiid = "public".utilisateur.utiid))))
+;
 INSERT INTO "public"."demande" ("demandeid", "cliid", "utiid", "demandeetat") VALUES ('4', '2', '1', '20');
 UPDATE "public"."client" SET "utiid"='1' WHERE ("cliid"='2');
 

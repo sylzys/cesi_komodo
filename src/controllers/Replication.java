@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import views.Fenetre;
-import views.ProgressBarAtt;
+import views.ReplicView;
 
 /**
  *
