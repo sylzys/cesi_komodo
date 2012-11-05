@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
+import models.Interlocuteur;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -78,9 +79,9 @@ public class ClientInstance {
         try
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
-   if (!h.isEmpty())
+            if (!h.isEmpty())
             {
-                 System.out.println("got parameters");
+                System.out.println("got parameters");
                 Set<String> set = h.keySet();
                 Iterator<String> itr = set.iterator();
                 while (itr.hasNext())
@@ -91,7 +92,7 @@ public class ClientInstance {
                     System.out.println("setting params");
                 }
             }
-            System.out.println("QUERY : " +query.getQueryString());// query.toString());
+            System.out.println("QUERY : " + query.getQueryString());// query.toString());
             this.clients = query.list();
         }
         catch (Exception e)
@@ -99,6 +100,31 @@ public class ClientInstance {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public synchronized Boolean updaterBaseDeDonnées(Client cli) {
+        Transaction tx = null;
+
+        try
+        {
+//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
+//            session = sessionFactory.openSession();
+//            tx = session.beginTransaction();
+            tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+//			  Utilisateur uti = new Utilisateur();
+//			  .setUtiid(10);
+//			  uti.setUtinom("test");
+            //session.update(inter);
+            HibernateConnection.getSession().update(cli);
+            tx.commit();
+            System.out.println("Done");
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
     }
 
     public Boolean ajouterDansBaseDeDonnées() {
@@ -116,13 +142,13 @@ public class ClientInstance {
                 Synchro writereq = new Synchro();
                 writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
                         + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clisuppr)"
-                        + " VALUES ("+this.client.getUtiid()+","+this.client.getUti_utiid()+","
-                        + "'"+this.client.getClinom()+"','"+this.client.getCliadresse()+"','"+this.client.getClicp()+"','"
-                        + ""+this.client.getClitel()+"','"+this.client.getClifax()+"','"
-                        + ""+this.client.getClimail()+"','"+this.client.getCliactivite()+"','"+this.client.getClisiret()+"',"+this.client.getClica()+",'"
-                        + ""+this.client.getClisite()+"','"+this.client.getClidg()+"',"+this.client.getClietat()+","
-                        + ""+this.client.isCliacces()+",'"+this.client.getClinaf()+"','"
-                        + ""+this.client.getClisiren()+"','f')"
+                        + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
+                        + "'" + this.client.getClinom() + "','" + this.client.getCliadresse() + "','" + this.client.getClicp() + "','"
+                        + "" + this.client.getClitel() + "','" + this.client.getClifax() + "','"
+                        + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
+                        + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
+                        + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
+                        + "" + this.client.getClisiren() + "','f')"
                         + "", -1, this.client.getClinom());
             }
             return true;
