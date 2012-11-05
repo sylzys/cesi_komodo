@@ -291,6 +291,14 @@ public class ClientDetail extends KContainer {
            // alertes.setBackground(Color.white);
             alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
             alertes.setPreferredSize(new Dimension(120, 50));
+            JButton btn_view_alertes = new JButton("Voir les alertes");
+            btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    Fenetre.getInstance().RenewAlert(cli_id);
+                }
+            });
+            alertes.add(btn_view_alertes);
             bottom.add(alertes);
             bottom.add(Box.createVerticalStrut(10));
 
@@ -423,4 +431,6 @@ public class ClientDetail extends KContainer {
             ClientDetail cd = new ClientDetail(cli_id);
         }
     }
+    
+    
 }

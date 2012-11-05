@@ -71,7 +71,6 @@ public class Alertes extends KContainer{
     void initPanel() {
         JPanel listPane = new JPanel();
         listPane.setLayout(new BoxLayout(listPane, BoxLayout.PAGE_AXIS));
-        
         JScrollPane listScroller = new JScrollPane();
         listScroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
         listScroller.setPreferredSize(new Dimension(800, 600));
@@ -154,7 +153,16 @@ public class Alertes extends KContainer{
             PanelListPane.add(jp);
             PanelListPane.add(Box.createRigidArea(new Dimension(0, 20)));
         }
-        
+        if (this.filter_ste > -1) {
+            JButton btn_return = new JButton("Retour a la fiche societe");
+            btn_return.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    ClientDetail cd = new ClientDetail(filter_ste);
+                }
+            });
+            PanelListPane.add(btn_return, Box.CENTER_ALIGNMENT);
+        }
         listScroller.setViewportView(PanelListPane);
         //listPane.add(listScroller, BorderLayout.PAGE_START);
         this.panel.add(listScroller);
@@ -177,14 +185,6 @@ public class Alertes extends KContainer{
     
     private void openSte(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        if (HibernateConnection.online == false)
-        {
-            HibernateConnection.newConnect(false);
-        }
-        else
-        {
-            HibernateConnection.newConnect(true);
-        }
         ClientDetail cd = new ClientDetail(lbl_tmp.getId());
     }
     
