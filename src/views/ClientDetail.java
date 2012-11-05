@@ -400,7 +400,7 @@ public class ClientDetail extends KContainer {
         ClientDetail cd = new ClientDetail(cli_id);
     }
 
-    private void addInterlocuteur(int cli_id) {
+    public void addInterlocuteur(int cli_id) {
 
         addInterlocuteurDialog addInter = new addInterlocuteurDialog(null, "Ajouter un interlocuteur", true, cli_id);
 

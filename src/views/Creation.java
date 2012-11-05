@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import models.Client;
+import models.CurrentDatas;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 
@@ -303,6 +304,9 @@ public class Creation extends KContainer {
         {
             HibernateConnection.newConnect(true);
         }
+        CurrentDatas cur_dat = CurrentDatas.getInstance();
+        cur_dat.setSoc_id(last_value);
+      //  ClientDetail.addin
         ClientDetail cd = new ClientDetail(last_value);
     }
 
