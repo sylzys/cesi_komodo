@@ -236,7 +236,7 @@ public class Synchro {
                 System.out.println(e.getMessage());
             }  
         }
-        else if(table.equals("client") == true)
+        else if(!nomclient.equals("") || table.equals("client") == true)
         {
             nameclient = nomclient;
         }
@@ -305,9 +305,9 @@ public class Synchro {
             Query query = HibernateConnection.getSession().createQuery("from Client where cliid = :cliid");
             query.setParameter("cliid", cliid);
             List<Client> clilist = query.list();
-            for (Client client : clilist) 
+            for (Client client : clilist)
             {
-                nameclient = client.getClinom();
+                cliNom = client.getClinom();
             }
         }
         catch(Exception e)
