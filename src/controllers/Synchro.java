@@ -236,7 +236,7 @@ public class Synchro {
                 System.out.println(e.getMessage());
             }  
         }
-        else if(table.equals("client") == true)
+        else if(!nomclient.equals("") || table.equals("client") == true)
         {
             nameclient = nomclient;
         }
