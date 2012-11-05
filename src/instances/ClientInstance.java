@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -73,7 +74,7 @@ public class ClientInstance {
         {
             sql += where;
         }
-
+Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
         try
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");

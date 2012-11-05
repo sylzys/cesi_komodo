@@ -38,6 +38,7 @@ public class Cesi_komodo {
 //            Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
 //            query.setParameter("interid", 1);
 //            List<Interlocuteur> interlist = query.list();
+        
 //            for (Interlocuteur inter : interlist) 
 //            {
 //                System.out.println("Name : " + inter.getInternom());
