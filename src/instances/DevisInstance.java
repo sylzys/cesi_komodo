@@ -6,8 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import models.Client;
+import models.Demande;
 import models.Devis;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 public class DevisInstance {
 
@@ -15,6 +17,7 @@ public class DevisInstance {
     private List<Devis> devis;
     private String where;
     private Hashtable h;
+    private Devis dvis;
 
     /**
      * Constructeur prive
@@ -42,6 +45,10 @@ public class DevisInstance {
         this.h = h;
         chargerDepuisBaseDeDonnees();
         return devis;
+    }
+    
+    public synchronized void setDevis(Devis dvis) {
+        this.dvis = dvis;
     }
 
     /**
@@ -90,6 +97,35 @@ public class DevisInstance {
         {
             System.out.println(e.getMessage());
         }
+        
+        
+        
+    }
 
+    
+    
+    
+    public boolean ajouterDansBaseDeDonnees() {
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+
+            HibernateConnection.getSession().save(this.dvis);
+            // System.out.println(tx.wasCommitted());       
+            tx.commit();
+            System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if (HibernateConnection.online == false)
+            {
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    
     }
 }

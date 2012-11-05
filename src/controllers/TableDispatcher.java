@@ -24,6 +24,7 @@ import tableModels.DevisModel;
 import views.ClientDetail;
 import views.CommandeDetail;
 import views.DemandeDetail;
+import views.DevisDetail;
 import views.Fenetre;
 import views.Logout;
 
@@ -174,7 +175,9 @@ public class TableDispatcher extends JPanel {
                             break;
                         case DEVIS:
                             System.out.println("GETTIN DBL CLIC DEVISLIST");
-                            DemandeDetail devislist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
+                            DevisDetail devislist = new DevisDetail((Integer) tm.getValueAt(row, 999));
+                            Fenetre fen2 = Fenetre.getInstance();
+                            fen2.RenewContener(devislist.getPanel());
                             break;
               }
           }
