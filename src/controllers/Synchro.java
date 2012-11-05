@@ -27,6 +27,7 @@ import models.Commande;
 import models.Interlocuteur;
 import views.ReplicView;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
@@ -275,11 +276,17 @@ public class Synchro {
                     Query q = HibernateConnection.getSession().createSQLQuery(requete);
                     q.executeUpdate();
                     tx.commit();
+                    eraseFic();
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                    Fenetre fen = Fenetre.getInstance();
+                    fen.RenewAccueil();
                 } catch (HibernateException ex) {
                     System.out.println(ex.toString());
+                    JOptionPane jop = new JOptionPane();
+                    jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation", "Erreur", JOptionPane.INFORMATION_MESSAGE);
                 }  
             }
-            eraseFic();
         }
     }
 }
