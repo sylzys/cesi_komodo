@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.CheckBoxData;
 import controllers.Synchro;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -114,6 +115,10 @@ public class SynchroView extends KContainer {
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 JCheckBox chkbox = new JCheckBox();
+                // utilisation du checkbox avec id
+                CheckBoxData chk = new CheckBoxData(42);
+                System.out.println(chk.getId());
+                // fin demo utilisation
                 JLabel lblclient = new JLabel(action[0]);
                 JLabel lbltable = new JLabel(action[1].toUpperCase());
                 JLabel lblaction = new JLabel(action[2]);
