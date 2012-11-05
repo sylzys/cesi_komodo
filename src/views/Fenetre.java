@@ -327,6 +327,10 @@ public class Fenetre extends JFrame {
         Alertes alt = new Alertes(user, cli_id);
         RenewContener(alt.getPanel());
     }
+    public void RenewCmd(Integer cmd_id) {
+        CommandeDetail cmd = new CommandeDetail(cmd_id);
+        RenewContener(cmd.getPanel());
+    }
     public void RenewSnchro() {            
             user = new UserActif("admin");
             if(HibernateConnection.online == false)

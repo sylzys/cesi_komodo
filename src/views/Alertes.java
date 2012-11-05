@@ -197,8 +197,7 @@ public class Alertes extends KContainer{
     
     private void openCmd(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
-        JOptionPane jop = new JOptionPane();
-        jop.showMessageDialog(null, "ouverture de la commande id/num => " + lbl_tmp.getId(), "Ouverture page commande", JOptionPane.INFORMATION_MESSAGE);
+        Fenetre.getInstance().RenewCmd(lbl_tmp.getId());
     }
     
     private void readCmd(MouseEvent evt) {
