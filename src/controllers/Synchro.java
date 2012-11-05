@@ -25,8 +25,9 @@ import javax.swing.JFrame;
 import models.Client;
 import models.Commande;
 import models.Interlocuteur;
-import views.ProgressBarAtt;
+import views.ReplicView;
 import java.util.List;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 
@@ -34,6 +35,7 @@ import org.hibernate.Transaction;
  *
  * @author lavie
  */
+//Class pour la synchronisation en ligne
 public class Synchro {
     private static SessionFactory sessionFactory;
     private String lib;
@@ -43,6 +45,8 @@ public class Synchro {
     private String[] name;
     private String[] decTable;
     private String nameclient;
+    
+    //Test la connection en ligne
     public boolean InitConnect()
     {
             try {
@@ -60,6 +64,7 @@ public class Synchro {
         sessionFactory.close();
         return true;
     }
+    //Sauvegarde de la requete dans le fichier
     public void SaveReq(String req, int interid, String nomclient) throws IOException
     {
         try {
@@ -78,6 +83,7 @@ public class Synchro {
            System.out.println(e);
         }
     }
+    //Test si fichier vide renvoi false si il est vide
     public boolean emptyFic()
     {
         try {
@@ -96,6 +102,7 @@ public class Synchro {
            return false;
         }
     }
+    //Remise à 0 du fichier de requete
     public void eraseFic()
     {
         try
@@ -126,6 +133,7 @@ public class Synchro {
             fen.RenewAccueil();
         }
     }
+    //Lecture du fichier
     public String readFic()
     {
         req = "";
@@ -152,7 +160,7 @@ public class Synchro {
         }
         return req;
     }
-    
+    //Lecture des requete dans le fichier
     public String[] readReq(String req, int interid, String nomclient)
     {
         nameclient = "";
@@ -239,8 +247,10 @@ public class Synchro {
         String action[] = {nameclient, table, libreq};
         return action;
     }
+    //Envoi des requete dans la base en ligne
     public void record()
     {
+        boolean test = false;
         boolean empty = emptyFic();
         if(empty == true)
         {
@@ -267,11 +277,24 @@ public class Synchro {
                     Query q = HibernateConnection.getSession().createSQLQuery(requete);
                     q.executeUpdate();
                     tx.commit();
+                    eraseFic();   
+                    test = true;
+                    Fenetre fen = Fenetre.getInstance();
+                    fen.RenewAccueil();
                 } catch (HibernateException ex) {
-                    System.out.println(ex.toString());
+                    test = false;
+                    System.out.println(ex.toString());                    
                 }  
             }
-            eraseFic();
+            JOptionPane jop = new JOptionPane();
+            if(test == true)
+            {
+                jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else
+            {
+                jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation", "Erreur", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 }

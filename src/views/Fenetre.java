@@ -52,7 +52,7 @@ public class Fenetre extends JFrame {
         this.setTitle("Plast'Prod");
         this.setSize(1024, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.setResizable(false);
         boolean login_ok = false;
 
 //        while (!login_ok)
@@ -301,6 +301,10 @@ public class Fenetre extends JFrame {
         conteneur.add(panel, BorderLayout.CENTER);
         conteneur.revalidate();
     }
+    public void RenewAlert() {
+        Alertes alt = new Alertes(user);
+        RenewContener(alt.getPanel());
+    }
     public void RenewSnchro() {            
             user = new UserActif("admin");
             if(HibernateConnection.online == false)
@@ -349,12 +353,12 @@ public class Fenetre extends JFrame {
     }
     public void progBar()
     {
-        ProgressBarAtt pb = new ProgressBarAtt();
+        ReplicView pb = new ReplicView();
         RenewContener(pb.getPanel());
     }
     public void rep(int value, String title)
     {
-        ProgressBarAtt pb = new ProgressBarAtt();
+        ReplicView pb = new ReplicView();
         RenewContener(pb.stateChanged(value, title));
     }
 }

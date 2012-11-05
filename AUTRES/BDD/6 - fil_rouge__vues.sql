@@ -54,6 +54,6 @@ FROM utilisateur u, client c, interlocuteur i
 WHERE u.utiid = i.utiid AND c.cliid = i.cliid;
 
 CREATE OR REPLACE VIEW getalerte AS
-SELECT 	s.suivdosid, s.comid, i.interid, i.internom, i.interprenom, l.cliid, l.clinom, s.suivdoscom, s.suivdosdate, s.utiid
+SELECT 	s.suivdosid, s.comid, i.interid, i.internom, i.interprenom, l.cliid, l.clinom, s.suivdoscom, s.suivdosdate, s.utiid, s.suividossuppr
 FROM suivdossier s, interlocuteur i,  client l
-WHERE s.interid = i.interid AND i.cliid = l.cliid AND s.suividossuppr = false;
+WHERE s.interid = i.interid AND i.cliid = l.cliid;

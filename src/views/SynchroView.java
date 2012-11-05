@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.CheckBoxData;
 import controllers.Synchro;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -114,6 +116,10 @@ public class SynchroView extends KContainer {
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 JCheckBox chkbox = new JCheckBox();
+                // utilisation du checkbox avec id
+                CheckBoxData chk = new CheckBoxData(42, "requete");
+                System.out.println(chk.getId());
+                // fin demo utilisation
                 JLabel lblclient = new JLabel(action[0]);
                 JLabel lbltable = new JLabel(action[1].toUpperCase());
                 JLabel lblaction = new JLabel(action[2]);
@@ -164,7 +170,7 @@ public class SynchroView extends KContainer {
         {
             title.setPreferredSize(new Dimension(350,100));
             title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=red>"
-                    + "Vous n'avez auncune action à sauvegarder</p><center></html>");
+                    + "Vous n'avez aucune action à sauvegarder</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
         } 
 

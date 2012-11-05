@@ -8,6 +8,9 @@ public class GetAlerte {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer suivdosid;
+    
+    @Column(name="comid", columnDefinition="INTEGER", nullable=true)
     private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
@@ -31,6 +34,25 @@ public class GetAlerte {
     @Column(name="suivdosdate", columnDefinition="DATE", nullable=true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date suivdosdate;    
+    
+    @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
+    private Boolean suividossuppr;
+
+    public Integer getSuivdosid() {
+        return suivdosid;
+    }
+
+    public void setSuivdosid(Integer suivdosid) {
+        this.suivdosid = suivdosid;
+    }
+
+    public Boolean getSuividossuppr() {
+        return suividossuppr;
+    }
+
+    public void setSuividossuppr(Boolean suividossuppr) {
+        this.suividossuppr = suividossuppr;
+    }
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private Integer utiid;
