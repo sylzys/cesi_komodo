@@ -2,6 +2,7 @@ package instances;
 
 import controllers.Synchro;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -137,14 +138,14 @@ public class InterlocuteurInstance {
            if (HibernateConnection.online == false)
             {
                 Synchro writereq = new Synchro();
-                CurrentDatas cli = new CurrentDatas();
+                CurrentDatas cli = CurrentDatas.getInstance();
                 int cliid = cli.getSoc_id();
                 String cliname = writereq.cliNom(cliid);
-                writereq.SaveReq("INSERT INTO interlocuteur (utiid, cliid, internom, interprenom, intermail, intertel, "
-                        + "interposte, interdteadd, intersuppr)"
-                        + " VALUES ("+inter.getUtiid()+","+inter.getCliid()+",'"+inter.getInternom()+"','"
+                writereq.SaveReq("INSERT INTO interlocuteur (cliid, internom, interprenom, intermail, intertel, "
+                        + " interdteadd, intersuppr)"
+                        + " VALUES ("+cliid+",'"+inter.getInternom()+"','"
                         +inter.getInterprenom()+"','"+inter.getIntermail()+"','"+inter.getIntertel()+"','"
-                        +inter.getInterposte()+"','"+inter.getInterdteadd()+"',"
+                        +Calendar.getInstance().getTime()+"',"
                         + "'f')"
                         + "", -1, cliname);
             }
