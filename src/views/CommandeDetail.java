@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.ButtonData;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.CommandeInstance;
@@ -36,12 +37,12 @@ import models.ModelesTables;
  * @author sylv
  */
 public class CommandeDetail extends KContainer {
-    int cmd_id;
+    Integer cmd_id;
     JLabel title = new JLabel();
     private JProgressBar progressBar;
     DetailCommande details;
 
-    public CommandeDetail(int id) {
+    public CommandeDetail(Integer id) {
         super();
         this.cmd_id = id;
         this.recupDetails();
@@ -80,7 +81,7 @@ public class CommandeDetail extends KContainer {
 
         top_right.setLayout(new FlowLayout());
         top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par " + details.getInternom() + "</html>"));
-        JButton retour = new JButton("Retour à la société");
+        ButtonData retour = new ButtonData("Retour à la société", details.getCliid());
         retour.addActionListener(new RetourListener());
         top_right.add(retour);
         center_right.setBackground(Color.white);
@@ -92,10 +93,7 @@ public class CommandeDetail extends KContainer {
         center_right.add(progressBar);
         bottom_right.setBackground(Color.white);
         bottom_right.setLayout(new GridBagLayout());
-        JLabel comm = new JLabel("<html><b>Commentaires</b><br />Powder gingerbread cheesecake wafer. "
-                + "I love sugar plum chocolate cake pudding dragée macaroon. Gingerbread wafer dragée pie. "
-                + "Fruitcake I love candy canes jelly beans cupcake I love applicake. Dessert I love jelly powder jelly. "
-                + "Cookie cookie wypas tootsie roll I love.");
+        JLabel comm = new JLabel("<html><b>Description :</b><br />" + this.details.getComdesc());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -115,9 +113,11 @@ public class CommandeDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-           // System.out.println("RETOUR");
-            CurrentDatas cur = CurrentDatas.getInstance();
-            ClientDetail cd = new ClientDetail(cur.getSoc_id());
+            ButtonData tmp = (ButtonData)e.getSource();
+            ClientDetail cd = new ClientDetail(tmp.getId());
+            // System.out.println("RETOUR");
+            //CurrentDatas cur = CurrentDatas.getInstance();
+            //ClientDetail cd = new ClientDetail(cur.getSoc_id());
         }
     }
     
