@@ -59,6 +59,8 @@ public class NouvelleDemande extends JDialog {
     private getDemandeInfos zInfo = new getDemandeInfos();
     private boolean sendData;
     
+    private Fenetre fen = Fenetre.getInstance();
+    
     JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
     WhitePanel left = new WhitePanel(),
             right = new WhitePanel();
@@ -168,6 +170,8 @@ public class NouvelleDemande extends JDialog {
             public void actionPerformed(ActionEvent arg0) {
                
                     addToDataBase();
+                new ClientDetail(dmd_id);
+                setVisible(false);
                     setVisible(false);
             }
         });
@@ -176,6 +180,8 @@ public class NouvelleDemande extends JDialog {
         cancelBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 zInfo = new getDemandeInfos();
+                
+                new ClientDetail(dmd_id);
                 setVisible(false);
             }
         });
