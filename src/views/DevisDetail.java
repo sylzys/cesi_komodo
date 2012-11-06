@@ -78,7 +78,7 @@ public class DevisDetail extends KContainer {
         JLabel statut = new JLabel();
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
     //    content.setPreferredSize(new Dimension(1000, 750));
-        container.setPreferredSize(new Dimension(700, 450));
+        container.setPreferredSize(new Dimension(702, 451));
 
         content.setBackground(Color.white);
         container.setBackground(Color.white);
@@ -97,16 +97,18 @@ public class DevisDetail extends KContainer {
                 
         top.setPreferredSize(new Dimension(700, 235));
         middle.setPreferredSize(new Dimension(700, 150));
-        bottom.setPreferredSize(new Dimension(700, 50));
+        bottom.setPreferredSize(new Dimension(500, 30));
         sousTitre.setPreferredSize(new Dimension(700, 235));
         title.setPreferredSize(new Dimension(400, 25));
         jLabel7.setPreferredSize(new Dimension(200, 25));
         jLabel8.setPreferredSize(new Dimension(600, 10));
-        statut.setPreferredSize(new Dimension(700, 200));
+        statut.setPreferredSize(new Dimension(500, 200));
         
         jLabel8.setBorder(new EmptyBorder(0, 0, 0, 100));
         container.setBorder(new EmptyBorder(150, 0, 0, 0));
-
+        statut.setBorder(new EmptyBorder(0, 0, 0, 200));
+        bottom.setBorder(new EmptyBorder(0, 0, 0, 200));
+                
         top.setLayout(new BoxLayout(top, BoxLayout.LINE_AXIS));
         middle.setLayout(new BoxLayout(middle, BoxLayout.LINE_AXIS));
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.LINE_AXIS));

@@ -21,7 +21,7 @@ public class DemandelistModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Id Demande", "Créateur", "Date",  "Etat"
+        "Id Demande", "Créateur",  "Etat"
     };
     private List<DetailDmd> demandes;
 
@@ -61,9 +61,6 @@ public class DemandelistModel extends AbstractTableModel {
                 return demandes.get(rowIndex).getUtiprenom() + " " + demandes.get(rowIndex).getUtinom();
                 
             case 2:
-                return demandes.get(rowIndex).getSuivdosdate();
-
-            case 3:
                 return demandes.get(rowIndex).getDemandeetat();
 
             case 999:
@@ -85,8 +82,6 @@ public class DemandelistModel extends AbstractTableModel {
             case 1:
                 return String.class;
             case 2:
-                return Date.class;
-            case 3:
                 return Integer.class;
             case 999:
                 return Integer.class;

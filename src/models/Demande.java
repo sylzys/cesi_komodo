@@ -9,11 +9,20 @@ public class Demande {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int demandeid;
 
+    @Column(name="interid", columnDefinition="INTEGER", nullable=true)
+    private int interid ;
+    
     @Column(name="cliid", columnDefinition="INTEGER", nullable=true)
     private int cliid ;
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private int utiid ;    
+    
+    @Column(name="demandetitre", columnDefinition="VARCHAR(254)", nullable=true)
+    private String demandetitre ;
+    
+    @Column(name="demandedesc", columnDefinition="VARCHAR(500)", nullable=true)
+    private String demandedesc ;
     
     @Column(name="demandeetat", columnDefinition="INTEGER", nullable=true)
     private int demandeetat ;
@@ -25,14 +34,20 @@ public class Demande {
     @Column(name="demandesuppr", columnDefinition="BOOLEAN", nullable=true)
     private Boolean demandesuppr ;
 
-  
-
     public int getDemandeid() {
         return demandeid;
     }
 
     public void setDemandeid(int demandeid) {
         this.demandeid = demandeid;
+    }
+
+    public int getInterid() {
+        return interid;
+    }
+
+    public void setInterid(int interid) {
+        this.interid = interid;
     }
 
     public int getCliid() {
@@ -51,6 +66,22 @@ public class Demande {
         this.utiid = utiid;
     }
 
+    public String getDemandetitre() {
+        return demandetitre;
+    }
+
+    public void setDemandetitre(String demandetitre) {
+        this.demandetitre = demandetitre;
+    }
+
+    public String getDemandedesc() {
+        return demandedesc;
+    }
+
+    public void setDemandedesc(String demandedesc) {
+        this.demandedesc = demandedesc;
+    }
+
     public int getDemandeetat() {
         return demandeetat;
     }
@@ -67,12 +98,14 @@ public class Demande {
         this.demandedteadd = demandedteadd;
     }
 
-    public boolean isDemandesuppr() {
+    public Boolean getDemandesuppr() {
         return demandesuppr;
     }
 
-    public void setDemandesuppr(boolean demandesuppr) {
+    public void setDemandesuppr(Boolean demandesuppr) {
         this.demandesuppr = demandesuppr;
-    } 
+    }
+
+  
 }
 

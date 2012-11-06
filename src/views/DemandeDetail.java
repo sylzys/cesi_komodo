@@ -124,7 +124,7 @@ public class DemandeDetail extends KContainer {
         h.put("demandeid", demande_id);
         dd = DetailDdeInstance.GetDetaildemande("demandeid",demande_id, h);
 
-        jLabel5.setText("<html><h1><b>> Demande n°" + dd.get(0).getDemandeid() + "</b></h1><small>Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtinom() + " le " +dd.get(0).getSuivdosdate() + "</small></html>");
+        jLabel5.setText("<html><h1><b>> Demande n°" + dd.get(0).getDemandeid() + "</b></h1><small>Créee par " + dd.get(0).getUtiprenom() + " " + dd.get(0).getUtinom() + "</small></html>");
         jLabel5.setPreferredSize(new Dimension(450, 100));
         top_right.add(jLabel5);
         JButton retour = new JButton("Retour à la société");
@@ -178,7 +178,7 @@ public class DemandeDetail extends KContainer {
         
         
         Font f = new Font("Euphemia", Font.PLAIN, 14);
-        JLabel comm = new JLabel("<html><b>Commentaires : </b><br />"+dd.get(0).getSuivdoscom()+"</html>");
+        JLabel comm = new JLabel("<html><b>Commentaires : </b><br />"+dd.get(0).getDemandedesc()+"</html>");
         comm.setFont(f); 
         comm.setVerticalTextPosition(0);
         comm.setPreferredSize(new Dimension(600, 200));
