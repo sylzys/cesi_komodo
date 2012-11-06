@@ -45,6 +45,7 @@ import models.DetailDmd;
 import models.Interlocuteur;
 import org.hibernate.Query;
 import classes.WhitePanel;
+import controllers.getSteInfos;
 
 /**
  *
@@ -122,204 +123,236 @@ public class ClientDetail extends KContainer {
 //            h.put("cliid", cli_id);
 //            //récupère la liste.
 //            cli.GetClients("where cliid = :cliid", h);
-           // top.setBackground(Color.white);
-            top.setLayout(new BorderLayout());
+        // top.setBackground(Color.white);
+        top.setLayout(new BorderLayout());
 
-            //cliInfos.setBackground(Color.white);
-            cliDetail.setPreferredSize(new Dimension(780, 150));
+        //cliInfos.setBackground(Color.white);
+        cliDetail.setPreferredSize(new Dimension(780, 150));
 
-            //ajout des Listeners sur les boutons
-            addContact.addActionListener(new addContactListener());
-            validateCmd.addActionListener(new validateCmdListener());
-            validateDmd.addActionListener(new validateDmdListener());
-            newDemand.addActionListener(new newDmdListener());
-            //adresse, contacts raison sociale etc
+        //ajout des Listeners sur les boutons
+        addContact.addActionListener(new addContactListener());
+        validateCmd.addActionListener(new validateCmdListener());
+        validateDmd.addActionListener(new validateDmdListener());
+        newDemand.addActionListener(new newDmdListener());
+        //adresse, contacts raison sociale etc
 
-            //cliDetail.setBackground(Color.white);
-            cliDetail.setLayout(new BorderLayout());
-            cliInfos.setLayout(new FlowLayout(0, 50, 0));
+        //cliDetail.setBackground(Color.white);
+        cliDetail.setLayout(new BorderLayout());
+        cliInfos.setLayout(new FlowLayout(0, 50, 0));
 
-            //adresse
-            WhitePanel cliAddr = new WhitePanel();
-            //cliAddr.setBackground(Color.white);
-            JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
-                    + cli.getClicp() + "<br>"
-                    + cli.getCliville() + "<br>"
-                    + cli.getClipays() + "</html>");
-            cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
-            cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-            cliAddr.add(addr);
-            cliInfos.add(cliAddr);
+        //adresse
+        WhitePanel cliAddr = new WhitePanel();
+        //cliAddr.setBackground(Color.white);
+        JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
+                + cli.getClicp() + "<br>"
+                + cli.getCliville() + "<br>"
+                + cli.getClipays() + "</html>");
+        cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
+        cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+        cliAddr.add(addr);
+        cliInfos.add(cliAddr);
 
-            //contacts
-            WhitePanel cliContact = new WhitePanel();
-            //cliContact.setBackground(Color.white);
-            JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
-                    + cli.getClifax() + "<br>Mail: "
-                    + cli.getClimail() + "<br>Web Site: "
-                    + cli.getClisite() + "</html>");
-            cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
-            cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-            cliContact.add(contact);
-            cliInfos.add(cliContact);
+        //contacts
+        WhitePanel cliContact = new WhitePanel();
+        //cliContact.setBackground(Color.white);
+        JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
+                + cli.getClifax() + "<br>Mail: "
+                + cli.getClimail() + "<br>Web Site: "
+                + cli.getClisite() + "</html>");
+        cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
+        cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
+        cliContact.add(contact);
+        cliInfos.add(cliContact);
 
-            //raison sociale
-            WhitePanel cliRS = new WhitePanel();
-          //  cliRS.setBackground(Color.white);
-            JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
-                    + cli.getCliactivite() + "<br>SIRET: "
-                    + cli.getClisiret() + "<br>CA: "
-                    + Integer.toString(cli.getClica()) + "</html>");
-            cliRS.add(RS);
-            cliInfos.add(cliRS);
+        //raison sociale
+        WhitePanel cliRS = new WhitePanel();
+        //  cliRS.setBackground(Color.white);
+        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
+                + cli.getCliactivite() + "<br>SIRET: "
+                + cli.getClisiret() + "<br>CA: "
+                + Integer.toString(cli.getClica()) + "</html>");
+        cliRS.add(RS);
+        cliInfos.add(cliRS);
 
-            //Boutons contact
+        //Boutons contact
 
-            //cliButtons.setBackground(Color.white);
-            cliButtons.setLayout(new FlowLayout());
-            cliButtons.add(new JLabel("Contacts : "));
-            interInstance = InterlocuteurInstance.getInstance();
-            Hashtable hh = new Hashtable();
-            hh.put("cliid", cli_id);
-            inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
-            for (Interlocuteur in : inter)
-            {
-                System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
-                LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
-                LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+        //cliButtons.setBackground(Color.white);
+        cliButtons.setLayout(new FlowLayout());
+        cliButtons.add(new JLabel("Contacts : "));
+        interInstance = InterlocuteurInstance.getInstance();
+        Hashtable hh = new Hashtable();
+        hh.put("cliid", cli_id);
+        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
+        for (Interlocuteur in : inter)
+        {
+            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
+            LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
+            LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
-                LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        getInterId(evt);
-                    }
+            LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    getInterId(evt);
+                }
 
-                    private void getInterId(MouseEvent evt) {
-                        LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
-                        showInterlocuteur(lbl_tmp.getId());
-                    }
-                });
-                cliButtons.add(LblCmd);
-                cliButtons.add(Box.createHorizontalStrut(5));
-            }
+                private void getInterId(MouseEvent evt) {
+                    LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+                    showInterlocuteur(lbl_tmp.getId());
+                }
+            });
+            cliButtons.add(LblCmd);
+            cliButtons.add(Box.createHorizontalStrut(5));
+        }
 //        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
 //        LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
 
-            cliButtons.add(addContact);
+        cliButtons.add(addContact);
 
 
-            cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
+        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
-            //Panneau des combos box
-           // comboPanel.setBackground(Color.white);
-            comboPanel.setLayout(new BorderLayout());
-            comboPanel.add(newDemand, BorderLayout.NORTH);
+        //Panneau des combos box
+        // comboPanel.setBackground(Color.white);
+        comboPanel.setLayout(new BorderLayout());
+        comboPanel.add(newDemand, BorderLayout.NORTH);
 
-            //ComboBox demandes
-            WhitePanel comboDmd_panel = new WhitePanel();
-           // comboDmd_panel.setBackground(Color.white);
-            comboDmd_panel.setLayout(new FlowLayout());
+        //ComboBox demandes
+        WhitePanel comboDmd_panel = new WhitePanel();
+        // comboDmd_panel.setBackground(Color.white);
+        comboDmd_panel.setLayout(new FlowLayout());
 
-            //get detail demande
-            DemandeInstance dd = DemandeInstance.getInstance();
-            Hashtable hhh = new Hashtable();
-            hhh.put("cliid", cli_id);
-            demande = dd.GetDemandes("where cliid = :cliid", hhh);
+        //get detail demande
+        DemandeInstance dd = DemandeInstance.getInstance();
+        Hashtable hhh = new Hashtable();
+        hhh.put("cliid", cli_id);
+        demande = dd.GetDemandes("where cliid = :cliid", hhh);
 
-            cb_demande.addItem("Demandes");
-            for (Demande dddd : demande)
-            {
-                System.out.println("Etat : " + dddd.getDemandeetat());
-                cb_demande.addItem((dddd.getDemandeid()));
+        cb_demande.addItem("Demandes");
+        for (Demande dddd : demande)
+        {
+            System.out.println("Etat : " + dddd.getDemandeetat());
+            cb_demande.addItem((dddd.getDemandeid()));
+        }
+
+        comboDmd_panel.add(cb_demande);
+        comboDmd_panel.add(validateDmd);
+
+        //Combobox commandes
+        WhitePanel comboCmd_panel = new WhitePanel();
+        // comboCmd_panel.setBackground(Color.white);
+        comboCmd_panel.setLayout(new FlowLayout());
+
+        //get detail cde
+        DetailCdeInstance dc = DetailCdeInstance.getInstance();
+        Hashtable hhhh = new Hashtable();
+        hhhh.put("cliid", cli_id);
+        detail = dc.GetDetailcde("cliid = :cliid", hhhh);
+
+        cb_commande.addItem("Commandes");
+        for (DetailCommande dcc : detail)
+        {
+            System.out.println("Name : " + dcc.getInternom());
+            System.out.println("Prénom : " + dcc.getInteprenom());
+            System.out.println("Prix : " + dcc.getComprix());
+            System.out.println("Etat : " + dcc.getCometat());
+            System.out.println("date ?  : " + dcc.getComdate());
+            cb_commande.addItem(dcc.getComid());
+        }
+
+        comboCmd_panel.add(cb_commande);
+        comboCmd_panel.add(validateCmd);
+
+        //ajout des combobox a droite
+        comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
+        comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
+//LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
+//                LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+//
+//                LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+//                    @Override
+//                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+//                        getInterId(evt);
+//                    }
+//
+//                    private void getInterId(MouseEvent evt) {
+//                        LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+//                        showInterlocuteur(lbl_tmp.getId());
+//                    }
+//                });
+        //ajout des panels au WhitePanel principal
+        top.add(comboPanel, BorderLayout.EAST);
+        LinkLabelData LblSte = new LinkLabelData("(Modifier)", cli.getCliid());
+       // LblSte.setIcon(new ImageIcon("ressources/images/eye.gif"));
+        LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("CLICKED");
+                goModifSte(evt);
             }
 
-            comboDmd_panel.add(cb_demande);
-            comboDmd_panel.add(validateDmd);
-
-            //Combobox commandes
-            WhitePanel comboCmd_panel = new WhitePanel();
-           // comboCmd_panel.setBackground(Color.white);
-            comboCmd_panel.setLayout(new FlowLayout());
-
-            //get detail cde
-            DetailCdeInstance dc = DetailCdeInstance.getInstance();
-            Hashtable hhhh = new Hashtable();
-            hhhh.put("cliid", cli_id);
-            detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
-
-            cb_commande.addItem("Commandes");
-            for (DetailCommande dcc : detail)
-            {
-                System.out.println("Name : " + dcc.getInternom());
-                System.out.println("Prénom : " + dcc.getInteprenom());
-                System.out.println("Prix : " + dcc.getComprix());
-                System.out.println("Etat : " + dcc.getCometat());
-                System.out.println("date ?  : " + dcc.getComdate());
-                cb_commande.addItem(dcc.getComid());
+            private void goModifSte(MouseEvent evt) {
+                LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+                modif_ste(lbl_tmp.getId());
             }
+        });
+        WhitePanel name_ste = new WhitePanel();
+        name_ste.setPreferredSize(new Dimension(100, 20));
+        name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
+        name_ste.add(new JLabel("<html><b>" + cli.getClinom()));
+        name_ste.add(LblSte);
+        cliDetail.add(name_ste, BorderLayout.PAGE_START);
+        cliDetail.add(cliInfos, BorderLayout.CENTER);
+        cliDetail.add(cliButtons, BorderLayout.SOUTH);
+        top.add(cliDetail, BorderLayout.WEST);
+        content.add(top, BorderLayout.NORTH);
 
-            comboCmd_panel.add(cb_commande);
-            comboCmd_panel.add(validateCmd);
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
-            //ajout des combobox a droite
-            comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
-            comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
+        //WhitePanel pour accordeons
 
-            //ajout des panels au WhitePanel principal
-            top.add(comboPanel, BorderLayout.EAST);
-            cliDetail.add(new JLabel("<html><b>" + cli.getClinom() + "</b><br/></html>"), BorderLayout.NORTH);
-            cliDetail.add(cliInfos, BorderLayout.CENTER);
-            cliDetail.add(cliButtons, BorderLayout.SOUTH);
-            top.add(cliDetail, BorderLayout.WEST);
-            content.add(top, BorderLayout.NORTH);
+        //suivi satisfaction
+        WhitePanel suivi_satisfaction = new WhitePanel();
+        //   suivi_satisfaction.setBackground(Color.white);
+        suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
+        suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
+        bottom.add(suivi_satisfaction);
+        bottom.add(Box.createVerticalStrut(10));
 
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        //alertes
+        WhitePanel alertes = new WhitePanel();
+        // alertes.setBackground(Color.white);
+        alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
+        alertes.setPreferredSize(new Dimension(120, 50));
+        JButton btn_view_alertes = new JButton("Voir les alertes");
+        btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Fenetre.getInstance().RenewAlert(cli_id);
+            }
+        });
+        alertes.add(btn_view_alertes);
+        bottom.add(alertes);
+        bottom.add(Box.createVerticalStrut(10));
 
-            //WhitePanel pour accordeons
+        //Reporting
+        WhitePanel reporting = new WhitePanel();
+        // reporting.setBackground(Color.white);
+        reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
+        reporting.setPreferredSize(new Dimension(120, 50));
+        bottom.add(reporting);
+        bottom.add(Box.createVerticalStrut(10));
 
-            //suivi satisfaction
-            WhitePanel suivi_satisfaction = new WhitePanel();
-         //   suivi_satisfaction.setBackground(Color.white);
-            suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-            suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
-            bottom.add(suivi_satisfaction);
-            bottom.add(Box.createVerticalStrut(10));
-
-            //alertes
-            WhitePanel alertes = new WhitePanel();
-           // alertes.setBackground(Color.white);
-            alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
-            alertes.setPreferredSize(new Dimension(120, 50));
-            JButton btn_view_alertes = new JButton("Voir les alertes");
-            btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    Fenetre.getInstance().RenewAlert(cli_id);
-                }
-            });
-            alertes.add(btn_view_alertes);
-            bottom.add(alertes);
-            bottom.add(Box.createVerticalStrut(10));
-
-            //Reporting
-            WhitePanel reporting = new WhitePanel();
-           // reporting.setBackground(Color.white);
-            reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
-            reporting.setPreferredSize(new Dimension(120, 50));
-            bottom.add(reporting);
-            bottom.add(Box.createVerticalStrut(10));
-
-            content.add(bottom, BorderLayout.CENTER);
+        content.add(bottom, BorderLayout.CENTER);
 
 
-            //refresh de la fenetre
-          //JOptionPane.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+        //refresh de la fenetre
+        //JOptionPane.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
 
-            fen.conteneur.setVisible(false);
-            fen.RenewContener(this.getPanel());
-            fen.conteneur.setVisible(true);
-       // }
+        fen.conteneur.setVisible(false);
+        fen.RenewContener(this.getPanel());
+        fen.conteneur.setVisible(true);
+        // }
     }
 
     private class addContactListener implements ActionListener {
@@ -374,12 +407,12 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+
             NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
 
-        getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
-            
-            
+            getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+
+
         }
     }
 
@@ -410,6 +443,7 @@ public class ClientDetail extends KContainer {
 
         if ("N/A" != interInfos.toString())
         {
+            CurrentDatas cd = CurrentDatas.getInstance();
             String[] infos = interInfos.toString().split("#-#");
             System.out.println("add inter with cli_id : " + cli_id);
             Interlocuteur i = new Interlocuteur();
@@ -418,6 +452,7 @@ public class ClientDetail extends KContainer {
             i.setInterprenom(infos[1]);
             i.setIntertel(infos[2]);
             i.setIntermail(infos[3]);
+            i.setUtiid(cd.getUser().getId());
             InterlocuteurInstance is = InterlocuteurInstance.getInstance();
             is.insererEnBaseDeDonnées(i);
             if (HibernateConnection.online == false)
@@ -428,8 +463,24 @@ public class ClientDetail extends KContainer {
             {
                 HibernateConnection.newConnect(true);
             }
-            ClientDetail cd = new ClientDetail(cli_id);
+            new ClientDetail(cli_id);
         }
-    } 
-    
+    }
+
+    private void modif_ste(int id) {
+        ModifSteDialog modif = new ModifSteDialog(null, "Modification client", true, id);
+        System.out.println("MODIFYING CLIENT ID " + id);
+        getSteInfos interInfos = modif.showZDialog(id);
+        //JOptionPane jop = new JOptionPane();
+
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        ClientDetail cd = new ClientDetail(cli_id);
+    }
 }

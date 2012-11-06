@@ -18,6 +18,28 @@ public class DetailCommande {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date comdateprev ;
 
+    @Column(name="comdesc", columnDefinition="VARCHAR(254)", nullable=true)
+    private String comdesc;
+
+    public String getComdesc() {
+        return comdesc;
+    }
+
+    public void setComdesc(String comdesc) {
+        this.comdesc = comdesc;
+    }
+
+    public String getComtitre() {
+        return comtitre;
+    }
+
+    public void setComtitre(String comtitre) {
+        this.comtitre = comtitre;
+    }
+    
+    @Column(name="comtitre", columnDefinition="VARCHAR(50)", nullable=true)
+    private String comtitre;
+    
     @Column(name="cometat", columnDefinition="INTEGER", nullable=true)
     private String cometat ;
 
@@ -96,6 +118,29 @@ public class DetailCommande {
     
     @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean suividossuppr ;
+    
+    @Column(name="utiprenom", columnDefinition="VARCHAR(50)", nullable=true)
+    private String utiprenom;
+    
+    @Column(name="utinom", columnDefinition="VARCHAR(50)", nullable=true)
+    private String utinom;
+
+    public String getUtiprenom() {
+        return utiprenom;
+    }
+
+    public void setUtiprenom(String utiprenom) {
+        this.utiprenom = utiprenom;
+    }
+
+    public String getUtinom() {
+        return utinom;
+    }
+
+    public void setUtinom(String utinom) {
+        this.utinom = utinom;
+    }
+    
 
     public int getComid() {
         return comid;

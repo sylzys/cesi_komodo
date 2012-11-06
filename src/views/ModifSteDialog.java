@@ -1,53 +1,40 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package views;
 
 import classes.BackgroundPanel;
-import com.google.common.base.Strings;
-import controllers.UserActif;
-import instances.ClientInstance;
-import instances.HibernateConnection;
+import controllers.getSteInfos;
+import controllers.getLoginInfos;
+import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigInteger;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import java.util.Hashtable;
+import java.util.List;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import models.Interlocuteur;
+import classes.WhitePanel;
+import com.google.common.base.Strings;
+import instances.ClientInstance;
+import instances.HibernateConnection;
+import java.awt.Font;
+import java.awt.Image;
 import models.Client;
-import models.CurrentDatas;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import sun.java2d.pipe.DrawImage;
 
-/**
- *
- * @author sylv
- */
-public class Creation extends KContainer {
+public class ModifSteDialog extends JDialog {
 
-    JLabel title = new JLabel("Créer un nouveau client");
+    private getSteInfos zInfo = new getSteInfos();
+    JLabel title = new JLabel("Modification du client");
     JPanel left = new JPanel(),
             right = new JPanel();
     JTextField cli_nom = new JTextField(),
             cli_add = new JTextField(),
             cli_cp = new JTextField(),
+            cli_ville = new JTextField(),
             cli_tel = new JTextField(),
             cli_fax = new JTextField(),
             cli_mail = new JTextField(),
@@ -60,7 +47,8 @@ public class Creation extends KContainer {
             cli_ca = new JTextField();
     JLabel lbl_clinom = new JLabel("Nom société *"),
             lbl_cliadd = new JLabel("N° - Rue *"),
-            lbl_clicp = new JLabel("CP - Ville *"),
+            lbl_clicp = new JLabel("CP *"),
+            lbl_cliville = new JLabel("Ville *"),
             lbl_clitel = new JLabel("Téléphone *"),
             lbl_clifax = new JLabel("Fax"),
             lbl_climail = new JLabel("Mail"),
@@ -71,15 +59,30 @@ public class Creation extends KContainer {
             lbl_clisiren = new JLabel("SIREN *"),
             lbl_clisiret = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
+    private JButton btn_modif = new JButton("Modifier"),
+            btn_cancel = new JButton("Annuler");
+    private final int cli_id;
+    private List<Client> client;
+    private Client cli;
 
-    public Creation(UserActif user) {
-        super();
-        this.user = user;
-        initPanel();
+    public ModifSteDialog(JFrame parent, String title, boolean modal, int id) {
+        super(parent, title, modal);
+        this.setSize(1000, 600);
+        this.setLocationRelativeTo(null);
+        //this.inter_id = id;
+        this.cli_id = id;
+        this.setResizable(false);
+        //this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        this.initComponent();
     }
 
-    @Override
-    protected void initPanel() {
+    public getSteInfos showZDialog(int id) {
+        // this.sendData = false;
+        this.setVisible(true);
+        return this.zInfo;
+    }
+
+    private void initComponent() {
         BackgroundPanel content = new BackgroundPanel();
 
         content.setLayout(new FlowLayout());
@@ -107,7 +110,7 @@ public class Creation extends KContainer {
         cli_add.setAlignmentX(Box.RIGHT_ALIGNMENT);
         addr.add(cli_add);
         left.add(addr);
-        //cp ville
+        //cp
         JPanel cp = new JPanel();
         // cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
@@ -116,6 +119,16 @@ public class Creation extends KContainer {
         cli_cp.setAlignmentX(Box.RIGHT_ALIGNMENT);
         cp.add(cli_cp);
         left.add(cp);
+        //left.add(Box.createVerticalStrut(30));
+        //ville
+        JPanel ville = new JPanel();
+        // cp.setBackground(Color.WHITE);
+        ville.setLayout(new FlowLayout());
+        ville.add(lbl_cliville);
+        cli_ville.setPreferredSize(new Dimension(200, 30));
+        cli_ville.setAlignmentX(Box.RIGHT_ALIGNMENT);
+        ville.add(cli_ville);
+        left.add(ville);
         left.add(Box.createVerticalStrut(30));
         //tel
         JPanel tel = new JPanel();
@@ -220,25 +233,64 @@ public class Creation extends KContainer {
         right.add(new JLabel("Les champs marqués d'une * sont obligatoires"));
         //Enregistrer
         JButton val = new JButton("Enregistrer");
+        JButton cancel = new JButton("Annuler");
         val.addActionListener(new saveListener());
-        val.setHorizontalAlignment(SwingConstants.CENTER);
-        right.add(val);
-        JLabel icon = new JLabel(new ImageIcon("ressources/images/new_client.jpg"));
+        cancel.addActionListener(new cancelListener());
+        //val.setHorizontalAlignment(SwingConstants.CENTER);
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+        buttons.add(val);
+        buttons.add(cancel);
+        right.add(buttons);
+        JLabel icon = new JLabel(new ImageIcon("ressources/images/edit.jpg"));
         icon.setOpaque(false);
 
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setBorder(new EmptyBorder(0, 0, 10, 0));
-        Font f = new Font("Euphemia", Font.PLAIN, 22);
+        Font f = new Font("Euphemia", Font.PLAIN, 14);
         title.setFont(f);
         title.setPreferredSize(new Dimension(1000, 30));
-        this.panel.add(icon, BorderLayout.PAGE_START);
+        //this.panel.add(icon, BorderLayout.PAGE_START);
         content.add(left);
         content.add(right);
-        this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
-        this.panel.add(content, BorderLayout.PAGE_END);
+
+        //this.getContentPane() = new BackgroundPanel();
+        this.getContentPane().add(icon, BorderLayout.PAGE_START);
+        this.getContentPane().add(title, BorderLayout.AFTER_LINE_ENDS);
+        this.getContentPane().add(content, BorderLayout.PAGE_END);
+        //this.getContentPane().add(content, BorderLayout.CENTER);
+        // this.getContentPane().add(control, BorderLayout.SOUTH);
+        fill_all();
     }
 
-    private class saveListener implements ActionListener {
+    private void fill_all() {
+        ClientInstance ci = ClientInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("cliid", cli_id);
+        String where = "where cliid = :cliid";
+        client = ci.GetClients(where, h);
+        for (Client cli : client)
+        {
+            this.cli = cli;
+        }
+        cli_nom.setText(cli.getClinom());
+        cli_add.setText(cli.getCliadresse());
+        cli_cp.setText(cli.getClicp());
+        cli_ville.setText(cli.getCliville());
+        cli_nom.setText(cli.getClinom());
+        cli_tel.setText(cli.getClitel());
+        cli_fax.setText(cli.getClifax());
+        cli_mail.setText(cli.getClimail());
+        cli_site.setText(cli.getClisite());
+        cli_dir.setText(cli.getClidg());
+        cli_naf.setText(cli.getClinaf());
+        cli_act.setText(cli.getCliactivite());
+        cli_siren.setText(cli.getClisiren());
+        cli_siret.setText(cli.getClisiret());
+        cli_ca.setText(String.valueOf(cli.getClica()));
+    }
+
+    public class saveListener implements ActionListener {
 
         public saveListener() {
         }
@@ -248,68 +300,46 @@ public class Creation extends KContainer {
             String str = check_fields();
             if (str == "")
             {
-                add_customer();
-
+                ClientInstance ci = ClientInstance.getInstance();
+            cli.setClinom(cli_nom.getText());
+            cli.setCliadresse(cli_add.getText());
+            cli.setClicp(cli_cp.getText());
+            cli.setCliville(cli.getCliville());
+            cli.setClitel(cli_tel.getText());
+            cli.setClifax(cli_fax.getText());
+            cli.setClimail(cli_mail.getText());
+            cli.setClisite(cli_site.getText());
+            cli.setClidg(cli_dir.getText());
+            cli.setCliactivite(cli_act.getText());
+            cli.setClinaf(cli_naf.getText());
+            cli.setClisiren(cli_siren.getText());
+            cli.setClisiret(cli_siret.getText());
+            cli.setClica(Integer.valueOf(cli_ca.getText()));
+            Boolean is_ok = ci.updaterBaseDeDonnées(cli);
+            String str2 = is_ok ? "La modification du client a été effectué" : "La modification a échoué";
+            JOptionPane.showMessageDialog(null, str2, "Modification du client", JOptionPane.INFORMATION_MESSAGE);
             }
             else
             {
                 System.out.println("Champs NOK -> ");
                 JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);
+                jop3.showMessageDialog(null, str, "Attention", JOptionPane.ERROR_MESSAGE);
             }
+            
         }
     }
 
-    private void add_customer() {
-        //remplir client
-        Client cli = new Client();
-        cli.setClinom(cli_nom.getText());
-        cli.setCliadresse(cli_add.getText());
-        cli.setClicp(cli_cp.getText().substring(0, 4));
-        cli.setCliville(cli_cp.getText().substring(5, cli_cp.getText().length()));
-        cli.setClitel(cli_tel.getText());
-        cli.setClifax(cli_fax.getText());
-        cli.setClimail(cli_mail.getText());
-        cli.setClisite(cli_site.getText());
-        cli.setClidg(cli_dir.getText());
-        cli.setClinaf(cli_naf.getText());
-        cli.setClisiren(cli_siren.getText());
-        cli.setClisiret(cli_siret.getText());
-        cli.setCliactivite(cli_act.getText());
-        cli.setUtiid(this.user.getId());
-        cli.setUti_utiid(this.user.getId());
-        cli.setClidteadd(Calendar.getInstance().getTime());
-        if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
-        {
-            cli.setClica(Integer.parseInt(cli_ca.getText()));
+    public class cancelListener implements ActionListener {
+
+        public cancelListener() {
         }
 
-        ClientInstance cli_inst = ClientInstance.getInstance();
-        cli_inst.setClient(cli);
-        //inserer client
-        Boolean is_ok = cli_inst.ajouterDansBaseDeDonnées();
-        String str = is_ok ? "L'ajout du client a été effectué" : "L'ajout du client a échoué";
-        JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.ERROR_MESSAGE);
-        HibernateConnection connection = HibernateConnection.getInstance();
-        Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
-        // System.out.println ("Recorded client ID :" + query.uniqueResult());
-        int last_value = ((BigInteger) query.uniqueResult()).intValue();
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            fill_all();
 
-        
-        if (HibernateConnection.online == false)
-        {
-            HibernateConnection.newConnect(false);
         }
-        else
-        {
-            HibernateConnection.newConnect(true);
-        }
-        CurrentDatas cur_dat = CurrentDatas.getInstance();
-        cur_dat.setSoc_id(last_value);
-        ClientDetail cd = new ClientDetail(last_value);
-        cd.addInterlocuteur(last_value);
     }
-
     private String check_fields() {
         String str = "";
         System.out.println("NOM -> " + cli_nom.getText());
@@ -322,9 +352,9 @@ public class Creation extends KContainer {
         {
             str += "<html>Le champ <i>N° - Rue</i> ne peut être vide<br />";
         }
-        if (Strings.isNullOrEmpty(cli_cp.getText()) || cli_cp.getText().trim().isEmpty())
+        if (Strings.isNullOrEmpty(cli_cp.getText()) || cli_cp.getText().trim().isEmpty() || cli_cp.getText().trim().length() > 5)
         {
-            str += "<html>Le champ <i>CP - Ville</i> ne peut être vide<br />";
+            str += "<html>Le champ <i>CP</i> ne peut être vide et ne doit pas exceder 5 chiffres<br />";
         }
         if (Strings.isNullOrEmpty(cli_tel.getText()) || cli_tel.getText().trim().isEmpty())
         {
@@ -353,6 +383,7 @@ public class Creation extends KContainer {
         {
             str += "</html>";
         }
+        System.out.println("RETURNING CHECKED : "+str);
         return str;
     }
 }

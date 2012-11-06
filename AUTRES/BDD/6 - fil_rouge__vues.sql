@@ -3,11 +3,16 @@ SELECT b.bonatirerid, b.bonatirerdte, b.bonatirersuppr, p.prodid, p.bonajeterid,
 FROM bonatirer b, production p, chaine c, commande d
 WHERE p.bonatirerid = b.bonatirerid AND p.chaineid = c.chaineid AND p.comid = d.comid;
 
+
 CREATE OR REPLACE VIEW detailcommande AS 
-SELECT c.comid, c.comdate, c.comdateprev, c.cometat, c.comproddeb, c.comprodfin, c.comprix, c.comsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
-l.clilogin,  l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel, i.intersuppr, s.suivdosid, s.suividossuppr
-FROM commande c, client l, suivdossier s, interlocuteur i
-WHERE s.comid = c.comid AND l.cliid = i.cliid AND s.interid = i.interid;
+SELECT c.comid, c.comdate, c.comdateprev, c.cometat, c.comproddeb, c.comprodfin, c.comprix, c.comsuppr, l.cliid, l.clirais, l.clinom,
+l.cliadresse, l.clicp, l.cliville, l.clietat, l.clilogin, l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel,
+i.intersuppr, s.suivdosid, s.suividossuppr, c.comdesc, c.comtitre, u.utinom, u.utiprenom
+FROM commande AS c , client AS l , suivdossier AS s , interlocuteur AS i , utilisateur AS u
+WHERE s.comid = c.comid AND l.cliid = i.cliid AND s.interid = i.interid AND s.utiid = u.utiid;
+
+
+
 
 CREATE OR REPLACE VIEW detaildevis AS 
 SELECT d.devid, d.devdate, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
