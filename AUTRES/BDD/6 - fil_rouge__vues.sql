@@ -7,7 +7,7 @@ WHERE p.bonatirerid = b.bonatirerid AND p.chaineid = c.chaineid AND p.comid = d.
 CREATE OR REPLACE VIEW detailcommande AS 
 SELECT c.comid, c.comdate, c.comdateprev, c.cometat, c.comproddeb, c.comprodfin, c.comprix, c.comsuppr, l.cliid, l.clirais, l.clinom,
 l.cliadresse, l.clicp, l.cliville, l.clietat, l.clilogin, l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel,
-i.intersuppr, s.suivdosid, s.suividossuppr, c.comdesc, c.comtitre, u.utinom, u.utiprenom
+i.intersuppr, s.suivdosid, s.demandeid, s.suividossuppr, c.comdesc, c.comtitre, u.utinom, u.utiprenom
 FROM commande AS c , client AS l , suivdossier AS s , interlocuteur AS i , utilisateur AS u
 WHERE s.comid = c.comid AND l.cliid = i.cliid AND s.interid = i.interid AND s.utiid = u.utiid;
 

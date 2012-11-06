@@ -248,53 +248,27 @@ public class Synchro {
         return action;
     }
     //Envoi des requete dans la base en ligne
-    public void record()
+    public boolean record(String requete)
     {
-        boolean test = false;
         boolean empty = emptyFic();
         if(empty == true)
         {
-            String fic = readFic();
-            StringTokenizer strtok = new StringTokenizer(fic, "||");
-            String act = "";
-            String requete = "";
-            while (strtok.hasMoreTokens()) {
-               act = strtok.nextToken();
-               String[] inter = act.split("interlocuteur:");
-               String[] cli = act.split("client:");
-                if(inter.length > 1)
-                {
-                    requete = inter[0];
-                }
-                else
-                {
-                    requete = cli[0];
-                }
-                Transaction tx = null;
-                try {
-                    tx = HibernateConnection.getSession().beginTransaction();
-                    // Ordre Hibernate             
-                    Query q = HibernateConnection.getSession().createSQLQuery(requete);
-                    q.executeUpdate();
-                    tx.commit();
-                    eraseFic();   
-                    test = true;
-                    Fenetre fen = Fenetre.getInstance();
-                    fen.RenewAccueil();
-                } catch (HibernateException ex) {
-                    test = false;
-                    System.out.println(ex.toString());                    
-                }  
+            Transaction tx = null;
+            try {
+                tx = HibernateConnection.getSession().beginTransaction();
+                // Ordre Hibernate             
+                Query q = HibernateConnection.getSession().createSQLQuery(requete);
+                q.executeUpdate();
+                tx.commit();
+                return true;
+            } catch (HibernateException ex) {
+                System.out.println(ex.toString());  
+                return false;
             }
-            JOptionPane jop = new JOptionPane();
-            if(test == true)
-            {
-                jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-                jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation", "Erreur", JOptionPane.INFORMATION_MESSAGE);
-            }
+        }
+        else
+        {
+            return false;
         }
     }
     public String cliNom(int cliid)
@@ -315,5 +289,46 @@ public class Synchro {
             System.out.println(e.getMessage());
         }  
         return cliNom;
+    }
+    public void delReq(String ligne)
+    {
+        String fic= readFic();
+        String newFic="";
+        StringTokenizer strtok = new StringTokenizer(fic, "||");
+        while (strtok.hasMoreTokens()) {
+            String requete = req = strtok.nextToken();
+            if(!requete.equals(ligne))
+            {
+                newFic+=requete+"||";
+            }
+        }
+        eraseFic();
+        createFic();
+        writeFic(newFic);
+    }
+    public void createFic(){
+        try
+        {
+            File fichier = new java.io.File("ressources/requetes.txt");
+            if(fichier.exists() == false)
+            {
+                fichier.createNewFile();
+            }
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+        }
+    }
+    public void writeFic(String contenu)
+    {
+        try {
+           FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
+           BufferedWriter bw = new BufferedWriter(fichier);
+           bw.write(contenu);
+           bw.close();
+        } catch(IOException e) {
+           System.out.println(e);
+        }
     }
 }

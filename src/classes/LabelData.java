@@ -9,7 +9,7 @@ import javax.swing.JLabel;
  */
 public class LabelData extends JLabel {
     Hashtable<String, Object> Data;
-    int Id = -1;
+    Integer Id = -1;
 
     public LabelData() {
         super();
@@ -30,7 +30,7 @@ public class LabelData extends JLabel {
         Data = data;
     }
 
-     public int getId() {
+     public Integer getId() {
         return Id;
     }
 
