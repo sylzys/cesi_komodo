@@ -27,7 +27,7 @@ public class CommandeModel extends AbstractTableModel {
     //intitulé des colonnes
     private final String[] entetes =
     {
-        "N. Commande", "Titre", "Date", "Créateur", "Etat"
+        "N°", "Titre", "Date", "Créateur", "Etat"
     };
 
     public CommandeModel() {

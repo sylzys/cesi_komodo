@@ -91,6 +91,7 @@ public class CommandeDetail extends KContainer {
         progressBar.setString(details.getCometat() + "%");
         progressBar.setStringPainted(true);
         center_right.add(progressBar);
+        center_right.add(cp.showtable(ModelesTables.DEVIS,this.details.getDemandeid()));
         bottom_right.setBackground(Color.white);
         bottom_right.setLayout(new GridBagLayout());
         JLabel comm = new JLabel("<html><b>Description :</b><br />" + this.details.getComdesc());
