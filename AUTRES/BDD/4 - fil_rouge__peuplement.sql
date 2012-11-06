@@ -557,6 +557,10 @@ VALUES(
 
 INSERT INTO commande (
 COMID ,
+INTERID,
+DEMANDEID,
+COMTITRE,
+COMDESC,
 COMDATE ,
 COMDATEPREV ,
 COMETAT ,
@@ -566,13 +570,35 @@ COMPRIX ,
 COMSUPPR
 )
 VALUES (
-nextval('commande_comid_seq'), '2012-03-14', '2012-03-16', '80', '2012-03-14', NULL , '2309', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 1', 'Description commande 1', '2012-03-14', '2012-03-16', '80', '2012-03-14', NULL , '2309', false
 ), (
-nextval('commande_comid_seq'), '2012-03-15', '2012-03-31', '10', '2012-03-15', NULL , '70987', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 2', 'Description commande 2', '2012-03-15', '2012-03-31', '10', '2012-03-15', NULL , '70987', false
 ), (
-nextval('commande_comid_seq'), '2012-03-14', '2012-04-02', '100', '2012-03-14', '2012-04-01', '26543', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 3', 'Description commande 3', '2012-03-14', '2012-04-02', '100', '2012-03-14', '2012-04-01', '26543', false
 ), (
-nextval('commande_comid_seq'), '2012-04-13', '2012-04-14', '100', '2012-04-13', '2012-04-14', '346543', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 4', 'Description commande 4', '2012-04-13', '2012-04-14', '100', '2012-04-13', '2012-04-14', '346543', false
+);
+
+
+INSERT INTO demande (
+DEMANDEID ,
+INTERID,
+CLIID,
+UTIID,
+DEMANDETITRE,
+DEMANDEDESC,
+DEMANDEETAT ,
+DEMANDEDTEADD ,
+DEMANDESUPPR
+)
+VALUES (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 1', 'Description de la demande 1', 50, '2012-03-14', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 2', 'Description de la demande 1', 50, '2012-03-15', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 3', 'Description de la demande 1', 30, '2012-03-14', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 4', 'Description de la demande 1', 30, '2012-04-13', false
 );
 
 INSERT INTO comnom (
