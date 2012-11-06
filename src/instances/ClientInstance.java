@@ -149,7 +149,7 @@ public class ClientInstance {
                         + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
                         + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
-                        + "" + this.client.getClisiren() + "',"+Calendar.getInstance().getTime()+",'f')"
+                        + "" + this.client.getClisiren() + "','"+Calendar.getInstance().getTime()+"','f')"
                         + "", -1, this.client.getClinom());
             }
             return true;

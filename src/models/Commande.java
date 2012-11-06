@@ -18,10 +18,10 @@ public class Commande {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int comid;
 
-    @Column(name="comtitre", columnDefinition="VARCHAR(50)", nullable=true)
+    @Column(name="comtitre", columnDefinition="VARCHAR(254)", nullable=true)
     private String comtitre ;
     
-    @Column(name="comdesc", columnDefinition="VARCHAR(254)", nullable=true)
+    @Column(name="comdesc", columnDefinition="VARCHAR(500)", nullable=true)
     private String comdesc ;
    
     @Column(name="comdate", columnDefinition="DATE", nullable=true)
