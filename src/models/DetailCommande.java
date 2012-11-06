@@ -8,7 +8,7 @@ public class DetailCommande {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int comid;
+    private Integer comid;
 
     @Column(name="comdate", columnDefinition="DATE", nullable=true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -20,22 +20,6 @@ public class DetailCommande {
 
     @Column(name="comdesc", columnDefinition="VARCHAR(254)", nullable=true)
     private String comdesc;
-
-    public String getComdesc() {
-        return comdesc;
-    }
-
-    public void setComdesc(String comdesc) {
-        this.comdesc = comdesc;
-    }
-
-    public String getComtitre() {
-        return comtitre;
-    }
-
-    public void setComtitre(String comtitre) {
-        this.comtitre = comtitre;
-    }
     
     @Column(name="comtitre", columnDefinition="VARCHAR(50)", nullable=true)
     private String comtitre;
@@ -52,39 +36,31 @@ public class DetailCommande {
     private Date comprodfin ;
 
     @Column(name="comprix", columnDefinition="INTEGER", nullable=true)
-    private int comprix ;
+    private Integer comprix ;
 
     @Column(name="comsuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean compsuppr ;
+    private Boolean compsuppr ;
+
+    @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
+    private Integer demandeid;
 
     @Column(name="cliid", columnDefinition="INTEGER", nullable=true)
-    private int cliid ;
-
+    private Integer cliid ;
+    
     @Column(name="clirais", columnDefinition="VARCHAR(10)", nullable=true)
     private String clirais ;
     
     @Column(name="clinom", columnDefinition="VARCHAR(50)", nullable=true)
     private String clinom;
 
-    public String getClinom() {
-        return clinom;
-    }
-
-    public void setClinom(String clinom) {
-        this.clinom = clinom;
-    }
-    
     @Column(name="cliadresse", columnDefinition="VARCHAR(250)", nullable=true)
     private String cliadresse ;
     
     @Column(name="clicp", columnDefinition="VARCHAR(10)", nullable=true)
     private String clicp ;
     
-//    @Column(name="cliactivite", columnDefinition="VARCHAR(254)", nullable=true)
-//    private String cliactivite ;
-    
     @Column(name="clietat", columnDefinition="INTEGER", nullable=true)
-    private int clietat ;
+    private Integer clietat ;
     
     @Column(name="clilogin", columnDefinition="CHAR(50)", nullable=true)
     private String clilogin ;
@@ -93,10 +69,10 @@ public class DetailCommande {
     private String climdp ;
     
     @Column(name="cliacces", columnDefinition="BOOLEAN", nullable=true)
-    private boolean cliacces ;
+    private Boolean cliacces ;
     
     @Column(name="clisuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean clisuppr ;
+    private Boolean clisuppr ;
     
     @Column(name="internom", columnDefinition="VARCHAR(50)", nullable=true)
     private String internom ;
@@ -111,13 +87,13 @@ public class DetailCommande {
     private String intertel ;
     
     @Column(name="intersuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean intersuppr ;
+    private Boolean intersuppr ;
     
     @Column(name="suivdosid", columnDefinition="INTEGER", nullable=true)
-    private int suivdosid ;
+    private Integer suivdosid ;
     
     @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean suividossuppr ;
+    private Boolean suividossuppr ;
     
     @Column(name="utiprenom", columnDefinition="VARCHAR(50)", nullable=true)
     private String utiprenom;
@@ -125,28 +101,32 @@ public class DetailCommande {
     @Column(name="utinom", columnDefinition="VARCHAR(50)", nullable=true)
     private String utinom;
 
-    public String getUtiprenom() {
-        return utiprenom;
-    }
-
-    public void setUtiprenom(String utiprenom) {
-        this.utiprenom = utiprenom;
-    }
-
-    public String getUtinom() {
-        return utinom;
-    }
-
-    public void setUtinom(String utinom) {
-        this.utinom = utinom;
-    }
     
+    public Boolean isCompsuppr() {
+        return compsuppr;
+    }
 
-    public int getComid() {
+    public Boolean isCliacces() {
+        return cliacces;
+    }
+
+    public Boolean isClisuppr() {
+        return clisuppr;
+    }
+
+    public Boolean isIntersuppr() {
+        return intersuppr;
+    }
+
+    public Boolean isSuividossuppr() {
+        return suividossuppr;
+    }
+
+    public Integer getComid() {
         return comid;
     }
 
-    public void setComid(int comid) {
+    public void setComid(Integer comid) {
         this.comid = comid;
     }
 
@@ -164,6 +144,22 @@ public class DetailCommande {
 
     public void setComdateprev(Date comdateprev) {
         this.comdateprev = comdateprev;
+    }
+
+    public String getComdesc() {
+        return comdesc;
+    }
+
+    public void setComdesc(String comdesc) {
+        this.comdesc = comdesc;
+    }
+
+    public String getComtitre() {
+        return comtitre;
+    }
+
+    public void setComtitre(String comtitre) {
+        this.comtitre = comtitre;
     }
 
     public String getCometat() {
@@ -190,27 +186,35 @@ public class DetailCommande {
         this.comprodfin = comprodfin;
     }
 
-    public int getComprix() {
+    public Integer getComprix() {
         return comprix;
     }
 
-    public void setComprix(int comprix) {
+    public void setComprix(Integer comprix) {
         this.comprix = comprix;
     }
 
-    public boolean isCompsuppr() {
+    public Boolean getCompsuppr() {
         return compsuppr;
     }
 
-    public void setCompsuppr(boolean compsuppr) {
+    public void setCompsuppr(Boolean compsuppr) {
         this.compsuppr = compsuppr;
     }
 
-    public int getCliid() {
+    public Integer getDemandeid() {
+        return demandeid;
+    }
+
+    public void setDemandeid(Integer demandeid) {
+        this.demandeid = demandeid;
+    }
+
+    public Integer getCliid() {
         return cliid;
     }
 
-    public void setCliid(int cliid) {
+    public void setCliid(Integer cliid) {
         this.cliid = cliid;
     }
 
@@ -220,6 +224,14 @@ public class DetailCommande {
 
     public void setClirais(String clirais) {
         this.clirais = clirais;
+    }
+
+    public String getClinom() {
+        return clinom;
+    }
+
+    public void setClinom(String clinom) {
+        this.clinom = clinom;
     }
 
     public String getCliadresse() {
@@ -238,19 +250,11 @@ public class DetailCommande {
         this.clicp = clicp;
     }
 
-//    public String getCliactivite() {
-//        return cliactivite;
-//    }
-//
-//    public void setCliactivite(String cliactivite) {
-//        this.cliactivite = cliactivite;
-//    }
-
-    public int getClietat() {
+    public Integer getClietat() {
         return clietat;
     }
 
-    public void setClietat(int clietat) {
+    public void setClietat(Integer clietat) {
         this.clietat = clietat;
     }
 
@@ -270,19 +274,19 @@ public class DetailCommande {
         this.climdp = climdp;
     }
 
-    public boolean isCliacces() {
+    public Boolean getCliacces() {
         return cliacces;
     }
 
-    public void setCliacces(boolean cliacces) {
+    public void setCliacces(Boolean cliacces) {
         this.cliacces = cliacces;
     }
 
-    public boolean isClisuppr() {
+    public Boolean getClisuppr() {
         return clisuppr;
     }
 
-    public void setClisuppr(boolean clisuppr) {
+    public void setClisuppr(Boolean clisuppr) {
         this.clisuppr = clisuppr;
     }
 
@@ -318,29 +322,46 @@ public class DetailCommande {
         this.intertel = intertel;
     }
 
-    public boolean isIntersuppr() {
+    public Boolean getIntersuppr() {
         return intersuppr;
     }
 
-    public void setIntersuppr(boolean intersuppr) {
+    public void setIntersuppr(Boolean intersuppr) {
         this.intersuppr = intersuppr;
     }
 
-    public int getSuivdosid() {
+    public Integer getSuivdosid() {
         return suivdosid;
     }
 
-    public void setSuivdosid(int suivdosid) {
+    public void setSuivdosid(Integer suivdosid) {
         this.suivdosid = suivdosid;
     }
 
-    public boolean isSuividossuppr() {
+    public Boolean getSuividossuppr() {
         return suividossuppr;
     }
 
-    public void setSuividossuppr(boolean suividossupp) {
-        this.suividossuppr = suividossupp;
+    public void setSuividossuppr(Boolean suividossuppr) {
+        this.suividossuppr = suividossuppr;
     }
+
+    public String getUtiprenom() {
+        return utiprenom;
+    }
+
+    public void setUtiprenom(String utiprenom) {
+        this.utiprenom = utiprenom;
+    }
+
+    public String getUtinom() {
+        return utinom;
+    }
+
+    public void setUtinom(String utinom) {
+        this.utinom = utinom;
+    }
+    
     
     
 }
