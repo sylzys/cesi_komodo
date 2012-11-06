@@ -6,46 +6,37 @@ package views;
 
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
-import controllers.UserActif;
-import controllers.getInterlocuteurInfos;
 import controllers.getDemandeInfos;
-import instances.ClientInstance;
+import controllers.getInterlocuteurInfos;
+import controllers.getSteInfos;
 import instances.DemandeInstance;
 import instances.DetailCdeInstance;
+import instances.HibernateConnection;
+import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import models.Client;
-import models.DetailCommande;
-import models.Demande;
-import instances.HibernateConnection;
-import instances.InterlocuteurInstance;
-import java.awt.Button;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
 import models.CurrentDatas;
-import models.DetailDmd;
+import models.Demande;
+import models.DetailCommande;
 import models.Interlocuteur;
 import org.hibernate.Query;
-import classes.WhitePanel;
-import controllers.getSteInfos;
 
 /**
  *
@@ -53,7 +44,7 @@ import controllers.getSteInfos;
  */
 public class ClientDetail extends KContainer {
 
-    JLabel title = new JLabel("PANNEAU CLIENT DETAIL");
+    //JLabel title = new JLabel("PANNEAU CLIENT DETAIL");
     int cli_id;
     private Fenetre fen = Fenetre.getInstance();
     private List<DetailCommande> detail;
@@ -75,15 +66,16 @@ public class ClientDetail extends KContainer {
 
     //@Override
     protected void initPanel() {
-        BackgroundPanel content = new BackgroundPanel();
+        BackgroundPanel content = new BackgroundPanel(),
+                top = new BackgroundPanel(),
+                bottom = new BackgroundPanel();
 
-        //WhitePanelS
-        WhitePanel cliInfos = new WhitePanel(),
-                top = new WhitePanel(),
-                bottom = new WhitePanel(),
-                cliDetail = new WhitePanel(),
-                cliButtons = new WhitePanel(),
-                comboPanel = new WhitePanel();
+        //JPanelS
+        JPanel cliInfos = new JPanel(),
+                
+                cliDetail = new JPanel(),
+                cliButtons = new JPanel(),
+                comboPanel = new JPanel();
 
         //JBUTTONS
         JButton addContact = new JButton("Ajouter"),
@@ -91,8 +83,8 @@ public class ClientDetail extends KContainer {
                 contact2 = new JButton("+"),
                 contact3 = new JButton("+"),
                 newDemand = new JButton("Creer une demande"),
-                validateDmd = new JButton("Valider D"),
-                validateCmd = new JButton("Valider C");
+                validateDmd = new JButton("Rechercher"),
+                validateCmd = new JButton("Rechercher");
 //        //JComboBox
 //        JComboBox cb_demande = new JComboBox(),
 //                cb_commande = new JComboBox();
@@ -123,10 +115,10 @@ public class ClientDetail extends KContainer {
 //            h.put("cliid", cli_id);
 //            //récupère la liste.
 //            cli.GetClients("where cliid = :cliid", h);
-        // top.setBackground(Color.white);
+        // top.setBackground(Color.J);
         top.setLayout(new BorderLayout());
 
-        //cliInfos.setBackground(Color.white);
+        //cliInfos.setBackground(Color.J);
         cliDetail.setPreferredSize(new Dimension(780, 150));
 
         //ajout des Listeners sur les boutons
@@ -136,13 +128,13 @@ public class ClientDetail extends KContainer {
         newDemand.addActionListener(new newDmdListener());
         //adresse, contacts raison sociale etc
 
-        //cliDetail.setBackground(Color.white);
+        //cliDetail.setBackground(Color.J);
         cliDetail.setLayout(new BorderLayout());
         cliInfos.setLayout(new FlowLayout(0, 50, 0));
 
         //adresse
-        WhitePanel cliAddr = new WhitePanel();
-        //cliAddr.setBackground(Color.white);
+        JPanel cliAddr = new JPanel();
+        //cliAddr.setBackground(Color.J);
         JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
                 + cli.getClicp() + "<br>"
                 + cli.getCliville() + "<br>"
@@ -153,8 +145,8 @@ public class ClientDetail extends KContainer {
         cliInfos.add(cliAddr);
 
         //contacts
-        WhitePanel cliContact = new WhitePanel();
-        //cliContact.setBackground(Color.white);
+        JPanel cliContact = new JPanel();
+        //cliContact.setBackground(Color.J);
         JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
                 + cli.getClifax() + "<br>Mail: "
                 + cli.getClimail() + "<br>Web Site: "
@@ -165,8 +157,8 @@ public class ClientDetail extends KContainer {
         cliInfos.add(cliContact);
 
         //raison sociale
-        WhitePanel cliRS = new WhitePanel();
-        //  cliRS.setBackground(Color.white);
+        JPanel cliRS = new JPanel();
+        //  cliRS.setBackground(Color.J);
         JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
                 + cli.getCliactivite() + "<br>SIRET: "
                 + cli.getClisiret() + "<br>CA: "
@@ -176,7 +168,7 @@ public class ClientDetail extends KContainer {
 
         //Boutons contact
 
-        //cliButtons.setBackground(Color.white);
+        //cliButtons.setBackground(Color.J);
         cliButtons.setLayout(new FlowLayout());
         cliButtons.add(new JLabel("Contacts : "));
         interInstance = InterlocuteurInstance.getInstance();
@@ -213,13 +205,13 @@ public class ClientDetail extends KContainer {
         cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
         //Panneau des combos box
-        // comboPanel.setBackground(Color.white);
+        // comboPanel.setBackground(Color.J);
         comboPanel.setLayout(new BorderLayout());
         comboPanel.add(newDemand, BorderLayout.NORTH);
 
         //ComboBox demandes
-        WhitePanel comboDmd_panel = new WhitePanel();
-        // comboDmd_panel.setBackground(Color.white);
+        JPanel comboDmd_panel = new JPanel();
+        // comboDmd_panel.setBackground(Color.J);
         comboDmd_panel.setLayout(new FlowLayout());
 
         //get detail demande
@@ -239,8 +231,8 @@ public class ClientDetail extends KContainer {
         comboDmd_panel.add(validateDmd);
 
         //Combobox commandes
-        WhitePanel comboCmd_panel = new WhitePanel();
-        // comboCmd_panel.setBackground(Color.white);
+        JPanel comboCmd_panel = new JPanel();
+        // comboCmd_panel.setBackground(Color.J);
         comboCmd_panel.setLayout(new FlowLayout());
 
         //get detail cde
@@ -280,10 +272,10 @@ public class ClientDetail extends KContainer {
 //                        showInterlocuteur(lbl_tmp.getId());
 //                    }
 //                });
-        //ajout des panels au WhitePanel principal
+        //ajout des panels au JPanel principal
         top.add(comboPanel, BorderLayout.EAST);
         LinkLabelData LblSte = new LinkLabelData("(Modifier)", cli.getCliid());
-       // LblSte.setIcon(new ImageIcon("ressources/images/eye.gif"));
+        // LblSte.setIcon(new ImageIcon("ressources/images/eye.gif"));
         LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -296,7 +288,7 @@ public class ClientDetail extends KContainer {
                 modif_ste(lbl_tmp.getId());
             }
         });
-        WhitePanel name_ste = new WhitePanel();
+        JPanel name_ste = new JPanel();
         name_ste.setPreferredSize(new Dimension(100, 20));
         name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
         name_ste.add(new JLabel("<html><b>" + cli.getClinom()));
@@ -309,19 +301,19 @@ public class ClientDetail extends KContainer {
 
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
-        //WhitePanel pour accordeons
+        //JPanel pour accordeons
 
         //suivi satisfaction
-        WhitePanel suivi_satisfaction = new WhitePanel();
-        //   suivi_satisfaction.setBackground(Color.white);
+        JPanel suivi_satisfaction = new JPanel();
+        //   suivi_satisfaction.setBackground(Color.J);
         suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
         suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
         bottom.add(suivi_satisfaction);
         bottom.add(Box.createVerticalStrut(10));
 
         //alertes
-        WhitePanel alertes = new WhitePanel();
-        // alertes.setBackground(Color.white);
+        JPanel alertes = new JPanel();
+        // alertes.setBackground(Color.J);
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
         alertes.setPreferredSize(new Dimension(120, 50));
         JButton btn_view_alertes = new JButton("Voir les alertes");
@@ -336,8 +328,8 @@ public class ClientDetail extends KContainer {
         bottom.add(Box.createVerticalStrut(10));
 
         //Reporting
-        WhitePanel reporting = new WhitePanel();
-        // reporting.setBackground(Color.white);
+        JPanel reporting = new JPanel();
+        // reporting.setBackground(Color.J);
         reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
         reporting.setPreferredSize(new Dimension(120, 50));
         bottom.add(reporting);
