@@ -11,12 +11,10 @@ SELECT
 "public".client.clitel,
 "public".client.cliactivite,
 "public".client.clica,
-"public".suivdossier.suivdoscom,
-"public".suivdossier.suivdosdate
+"public".demande.demandetitre,
+"public".demande.demandedesc
 FROM
-(((("public".client
-JOIN "public".demande ON (("public".demande.cliid = "public".client.cliid)))
-JOIN "public".suivdossier ON (("public".suivdossier.demandeid = "public".demande.demandeid)))
-JOIN "public".utilisateur ON (("public".client.utiid = "public".utilisateur.utiid))))
+((("public".client
+JOIN "public".demande ON (("public".demande.cliid = "public".client.cliid))))
+JOIN "public".utilisateur ON (("public".client.utiid = "public".utilisateur.utiid)))
 ;
-
