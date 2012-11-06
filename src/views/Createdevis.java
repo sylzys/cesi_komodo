@@ -53,6 +53,7 @@ public class Createdevis extends KContainer {
         JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
         JFormattedTextField jFormattedTextField2 = new javax.swing.JFormattedTextField();
         int id;
+    private Fenetre fen = Fenetre.getInstance();
 
     public Createdevis(UserActif user, int id) {
         super();
@@ -121,7 +122,7 @@ public class Createdevis extends KContainer {
         content.setPreferredSize(new Dimension(500, 180));
         content.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 
-        JButton retour = new JButton("Retourner à la société");
+        JButton retour = new JButton("Annuler");
         retour.addActionListener(new Createdevis.RetourListenerDmd());
         jLabel8.setPreferredSize(new Dimension(20, 50));
 
@@ -181,6 +182,9 @@ public class Createdevis extends KContainer {
            if(dvis_inst.ajouterDansBaseDeDonnees()){
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
            }
+           
+            DemandeDetail devisForm = new DemandeDetail(id);
+            fen.RenewContener(devisForm.getPanel());
        //     HibernateConnection connection = HibernateConnection.getInstance();
        //     Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
 }
@@ -194,7 +198,7 @@ public class Createdevis extends KContainer {
 
 
 
-    private static class RetourListenerDmd implements ActionListener {
+    private class RetourListenerDmd implements ActionListener {
 
         public RetourListenerDmd() {
         }
@@ -202,7 +206,9 @@ public class Createdevis extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
             CurrentDatas cur = CurrentDatas.getInstance();
-            ClientDetail cd = new ClientDetail(cur.getSoc_id());
+            
+            DemandeDetail devisForm = new DemandeDetail(id);
+            fen.RenewContener(devisForm.getPanel());
         }
     }
 }

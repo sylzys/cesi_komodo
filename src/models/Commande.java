@@ -17,7 +17,16 @@ public class Commande {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int comid;
-
+    
+    @Column(name="interid", columnDefinition="INTEGER", nullable=true)
+    private int interid ;
+    
+    @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
+    private int utiid ; 
+    
+    @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
+    private int demandeid ; 
+    
     @Column(name="comtitre", columnDefinition="VARCHAR(254)", nullable=true)
     private String comtitre ;
     
@@ -59,6 +68,32 @@ public class Commande {
     public void setComid(int comid) {
         this.comid = comid;
     }
+
+    public int getInterid() {
+        return interid;
+    }
+
+    public void setInterid(int interid) {
+        this.interid = interid;
+    }
+
+    public int getUtiid() {
+        return utiid;
+    }
+
+    public void setUtiid(int utiid) {
+        this.utiid = utiid;
+    }
+
+    public int getDemandeid() {
+        return demandeid;
+    }
+
+    public void setDemandeid(int demandeid) {
+        this.demandeid = demandeid;
+    }
+    
+    
 
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     public String getComtitre() {

@@ -51,6 +51,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import models.CurrentDatas;
 import org.hibernate.Hibernate;
 import org.hibernate.Transaction;
 
@@ -58,6 +59,8 @@ public class NouvelleDemande extends JDialog {
 
     private getDemandeInfos zInfo = new getDemandeInfos();
     private boolean sendData;
+    
+    private Fenetre fen = Fenetre.getInstance();
     
     JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
     WhitePanel left = new WhitePanel(),
@@ -168,6 +171,8 @@ public class NouvelleDemande extends JDialog {
             public void actionPerformed(ActionEvent arg0) {
                
                     addToDataBase();
+                new ClientDetail(dmd_id);
+                setVisible(false);
                     setVisible(false);
             }
         });
@@ -175,7 +180,8 @@ public class NouvelleDemande extends JDialog {
         JButton cancelBouton = new JButton("Annuler");
         cancelBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                zInfo = new getDemandeInfos();
+                CurrentDatas cur = CurrentDatas.getInstance();
+                new ClientDetail(cur.getSoc_id());
                 setVisible(false);
             }
         });
@@ -220,25 +226,17 @@ public class NouvelleDemande extends JDialog {
             Demande dmde = new Demande();
             dmde.setCliid(dmd_id);
             dmde.setUtiid(1);
+            dmde.setInterid(1);
             dmde.setDemandeetat(20);
+            dmde.setDemandetitre(suivdostitre.getText());
+            dmde.setDemandedesc(suivdoscom.getText());
             dmde.setDemandesuppr(false);
+            dmde.setDemandedteadd(new Date());
             Suivdossier svidossier = new Suivdossier();
-            svidossier.setUtiid(1);
-            svidossier.setSuivdosdate(new Date());
-            svidossier.setInterid(1);
-            svidossier.setSuivdoscom(suivdoscom.getText());
-            svidossier.setSuividossuppr(false);
-            
+
             DemandeInstance dmd_inst = DemandeInstance.getInstance();
-            SuivDossierInstance suivd_inst = SuivDossierInstance.getInstance();
             dmd_inst.setDemandes(dmde);
-            //inserer demande et suivi dossier
             dmd_inst.ajouterDansBaseDeDonnées();
-            HibernateConnection connection = HibernateConnection.getInstance();
-            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
-           
-            svidossier.setDemandeid(value);
-            suivd_inst.setSuivDossier(svidossier);
-            suivd_inst.add();
+
     }
 }
