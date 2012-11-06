@@ -3,6 +3,7 @@ package instances;
 import controllers.Synchro;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -141,14 +142,14 @@ public class ClientInstance {
             {
                 Synchro writereq = new Synchro();
                 writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
-                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clisuppr)"
+                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clidteadd, clisuppr)"
                         + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
                         + "'" + this.client.getClinom() + "','" + this.client.getCliadresse() + "','" + this.client.getClicp() + "','"
                         + "" + this.client.getClitel() + "','" + this.client.getClifax() + "','"
                         + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
                         + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
-                        + "" + this.client.getClisiren() + "','f')"
+                        + "" + this.client.getClisiren() + "',"+Calendar.getInstance().getTime()+",'f')"
                         + "", -1, this.client.getClinom());
             }
             return true;

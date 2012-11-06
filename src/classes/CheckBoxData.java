@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
+import java.util.Hashtable;
 import javax.swing.JCheckBox;
 
 /**
@@ -11,7 +8,7 @@ import javax.swing.JCheckBox;
  * @author BoBo
  */
 public class CheckBoxData extends JCheckBox {
-    String Data;
+    Hashtable<String, Object> Data;
     int Id = -1;
     
     public CheckBoxData() {
@@ -23,22 +20,22 @@ public class CheckBoxData extends JCheckBox {
         Id = id;
     }
     
-    public CheckBoxData(String data) {
+    public CheckBoxData(Hashtable<String, Object> data) {
         super();
         Data = data;
     }
 
-    public CheckBoxData(Integer id, String data) {
+    public CheckBoxData(Integer id, Hashtable<String, Object> data) {
         super();
         Id = id;
         Data = data;
     }
 
-    public String getData() {
+    public Hashtable<String, Object> getData() {
         return Data;
     }
 
-    public void setData(String Data) {
+    public void setData(Hashtable<String, Object> Data) {
         this.Data = Data;
     }
 

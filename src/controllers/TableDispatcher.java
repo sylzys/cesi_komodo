@@ -49,7 +49,7 @@ public class TableDispatcher extends JPanel {
               //  model = new ClientModel(id);
                 break;
             case COMMANDE:
-                model = new CommandeModel();
+                model = new CommandeModel(id);
                 break;
             case DEMANDE:
                 model = new DemandeModel(id);
@@ -160,7 +160,7 @@ public class TableDispatcher extends JPanel {
                             ClientDetail cd = new ClientDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case COMMANDE:
-                            CommandeDetail cmd = new CommandeDetail((Integer) tm.getValueAt(row, 999));
+                            Fenetre.getInstance().RenewCmd((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEMANDE:
                             System.out.println("GETTIN DBL CLIC DEMANDE");
