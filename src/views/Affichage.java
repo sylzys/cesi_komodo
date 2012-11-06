@@ -78,7 +78,8 @@ public class Affichage extends KContainer {
         clientCommInstance cci = clientCommInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("utiid", user.getId());
-        this.liste = cci.GetClients(" where utiid = :utiid", h);
+        h.put("clisuppr", false);
+        this.liste = cci.GetClients(" where utiid = :utiid and clisuppr = :clisuppr", h);
 
    }
        
