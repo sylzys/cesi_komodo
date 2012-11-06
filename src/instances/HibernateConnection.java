@@ -35,19 +35,8 @@ public class HibernateConnection {
 	{
                 online = false;
                 confHib = "/config/offline.xml";
-                //Création du fichier pour enregistrer les requetes
-                try
-                {
-                    File fichier = new java.io.File("ressources/requetes.txt");
-                    if(fichier.exists() == false)
-                    {
-                        fichier.createNewFile();
-                    }
-                }
-                catch (IOException e)
-                {
-                    System.out.println(e);
-                }
+                Synchro sync = new Synchro();
+                sync.createFic();
 	}
         
 	public static void connectOnline()

@@ -26,6 +26,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -111,21 +112,26 @@ public class SynchroView extends KContainer {
             while (strtok.hasMoreTokens()) {
                 i = i + 1;
                 req = strtok.nextToken();
-                String[] inter = req.split("interlocuteur:");
+                String[] decoup = req.split("interlocuteur:");
                 int interid = -1;
-                if(inter.length > 1)
+                if(decoup.length > 1)
                 {
-                    interid = Integer.parseInt(inter[1]);
+                    interid = Integer.parseInt(decoup[1]);
                 }
-                String[] cli = req.split("client:");
+                decoup = req.split("client:");
                 String nomclient = "";
-                if(cli.length > 1)
+                if(decoup.length > 1)
                 {
-                    nomclient = cli[1];
+                    nomclient = decoup[1];
                 }
+                String requete = decoup[0];
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
-                CheckBoxData chkbox = new CheckBoxData(i, req);
+                Hashtable ht = new Hashtable();
+                ht.put("requete", requete);
+                ht.put("type",req);
+                //NEW CHKBOXDATA
+                CheckBoxData chkbox = new CheckBoxData(i, ht);
                 chkbox.setSelected(true);
                 listchk.add(chkbox);
                 JLabel lblclient = new JLabel(action[0].toUpperCase());
@@ -181,9 +187,43 @@ public class SynchroView extends KContainer {
             button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e)
-            {
+            {  
                 Synchro sync = new Synchro();
-                sync.record();
+                List<Boolean> tabtest = new ArrayList<Boolean>();
+                JOptionPane jop = new JOptionPane();
+                for(CheckBoxData chkdata: listchk)
+                {
+                    Hashtable tmp = chkdata.getData();
+                    String requete = tmp.get("requete").toString();
+                    String ligne = tmp.get("type").toString();
+                    if(chkdata.isSelected() == true)
+                    {
+                        boolean retour = sync.record(requete);
+                        tabtest.add(retour);
+                        if(retour == true)
+                        {
+                            sync.delReq(ligne);
+                        }
+                    }
+                }
+                boolean valid = true;
+                for(Boolean booltest : tabtest)
+                {
+                    if(booltest == false)
+                    {
+                        valid = false;
+                    }
+                }
+                if(valid == true)
+                {
+                      jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                      Fenetre fen = Fenetre.getInstance();
+                      fen.RenewAccueil();
+                }
+                else
+                {
+                    jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation. Contactez l'administrateur", "Erreur", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
             });
             pnlbtn.setBackground(Color.white);
