@@ -60,7 +60,7 @@ public class DetailCdeInstance {
         String sql = "from detailcommande ";
         if (!where.isEmpty())
         {
-            sql += where;
+            sql += " WHERE " + where;
         }
 
         try

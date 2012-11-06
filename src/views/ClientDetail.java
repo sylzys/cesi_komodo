@@ -247,7 +247,7 @@ public class ClientDetail extends KContainer {
         DetailCdeInstance dc = DetailCdeInstance.getInstance();
         Hashtable hhhh = new Hashtable();
         hhhh.put("cliid", cli_id);
-        detail = dc.GetDetailcde("where cliid = :cliid", hhhh);
+        detail = dc.GetDetailcde("cliid = :cliid", hhhh);
 
         cb_commande.addItem("Commandes");
         for (DetailCommande dcc : detail)

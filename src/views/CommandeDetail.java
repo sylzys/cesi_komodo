@@ -72,14 +72,14 @@ public class CommandeDetail extends KContainer {
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 
         //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
-        listeCmd.add(cp.showtable(ModelesTables.COMMANDE,2));
+        listeCmd.add(cp.showtable(ModelesTables.COMMANDE,this.details.getCliid()));
         content.add(listeCmd);
         //detail commandes, panneau de droite
         detailCmd.setBackground(Color.green);
         detailCmd.setLayout(new BoxLayout(detailCmd, BoxLayout.Y_AXIS));
 
         top_right.setLayout(new FlowLayout());
-        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créee le " + details.getComdate() + " par " + details.getInternom() + "</html>"));
+        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par " + details.getInternom() + "</html>"));
         JButton retour = new JButton("Retour à la société");
         retour.addActionListener(new RetourListener());
         top_right.add(retour);
@@ -125,7 +125,8 @@ public class CommandeDetail extends KContainer {
         DetailCdeInstance cmdInstance = DetailCdeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("comid", this.cmd_id);
-        List<DetailCommande> cmds = cmdInstance.GetDetailcde("WHERE comid=:comid", h);
+        List<DetailCommande> cmds = cmdInstance.GetDetailcde("comid=:comid", h);
         this.details = cmds.get(0);
     }
+   
 }
