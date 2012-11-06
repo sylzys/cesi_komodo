@@ -6,6 +6,7 @@ package views;
 
 import controllers.TableDispatcher;
 import controllers.UserActif;
+import instances.DemandeInstance;
 import instances.DetailDmdInstance;
 import instances.DevisInstance;
 import instances.HibernateConnection;
@@ -33,6 +34,7 @@ import models.Client;
 import models.DetailDmd;
 import models.ModelesTables;
 import models.CurrentDatas;
+import models.Demande;
 import models.Devis;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -176,6 +178,16 @@ public class DevisDetail extends KContainer {
             dvs.setDevetat("Accepté");
             session.update(dvs);
             tx3.commit();
+            
+            Transaction tx4 = HibernateConnection.getSession().beginTransaction();
+            Session session2 = HibernateConnection.getSession();
+            Demande dmdd = (Demande) session2.get(Demande.class, idDemande);
+            System.out.println("Updating Record");
+            dmdd.setDemandeid(idDemande);
+            dmdd.setDemandeetat(100);
+            session2.update(dmdd);
+            tx4.commit();
+            
             System.out.println("Done");
             DemandeDetail devisForm = new DemandeDetail(idDemande);
             fen.RenewContener(devisForm.getPanel());

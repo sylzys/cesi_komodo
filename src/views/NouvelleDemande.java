@@ -233,22 +233,10 @@ public class NouvelleDemande extends JDialog {
             dmde.setDemandesuppr(false);
             dmde.setDemandedteadd(new Date());
             Suivdossier svidossier = new Suivdossier();
-//            svidossier.setUtiid(1);
-//            svidossier.setSuivdosdate(new Date());
-//            svidossier.setInterid(1);
-//            svidossier.setSuivdoscom(suivdoscom.getText());
-//            svidossier.setSuividossuppr(false);
-            
+
             DemandeInstance dmd_inst = DemandeInstance.getInstance();
-//            SuivDossierInstance suivd_inst = SuivDossierInstance.getInstance();
             dmd_inst.setDemandes(dmde);
-       //     inserer demande et suivi dossier
             dmd_inst.ajouterDansBaseDeDonnées();
-//            HibernateConnection connection = HibernateConnection.getInstance();
-//            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
-//           
-//            svidossier.setDemandeid(value);
-//            suivd_inst.setSuivDossier(svidossier);
-//            suivd_inst.add();
+
     }
 }
