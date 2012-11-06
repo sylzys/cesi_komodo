@@ -74,7 +74,7 @@ public class NouvelleDemande extends JDialog {
 
     public NouvelleDemande(JFrame parent, String title, boolean modal, int id) {
         super(parent, title, modal);
-        this.setSize(650, 500);
+        this.setSize(400, 270);
         this.setLocationRelativeTo(null);
         this.dmd_id = id;
         //this.cli_id = cli_id;
@@ -91,61 +91,78 @@ public class NouvelleDemande extends JDialog {
 
     private void initComponent() {
         
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JLabel label1 = new JLabel();
+        JLabel label2 = new JLabel();
+        JLabel label3 = new JLabel();
+        JLabel label4 = new JLabel();
+        JLabel label5 = new JLabel();
+        JLabel label6 = new JLabel();
         JPanel content = new JPanel();
         content.setBackground(Color.white);
-        content.setPreferredSize(new Dimension(620, 600));
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
-        content.setBorder(BorderFactory.createLineBorder(Color.black));
+        content.setPreferredSize(new Dimension(400, 270));
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+        content.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
-        //LEFT PANEL
-        left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-        left.setPreferredSize(new Dimension(400, 450));
-        //nom ste
-        WhitePanel nom = new WhitePanel();
-        nom.setBackground(Color.WHITE);
-        nom.setLayout(new FlowLayout());
-        nom.add(lbl_titre);
-        suivdostitre.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        suivdostitre.setPreferredSize(new Dimension(200, 30));
-        nom.add(suivdostitre);
-        left.add(nom);
-        left.add(Box.createVerticalStrut(30));
-        //addr
-        WhitePanel addr = new WhitePanel();
-        addr.setBackground(Color.WHITE);
-        addr.setLayout(new FlowLayout());
-        addr.add(lbl_interlo);
-        interid.setPreferredSize(new Dimension(200, 30));
-        interid.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        addr.add(interid);
-        left.add(addr);
-        //cp ville
-        WhitePanel cp = new WhitePanel();
-        cp.setBackground(Color.WHITE);
-        cp.setLayout(new FlowLayout());
-        cp.add(lbl_comm);
-        suivdoscom.setPreferredSize(new Dimension(200, 30));
-        suivdoscom.setAlignmentX(Box.RIGHT_ALIGNMENT);
-        cp.add(suivdoscom);
-        left.add(cp);
-        left.add(Box.createVerticalStrut(30));
+        label1.setPreferredSize(new Dimension(30, 20));
+        label2.setPreferredSize(new Dimension(30, 20));
+        label3.setPreferredSize(new Dimension(30, 20));
+        label4.setPreferredSize(new Dimension(30, 20));
+        label5.setPreferredSize(new Dimension(30, 20));
+        label6.setPreferredSize(new Dimension(30, 20));
+                
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.LINE_AXIS));
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.LINE_AXIS));
+        panel1.setPreferredSize(new Dimension(450, 20));
+        panel2.setPreferredSize(new Dimension(450, 20));
+        panel3.setPreferredSize(new Dimension(450, 20));
+        
+        
+        lbl_titre.setPreferredSize(new Dimension(130, 20));
+        suivdostitre.setPreferredSize(new Dimension(200, 20));
+        
+        panel1.add(label1, BorderLayout.WEST);
+        panel1.add(lbl_titre, BorderLayout.CENTER);
+        panel1.add(suivdostitre, BorderLayout.EAST);
+        panel1.add(label4, BorderLayout.WEST);
+        panel1.setBorder(new EmptyBorder(20, 5, 20, 5));
+        
+        
+        
+        lbl_interlo.setPreferredSize(new Dimension(130, 20));
+        interid.setPreferredSize(new Dimension(200, 20));
+        
+        panel2.add(label2, BorderLayout.WEST);
+        panel2.add(lbl_interlo);
+        panel2.add(interid);
+        panel2.add(label5, BorderLayout.WEST);
+        panel2.setBorder(new EmptyBorder(20, 5, 20, 5));
+        
+        
+        
+        lbl_comm.setPreferredSize(new Dimension(130, 20));
+        suivdoscom.setPreferredSize(new Dimension(200, 20));
+        
+        panel3.add(label3, BorderLayout.WEST);
+        panel3.add(lbl_comm);
+        panel3.add(suivdoscom);
+        panel3.add(label6, BorderLayout.WEST);
+        panel3.setBorder(new EmptyBorder(20, 5, 20, 5));
       
        // panInfos.add(left);
 
         content.setBackground(Color.white);
-        content.setBorder(new EmptyBorder(20, 30, 0, 10));
-        content.setLayout(new BorderLayout());
-        content.add(left, BorderLayout.WEST);
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+        content.add(panel1);
+        content.add(panel2);
+        content.add(panel3);
 
 
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
-        //recupere infos BDD
-//        System.out.println("DIALOG SHOWING INTER ID " + dmd_id);
-//        DemandeInstance dmdInstance = DemandeInstance.getInstance();
-//        Hashtable h = new Hashtable();
-//        h.put("interid", dmd_id);
-//        dmd = dmdInstance.GetDemandes("where demandeid = :demandeid", h);
 
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -165,6 +182,7 @@ public class NouvelleDemande extends JDialog {
 
         control.add(okBouton);
         control.add(cancelBouton);
+        control.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
@@ -199,7 +217,7 @@ public class NouvelleDemande extends JDialog {
     }
     
     private void addToDataBase() {
- Demande dmde = new Demande();
+            Demande dmde = new Demande();
             dmde.setCliid(dmd_id);
             dmde.setUtiid(1);
             dmde.setDemandeetat(20);
