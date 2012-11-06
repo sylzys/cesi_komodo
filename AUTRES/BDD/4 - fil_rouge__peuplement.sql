@@ -444,11 +444,11 @@ INSERT INTO demande (demandeid, cliid, utiid, demandeetat, demandedteadd, demand
 -- Data for Name: devis; Type: TABLE DATA; Schema: public; Owner: cesi
 --
 
-INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr, deviid) VALUES (1, NULL, '2012-03-08', 1900, false, NULL);
-INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr, deviid) VALUES (2, NULL, '2012-03-13', 20050, false, NULL);
-INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr, deviid) VALUES (3, NULL, '2012-03-20', 7654, false, NULL);
-INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr, deviid) VALUES (4, NULL, '2012-03-04', 72630, false, NULL);
-INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr, deviid) VALUES (5, NULL, '2012-03-13', 2309, false, NULL);
+INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr) VALUES (1, NULL, '2012-03-08', 1900, false);
+INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr) VALUES (2, NULL, '2012-03-13', 20050, false);
+INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr) VALUES (3, NULL, '2012-03-20', 7654, false);
+INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr) VALUES (4, NULL, '2012-03-04', 72630, false);
+INSERT INTO devis (devid, devetat, devdate, devprix, devsuppr) VALUES (5, NULL, '2012-03-13', 2309, false);
 
 
 --
