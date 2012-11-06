@@ -148,7 +148,7 @@ public class Replication extends Thread {
         commd.add("-U"); // utilisateur
         commd.add("cesi");
         commd.add("projetcesi2");//Nom de la base
-         System.out.println("suppression = " +commd.toString());
+        System.out.println("suppression = " +commd.toString());
         PrcBld = new ProcessBuilder(commd);
         try
         {
@@ -159,7 +159,7 @@ public class Replication extends Thread {
             {
                 System.err.println(line);
                 line = r.readLine();
-                fen.rep(25, "Erreur lors de la suppression de la base locale: line = null");
+                fen.rep(25, "Erreur lors de la suppression de la base locale");
                 try
                 {
                     // pause
@@ -177,7 +177,7 @@ public class Replication extends Thread {
             }
             catch (InterruptedException i)
             {
-                fen.rep(25, "Erreur lors de la suppression de la base locale : interrupted ex");
+                fen.rep(25, "Erreur lors de la suppression de la base locale");
                 try
                 {
                     // pause
@@ -191,7 +191,7 @@ public class Replication extends Thread {
         }
         catch (IOException e)
         {
-            fen.rep(25, "Erreur lors de la suppression de la base locale: ioexception");
+            fen.rep(25, "Erreur lors de la suppression de la base locale");
             try
             {
                 // pause
@@ -205,6 +205,8 @@ public class Replication extends Thread {
         fen.rep(50, "Création de la base locale");
         commd = new ArrayList<String>();
         commd.add(PATH_CREATE_DB);
+        commd.add("-T"); // adresse du serveur de bdd
+        commd.add("postgres");       
         commd.add("-h"); // adresse du serveur de bdd
         commd.add("127.0.0.1");
         commd.add("-p"); // port du serveur de bdd
@@ -223,7 +225,7 @@ public class Replication extends Thread {
             {
                 System.err.println(line);
                 line = r.readLine();
-                fen.rep(50, "Erreur lors de la création de la base locale : line = null");
+                fen.rep(50, "Erreur lors de la création de la base locale");
                 try
                 {
                     // pause
@@ -241,7 +243,7 @@ public class Replication extends Thread {
             }
             catch (InterruptedException i)
             {
-                fen.rep(50, "Erreur lors de la création de la base locale: inter ex");
+                fen.rep(50, "Erreur lors de la création de la base locale");
                 try
                 {
                     // pause
@@ -255,7 +257,7 @@ public class Replication extends Thread {
         }
         catch (IOException e)
         {
-            fen.rep(50, "Erreur lors de la création de la base locale: io ex");
+            fen.rep(50, "Erreur lors de la création de la base locale");
             try
             {
                 // pause
@@ -290,7 +292,7 @@ public class Replication extends Thread {
             {
                 System.err.println(line);
                 line = r.readLine();
-                fen.rep(75, "Erreur lors de la restauration: line = null");
+                fen.rep(75, "Erreur lors de la restauration");
                 try
                 {
                     // pause
@@ -308,7 +310,7 @@ public class Replication extends Thread {
             }
             catch (InterruptedException i)
             {
-                fen.rep(75, "Erreur lors de la restauration: inter ex");
+                fen.rep(75, "Erreur lors de la restauration");
                 try
                 {
                     // pause
@@ -322,7 +324,7 @@ public class Replication extends Thread {
         }
         catch (IOException e)
         {
-            fen.rep(75, "Erreur lors de la restauration: io ex");
+            fen.rep(75, "Erreur lors de la restauration");
             try
             {
                 // pause
