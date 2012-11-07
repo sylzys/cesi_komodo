@@ -125,7 +125,8 @@ public class DemandeDetail extends KContainer {
         listeDevis.setLayout(new BorderLayout());
         bottom_bottom.setLayout(new BoxLayout(bottom_bottom, BoxLayout.LINE_AXIS));
 
-
+        
+            HibernateConnection.newConnect(HibernateConnection.online);
         //get cmd-detail from DB
         DetailDmdInstance DetailDdeInstance = DetailDmdInstance.getInstance();
         Hashtable h = new Hashtable();

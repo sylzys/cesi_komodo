@@ -190,6 +190,7 @@ public class DevisDetail extends KContainer {
             
             System.out.println("Done");
             DemandeDetail devisForm = new DemandeDetail(idDemande);
+            HibernateConnection.newConnect(HibernateConnection.online);
             fen.RenewContener(devisForm.getPanel());
         }
     }
