@@ -122,8 +122,8 @@ public class InterlocuteurInstance {
             {
                 writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
                         + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
-                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "', interposte = '" + inter.getInterposte() + "',"
-                        + "interdteadd = '" + inter.getInterdteadd() + "', intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
+                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "',"
+                        + "intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
             }
             catch (IOException ex)
             {
