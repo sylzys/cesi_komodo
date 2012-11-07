@@ -201,11 +201,13 @@ public class InterlocuteurDialog extends JDialog {
             {
                 enable_all();
                 btn_modif.setText("Valider");
+               
             }
             else
             {
                 for (Interlocuteur in : inter)
                 {
+                   // System.out.println("FOUR ID :" +in.getFourid());
                     in.setInternom(nom.getText());
                     in.setInterprenom(prenom.getText());
                     in.setIntertel(tel.getText());

@@ -114,12 +114,16 @@ public class InterlocuteurInstance {
             CurrentDatas cli = CurrentDatas.getInstance();
             int cliid = cli.getSoc_id();
             String cliname = writereq.cliNom(cliid);
-            try
+//            System.out.println("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
+//                        + "cliid = '" + inter.getCliid() + "', internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
+//                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "', interposte = '" + inter.getInterposte() + "',"
+//                        + "interdteadd = " + inter.getInterdteadd() + ", intersuppr = '" + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid());
+           try
             {
-                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", fourid = " + inter.getFourid() + ","
-                        + "cliid = '" + inter.getCliid() + "', internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
+                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
+                        + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
                         + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "', interposte = '" + inter.getInterposte() + "',"
-                        + "interdteadd = " + inter.getInterdteadd() + ", intersuppr = '" + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
+                        + "interdteadd = '" + inter.getInterdteadd() + "', intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
             }
             catch (IOException ex)
             {
