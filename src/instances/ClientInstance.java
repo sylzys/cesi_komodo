@@ -110,14 +110,6 @@ public class ClientInstance {
         Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-            System.out.println("REQUEST : UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
-                    + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + ", "
-                    + "clicp = '" + cli.getClicp() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
-                    + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + ", "
-                    + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
-                    + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin() + "', "
-                    + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + ", "
-                    + "clidteadd = '" + cli.getClidteadd() + "', clinaf = " + cli.getClinaf());
             try
             {
                 writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
@@ -127,7 +119,7 @@ public class ClientInstance {
                         + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
                         + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
                         + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + "', "
-                        + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = "+ cli.getCliid(),
+                        + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
                         -1, cli.getClinom());
                 return true;
             }
