@@ -163,7 +163,6 @@ public class ClientInstance {
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
                         + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
                         + "", -1, this.client.getClinom());
-                //return true;
             }
             catch (IOException ex)
             {
