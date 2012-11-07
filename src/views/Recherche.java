@@ -4,9 +4,13 @@
  */
 package views;
 
+import classes.ButtonData;
 import controllers.UserActif;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -27,19 +31,39 @@ import org.hibernate.search.query.dsl.QueryBuilder;
  * @author sylv
  */
 public class Recherche extends KContainer {
+
     JLabel title = new JLabel ("PANNEAU RECHERCHE");
-    
+
     JTextField searchTextField ;
-    public Recherche(UserActif user) {
-    super();
-    this.user = user;
+
+    JPanel panelListSearch;
+     // creation des bouton radio
+    JRadioButton rbCommande = new JRadioButton("Commande");
     
-      this.user = user;
+    JRadioButton rbSociete =new JRadioButton("Société");
+    
+    JRadioButton rbNomenclature = new JRadioButton("Nomenclature");
+    
+    JRadioButton rbDevis = new JRadioButton("Devis");
+    
+    JRadioButton rbContact = new JRadioButton("Contact");
+    
+    JRadioButton rbDemande = new JRadioButton("Demande");
+
+    /**
+     *
+     * @param user
+     */
+    public Recherche(UserActif user) {
+        super();
+        this.user = user;
+
+        this.user = user;
         try
         {
             Session session = HibernateConnection.getSession();
-            FullTextSession  fullTextSession = Search.getFullTextSession(session);
-            fullTextSession.createIndexer().startAndWait();
+           //FullTextSession  fullTextSession = Search.getFullTextSession(session);
+           //fullTextSession.createIndexer().startAndWait();
 
             //fullTextSession.close();
         }catch(Exception e)
@@ -48,39 +72,51 @@ public class Recherche extends KContainer {
         }
 
         initPanel();
-        
+
     }
 
+    /**
+     *
+     */
     @Override
-    protected
-    void initPanel() {
+    protected void initPanel() {
+
+        JPanel global = new JPanel();
+        global.setLayout(new BorderLayout());     
         
-        JPanel content = new JPanel();
-        content.setLayout(new BorderLayout());
-        content.add(title, BorderLayout.CENTER);      
-        this.panel.add(content);
+        JPanel header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.setPreferredSize(new Dimension(800,50));
+        //content.setLayout(new BorderLayout());
+        //content.add(title, BorderLayout.CENTER);
+        //content.setPreferredSize(new Dimension(500,100));
+
+        global.add(header,BorderLayout.NORTH);
+
         //Création du textfield
         searchTextField = new JTextField("Tapez un mot:");
-        //ajout au panel 
-        this.panel.add(searchTextField);
+        searchTextField.setPreferredSize(new Dimension(100,20));
+        searchTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    // sur l'évènement clique, je vide le champ texte 
+                    searchTextField.setText("");
+                }
+            });
+        //ajout au content
+       // content.add(searchTextField);
         
-        // creation des bouton radio 
-        JRadioButton rbCommande = new JRadioButton("Commande");
-        JRadioButton rbSociete =new JRadioButton("Société");
-        JRadioButton rbNomenclature = new JRadioButton("Nomenclature");
-        JRadioButton rbDevis = new JRadioButton("Devis");
-        JRadioButton rbContact = new JRadioButton("Contact");
-        JRadioButton rbDemande = new JRadioButton("Demande");
-        //rbDemande.
+        JPanel groupRb = new JPanel();
+        groupRb.setPreferredSize(new Dimension(700,50));
+        groupRb.add(searchTextField,BorderLayout.CENTER);
+        groupRb.add(rbCommande,BorderLayout.CENTER);
+        groupRb.add(rbContact,BorderLayout.CENTER);
+        groupRb.add(rbDemande,BorderLayout.CENTER);
+        groupRb.add(rbSociete,BorderLayout.CENTER);
+        groupRb.add(rbNomenclature,BorderLayout.CENTER);        
+        groupRb.add(rbDevis);
         
-        // ajout au panel 
-        this.panel.add(rbCommande);
-        this.panel.add(rbSociete);
-        this.panel.add(rbNomenclature);
-        this.panel.add(rbContact);
-        this.panel.add(rbDevis);
-        this.panel.add(rbDemande);
-        
+
         // creation d'un group pour les radio bouton
         ButtonGroup group = new ButtonGroup();
         //ajout de chaque radio bouton dans le groupe
@@ -90,51 +126,107 @@ public class Recherche extends KContainer {
         group.add(rbSociete);
         group.add(rbNomenclature);
         group.add(rbDemande);
+
         
         JButton btnSearch = new JButton("Rechercher");
+        btnSearch.setPreferredSize(new Dimension(120,20));
+        //add(btnSearch,BorderLayout.);
+        header.add(groupRb,BorderLayout.WEST);
+        header.add(btnSearch,BorderLayout.EAST);
+        
+        //content.add(header,BorderLayout.NORTH);
+        
+        panelListSearch = new JPanel();        
+        panelListSearch.add(new JLabel("test"));
+        panelListSearch.setPreferredSize(new Dimension(800,500));
+        
+        global.add(panelListSearch,BorderLayout.CENTER);
+
+        // ajout au panel principal
+        this.panel.add(global);      
+
+
         btnSearch.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-            
-                try
-                {
-                    doIndex();
-                }
-                catch(Exception e)
-                {
-                    System.out.println(e.getStackTrace().toString());
-                }
-                List<Commande> result = search(searchTextField.getText());           
-            
-             
-                for (Commande Commande : result) {
-                    System.out.println(Commande.getComtitre());
-                }             
-            }            
+                search(searchTextField.getText());
+            }
         });
-        this.panel.add(btnSearch);
     }
-    private List<Commande> search(String query)
+    private void search(String query)
     {
-        
+        panelListSearch.removeAll();
         Session session = HibernateConnection.getSession();
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-
-        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
-        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
-
-        // wrap Lucene query in a javax.persistence.Query
-        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
-        List<Commande> commandes = fullTextQuery.list();
-        //fullTextSession.close();
-        return commandes;
+        if(rbCommande.isSelected()) 
+        {           
+            List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
+            Commande  com = null;
+            JPanel panelCom = null;
+            for (int i = 0; i < list.size(); i++) {
+                com = list.get(i);      
+                panelCom = new JPanel();
+                panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
+                panelCom.setBackground(Color.WHITE);
+                panelCom.setPreferredSize(new Dimension(750,100));
+                JLabel comLabel = new JLabel();
+                comLabel.setText("Titre : " + com.getComtitre());
+                panelCom.add(comLabel);
+                ButtonData btnGoToCmd = new ButtonData("Aller");
+                btnGoToCmd.setId(com.getComid());
+                btnGoToCmd.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        ButtonData btn_temp = (ButtonData)arg0.getSource();
+                        Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                    }
+                });
+                panelCom.add(btnGoToCmd);
+                panelListSearch.add(panelCom,BorderLayout.CENTER);
+            }
+            Fenetre.getInstance().RenewContener(panel);
+        }
+        if(rbDevis.isSelected())
+        {
+            List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
+        }
+        if(rbContact.isSelected())
+        {
+            List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE clinom LIKE '%" +query+ "%' OR cliville LIKE '%" +query+ "%' OR climail LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+        }
+        if(rbSociete.isSelected())
+        {
+            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+        }
+        if(rbNomenclature.isSelected())
+        {
+            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+        }
+        if(rbDemande.isSelected())
+        {
+            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+        }
     }
-    private static void doIndex() throws InterruptedException {
-        Session session = HibernateConnection.getSession();
-         
-        FullTextSession fullTextSession = Search.getFullTextSession(session);
-        fullTextSession.createIndexer().startAndWait();
-         
-        //fullTextSession.close();
-    }
+
+//    private List<Commande> search(String query)
+//    {
+//
+//        Session session = HibernateConnection.getSession();
+//        FullTextSession fullTextSession = Search.getFullTextSession(session);
+//
+//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
+//        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
+//
+//        // wrap Lucene query in a javax.persistence.Query
+//        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
+//        List<Commande> commandes = fullTextQuery.list();
+//        //fullTextSession.close();
+//        return commandes;
+//    }
+//    private static void doIndex() throws InterruptedException {
+//        Session session = HibernateConnection.getSession();
+//
+//        FullTextSession fullTextSession = Search.getFullTextSession(session);
+//        fullTextSession.createIndexer().startAndWait();
+//
+//        //fullTextSession.close();
+//    }
 }
