@@ -211,7 +211,7 @@ public class InterlocuteurDialog extends JDialog {
                     in.setIntertel(tel.getText());
                     //in.setInter(nom.getText());
                     in.setIntermail(mail.getText());
-                    interInstance.updaterBaseDeDonnées(in);
+                    interInstance.updaterBaseDeDonnees(in);
                 }
                 disable_all();
                 btn_modif.setText("Modifier");

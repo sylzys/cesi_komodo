@@ -5,6 +5,7 @@
 package views;
 
 import classes.BackgroundPanel;
+import classes.LinkLabelData;
 import com.google.common.base.Strings;
 import controllers.UserActif;
 import instances.ClientInstance;
@@ -74,6 +75,8 @@ public class NouvelleDemande extends JDialog {
             lbl_interlo = new JLabel("Interlocuteur");
     private int dmd_id;
     private List<Demande> dmd;
+    private List<Interlocuteur> inter;
+    private JComboBox cb_interlo = new JComboBox();
 
     public NouvelleDemande(JFrame parent, String title, boolean modal, int id) {
         super(parent, title, modal);
@@ -105,22 +108,22 @@ public class NouvelleDemande extends JDialog {
         JLabel label6 = new JLabel();
         JPanel content = new JPanel();
         content.setBackground(Color.white);
-        content.setPreferredSize(new Dimension(400, 270));
+        content.setPreferredSize(new Dimension(400, 200));
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         content.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 
         label1.setPreferredSize(new Dimension(30, 20));
-        label2.setPreferredSize(new Dimension(30, 20));
+        label2.setPreferredSize(new Dimension(30, 30));
         label3.setPreferredSize(new Dimension(30, 20));
         label4.setPreferredSize(new Dimension(30, 20));
-        label5.setPreferredSize(new Dimension(30, 20));
+        label5.setPreferredSize(new Dimension(30, 30));
         label6.setPreferredSize(new Dimension(30, 20));
                 
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.LINE_AXIS));
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.LINE_AXIS));
         panel1.setPreferredSize(new Dimension(450, 20));
-        panel2.setPreferredSize(new Dimension(450, 20));
+        panel2.setPreferredSize(new Dimension(450, 30));
         panel3.setPreferredSize(new Dimension(450, 20));
         
         
@@ -131,18 +134,31 @@ public class NouvelleDemande extends JDialog {
         panel1.add(lbl_titre, BorderLayout.CENTER);
         panel1.add(suivdostitre, BorderLayout.EAST);
         panel1.add(label4, BorderLayout.WEST);
-        panel1.setBorder(new EmptyBorder(20, 5, 20, 5));
+        panel1.setBorder(new EmptyBorder(30, 5, 30, 5));
         
         
+        InterlocuteurInstance interInstance = InterlocuteurInstance.getInstance();
+        Hashtable hh = new Hashtable();
+        hh.put("cliid", dmd_id);
+        hh.put("intersuppr", false);
+        inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
+        cb_interlo.addItem("Interlocuteurs");
+        for (final Interlocuteur in : inter)
+        {
+            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
+            cb_interlo.addItem((in.getInterid()+ ". " +in.getInterprenom() + " " + in.getInternom()));
+           // LinkLabelData LblInter = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
         
-        lbl_interlo.setPreferredSize(new Dimension(130, 20));
-        interid.setPreferredSize(new Dimension(200, 20));
+        
+        }
+        lbl_interlo.setPreferredSize(new Dimension(130, 30));
+        cb_interlo.setPreferredSize(new Dimension(120, 30));
         
         panel2.add(label2, BorderLayout.WEST);
         panel2.add(lbl_interlo);
-        panel2.add(interid);
-        panel2.add(label5, BorderLayout.WEST);
-        panel2.setBorder(new EmptyBorder(20, 5, 20, 5));
+        panel2.add(cb_interlo, BorderLayout.CENTER);
+        panel2.add(label5, BorderLayout.EAST);
+        panel2.setBorder(new EmptyBorder(0, 5, 0, 5));
         
         
         
@@ -153,7 +169,7 @@ public class NouvelleDemande extends JDialog {
         panel3.add(lbl_comm);
         panel3.add(suivdoscom);
         panel3.add(label6, BorderLayout.WEST);
-        panel3.setBorder(new EmptyBorder(20, 5, 20, 5));
+        panel3.setBorder(new EmptyBorder(30, 5, 30, 5));
       
        // panInfos.add(left);
 
@@ -185,7 +201,7 @@ public class NouvelleDemande extends JDialog {
                 setVisible(false);
             }
         });
-
+        
         control.add(okBouton);
         control.add(cancelBouton);
         control.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -226,17 +242,19 @@ public class NouvelleDemande extends JDialog {
             Demande dmde = new Demande();
             dmde.setCliid(dmd_id);
             dmde.setUtiid(1);
-            dmde.setInterid(1);
+            String interlo = (String) cb_interlo.getSelectedItem();
+            String str[]=interlo.split(". ");
+            
+            dmde.setInterid((Integer.parseInt(str[0])));
             dmde.setDemandeetat(20);
             dmde.setDemandetitre(suivdostitre.getText());
             dmde.setDemandedesc(suivdoscom.getText());
             dmde.setDemandesuppr(false);
             dmde.setDemandedteadd(new Date());
-            Suivdossier svidossier = new Suivdossier();
 
             DemandeInstance dmd_inst = DemandeInstance.getInstance();
             dmd_inst.setDemandes(dmde);
-            dmd_inst.ajouterDansBaseDeDonnées();
+            dmd_inst.ajouterDansBaseDeDonnees();
 
     }
 }

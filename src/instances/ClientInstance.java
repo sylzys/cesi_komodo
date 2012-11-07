@@ -106,7 +106,7 @@ public class ClientInstance {
 
     }
 
-    public synchronized Boolean updaterBaseDeDonnées(Client cli) {
+    public synchronized Boolean updaterBaseDeDonnees(Client cli) {
         Transaction tx = null;
         if (HibernateConnection.online == false)
         {
@@ -156,7 +156,7 @@ public class ClientInstance {
         return true;
     }
 
-    public Boolean ajouterDansBaseDeDonnées() {
+    public Boolean ajouterDansBaseDeDonnees() {
         if (HibernateConnection.online == false)
         {
             try

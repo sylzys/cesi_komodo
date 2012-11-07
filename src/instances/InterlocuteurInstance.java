@@ -103,7 +103,7 @@ public class InterlocuteurInstance {
 
     }
 
-    public synchronized void updaterBaseDeDonnées(Interlocuteur inter) {
+    public synchronized void updaterBaseDeDonnees(Interlocuteur inter) {
         Transaction tx = null;
 
         try
@@ -128,7 +128,7 @@ public class InterlocuteurInstance {
         }
     }
     
-    public synchronized void insererEnBaseDeDonnées(Interlocuteur inter) {
+    public synchronized void insererEnBaseDeDonnees(Interlocuteur inter) {
         Transaction tx = null;
         try
         {

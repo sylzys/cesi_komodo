@@ -286,7 +286,7 @@ public class DemandeDetail extends KContainer {
             
             CommandeInstance cmd_inst = CommandeInstance.getInstance();
             cmd_inst.setCommande(cmd);
-            cmd_inst.ajouterDansBaseDeDonnées();
+            cmd_inst.ajouterDansBaseDeDonnees();
             
             
             
