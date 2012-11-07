@@ -118,8 +118,8 @@ public class ClientInstance {
                         + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
                         + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
                         + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
-                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + "', "
-                        + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
+                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ",  "
+                        + "clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
                         -1, cli.getClinom());
                 //return true;
             }
