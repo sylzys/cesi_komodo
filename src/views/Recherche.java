@@ -4,9 +4,12 @@
  */
 package views;
 
+import classes.ButtonData;
 import controllers.UserActif;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,16 +82,20 @@ public class Recherche extends KContainer {
     protected void initPanel() {
 
         JPanel global = new JPanel();
-        global.setLayout(new FlowLayout());
-        JPanel content = new JPanel();
-        content.setLayout(new FlowLayout());
+        global.setLayout(new BorderLayout());     
+        
+        JPanel header = new JPanel();
+        header.setLayout(new BorderLayout());
+        header.setPreferredSize(new Dimension(800,50));
+        //content.setLayout(new BorderLayout());
         //content.add(title, BorderLayout.CENTER);
-        content.setBounds(0, 0, 500, 200);
+        //content.setPreferredSize(new Dimension(500,100));
 
-        global.add(content);
+        global.add(header,BorderLayout.NORTH);
 
         //Création du textfield
         searchTextField = new JTextField("Tapez un mot:");
+        searchTextField.setPreferredSize(new Dimension(100,20));
         searchTextField.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,14 +104,18 @@ public class Recherche extends KContainer {
                 }
             });
         //ajout au content
-        content.add(searchTextField);
+       // content.add(searchTextField);
         
-        content.add(rbCommande);
-        content.add(rbContact);
-        content.add(rbDemande);
-        content.add(rbSociete);
-        content.add(rbNomenclature);        
-        content.add(rbDevis);
+        JPanel groupRb = new JPanel();
+        groupRb.setPreferredSize(new Dimension(700,50));
+        groupRb.add(searchTextField,BorderLayout.CENTER);
+        groupRb.add(rbCommande,BorderLayout.CENTER);
+        groupRb.add(rbContact,BorderLayout.CENTER);
+        groupRb.add(rbDemande,BorderLayout.CENTER);
+        groupRb.add(rbSociete,BorderLayout.CENTER);
+        groupRb.add(rbNomenclature,BorderLayout.CENTER);        
+        groupRb.add(rbDevis);
+        
 
         // creation d'un group pour les radio bouton
         ButtonGroup group = new ButtonGroup();
@@ -116,15 +127,24 @@ public class Recherche extends KContainer {
         group.add(rbNomenclature);
         group.add(rbDemande);
 
+        
         JButton btnSearch = new JButton("Rechercher");
-        content.add(btnSearch);
+        btnSearch.setPreferredSize(new Dimension(120,20));
+        //add(btnSearch,BorderLayout.);
+        header.add(groupRb,BorderLayout.WEST);
+        header.add(btnSearch,BorderLayout.EAST);
+        
+        //content.add(header,BorderLayout.NORTH);
+        
+        panelListSearch = new JPanel();        
+        panelListSearch.add(new JLabel("test"));
+        panelListSearch.setPreferredSize(new Dimension(800,500));
+        
+        global.add(panelListSearch,BorderLayout.CENTER);
 
+        // ajout au panel principal
+        this.panel.add(global);      
 
-        this.panel.add(global);
-        this.panel.add(content);
-        panelListSearch = new JPanel();
-        this.panel.add(panelListSearch);
-        // ajout au panel
 
         btnSearch.addActionListener(new ActionListener() {
 
@@ -135,17 +155,34 @@ public class Recherche extends KContainer {
     }
     private void search(String query)
     {
+        panelListSearch.removeAll();
         Session session = HibernateConnection.getSession();
         if(rbCommande.isSelected()) 
-        {
-            
-            List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();        
-            
+        {           
+            List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
             Commande  com = null;
+            JPanel panelCom = null;
             for (int i = 0; i < list.size(); i++) {
                 com = list.get(i);      
-                
+                panelCom = new JPanel();
+                panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
+                panelCom.setBackground(Color.WHITE);
+                panelCom.setPreferredSize(new Dimension(750,100));
+                JLabel comLabel = new JLabel();
+                comLabel.setText("Titre : " + com.getComtitre());
+                panelCom.add(comLabel);
+                ButtonData btnGoToCmd = new ButtonData("Aller");
+                btnGoToCmd.setId(com.getComid());
+                btnGoToCmd.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        ButtonData btn_temp = (ButtonData)arg0.getSource();
+                        Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                    }
+                });
+                panelCom.add(btnGoToCmd);
+                panelListSearch.add(panelCom,BorderLayout.CENTER);
             }
+            Fenetre.getInstance().RenewContener(panel);
         }
         if(rbDevis.isSelected())
         {
