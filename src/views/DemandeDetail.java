@@ -266,7 +266,7 @@ public class DemandeDetail extends KContainer {
         DemandeInstance DmdeInstance = DemandeInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("demandeid", demande_id);
-        ddd = DmdeInstance.GetDemandes("where demandesuppr = false AND demandeid = :demandeid", h);
+        ddd = DmdeInstance.GetDemandes("where demandeid = :demandeid", h);
             
             
             
