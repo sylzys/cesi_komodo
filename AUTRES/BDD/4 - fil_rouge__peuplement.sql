@@ -456,45 +456,6 @@ nextval('stock_stockid_seq'), '1', '7', '2012-03-11', '2012-03-31', NULL , '20',
 nextval('stock_stockid_seq'), '2', '7', '2012-03-11', '2012-03-31', NULL , '20', '985244', '2', false
 );
 
-INSERT INTO devis (
-DEVID ,
-DEVDATE ,
-DEVPRIX ,
-DEVSUPPR
-)
-VALUES (
-nextval('devis_devid_seq'), '2012-03-08', '1900', false
-), (
-nextval('devis_devid_seq'), '2012-03-13', '20050', false
-), (
-nextval('devis_devid_seq'), '2012-03-20', '7654', false
-), (
-nextval('devis_devid_seq'), '2012-03-04', '72630', false
-), (
-nextval('devis_devid_seq'), '2012-03-13', '2309', false
-);
-
-INSERT INTO devnom (
-NOMID ,
-DEVID ,
-DEVNOMQTE
-)
-VALUES (
-'3', '1', '3'
-), (
-'1', '1', '1'
-), (
-'4', '2', '2'
-), (
-'5', '2', '5'
-), (
-'1', '3', '1'
-), (
-'5', '4', '2'
-), (
-'1', '4', '2'
-);
-
 INSERT INTO agenda (
 AGEID ,
 UTIID ,
@@ -554,6 +515,69 @@ VALUES(
 ), (
 '2', '7', 100000
 );
+INSERT INTO demande (
+DEMANDEID ,
+INTERID,
+CLIID,
+UTIID,
+DEMANDETITRE,
+DEMANDEDESC,
+DEMANDEETAT ,
+DEMANDEDTEADD ,
+DEMANDESUPPR
+)
+VALUES (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 1', 'Description de la demande 1', 50, '2012-03-14', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 2', 'Description de la demande 1', 50, '2012-03-15', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 3', 'Description de la demande 1', 30, '2012-03-14', false
+), (
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 4', 'Description de la demande 1', 30, '2012-04-13', false
+);
+INSERT INTO devis (
+DEVID ,
+DEMANDEID,
+INTERID,
+DEVTITRE,
+DEVDESC,
+DEVETAT,
+DEVDATE ,
+DEVPRIX ,
+DEVSUPPR
+)
+VALUES (
+nextval('devis_devid_seq'), 1, 3, 'Titre du devis 1', 'Description du devis 1', 50, '2012-03-08', '1900', false
+), (
+nextval('devis_devid_seq'), 2, 3, 'Titre du devis 2', 'Description du devis 2', 20,  '2012-03-13', '20050', false
+), (
+nextval('devis_devid_seq'), 3, 3, 'Titre du devis 3', 'Description du devis 3', 80,  '2012-03-20', '7654', false
+), (
+nextval('devis_devid_seq'), 1, 3, 'Titre du devis 4', 'Description du devis 4', 100,  '2012-03-04', '72630', false
+), (
+nextval('devis_devid_seq'), 2, 3, 'Titre du devis 5', 'Description du devis 5', 0,  '2012-03-13', '2309', false
+);
+
+INSERT INTO devnom (
+NOMID ,
+DEVID ,
+DEVNOMQTE
+)
+VALUES (
+'3', '1', '3'
+), (
+'1', '1', '1'
+), (
+'4', '2', '2'
+), (
+'5', '2', '5'
+), (
+'1', '3', '1'
+), (
+'5', '4', '2'
+), (
+'1', '4', '2'
+);
 
 INSERT INTO commande (
 COMID ,
@@ -577,28 +601,6 @@ nextval('commande_comid_seq'), 3, 1, 'Titre commande 2', 'Description commande 2
 nextval('commande_comid_seq'), 3, 1, 'Titre commande 3', 'Description commande 3', '2012-03-14', '2012-04-02', '100', '2012-03-14', '2012-04-01', '26543', false
 ), (
 nextval('commande_comid_seq'), 3, 1, 'Titre commande 4', 'Description commande 4', '2012-04-13', '2012-04-14', '100', '2012-04-13', '2012-04-14', '346543', false
-);
-
-
-INSERT INTO demande (
-DEMANDEID ,
-INTERID,
-CLIID,
-UTIID,
-DEMANDETITRE,
-DEMANDEDESC,
-DEMANDEETAT ,
-DEMANDEDTEADD ,
-DEMANDESUPPR
-)
-VALUES (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 1', 'Description de la demande 1', 50, '2012-03-14', false
-), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 2', 'Description de la demande 1', 50, '2012-03-15', false
-), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 3', 'Description de la demande 1', 30, '2012-03-14', false
-), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 4', 'Description de la demande 1', 30, '2012-04-13', false
 );
 
 INSERT INTO comnom (
