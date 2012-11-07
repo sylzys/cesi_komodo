@@ -6,6 +6,7 @@ package views;
 
 import controllers.TableDispatcher;
 import controllers.UserActif;
+import instances.DemandeInstance;
 import instances.DetailDmdInstance;
 import instances.DevisInstance;
 import instances.HibernateConnection;
@@ -33,6 +34,7 @@ import models.Client;
 import models.DetailDmd;
 import models.ModelesTables;
 import models.CurrentDatas;
+import models.Demande;
 import models.Devis;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -52,6 +54,10 @@ public class DevisDetail extends KContainer {
     JButton validate = new JButton();
     JButton refuse = new JButton();
     JButton Retour = new JButton();
+    JLabel jLabel6 = new javax.swing.JLabel();
+    JLabel jLabel7 = new javax.swing.JLabel();
+    JLabel jLabel8 = new javax.swing.JLabel();
+    JLabel jLabel9 = new javax.swing.JLabel();
     public UserActif user;
     public int idDemande;
 
@@ -66,36 +72,45 @@ public class DevisDetail extends KContainer {
     // @Override
     protected void initPanel() {
         JPanel content = new JPanel(),
-                listeDmd = new JPanel(),
-                listeDevis = new JPanel(),
-                detailDmd = new JPanel(),
                 top = new JPanel(),
                 middle = new JPanel(),
                 bottom = new JPanel(),
                 container = new JPanel(),
-                center_right = new JPanel(),
-                bottom_right = new JPanel(),
-                bottom_bottom = new JPanel();
+                sousTitre = new JPanel();
+        JLabel statut = new JLabel();
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+    //    content.setPreferredSize(new Dimension(1000, 750));
+        container.setPreferredSize(new Dimension(702, 451));
 
-        content.setLayout(new FlowLayout());
-        content.setPreferredSize(new Dimension(1000, 750));
-        container.setPreferredSize(new Dimension(700, 500));
-
-        //  System.out.println("CMD-ID: "+this.demande_id);
-        //title.setText("DETAIL COMMANDE "+ this.demande_id);
-        TableDispatcher nom_tblDis = new TableDispatcher();
-        /**
-         * fixer la largeur de la première colonne à 200 pixels
-         */
         content.setBackground(Color.white);
+        container.setBackground(Color.white);
+        top.setBackground(Color.white);
+        middle.setBackground(Color.white);
+        bottom.setBackground(Color.white);
+        sousTitre.setBackground(Color.white);
 
-        top.setPreferredSize(new Dimension(700, 100));
-        middle.setPreferredSize(new Dimension(700, 350));
-        bottom.setPreferredSize(new Dimension(700, 50));
-
-        listeDmd.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-        listeDevis.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-
+        Font f = new Font("Euphemia", Font.PLAIN, 22);
+        Font g = new Font("Euphemia", Font.PLAIN, 11);
+        Font h = new Font("Euphemia", Font.PLAIN, 16);
+        title.setFont(f);
+        jLabel7.setFont(h);
+        jLabel8.setFont(g);
+        statut.setFont(h);
+                
+        top.setPreferredSize(new Dimension(700, 235));
+        middle.setPreferredSize(new Dimension(700, 150));
+        bottom.setPreferredSize(new Dimension(500, 30));
+        sousTitre.setPreferredSize(new Dimension(700, 235));
+        title.setPreferredSize(new Dimension(400, 25));
+        jLabel7.setPreferredSize(new Dimension(200, 25));
+        jLabel8.setPreferredSize(new Dimension(600, 10));
+        statut.setPreferredSize(new Dimension(500, 200));
+        
+        jLabel8.setBorder(new EmptyBorder(0, 0, 0, 100));
+        container.setBorder(new EmptyBorder(150, 0, 0, 0));
+        statut.setBorder(new EmptyBorder(0, 0, 0, 200));
+        bottom.setBorder(new EmptyBorder(0, 0, 0, 200));
+                
         top.setLayout(new BoxLayout(top, BoxLayout.LINE_AXIS));
         middle.setLayout(new BoxLayout(middle, BoxLayout.LINE_AXIS));
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.LINE_AXIS));
@@ -103,22 +118,15 @@ public class DevisDetail extends KContainer {
 
         Devis dvis = null;
         HibernateConnection connection = HibernateConnection.getInstance();
-        try {
-            Query query = connection.getSession().createQuery("from Devis where devid = :devid");
-            query.setParameter("devid", devis_id);
-            //  query.setParameter("utiid", this.user.getId());
-            dvis = (Devis) query.uniqueResult();
-
-            System.out.println("Devis USED : " + devis_id);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        Query query = connection.getSession().createQuery("from Devis where devid = :devid");
+        query.setParameter("devid", devis_id);
+        dvis = (Devis) query.uniqueResult();
 
 
         String etat = dvis.getDevetat();
-        title.setText("<html><h1>Détails du devis n°" + dvis.getDevid() + " <br /></h1>Statut du devis : " + etat + " <br />Montant total : " + dvis.getDevprix() + "€<br /> Créé le : " + dvis.getDevdate() + "</html>");
-
+        title.setText("Détails du devis n°" + dvis.getDevid());
+        jLabel7.setText("Montant total : " + dvis.getDevprix() + "€");
+        jLabel8.setText("Créé le : " + dvis.getDevdate());
         refuse.setText("Refus du devis");
         validate.setText("Validation du devis");
         Retour.setText("Retour à la demande");
@@ -126,20 +134,29 @@ public class DevisDetail extends KContainer {
         validate.addActionListener(new DevisDetail.validateListener());
         Retour.addActionListener(new DevisDetail.RetourListener());
 
-        top.add(title, BorderLayout.CENTER);
+        sousTitre.add(title, BorderLayout.WEST);
+        sousTitre.add(jLabel7, BorderLayout.EAST);
+        sousTitre.add(jLabel8, BorderLayout.CENTER);
 
         if (etat.equals("En cours")) {
             bottom.add(validate, BorderLayout.CENTER);
             bottom.add(refuse, BorderLayout.CENTER);
+            statut.setText("Ce devis est en attente de validation");
+            sousTitre.add(statut, BorderLayout.CENTER);
         } else {
-            bottom.add(new JLabel("Ce devis a été " + dvis.getDevetat()), BorderLayout.CENTER);
+            statut.setText("Ce devis a été " + dvis.getDevetat());
+            sousTitre.add(statut, BorderLayout.CENTER);
         }
+        top.add(sousTitre);
+
+
         bottom.add(Retour, BorderLayout.CENTER);
         idDemande = dvis.getDeviid();
 
         container.add(top);
         container.add((middle));
         container.add((bottom));
+        container.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
         content.add(container);
         this.panel.add(content);
     }
@@ -161,8 +178,19 @@ public class DevisDetail extends KContainer {
             dvs.setDevetat("Accepté");
             session.update(dvs);
             tx3.commit();
+            
+            Transaction tx4 = HibernateConnection.getSession().beginTransaction();
+            Session session2 = HibernateConnection.getSession();
+            Demande dmdd = (Demande) session2.get(Demande.class, idDemande);
+            System.out.println("Updating Record");
+            dmdd.setDemandeid(idDemande);
+            dmdd.setDemandeetat(100);
+            session2.update(dmdd);
+            tx4.commit();
+            
             System.out.println("Done");
             DemandeDetail devisForm = new DemandeDetail(idDemande);
+            HibernateConnection.newConnect(HibernateConnection.online);
             fen.RenewContener(devisForm.getPanel());
         }
     }

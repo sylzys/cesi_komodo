@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  23/09/2012 15:23:00                      */
+/* Date de création :  07/11/2012 07:56:26                      */
 /*==============================================================*/
 
 
@@ -205,6 +205,7 @@ create table CLIENT (
    CLISUPPR             BOOL                 null,
    CLIDTELOG            DATE                 null,
    CLIDTEADD            DATE                 null,
+   CLIURLTMP            VARCHAR(500)         null,
    constraint PK_CLIENT primary key (CLIID)
 );
 
@@ -269,8 +270,10 @@ FOURID
 /*==============================================================*/
 create table COMMANDE (
    COMID                SERIAL               not null,
-   COMTITRE             VARCHAR(50)          null,
-   COMDESC              VARCHAR(254)         null,
+   INTERID              INT4                 null,
+   DEMANDEID            INT4                 null,
+   COMTITRE             VARCHAR(254)         null,
+   COMDESC              VARCHAR(500)         null,
    COMDATE              DATE                 null,
    COMDATEPREV          DATE                 null,
    COMETAT              INT4                 null,
@@ -287,6 +290,20 @@ create table COMMANDE (
 /*==============================================================*/
 create unique index COMMANDE_PK on COMMANDE (
 COMID
+);
+
+/*==============================================================*/
+/* Index : DEMCOM_FK                                            */
+/*==============================================================*/
+create  index DEMCOM_FK on COMMANDE (
+DEMANDEID
+);
+
+/*==============================================================*/
+/* Index : INTERCOM_FK                                          */
+/*==============================================================*/
+create  index INTERCOM_FK on COMMANDE (
+INTERID
 );
 
 /*==============================================================*/
@@ -344,8 +361,11 @@ CTRLID
 /*==============================================================*/
 create table DEMANDE (
    DEMANDEID            SERIAL               not null,
+   INTERID              INT4                 null,
    CLIID                INT4                 not null,
    UTIID                INT4                 not null,
+   DEMANDETITRE         VARCHAR(254)         null,
+   DEMANDEDESC          VARCHAR(500)         null,
    DEMANDEETAT          INT4                 null,
    DEMANDEDTEADD        DATE                 null,
    DEMANDESUPPR         BOOL                 null,
@@ -374,10 +394,21 @@ CLIID
 );
 
 /*==============================================================*/
+/* Index : INTERDEM_FK                                          */
+/*==============================================================*/
+create  index INTERDEM_FK on DEMANDE (
+INTERID
+);
+
+/*==============================================================*/
 /* Table : DEVIS                                                */
 /*==============================================================*/
 create table DEVIS (
    DEVID                SERIAL               not null,
+   DEMANDEID            INT4                 null,
+   INTERID              INT4                 null,
+   DEVTITRE             VARCHAR(254)         null,
+   DEVDESC              VARCHAR(500)         null,
    DEVETAT              VARCHAR(50)          null,
    DEVDATE              DATE                 null,
    DEVPRIX              INT4                 null,
@@ -390,6 +421,20 @@ create table DEVIS (
 /*==============================================================*/
 create unique index DEVIS_PK on DEVIS (
 DEVID
+);
+
+/*==============================================================*/
+/* Index : DEMDEV_FK                                            */
+/*==============================================================*/
+create  index DEMDEV_FK on DEVIS (
+DEMANDEID
+);
+
+/*==============================================================*/
+/* Index : INTERDEV_FK                                          */
+/*==============================================================*/
+create  index INTERDEV_FK on DEVIS (
+INTERID
 );
 
 /*==============================================================*/
@@ -1008,6 +1053,16 @@ alter table CMDMAT
       references MATIERE (MATID)
       on delete restrict on update restrict;
 
+alter table COMMANDE
+   add constraint FK_COMMANDE_DEMCOM_DEMANDE foreign key (DEMANDEID)
+      references DEMANDE (DEMANDEID)
+      on delete restrict on update restrict;
+
+alter table COMMANDE
+   add constraint FK_COMMANDE_INTERCOM_INTERLOC foreign key (INTERID)
+      references INTERLOCUTEUR (INTERID)
+      on delete restrict on update restrict;
+
 alter table COMNOM
    add constraint FK_COMNOM_COMNOM_COMMANDE foreign key (COMID)
       references COMMANDE (COMID)
@@ -1026,6 +1081,21 @@ alter table DEMANDE
 alter table DEMANDE
    add constraint FK_DEMANDE_DEMCLI_CLIENT foreign key (CLIID)
       references CLIENT (CLIID)
+      on delete restrict on update restrict;
+
+alter table DEMANDE
+   add constraint FK_DEMANDE_INTERDEM_INTERLOC foreign key (INTERID)
+      references INTERLOCUTEUR (INTERID)
+      on delete restrict on update restrict;
+
+alter table DEVIS
+   add constraint FK_DEVIS_DEMDEV_DEMANDE foreign key (DEMANDEID)
+      references DEMANDE (DEMANDEID)
+      on delete restrict on update restrict;
+
+alter table DEVIS
+   add constraint FK_DEVIS_INTERDEV_INTERLOC foreign key (INTERID)
+      references INTERLOCUTEUR (INTERID)
       on delete restrict on update restrict;
 
 alter table DEVNOM

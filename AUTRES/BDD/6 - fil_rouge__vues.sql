@@ -5,13 +5,12 @@ WHERE p.bonatirerid = b.bonatirerid AND p.chaineid = c.chaineid AND p.comid = d.
 
 
 CREATE OR REPLACE VIEW detailcommande AS 
-SELECT c.comid, c.comdate, c.comdateprev, c.cometat, c.comproddeb, c.comprodfin, c.comprix, c.comsuppr, l.cliid, l.clirais, l.clinom,
-l.cliadresse, l.clicp, l.cliville, l.clietat, l.clilogin, l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel,
-i.intersuppr, s.suivdosid, s.demandeid, s.suividossuppr, c.comdesc, c.comtitre, u.utinom, u.utiprenom
-FROM commande AS c , client AS l , suivdossier AS s , interlocuteur AS i , utilisateur AS u
-WHERE s.comid = c.comid AND l.cliid = i.cliid AND s.interid = i.interid AND s.utiid = u.utiid;
-
-
+SELECT c.comid, c.interid, c.demandeid, c.comtitre, c.comdesc, c.comdate, c.cometat, c.comprix, c.comsuppr,
+i.internom, i.interprenom, i.intersuppr,
+l.cliid, l.clirais, l.clinom, l.clisuppr,
+u.utiid, u.utinom, u.utiprenom, u.utisuppr
+FROM commande AS c , client AS l , interlocuteur AS i , utilisateur AS u , demande AS d
+WHERE c.interid = i.interid AND c.demandeid = d.demandeid AND d.cliid = l.cliid AND d.utiid = u.utiid;
 
 
 CREATE OR REPLACE VIEW detaildevis AS 
@@ -62,3 +61,25 @@ CREATE OR REPLACE VIEW getalerte AS
 SELECT 	s.suivdosid, s.comid, i.interid, i.internom, i.interprenom, l.cliid, l.clinom, s.suivdoscom, s.suivdosdate, s.utiid, s.suividossuppr
 FROM suivdossier s, interlocuteur i,  client l
 WHERE s.interid = i.interid AND i.cliid = l.cliid;
+
+CREATE OR REPLACE VIEW "public"."detailsdemande" AS 
+SELECT
+"public".demande.demandeid,
+"public".client.cliid,
+"public".client.clirais,
+"public".demande.demandeetat,
+"public".utilisateur.utinom,
+"public".utilisateur.utiprenom,
+"public".client.clinom,
+"public".client.cliville,
+"public".client.clitel,
+"public".client.cliactivite,
+"public".client.clica,
+"public".demande.demandetitre,
+"public".demande.demandedesc
+FROM
+((("public".client
+JOIN "public".demande ON (("public".demande.cliid = "public".client.cliid))))
+JOIN "public".utilisateur ON (("public".client.utiid = "public".utilisateur.utiid)))
+;
+

@@ -67,6 +67,7 @@ public class Synchro {
     //Sauvegarde de la requete dans le fichier
     public void SaveReq(String req, int interid, String nomclient) throws IOException
     {
+        System.err.println ("saving request : " +req);
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
            BufferedWriter bw = new BufferedWriter(fichier);

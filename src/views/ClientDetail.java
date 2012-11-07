@@ -9,6 +9,7 @@ import classes.LinkLabelData;
 import controllers.getDemandeInfos;
 import controllers.getInterlocuteurInfos;
 import controllers.getSteInfos;
+import instances.ClientInstance;
 import instances.DemandeInstance;
 import instances.DetailCdeInstance;
 import instances.HibernateConnection;
@@ -29,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import models.Client;
@@ -36,6 +38,7 @@ import models.CurrentDatas;
 import models.Demande;
 import models.DetailCommande;
 import models.Interlocuteur;
+import org.dom4j.CDATA;
 import org.hibernate.Query;
 
 /**
@@ -53,6 +56,7 @@ public class ClientDetail extends KContainer {
             cb_commande = new JComboBox();
     private InterlocuteurInstance interInstance;
     private List<Interlocuteur> inter;
+    private Client cli = null;
 
     public ClientDetail(int id) {
         super();
@@ -72,7 +76,6 @@ public class ClientDetail extends KContainer {
 
         //JPanelS
         JPanel cliInfos = new JPanel(),
-                
                 cliDetail = new JPanel(),
                 cliButtons = new JPanel(),
                 comboPanel = new JPanel();
@@ -90,7 +93,7 @@ public class ClientDetail extends KContainer {
 //                cb_commande = new JComboBox();
 
 
-        Client cli = null;
+
         content.setLayout(new BorderLayout());
         content.setPreferredSize(new Dimension(1000, 768));
         this.panel.add(content);
@@ -174,14 +177,15 @@ public class ClientDetail extends KContainer {
         interInstance = InterlocuteurInstance.getInstance();
         Hashtable hh = new Hashtable();
         hh.put("cliid", cli_id);
-        inter = interInstance.GetInterlocuteurs("where cliid = :cliid", hh);
-        for (Interlocuteur in : inter)
+        hh.put("intersuppr", false);
+        inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
+        for (final Interlocuteur in : inter)
         {
             System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
-            LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
-            LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
+            LinkLabelData LblInter = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
+            LblInter.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
-            LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
+            LblInter.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     getInterId(evt);
@@ -192,7 +196,28 @@ public class ClientDetail extends KContainer {
                     showInterlocuteur(lbl_tmp.getId());
                 }
             });
-            cliButtons.add(LblCmd);
+
+            LinkLabelData LblSupprInter = new LinkLabelData("(X)  ", in.getInterid());
+            LblSupprInter.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    supprInter(evt);
+                }
+
+                private void supprInter(MouseEvent evt) {
+                    int userChoice = JOptionPane.showConfirmDialog(null, "Supprimer l'interlocuteur ?", "Supprimer l'interlocuteur ?", JOptionPane.YES_NO_OPTION);
+                    //JOptionPane.showMessageDialog(null, userChoice, "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+                    if (userChoice == 0)
+                    {
+                        LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+                        deleteInterlocuteur(lbl_tmp.getId(), in);
+                    }
+
+                }
+            });
+            cliButtons.add(LblInter);
+            cliButtons.add(new JLabel(" "));
+            cliButtons.add(LblSupprInter);
             cliButtons.add(Box.createHorizontalStrut(5));
         }
 //        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
@@ -258,24 +283,10 @@ public class ClientDetail extends KContainer {
         //ajout des combobox a droite
         comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
         comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
-//LinkLabelData LblCmd = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
-//                LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
-//
-//                LblCmd.addMouseListener(new java.awt.event.MouseAdapter() {
-//                    @Override
-//                    public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                        getInterId(evt);
-//                    }
-//
-//                    private void getInterId(MouseEvent evt) {
-//                        LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
-//                        showInterlocuteur(lbl_tmp.getId());
-//                    }
-//                });
+
         //ajout des panels au JPanel principal
         top.add(comboPanel, BorderLayout.EAST);
         LinkLabelData LblSte = new LinkLabelData("(Modifier)", cli.getCliid());
-        // LblSte.setIcon(new ImageIcon("ressources/images/eye.gif"));
         LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,11 +299,36 @@ public class ClientDetail extends KContainer {
                 modif_ste(lbl_tmp.getId());
             }
         });
+
+        LinkLabelData LblSupprSte = new LinkLabelData("(Supprimer)", cli.getCliid());
+        LblSupprSte.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("CLICKED");
+                goSupprSte(evt);
+            }
+
+            private void goSupprSte(MouseEvent evt) {
+//                LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
+//                modif_ste(lbl_tmp.getId());
+                //oui = 0
+                //non = 1
+                int userChoice = JOptionPane.showConfirmDialog(null, "upprimer le client ?", "Supprimer le client ?", JOptionPane.YES_NO_OPTION);
+                //JOptionPane.showMessageDialog(null, userChoice, "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
+                if (userChoice == 0)
+                {
+                    deleteClient();
+                }
+            }
+        });
+
         JPanel name_ste = new JPanel();
         name_ste.setPreferredSize(new Dimension(100, 20));
         name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
-        name_ste.add(new JLabel("<html><b>" + cli.getClinom()));
+        name_ste.add(new JLabel("<html><b>" + cli.getClinom() + "</b> - </html>"));
         name_ste.add(LblSte);
+        name_ste.add(new JLabel(" - "));
+        name_ste.add(LblSupprSte);
         cliDetail.add(name_ste, BorderLayout.PAGE_START);
         cliDetail.add(cliInfos, BorderLayout.CENTER);
         cliDetail.add(cliButtons, BorderLayout.SOUTH);
@@ -414,6 +450,30 @@ public class ClientDetail extends KContainer {
         getInterlocuteurInfos interInfos = interd.showZDialog(id);
         //JOptionPane jop = new JOptionPane();
 
+        if (HibernateConnection.online == false)
+        {
+            HibernateConnection.newConnect(false);
+        }
+        else
+        {
+            HibernateConnection.newConnect(true);
+        }
+        ClientDetail cd = new ClientDetail(cli_id);
+    }
+
+    public void deleteClient() {
+        ClientInstance ci = ClientInstance.getInstance();
+        cli.setClisuppr(true);
+        ci.updaterBaseDeDonnées(cli);
+        Fenetre fen = Fenetre.getInstance();
+        CurrentDatas cd = CurrentDatas.getInstance();
+        Affichage af = new Affichage(cd.getUser());
+        fen.RenewContener(af.getPanel());
+    }
+
+    public void deleteInterlocuteur(int inter_id, Interlocuteur in) {
+        in.setIntersuppr(true);
+        interInstance.updaterBaseDeDonnées(in);
         if (HibernateConnection.online == false)
         {
             HibernateConnection.newConnect(false);

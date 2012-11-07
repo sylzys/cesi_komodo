@@ -40,25 +40,11 @@ public class DetailDmd {
     @Column(name="clica", columnDefinition="INTEGER", nullable=true)
     private int clica ;
     
-    @Column(name="suivdoscom", columnDefinition="VARCHAR(1000)", nullable=true)
-    private String suivdoscom ;
+    @Column(name="demandetitre", columnDefinition="VARCHAR(1000)", nullable=true)
+    private String demandetitre ;
     
-    @Column(name="suivdosdate", columnDefinition="DATE", nullable=true)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date suivdosdate ;
-    
-
-    
-    
-    
-    
-    public int getCliid() {
-        return cliid;
-    }
-
-    public void setCliid(int cliid) {
-        this.cliid = cliid;
-    }
+    @Column(name="demandedesc", columnDefinition="VARCHAR(1000)", nullable=true)
+    private String demandedesc ;
 
     public int getDemandeid() {
         return demandeid;
@@ -66,6 +52,14 @@ public class DetailDmd {
 
     public void setDemandeid(int demandeid) {
         this.demandeid = demandeid;
+    }
+
+    public int getCliid() {
+        return cliid;
+    }
+
+    public void setCliid(int cliid) {
+        this.cliid = cliid;
     }
 
     public String getClirais() {
@@ -140,22 +134,23 @@ public class DetailDmd {
         this.clica = clica;
     }
 
-    public String getSuivdoscom() {
-        return suivdoscom;
+    public String getDemandetitre() {
+        return demandetitre;
     }
 
-    public void setSuivdoscom(String suivdoscom) {
-        this.suivdoscom = suivdoscom;
+    public void setDemandetitre(String demandetitre) {
+        this.demandetitre = demandetitre;
     }
 
-    public Date getSuivdosdate() {
-        return suivdosdate;
+    public String getDemandedesc() {
+        return demandedesc;
     }
 
-    public void setSuivdosdate(Date suivdosdate) {
-        this.suivdosdate = suivdosdate;
+    public void setDemandedesc(String demandedesc) {
+        this.demandedesc = demandedesc;
     }
-
+    
+    
     
    
     

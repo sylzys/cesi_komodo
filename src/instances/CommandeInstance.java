@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Set;
 import models.Client;
 import models.Commande;
+import models.Demande;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 public class CommandeInstance {
 
@@ -15,6 +17,7 @@ public class CommandeInstance {
     private List<Commande> commandes;
     private String where;
     private Hashtable h;
+    private Commande commande;
 
     /**
      * Constructeur prive
@@ -35,6 +38,10 @@ public class CommandeInstance {
         }
 
         return instance;
+    }
+    
+    public synchronized void setCommande(Commande cmd) {
+        this.commande = cmd;
     }
 
     public synchronized List<Commande> GetCommandes(String where, Hashtable h) {
@@ -92,5 +99,30 @@ public class CommandeInstance {
             System.out.println(e.getMessage());
         }
 
+    }
+    
+    
+    
+    public void ajouterDansBaseDeDonnées() {
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Nouvel enregistrement en cours d'insertion ...");
+
+            HibernateConnection.getSession().save(this.commande);
+            // System.out.println(tx.wasCommitted());       
+            tx.commit();
+            System.out.println("Insertion de l'enregistrement terminé");
+            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+            if (HibernateConnection.online == false)
+            {
+//                Synchro writereq = new Synchro();
+//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
