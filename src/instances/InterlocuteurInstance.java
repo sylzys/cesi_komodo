@@ -52,9 +52,9 @@ public class InterlocuteurInstance {
     public synchronized List<Interlocuteur> GetInterlocuteurs(String where, Hashtable h) {
         this.where = where;
         this.h = h;
-        //on récupère le "where", et les paramètres
+        //on r��cup��re le "where", et les param��tres
         chargerDepuisBaseDeDonnees();
-        //on retourne la liste correspondant à la requete
+        //on retourne la liste correspondant �� la requete
         return inter;
     }
 
@@ -62,10 +62,10 @@ public class InterlocuteurInstance {
 
         if (inter == null)
         {
-            //si pas déjà fait de requetes, on crée une liste vide
+            //si pas d��j�� fait de requetes, on cr��e une liste vide
             inter = new ArrayList<Interlocuteur>();
         }
-        else //sinon on vide la liste déjà créee
+        else //sinon on vide la liste d��j�� cr��ee
         {
             inter.clear();
         }
@@ -95,7 +95,7 @@ public class InterlocuteurInstance {
                     query.setParameter(str, h.get(str));
                 }
             }
-            //on met le resultat dans la liste renvoyée
+            //on met le resultat dans la liste renvoy��e
             this.inter = query.list();
 
         }
@@ -119,29 +119,26 @@ public class InterlocuteurInstance {
                 writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", fourid = " + inter.getFourid() + ","
                         + "cliid = '" + inter.getCliid() + "', internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
                         + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "', interposte = '" + inter.getInterposte() + "',"
-                        + "interdteadd = " + inter.getInterdteadd() + ", intersuppr = '" + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid()
-                        ,inter.getInterid(), "");
+                        + "interdteadd = " + inter.getInterdteadd() + ", intersuppr = '" + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
             }
             catch (IOException ex)
             {
                 Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
-            try
-            {
-                tx = HibernateConnection.getSession().beginTransaction();
-                System.out.println("Updating Record");
-                HibernateConnection.getSession().update(inter);
-                tx.commit();
-                System.out.println("Done");
 
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
+        try
+        {
+            tx = HibernateConnection.getSession().beginTransaction();
+            System.out.println("Updating Record");
+            HibernateConnection.getSession().update(inter);
+            tx.commit();
+            System.out.println("Done");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -168,19 +165,17 @@ public class InterlocuteurInstance {
                 Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
-            try
-            {
-                tx = HibernateConnection.getSession().beginTransaction();
-                HibernateConnection.getSession().save(inter);
-                tx.commit();
 
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
+        try
+        {
+            tx = HibernateConnection.getSession().beginTransaction();
+            HibernateConnection.getSession().save(inter);
+            tx.commit();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -48,6 +48,7 @@ public class Creation extends KContainer {
     JTextField cli_nom = new JTextField(),
             cli_add = new JTextField(),
             cli_cp = new JTextField(),
+            cli_ville = new JTextField(),
             cli_tel = new JTextField(),
             cli_fax = new JTextField(),
             cli_mail = new JTextField(),
@@ -60,7 +61,8 @@ public class Creation extends KContainer {
             cli_ca = new JTextField();
     JLabel lbl_clinom = new JLabel("Nom société *"),
             lbl_cliadd = new JLabel("N° - Rue *"),
-            lbl_clicp = new JLabel("CP - Ville *"),
+            lbl_clicp = new JLabel("CP *"),
+            lbl_cliville = new JLabel("Ville *"),
             lbl_clitel = new JLabel("Téléphone *"),
             lbl_clifax = new JLabel("Fax"),
             lbl_climail = new JLabel("Mail"),

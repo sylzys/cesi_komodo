@@ -121,15 +121,14 @@ public class ClientInstance {
                         + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + "', "
                         + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
                         -1, cli.getClinom());
-                return true;
+                //return true;
             }
             catch (IOException ex)
             {
                 Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
+        
             try
             {
                 tx = HibernateConnection.getSession().beginTransaction();
@@ -144,7 +143,7 @@ public class ClientInstance {
                 System.out.println("Update failed");
                 return false;
             }
-        }
+        
         return true;
     }
 
@@ -164,15 +163,14 @@ public class ClientInstance {
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
                         + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
                         + "", -1, this.client.getClinom());
-                return true;
+                //return true;
             }
             catch (IOException ex)
             {
                 Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
+        
             try
             {
                 Transaction tx = HibernateConnection.getSession().beginTransaction();
@@ -188,7 +186,6 @@ public class ClientInstance {
             {
                 return false;
             }
-        }
         return true;
     }
 }
