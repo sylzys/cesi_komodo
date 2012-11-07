@@ -10,8 +10,8 @@
   <property name="hibernate.connection.username">cesi</property>
   <property name="hibernate.connection.password">cesi</property>
   <property name="hibernate.connection.pool_size">1</property>
-  <property name="show_sql">true</property>
-  <property name="format_sql">true</property>
+  <property name="show_sql">false</property>
+  <property name="format_sql">false</property>
   <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
   <mapping class="models.Utilisateur"/>
@@ -27,5 +27,8 @@
   <mapping class="models.DetailDmd"/>
   <mapping class="models.Nomenclature"/>
   <mapping class="models.Nomenclaturelist"/>
+  <mapping class="models.Nommat"/>
+  <mapping class="models.Matiere"/>
+  <mapping class="models.Unite"/>
 </session-factory>
 </hibernate-configuration>

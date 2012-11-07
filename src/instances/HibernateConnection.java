@@ -48,9 +48,6 @@ public class HibernateConnection {
         //Constructeur privé
 	private HibernateConnection()
 	{
-            //Désactivation du log Infos hibernate
-            Logger log = Logger.getLogger("org.hibernate");
-            log.setLevel(Level.WARNING);
             //Test de la connection
             Synchro connect = new Synchro();
             status = connect.InitConnect();
@@ -112,9 +109,6 @@ public class HibernateConnection {
             //On ferme la connection
             closeConnection();
             HibernateConnection.online = false;
-            //Désactivation du log Infos hibernate
-            Logger log = Logger.getLogger("org.hibernate");
-            log.setLevel(Level.WARNING);
             connectOffline();
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
@@ -126,9 +120,6 @@ public class HibernateConnection {
             //On ferme la connection
             closeConnection();
             HibernateConnection.online = true;
-            //Désactivation du log Infos hibernate
-            Logger log = Logger.getLogger("org.hibernate");
-            log.setLevel(Level.WARNING);
             connectOnline();
             //Chargement du fichier de configuration de hibernate
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();

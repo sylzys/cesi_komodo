@@ -19,7 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import models.Client;
 import models.Commande;
+import models.Nomenclature;
 import org.hibernate.Session;
 
 /**
@@ -133,7 +135,7 @@ public class Recherche extends KContainer {
         //content.add(header,BorderLayout.NORTH);
         
         panelListSearch = new JPanel();        
-        panelListSearch.add(new JLabel("test"));
+        panelListSearch.add(new JLabel(""));
         panelListSearch.setPreferredSize(new Dimension(800,500));
         
         global.add(panelListSearch,BorderLayout.CENTER);
@@ -152,54 +154,121 @@ public class Recherche extends KContainer {
     private void search(String query)
     {
         panelListSearch.removeAll();
-        Session session = HibernateConnection.getSession();
-        if(rbCommande.isSelected()) 
-        {           
-            List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
-            Commande  com = null;
-            JPanel panelCom = null;
-            for (int i = 0; i < list.size(); i++) {
-                com = list.get(i);      
-                panelCom = new JPanel();
-                panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
-                panelCom.setBackground(Color.WHITE);
-                panelCom.setPreferredSize(new Dimension(750,100));
-                JLabel comLabel = new JLabel();
-                comLabel.setText("Titre : " + com.getComtitre());
-                panelCom.add(comLabel);
-                ButtonData btnGoToCmd = new ButtonData("Aller");
-                btnGoToCmd.setId(com.getComid());
-                btnGoToCmd.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                        ButtonData btn_temp = (ButtonData)arg0.getSource();
-                        Fenetre.getInstance().RenewCmd(btn_temp.getId());
-                    }
-                });
-                panelCom.add(btnGoToCmd);
-                panelListSearch.add(panelCom,BorderLayout.CENTER);
+        panelListSearch.revalidate();        
+        if(!query.isEmpty())
+        {
+            Boolean flag = false;
+            
+            Session session = HibernateConnection.getSession();
+            if(rbCommande.isSelected()) 
+            {           
+                List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
+                Commande  com = null;
+                JPanel panelCom = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    com = list.get(i);      
+                    panelCom = new JPanel();
+                    panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
+                    panelCom.setBackground(Color.WHITE);
+                    panelCom.setPreferredSize(new Dimension(750,100));
+                    JLabel comLabel = new JLabel();
+                    comLabel.setText("Titre : " + com.getComtitre());
+                    panelCom.add(comLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(com.getComid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                        }
+                    });
+                    panelCom.add(btnGoToCmd);
+                    panelListSearch.add(panelCom,BorderLayout.CENTER);
+                }
+                Fenetre.getInstance().RenewContener(panel);
             }
-            Fenetre.getInstance().RenewContener(panel);
+            if(rbDevis.isSelected())
+            {
+                List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
+            }
+            if(rbContact.isSelected())
+            {
+                List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE clinom LIKE '%" +query+ "%' OR cliville LIKE '%" +query+ "%' OR climail LIKE '%" +query+ "%';").addEntity(models.Client.class).list();                    
+                Client client = null;
+                JPanel panelClient = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    client = list.get(i);
+                    panelClient = new JPanel();
+                    panelClient.add(new JLabel("Client n°"+ client.getCliid()+""));               
+                    panelClient.setBackground(Color.WHITE);
+                    panelClient.setPreferredSize(new Dimension(750,100));
+                    JLabel nomLabel = new JLabel();
+                    nomLabel.setText("Nom: " + client.getClinom());
+                    panelClient.add(nomLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(client.getCliid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                        }
+                    });
+                    panelClient.add(btnGoToCmd);
+                    panelListSearch.add(panelClient,BorderLayout.CENTER);             
+                }
+                Fenetre.getInstance().RenewContener(panel);
+            }
+            if(rbSociete.isSelected())
+            {
+                //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+            }
+            if(rbNomenclature.isSelected())
+            {
+                //il faut remplir les nomnbchaine avec des valeurs sinon il y a une erreur
+                List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomlib LIKE '%" +query+ "%'").addEntity(Nomenclature.class).list();                    
+                Nomenclature nomen = null;
+                JPanel panelNom = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    nomen = list.get(i);
+                    panelNom = new JPanel();
+                    panelNom.add(new JLabel("Nomclature n°"+ nomen.getNomid()+""));               
+                    panelNom.setBackground(Color.WHITE);
+                    panelNom.setPreferredSize(new Dimension(750,100));
+                    JLabel nomLabel = new JLabel();
+                    nomLabel.setText("Description: " + nomen.getNomdes());
+                    panelNom.add(nomLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(nomen.getNomid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                        }
+                    });
+                    panelNom.add(btnGoToCmd);
+                    panelListSearch.add(panelNom,BorderLayout.CENTER);             
+                }
+                Fenetre.getInstance().RenewContener(panel);
+            }
+            if(rbDemande.isSelected())
+            {
+                //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+            }
+
+            if(flag == false)
+            {
+                panelListSearch.add(new JLabel("Aucun résultats"),BorderLayout.CENTER);
+            }
         }
-        if(rbDevis.isSelected())
+        else
         {
-            List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
+            panelListSearch.add(new JLabel("Veuillez saisir un mot pour la recherche"),BorderLayout.CENTER);
         }
-        if(rbContact.isSelected())
-        {
-            List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE clinom LIKE '%" +query+ "%' OR cliville LIKE '%" +query+ "%' OR climail LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
-        }
-        if(rbSociete.isSelected())
-        {
-            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
-        }
-        if(rbNomenclature.isSelected())
-        {
-            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
-        }
-        if(rbDemande.isSelected())
-        {
-            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
-        }
+        Fenetre.getInstance().RenewContener(panel);
+      
     }
 
 //    private List<Commande> search(String query)

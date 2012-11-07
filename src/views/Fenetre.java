@@ -334,6 +334,11 @@ public class Fenetre extends JFrame {
             Alertes alt = new Alertes(user, cli_id);
             RenewContener(alt.getPanel());
         }
+        
+        public void RenewClientdDetail(Integer cli_id){
+            ClientDetail clientDetail = new ClientDetail(cli_id);
+            RenewContener(clientDetail.getPanel());                    
+        }
 
         public void RenewCmd(Integer cmd_id) {
             CommandeDetail cmd = new CommandeDetail(cmd_id);
