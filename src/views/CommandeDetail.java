@@ -83,19 +83,8 @@ public class CommandeDetail extends KContainer {
         detailCmd.setLayout(new BoxLayout(detailCmd, BoxLayout.Y_AXIS));
 
         top_right.setLayout(new FlowLayout());
-        //top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par " + details.getInternom() + "</html>"));
-        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par</html>"));
+        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par " + details.getUtiprenom() + " " + details.getUtinom() + "</html>"));
         
-        LinkLabelData LblInter = new LinkLabelData("<html><br />" + details.getInteprenom() + " " + details.getInternom() + "</html>", details.getInterid());
-        LblInter.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, details.getInterid());
-                System.out.println("SHOWING INTER ID " + details.getInterid());
-                getInterlocuteurInfos interInfos = interd.showZDialog(details.getInterid());
-            }
-        });
-        top_right.add(LblInter);
         ButtonData retour = new ButtonData("Retour à la société", details.getCliid());
         retour.addActionListener(new RetourListener());
         top_right.add(retour);
