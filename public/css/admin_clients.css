@@ -1,0 +1,17 @@
+.acces_enabled {
+    color: green;
+}
+.acces_disabled {
+    color: red;
+}
+
+#admin_client_table {
+    width: 100%;
+}
+#admin_client_table th {
+    font-weight: bold;
+    padding: 5px 0;
+}
+#admin_client_table td {
+    padding: 5px 0;
+}

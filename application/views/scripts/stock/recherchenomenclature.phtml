@@ -1,0 +1,111 @@
+<div id="rechNom">
+<?php
+echo '<h1>' . $this->titre .'</h1>';
+?>
+    <div id="rechercheNom">
+    <p><b>Sélectionnez une matière première pour consulter les nomenclatures l'uilisant</b></p>
+    <form class="formNomMat" action="POST" id="mat" name="mat">
+        <select id="slctMat" name="slctMat">
+            <option id="first" selected="selected"></option>        
+            <?php
+            //On parcours les matières premières
+            foreach($this->matiere as $key => $matiere)
+            {
+                ?>
+                <option id="<?php echo $matiere['matid'];?>">
+                     <?php echo $matiere['matlib'];?>
+                </option>
+                <?php
+            }
+            ?>
+        </select>
+    </form>
+    <!--Div pour le tableau des nomenclatures-->
+<div id="nomMat"></div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $("#slctMat").change(function() {
+      var id = $("#slctMat option:selected").attr("id");
+      var matid = 'matid_'+id;
+      dataNom = "";
+      if(matid != "matid_first")
+      {
+          //Requete ajax pour aller chercher les nomenclatures associées
+          $.ajax({'url' : '../stock/ajaxlistnom',
+                        data: {'matid':matid},
+                        dataType: 'html',
+                        type : 'GET',
+            success : function (dataNom){
+            //Si il y'a bien des nomenclatures associées
+            if(dataNom != "")
+            {
+                   //Récupération des données encodé en JSON (fournisseur)
+                   var arrayJSONnom = JSON.parse(dataNom);
+                   //Tableau des nomenclatures
+                   var div = '<table id="tabres" class="tabnom"><thead><tr><th>Identifiant</th><th>Libellé</th><th>Date de création</th><th>Quantité matière</th><th style="cursor:default">PDF</th></tr></thead><tbody>';
+                        //Boucle sur les données json fournisseur
+                        for(var i=0;i<arrayJSONnom.length;i++) 
+                        {
+                            div+='<tr>'+
+                            '<td>';
+                            var objnom = arrayJSONnom[i];
+                            div+= objnom["nomid"];
+                            div+='</td>'+
+                            '<td>';
+                            div+= objnom["nomlib"];
+                            div+='</td>'+
+                            '<td>';
+                            div+= objnom["nomdate"];
+                            div+='</td>'+
+                            '<td>';
+                            div+= objnom["matqte"]+' '+objnom["unitelbl"];
+                            div+='</td>'+
+                            '<td><a href="../pdf/nomenclatures/nomenclature_'+objnom['nomlib']+'.pdf"><img style="width:32px; height:32px;" src="<?php echo $this->baseUrl('images/pdf_icone.png'); ?>" alt="Afficher la nomenclature" title="Afficher la nomenclature" /></a>';
+                            div+='</td>'+
+                            '</tr>';  
+                        }
+                     div+='</tbody></table>';
+                     //On écrit dans le dom la div avec le tableau
+                     $("#nomMat").html(div);
+                     $("#tabres").dataTable({
+                        "iDisplayLength": 6,
+                            "oLanguage": {
+                                "sUrl": "<?php echo $this->baseUrl('js/traduction_fr_datatable.txt'); ?>"
+                            },
+                            "bStateSave":true,
+                            "sPaginationType": "full_numbers",
+                            "bLengthChange": false,
+                            "bInfo": false,
+                            "bAutoWidth": false,
+                            "aoColumns": [
+                            { "bSortable": true },
+                            { "bSortable": true },
+                            { "bSortable": true },
+                            { "bSortable": true },
+                            { "bSortable": false }
+                            ]
+                        } );        
+             }
+             else
+             {
+                    //Sinon on affiche rien
+                    $("#nomMat").html("");
+             }
+           
+                }	,    
+                error : function(dataNom){
+                    alert(dataNom.responseText);
+                }
+            });
+        }
+        else
+        {
+            //Sinon on affiche rien si l'utilisateur a sélectionné l'option vide'
+            $("#nomMat").html("");
+        }
+  });
+});
+</script>

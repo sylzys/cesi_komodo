@@ -1,0 +1,72 @@
+    <tr>
+        <th>Profil</th>
+        <th>Droits</th>
+    </tr>
+<?php if (!$this->profils): ?>
+    <tr><td colspan="2" align="center">Aucun profil pour le moment</td></tr>
+<?php else: ?>
+    <?php foreach ($this->profils as $profil): ?>
+    <tr>
+        <td><?php echo $profil->getProflib();?></td>
+        <td>
+            <select name="rights" id="<?php echo $profil->getId(); ?>" multiple="multiple" class="select_right">
+                <?php foreach ($this->rights as $ctrl => $actions): ?>
+                <optgroup label="<?php echo $ctrl; ?>">
+                    <?php foreach ($actions as $act): ?>
+                        <option value="<?php echo $act->act_id; ?>" <?php echo (isset($this->current_rights[$profil->getId()]) && in_array($act->act_id, $this->current_rights[$profil->getId()])) ? 'selected': ''; ?>><?php echo $act->act_lib; ?></option>
+                    <?php endforeach; ?>
+                </optgroup>
+                <?php endforeach; ?>
+            </select>
+            <div class="select_right_updated">
+                <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Droits modifies
+            </div>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<script>
+    var urlProfilChangeRight = "<?php echo $this->baseUrl('admin/profilchangeright'); ?>";
+    var urlProfilList = "<?php echo $this->baseUrl('admin/profillist'); ?>";
+    
+    $(document).ready(function() {
+        $(".select_right").multiselect({
+            header: false,
+            height: 200,
+            minWidht: "auto",
+            checkAllText: "Tous",
+            uncheckAllText: "Aucuns",
+            noneSelectedText : "Choisir",
+            selectedText : "#/# s&eacute;lectionn&eacute;s",
+            beforeopen: function() {
+                $(".select_profil_updated").hide();
+            },
+            close: function() {
+                var item = $(this);
+                var Id_Profil = item.attr('id');
+                var droits = item.multiselect("getChecked").map(function() {
+                    return this.value;	
+                }).get();
+                if (droits.length == 0) {
+                    droits = 0;
+                }
+                $.ajax({
+                    url:        urlProfilChangeRight,
+                    data:       { id_profil: Id_Profil, droits: droits},
+                    type:       'POST',
+                    dataType:   'html',
+                    success:    function(data) {
+                        item.parent().children(".select_droit_updated").show();
+//                        document.write(data.responseText);
+//                        loadUser();
+                    },
+                    error :     function(data){
+//                        document.write(data.responseText);
+                    }
+                });
+            }
+        });
+    });
+        
+</script>

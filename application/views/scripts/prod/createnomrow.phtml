@@ -1,0 +1,50 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of createnomrow
+ *
+ * @author Cora 
+ */
+
+
+
+$i = $this->lastRowId + 1;
+?>
+<li class="rowLi" id="row_<?php echo $i; ?>">
+        <div class="px200">
+            <select class="selectMat" name="listProd_<?php echo $i; ?>" id="listProd_<?php echo $i; ?>">
+                <option>Selectionner un produit</option>
+                <?php
+                foreach ($this->matieres as $matiere) {
+                    echo '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '">' . $matiere["matlib"] . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="px200">
+            <input type="text" name="prod_<?php echo $i; ?>" id="prod_<?php echo $i; ?>"   /> 
+        </div>
+        <div class="px100">
+            <input type="text" name="prix_<?php echo $i; ?>" id="prix_<?php echo $i; ?>"  style="width: 50px;" /> 
+        </div>
+        <input type="hidden" name="matName_<?php echo $i; ?>" id="matName_<?php echo $i; ?>" value="" /> 
+        <div class="px100">
+            <input type="text" name="qte_<?php echo $i; ?>" id="qte_<?php echo $i; ?>" style="width: 50px;" /> 
+        </div>
+        <div class="px60">
+            <input type="button"  class="deleteThisRow" style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close.png'); ?>)"; />
+
+        </div>
+    </li>
+
+
+
+
+<script type="text/javascript">
+
+</script>

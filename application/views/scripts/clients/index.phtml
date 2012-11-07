@@ -1,0 +1,116 @@
+<?php
+
+/*
+ * Clients
+ */
+echo '<h1>' . $this->titre .'</h1>'; 
+?>
+<div id="listClient">
+<table id="tab_cli" border="1"><tr><th>Client</th><th>Commercial</th><th>Adresse</th><th>CP</th><th>Ville</th></tr>
+<?php
+foreach ($this->clients as $client)
+     { ?><tr>
+		 <td width="20%"><span class="txt_cli"><?php echo $client['clirais'] . $client['clinom']; ?></span><span class="btn_cli" id="<?php echo $client['cliid'] ?>"><button><img width="20" height="20" src="images/pictos/gris/eye_open.png"></button></span></td>
+		 <td width="20%"><?php echo $client['utiprenom'] . $client['utinom']; ?></td>
+		 <td width="20%"><?php echo $client['cliadresse']; ?></td>
+		 <td width="3%"><?php echo $client['clicp'] ?></td>
+		 <td width="20%"><?php echo $client['cliville']; ?></td>
+		 </tr>	 
+	<?php } ?>
+</table>
+<div class="cli_infos">
+	<table border = "1">
+		<tr><th width="20%">Contact</th><th width="20%">Détails commande</th></tr>
+		<tr><td><span class="cli_cont"></span></td>
+			<td><span class="cli_dtl"></span></td>
+		</tr>
+	</table>
+</div>
+</div>
+<script language="javascript" type="text/javascript">   
+//<![CDATA[     
+    var tab_cli_Props =  {    
+			sort: true,
+			sort_config: { sort_types:['String', 'string', 'None', 'None', 'None'],  },	
+			on_keyup: true,
+			on_keyup_delay: 1000,
+			btn_reset: true,
+			btn_reset_text: "Afficher tous les clients",
+			highlight_keywords: true,
+                    col_1: "select", 
+					col_4: "select", 	
+                    display_all_text: " [ Tous ] "
+                   
+                };   
+    setFilterGrid("tab_cli", tab_cli_Props );   
+//]]>   
+</script> 
+
+<script type="text/javascript">
+
+var urlGetClientInfos = "<?php echo $this->baseUrl('clients/getclientinfos'); ?>";
+
+$(document).ready(function(){
+$('.cli_infos').hide();
+function format_contact(params) {
+	var contact = params['clinom'] + "<br><br><img src= \"images/pictos/noir/contact_card.png\">&nbsp;&nbsp;&nbsp;" + params['internom'] + " " + params['interprenom'] + "<br>"+
+		   "<img src= \"images/pictos/noir/mail.png\">&nbsp;&nbsp;&nbsp;" + params['intermail'] + " <br>" +
+		   "<img src= \"images/pictos/noir/phone_2.png\">&nbsp;&nbsp;&nbsp;" + params['intertel'];
+	return contact;
+ } 
+
+function format_details(params) {
+	var details = "N° commande: " + params['comid'] + "<br>Prix: " + params['comprix'] + " €<br>Date Commande: "  + params['comdate'] + 
+	"<br>Date livraison prévue: " +  params['comdateprev'] + 
+	"<br>Avancée: " + params['cometat'] + "%<div style=\"border:1px solid black; width:200px; height:30px;\"><div class=\"cmd_prog\" height=\"30px\"></div></div>";
+	return details;
+ } 
+$('.btn_cli').click(function(event) {
+	 var iD = $(this).attr('id');
+	 // $(".box").hover(function () {
+		// 	// $(this).stop().animate({ backgroundColor: "#7bbe16", width: "150px" },700)
+		//  // }, function() {
+		// 	$(this).stop().animate({ backgroundColor: "#7bbe16", width: "150px" },10000)
+		//  }, function() {
+		// 	 $(this).stop().animate({ backgroundColor: "#ff7516", width: "500px" },10000)}	 
+		//  );
+
+    var tab_param = { 'id': iD };
+    //alert (iD);
+    $.ajax({
+        url:  urlGetClientInfos,
+        data: tab_param,
+        type:       'POST',
+        dataType:   'json',
+        success: function(data) {
+        	var move = 200 * data['cometat'] / 100;
+        	$('.cli_cont').html(format_contact(data));
+        	$('.cli_dtl').html(format_details(data));
+        	//$('.cmd_prog').width(200*data['cometat']/100);
+        	if (data['cometat'] <= 25)
+        		$('.cmd_prog').removeClass('prog25, prog50, prog75, prog100').addClass("prog25");    
+        	else if (data['cometat'] <= 50) 
+        		$('.cmd_prog').removeClass('prog25, prog50, prog75, prog100').addClass("prog50"); 
+        	else if (data['cometat'] <= 75) 
+        		$('.cmd_prog').removeClass('prog25, prog50, prog75, prog100').addClass("prog75");
+        	else
+        		$('.cmd_prog').removeClass('prog25, prog50, prog75, prog100').addClass("prog100");
+        	$('.cmd_prog').width(0);
+        		 $('.cmd_prog').animate({
+				    width: '+='+move
+				  }, 2000, function() {
+				    // Animation complete.
+				  });
+        	$('.cli_infos').show();
+        },
+        error : function(data){
+           // alert(data.responseText);
+        }
+    });
+}); 
+
+});     
+
+
+</script>
+

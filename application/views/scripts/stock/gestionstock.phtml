@@ -1,0 +1,205 @@
+<div id="gestionStock">
+	<?php
+	/*
+	 * Gestion des matières premières
+	* Ce module utilise "stock.js"
+	*/
+	echo '<h1>' . $this->titre .'</h1>';
+	?>
+	<!--affichage des matières premières-->
+	<div id="matiere" class="dataTable">
+<!-- 		<div class="btnMat"> -->
+			
+<!-- 		</div> -->
+		<table id="tabmat" class="tabmatiere">
+			<thead>
+				<tr>
+					<th>Matières premières</th>
+					<th>Quantité</th>
+					<th style="border: none; cursor: default;"></th>
+					<th>
+						<a style="float:left; margin-right:5px;" href="#" onclick="createFormAddMat()"> <img
+							style="width: 30px; height: 30px"
+							src="<?php echo $this->baseUrl('images/ajouter.png'); ?>"
+							alt="Ajouter une matière première"
+							title="Ajouter une matière première" />
+						</a> 
+						<a style="float:left" href="#" onclick="createFormUnite()"> <img
+							style="width: 30px; height: 30px"
+							src="<?php echo $this->baseUrl('images/balance.png'); ?>"
+							alt="Gérer les unités de mesure" 
+							title="Gérer les unités de mesure" />
+						</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php $alertSeuil = 0; ?>
+				<!--Boucle sur les matieres premières-->
+				<?php foreach($this->matiere as $key => $matiere) 
+				{
+					?>
+				<tr>
+					<td class="lienMat">
+						<!--Lien vers les infos d'une matière première (ouvre une boite de dialogue jquery)-->
+						<a style="cursor: pointer"
+						onclick="createFormUpdtStock('<?php echo $matiere['matid']; ?>','<?php echo $matiere['unitelbl']; ?>')"
+						id="rowMat_<?php echo $matiere['matid']; ?>"
+						title="Cliquez pour voir le stock de <?php echo $matiere['matlib']; ?> ">
+							<?php echo $matiere['matlib']; ?>
+					</a>
+					</td>
+					<td style="width: 220px;"><?php
+					$idmatiere = "";
+					$seuilMin = 0;
+					$seuilMax = 0;
+					$testAucun = true;
+					$qteSum = 0;
+					$alerteSeuil = false;
+					//Boucle sur les quantité
+					foreach($this->qte as $k => $quantite)
+					{
+						if($quantite['matid'] == $matiere['matid'])
+						{
+							//On additionne les quantité
+							$qteSum = $qteSum + $quantite['stockqte'];
+							$testAucun = false;
+						}
+					}
+					//Boucle sur les seuils
+					foreach($this->seuil as $j => $seuil)
+					{
+						//Si l'id de la matière correspond
+						if($seuil['matid'] == $matiere['matid'])
+						{
+							//Si le lbl du seuil est mini
+							if($seuil['alertelbl'] == "mini")
+							{
+								//On enregistre la valeur
+								$seuilMin = $seuil['qtemat'];
+							}
+							//Idem pour le maxi
+							if($seuil['alertelbl'] == "max")
+							{
+								$seuilMax = $seuil['qtemat'];
+							}
+						}
+					}
+					//Si la quantité n'est pas bonne par rapport au seuil
+					if($qteSum <= $seuilMin || $qteSum >= $seuilMax ||$testAucun == true)
+					{
+						//Si il n'y a pas de stock
+						if($testAucun == true)
+						{
+							//Affichage des seuils dans le titre
+							echo '<div class="seuil"><p style="font-weight:normal; cursor:help" title="Seuil mini : '.$seuilMin.' / Seuil maxi : '.$seuilMax.'">Aucun stock</p></div>';
+						}
+						else
+						{
+							//On calcul le nombre de matière en alerte
+							$alertSeuil = $alertSeuil + 1;
+							if($qteSum<= $seuilMin)
+							{
+								echo '<div class="seuil"><p style="font-weight: normal; font-size:12px;">! seuil minimum atteint (Seuil : '.$seuilMin.')</p></div>';
+							}
+							elseif($qteSum>= $seuilMax)
+							{
+								echo '<div class="seuil"><p style="font-weight: normal; font-size:12px;">! seuil maximum atteint (Seuil : '.$seuilMax.')</p></div>';
+							}
+							//On affiche la quantité en rouge
+							echo '<div class="seuil"><p style="cursor:help" style="cursor:default" title="Seuil mini : '.$seuilMin.' / Seuil maxi : '.$seuilMax.'">'.$qteSum.' '.$matiere['unitelbl'].'</p></div>';
+						}
+					}
+					//Sinon
+					else
+					{
+							//On affiche la quantité en vert
+							echo '<div class="seuilOk"><p style="cursor:help" style="cursor:default" title="Seuil mini : '.$seuilMin.' / Seuil maxi : '.$seuilMax.'">'.$qteSum.' '.$matiere['unitelbl'].'</p></div>';
+					}
+					?></td>
+					<td style="width: 75px"><a class="btnStock" href="#"
+						onclick="createFormCmdMat('<?php echo $matiere['matid']; ?>','<?php echo $matiere['matlib']; ?>','<?php echo $matiere['unitelbl']; ?>')">
+							<img style="width: 30px; height: 30px;"
+							src="<?php echo $this->baseUrl('images/pictos/gris/panier.png'); ?>"
+							alt="Passer une commande" title="Passer une commande" />
+					</a> <a class="btnStock" href="#"
+						onclick="createFormAddStock('<?php echo $matiere['matid']; ?>','<?php echo $matiere['matlib']; ?>','<?php echo $matiere['unitelbl']; ?>')">
+							<img style="width: 30px; height: 30px;"
+							src="<?php echo $this->baseUrl('images/livraison.png'); ?>"
+							alt="Entrée en stock" title="Entrée en stock" />
+					</a></td>
+					<td style="width: 75px"><a class="btnStock" href="#"
+						onclick="createFormUpdtMat('<?php echo $matiere['matid']; ?>','<?php echo $matiere['matlib']; ?>','<?php echo $matiere['uniteid']; ?>')">
+							<img style="width: 30px; height: 30px;"
+							src="<?php echo $this->baseUrl('images/modifier.png'); ?>"
+							alt="Modifier la matière première"
+							title="Modifier la matière première" />
+					</a> <a class="btnStock" href="#"
+						onclick="delMat('<?php echo $matiere['matid']; ?>')"> <img
+							style="width: 30px; height: 30px;"
+							src="<?php echo $this->baseUrl('images/corbeille.png'); ?>"
+							alt="Supprimer la matière première"
+							title="Supprimer la matière première" />
+					</a></td>
+				</tr>
+				<?php
+				}
+				?>
+			</tbody>
+		</table>
+		<!--Contrôles pagination-->
+		<div id="mycontrols"></div>
+	</div>
+	<!--Div affichée dans la jqueryDialog -->
+	<div style="display: none" id="detail"></div>
+</div>
+<script>
+initStock();
+$(document).ready(function() {
+    $("#tabmat").dataTable({
+        "iDisplayLength": 7,
+            "oLanguage": {
+                "sUrl": "<?php echo $this->baseUrl('js/traduction_fr_datatable.txt'); ?>"
+            },
+            "bStateSave":true,
+            "sPaginationType": "full_numbers",
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aoColumns": [
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": false },
+            { "bSortable": false }
+            ]
+        } );       
+ });
+</script>
+<?php
+//On test si il y a eu une alerte stock
+if($alertSeuil > 0)
+{
+	if($alertSeuil == 1)
+	{
+		?>
+<script>
+            //Message pour alerté qu'une matière a dépassé le seuil
+            setTimeout(function(){
+                alert("<?php echo $alertSeuil; ?> matière ne respecte pas le seuil");                        
+            }, 700);
+        </script>
+<?php  
+	}
+	else
+	{
+		?>
+<script>
+             //Message pour alerté qu'une matière a dépassé le seuil
+            setTimeout(function(){
+                alert("<?php echo $alertSeuil; ?> matières ne respectent pas les seuils");                        
+            }, 700);
+        </script>
+<?php 
+	}
+}
+?>

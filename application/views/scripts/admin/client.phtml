@@ -1,0 +1,32 @@
+<?php echo '<h1>' . $this->titre . '</h1>'; ?>
+
+<div id="adminClient">
+    <table id="admin_client_table">
+
+    </table>
+
+</div>
+<script type="text/javascript">
+    var urlClientChangeAcces = "<?php echo $this->baseUrl('admin/clientchangeacces'); ?>";
+    var urlClientList = "<?php echo $this->baseUrl('admin/clientlist'); ?>";
+       
+    $(document).ready(function(){
+        loadClient();
+    });     
+            
+    function loadClient(){
+        $.ajax({
+            url:        urlClientList,
+            type:       'POST',
+            dataType:   'html',
+            success: function(data) {
+                $('#admin_client_table').html(data);
+            },
+            error : function(data){
+                //alert(data.responseText);
+            }
+        });
+    }
+          
+    
+</script>

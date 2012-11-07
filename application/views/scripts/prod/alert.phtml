@@ -1,0 +1,70 @@
+<?php
+/*
+ * Alertes
+ */
+echo '<h1>' . $this->titre . '</h1>';
+?>
+<div id="alerts">
+    <div id="alertes"><label>Sélectionnez un produit</label>
+        <select class="selectMat" name="" id="">
+            <option>Produit</option>
+            <?php
+            foreach ($this->matieres as $matiere) {
+                echo '<option value="' . $matiere->getId() . '">' . $matiere->getMatlib() . '</option>';
+            }
+            ?>
+        </select>
+
+
+    </div>
+
+    <div id="blockResults" style="display:none;">
+        <div id="detailsAlerts">
+        </div>
+        <input type="button" value="Mettre à jour les seuils" id="updateAlerts" />
+    </div>
+</div>
+<script type="text/javascript">
+    var alertUrl = "<?php echo $this->baseUrl('prod/alert'); ?>";
+    $(document).ready(function(){
+        
+        $('.selectMat').change(function() {
+            var matLib = $(this).attr('value');
+            $('#confirmMessage').remove();
+            $('#detailsAlerts').html('');
+            $.ajax({
+                url:        alertUrl,
+                data: 'matlib='+matLib, 
+                type:       'POST',
+                dataType:   'json',
+                success: function(data) {
+                    console.log(data);
+                    $('#detailsAlerts').html('<label for="minAlert">Seuil min<br /><center>('+data.liste.unite+')</center></label> <input type="text" value="' + data.liste.seuils.mini + '" id="minAlert" /> <label for="maxAlert">Seuil max<br /><center>('+data.liste.unite+')</center></label><input type="text" value="' + data.liste.seuils.max + '" id="maxAlert" /><input type="hidden" value="'+data.liste.matId+'" id="matId" />');
+                    $('#blockResults').show();
+                },
+                error : function(data){
+                    alert('error' + data.response);
+                }
+            });
+        });
+        
+        $('#updateAlerts').click(function(){
+            var min = $('#minAlert').val();
+            var max = $('#maxAlert').val();
+            var matLib = $('#matId').val();
+            $.ajax({
+                url: alertUrl,
+                data: 'matId='+matLib+'&min='+min+'&max='+max,
+                type: 'POST',
+                dataType: 'html',
+                success: function(data){
+                    $('<h3 style="margin: 10px 0px 0px 30px;font-style:italic;" id="confirmMessage">Mise à jour effectuée</h3>').insertAfter($('#alertes'));
+                },
+                error: function(data){
+                    alert('error' + data);
+                }
+            });
+        });
+    });
+        
+</script>

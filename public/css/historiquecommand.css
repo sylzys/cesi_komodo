@@ -1,0 +1,61 @@
+/* 
+    Document   : historiquecommand
+    Created on : 30 avril 2012, 00:32:23
+    Author     : Lavie
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+/*#histCmd h1 {
+     text-align:center;
+     font-weight:bold;
+     font-size:18px;
+     margin-top:20px;
+}*/
+#histoCom {
+    margin: 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #CCC;
+    border-top: 0px;
+}
+/*Contrôle de la pagination*/
+#mycontrols {
+    margin-top:20px;
+}
+#mycontrols a:hover {
+    text-decoration:underline;
+    cursor:pointer
+}
+#tabcmdmat {
+    clear:both;
+    max-width:720px;
+    margin: 0 auto;
+    margin-top:5px;
+    padding: 20px;
+    border:1px solid #333;
+    background-color: rgba(248, 245, 240, 0.9);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+#tabcmdmat th {
+    border-right:1px solid black;
+    padding:10px;
+    font-size:13px;
+}
+#tabcmdmat td {
+    min-width:50px;
+    padding:5px;
+    text-align:center;    
+    border-right:1px solid black;
+    
+}

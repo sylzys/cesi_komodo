@@ -1,0 +1,115 @@
+<?php
+$instance = Zend_Controller_Front::getInstance();
+$controller = $instance->getRequest()->getControllerName();
+//var_dump($controller);
+
+?>
+    <div id="menu">
+        <ul id="menuList">
+            <li>
+                <a href="<?php echo $this->baseUrl('stock'); ?>" <?php echo (($controller == "stock") ? 'class="menu active"' : 'menu') ?>>
+                    <span>  <?php echo $this->translate('stock.link'); ?></span>
+                </a>
+            </li>
+            <?php if ($controller == "stock") { ?>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('stock/gestionstock'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/money_bag_pound_zoom.png'); ?>" alt="Stocks" title="Gestion des stocks"/>
+                    <span> <?php echo "Gestion des stocks"; ?>
+                </a>
+            </li>    
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('stock/gestionfournisseur'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/semi-trailer_truck_zoom.png'); ?>" alt="Fournisseurs" title="Gestion des fournisseurs"/>
+                    <span> <?php echo "Gestion des fournisseurs"; ?>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('stock/historiquecommande'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/semi-trailer_truck_clock.png'); ?>" alt="Commandes" title="Historique commandes" />
+                    <span> <?php echo "Historique commandes"; ?>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('stock/recherchenomenclature'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/white_list_zoom.png'); ?>" alt="findNom" title="Recherche nomenclature" />
+                    <span> <?php echo "Recherche nomenclature"; ?>
+                </a>
+            </li>
+        <?php } ?>
+            <li>
+                <a href="<?php echo $this->baseUrl('prod'); ?>" <?php echo (($controller == "prod") ? 'class="menu active"' : 'menu') ?>>
+                    <span>  <?php echo $this->translate('production.link'); ?></span>
+                </a>
+            </li>
+            <?php if ($controller == "prod") { ?>
+            <li class="ssMenu">
+               <a class="" href="<?php echo $this->baseUrl('prod/createnom'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/white_list_add.png'); ?>" alt="createNom" title="<?php echo $this->translate('prod.menu.newnom'); ?>" />
+                    <span> <?php echo "Creer une nomenclature"; ?></span>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('prod/index'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/white_list_pencil.png'); ?>" alt="editNom" title="Editer une nomenclature" />
+                    <span> <?php echo "Editer une nomenclature"; ?></span>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('prod/chainprocess'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/calendar.png'); ?>" alt="chainProcess" title="Gérer les chaines de production" />
+                    <span> <?php echo "Chaînes de production"; ?></span>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('prod/alert'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/chat_exclamation.png'); ?>" alt="alert" title="Alertes" />
+                    <span> <?php echo "Alertes"; ?></span>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('prod/bat'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/dispatch_order_pencil.png'); ?>" alt="bat" title="Gérer les BAT" />
+                    <span> <?php echo "Gérer les BAT"; ?></span>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('prod/baj'); ?>" alt="" >
+                     <img src="<?php echo $this->baseUrl('images/pictos/blanc/trash.png'); ?>" alt="bat" title="Gérer les BAT" />
+                    <span> <?php echo "Gérer les BAJ"; ?></span>
+                </a>
+            </li>
+        <?php } ?>
+            <li>
+                <a href="<?php echo $this->baseUrl('clients'); ?>" <?php echo (($controller == "clients") ? 'class="menu active"' : 'menu') ?>>
+                    <span>  <?php echo $this->translate('customers.link'); ?></span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $this->baseUrl('admin'); ?>" <?php echo (($controller == "admin") ? 'class="menu active"' : 'menu') ?>>
+                    <span>  <?php echo $this->translate('admin.link'); ?></span>
+                </a>
+            </li>
+          <?php  if ($controller == "admin") { ?>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('admin/profil'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/user.png'); ?>" alt="" title="Gestion des profils" />
+                    <span> <?php echo "Gestion des profils"; ?>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('admin/user'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/messenger.png'); ?>" alt="" title="Gestion comptes internes" style="max-width: 32px;margin: 4px;"/>
+                    <span> <?php echo "Gestion comptes internes"; ?>
+                </a>
+            </li>
+            <li class="ssMenu">
+                <a href="<?php echo $this->baseUrl('admin/client'); ?>" alt="" >
+                    <img src="<?php echo $this->baseUrl('images/pictos/blanc/world.png'); ?>" alt="" title="Gestion acces externes" style="max-width: 30px;margin: 5px;"/>
+                    <span> <?php echo "Gestion accès externe"; ?>
+                </a>
+            </li>
+        <?php } ?>
+        </ul>
+    </div>
+        

@@ -1,0 +1,58 @@
+/* 
+    Document   : recherchenom
+    Created on : 30 avril 2012, 14:58:23
+    Author     : Lavie
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+/*#rechNom h1 {
+     font-weight:bold;
+     font-size:18px;
+     margin-top:20px;
+     margin-bottom:20px;
+}*/
+#rechercheNom {
+    margin: 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #CCC;
+    border-top: 0px;
+}
+#rechNom {
+    text-align:center;
+}
+#rechNom h1 {
+    text-align:left;
+}
+.formNomMat {
+    margin-top: 20px;
+}
+#tabres {
+    max-width:700px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid black;
+}
+#tabres th {
+    border-bottom: 1px solid black;
+    border-right:1px solid black;
+    padding:10px;
+    font-size:13px;
+}
+#tabres td {
+    border-bottom: 1px solid black;
+    border-right:1px solid black;
+    min-width:5px;
+    padding:5px;
+}

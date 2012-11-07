@@ -1,0 +1,285 @@
+<?php
+echo '<h1>' . $this->titre . '</h1>';
+if ($this->nomenclature) {
+    $nom = $this->nomenclature[0];
+    $ref = $nom->getId();
+    $desc = $nom->getNomdes();
+    $prix = $nom->getNomprix();
+    $qr = $nom->getNomqr();
+    $chaines = $nom->getNomnbchaine();
+    $libele = $nom->getNomlib();
+    $temps = $nom->getNomtemps();
+    ?>
+
+
+    <div id="editNom">
+        <form action="POST" id="nomForm" name="nomForm" action="<?php echo $this->baseUrl('prod/createnom/'); ?>" >
+            <h6 style="margin: 0px;" >Réf. <?php echo $ref; ?></h6>  
+            <input type="button" value="Supprimer la nomenclature" id="deleteNom" style="" />
+            <input type="button" value="Télécharger au format pdf" id="downloadNom" style="margin-right: 400px;margin-bottom: 25px;" />
+            <input type="hidden" value="<?php echo $ref; ?>" name="nomId" id="nomId" />
+            <input type="hidden" value="updateMode" name="updateNameFlag" />
+            <ul style="position:relative;height:125px;" id="infosNom">
+                <li style="width:220px;">
+                    <label for="">
+                        Libelé
+                    </label>
+                    <input type="text" value="<?php echo $libele; ?>" name="nomName" id="nomName" />
+                </li>
+                <li>
+                    <label for="nomChain">
+                        Chaines nécessaires
+                    </label>
+                    <select name="nomChain" id="nomChain" >
+                        <option>
+                            <?php echo $chaines; ?>
+                        </option>
+                        <?php
+                        for ($i = 1; $i < 4; $i++) {
+                            if ($i != $chaines) {
+                                echo '<option value="' . $i . '">' . $i . '</option>';
+                            }
+                        }
+                        ?>
+                    </select>
+                </li>
+                <li style="width:220px;">
+                    <label for="">
+                        Prix
+                    </label>
+                    <input type="text" value="<?php echo $prix; ?>" name="nomPrix" id="nomPrix" />
+                </li>
+                <li>
+                    <label for="nomDesc">
+                        Description
+                    </label>
+                    <textarea name="nomDesc" ><?php echo $desc; ?></textarea>
+                </li>
+                <li style="width:220px;">
+                    <label for="nomTemps">
+                        Temps
+                    </label>
+                    <input type="text" value="<?php echo $temps; ?>" name="nomTemps" id="nomTemps" />
+                </li>
+                <li style="position:absolute;top: -115px;right: 10px;" id="qr">
+                    <img src="<?php echo $this->baseUrl('images/nomenclatures/') . $qr; ?>" alt="" style="max-width:150px;" />
+                </li>
+            </ul>
+            <ul id="editNomProductList" class="beautifulArray" class="rowLi" >
+                <li  class="firstLine">
+                    <div class="px200">
+                        Produit
+                    </div>
+                    <div class="px200">
+                        Référence
+                    </div>
+                    <div class="px100">
+                        Prix Unitaire
+                    </div>
+                    <div class="px100">
+                        Quantité
+                    </div>
+                    <div class="px60">
+                        Supprimer
+                    </div>
+                </li>
+                <?php
+                $o_matiereMapper = new Application_Model_MatiereMapper();
+                $flag = 0;
+                $totalNommat = count($this->nommat);
+                echo '<input type="hidden" value="' . $totalNommat . '" id="totalNommat" name="totalNommat" />';
+                foreach ($this->nommat as $nom) {
+                    $matId = $nom->getMatid();
+                    $matQte = $nom->getMatqte();
+                    $detailsMatiere = $o_matiereMapper->find($matId);
+                    $reqMatSelected = "SELECT matiere.matlib, stock.stockpu, matiere.matid
+                        FROM matiere , stock WHERE stock.matid = " . $matId . " AND matiere.matid = " . $matId;
+                    $reqMat = "SELECT matiere.matlib, stock.stockpu, matiere.matid
+                        FROM matiere , stock WHERE matiere.matid = stock.matid";
+                    $dbAdapter = Zend_Registry::get('dbAdapter');
+                    $res = $dbAdapter->fetchAll($reqMatSelected);
+                    $matieres = $dbAdapter->fetchAll($reqMat);
+                    foreach ($res as $matiere) {
+                        $matLib = $matiere["matlib"];
+                        $matPrix = $matiere["stockpu"];
+                        $matRef = $matiere["matid"];
+                    }
+                    ?>
+                    <li class="rowLi" id="row_<?php echo $flag; ?>">
+                        <div class="px200">
+                            <select class="selectMat" name="listProd_<?php echo $flag; ?>" id="listProd_<?php echo $flag; ?>" >
+                                <option ><?php echo $matLib; ?></option>
+                                <?php
+                                foreach ($matieres as $matiere) {
+                                    if ($matiere['matlib'] != $matLib) {
+                                        echo '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '">' . $matiere["matlib"] . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>    
+                        </div>
+                        <div class="px200">
+                            <input value="<?php echo $matId; ?>" type="text" name="prod_<?php echo $flag; ?>" id="prod_<?php echo $flag; ?>"   /> 
+                        </div>
+                        <div class="px100">
+                            <input value="<?php echo $matPrix; ?>" type="text" name="prix_<?php echo $flag; ?>" id="prix_<?php echo $flag; ?>"  style="width: 50px;" /> 
+                        </div>
+                        <input type="hidden" name="matName_<?php echo $flag; ?>" id="matName_<?php echo $flag; ?>" value="<?php echo $matLib; ?>" /> 
+                        <div class="px100">
+                            <input type="text" value="<?php echo $matQte; ?>" name="qte_<?php echo $flag; ?>" id="qte_<?php echo $flag; ?>" style="width: 50px;" /> 
+                        </div>
+                        <div class="px60">
+                            <input type="button"  class="deleteThisRow" style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close2.png'); ?>)"; />
+
+                        </div>
+
+
+                    </li>
+                    <?php
+                    $flag = $flag + 1;
+                }
+                ?>
+            </ul>
+            <input type="button" value="Ajouter une ligne" id="addRow" style="margin-left: 250px;" />
+            <input type="button" value="Mettre à jour la nomenclature" id="updateNom" />
+            <div style="clear: both;height: 20px;">
+            </div>  
+        </form>
+    </div>
+
+<?php } ?>
+<script type="text/javascript">
+    var current = 5;
+    var beginRow = '<li class="row"><select id="" style="float:left;width:160px;margin-right:20px;"><option>Selectionner un produit</option>';
+    var middleRow = '<?php /* echo $optionRow */ ?>';         
+    var endRow = '</select><input type="text" name="prod" id=""  style="float:left;width:160px;margin-right:20px;" /><input type="text" name="qte" id="" style="float:left;width:160px;margin-right:20px;" /><input type="button"  class="deleteThisRow" style="width:15px;height:15px;" /></div></li>';
+    var theRow = beginRow + middleRow + endRow;
+   
+    var updateNomUrl = "<?php echo $this->baseUrl('prod/updatenom'); ?>";
+    var urlCreationNomenclature = "<?php echo $this->baseUrl('prod/createqr'); ?>";
+    var urlLoadNom = "<?php echo $this->baseUrl('prod/loadnom'); ?>";
+    var urlPdfNom = '<?php echo $this->baseUrl('pdf/nomenclatures/'); ?>';
+    var newRowUrl = "<?php echo $this->baseUrl('prod/createnomrow'); ?>";
+    var deleteNomUrl = "<?php echo $this->baseUrl('prod/deletenom'); ?>";
+    var prodUrl = "<?php echo $this->baseUrl('prod'); ?>";
+    $(document).ready(function(){
+            
+        $('.selectMat').change(function() {
+            var refMatiere = $(this).attr('value').split("_")[0];
+            var matPrix = $(this).attr('value').split("_")[1];
+            var matName = $(this).attr('value').split("_")[2];
+            var lineId = $(this).attr('id').split("listProd_")[1];
+            var inputMatName = '<input type="hidden" name="matName_'+ lineId +'" id="matName_'+ lineId +'" value="" />';
+            $(inputMatName).insertAfter($('#prix_'+lineId).parent());
+            $('#prod_'+lineId).val(refMatiere);
+            $('#prix_'+lineId).val(matPrix);
+            $('#matName_'+lineId).value = matName;
+        });
+            
+        $('#selectNom').click(function(){
+            var nomId = $('#listExistingNom option:selected').attr('id');
+            $.ajax({
+                url:        existingNom,
+                data: 'idnom='+nomId, 
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    $('.row').html(data);
+                    $('.deleteThisRow').click(function(){
+                        $(this).parent().parent().remove();
+                    });
+                    $('.selectMat').change(function() {
+                        var refMatiere = $(this).attr('value').split("_")[0];
+                        var matPrix = $(this).attr('value').split("_")[1];
+                        var lineId = $(this).attr('id').split("listProd_")[1];
+                        $('#prod_'+lineId).val(refMatiere);
+                        $('#prix_'+lineId).val(matPrix);
+                    });
+                    
+                },
+                error : function(data){
+                    alert('error' + data.response);
+                }
+            });
+              
+        });
+        
+        $('.deleteThisRow').click(function(){
+            $(this).parent().parent().remove();
+        });
+        
+        $('#deleteNom').click(function(){
+            var idNom = $('#nomId').val();
+            $.ajax({
+                url:        deleteNomUrl,
+                data: 'nomId='+idNom, //envoi du formulaire complet serialisé
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    $(location).attr('href',prodUrl)
+                },
+                error : function(data){
+                    alert('error' + data.response);
+                }
+            });
+        });
+        
+        $('#addRow').click(function(){
+            var lastrow = $('li.rowLi').last().attr("id").split("row_")[1];
+            $.ajax({
+                url:        newRowUrl,
+                data: 'lastrowid='+lastrow, //envoi du formulaire complet serialisé
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    // $('.row').append(data);
+                    $(data).insertAfter('.rowLi:last');
+                    $('.deleteThisRow').click(function(){
+                        $(this).parent().parent().remove();
+                    });
+                    $('.selectMat').change(function() {
+                        var refMatiere = $(this).attr('value').split("_")[0];
+                        var matPrix = $(this).attr('value').split("_")[1];
+                        var lineId = $(this).attr('id').split("listProd_")[1];
+                        var matName = $(this).attr('value').split("_")[2];$('#matName_'+lineId).val(matName);
+                        $('#prod_'+lineId).val(refMatiere);
+                        $('#prix_'+lineId).val(matPrix);
+                        
+            
+                    });
+                    
+                },
+                error : function(data){
+                    alert('error' + data.response);
+                }
+            });
+            $('.deleteThisRow').click(function(){
+                $(this).parent().parent().remove();
+            });
+        });
+        
+        $('#downloadNom').click(function(){
+            var lblNom = $('#nomName').val();
+            var urlNomPdf = urlPdfNom + 'nomenclature_' + lblNom + '.pdf';
+            window.open(urlNomPdf, '_blank');
+        });
+        
+        $('#updateNom').on('click', function(){
+            nomName = $('#nomName').val();
+            $.ajax({
+                url:        urlCreationNomenclature,
+                data: $('#nomForm').serialize(), //envoi du formulaire complet serialisé
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    location.reload();
+                    //alert(data.responseText);
+                },
+                error : function(data){
+                    alert(data.statusText);
+                }
+            });
+        })
+    });
+    
+</script>

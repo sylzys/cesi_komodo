@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>    
+	<meta charset="utf-8">    
+	<?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/reset.css'); ?>
+	<?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/style.css'); ?>
+	<?php echo $this->headLink()->appendStylesheet($this->baseUrl() . '/css/style_client.css'); ?>
+	<?php echo $this->headScript()->appendFile($this->baseUrl() . '/js/jquery.js'); ?>
+        <?php echo $this->headScript()->appendFile($this->baseUrl() . '/js/easypaginate.min.js'); ?>
+	<?php echo $this->headTitle() ?>
+    </head>
+<body>    
+    <div id="main">
+	<?php     
+	    try
+	    {
+		echo $this->layout()->content;    
+	    } 
+	    catch (Exception $err) 
+	    {
+		echo $err;
+	    }
+	 ?>
+    </div>
+</body>
+</html>

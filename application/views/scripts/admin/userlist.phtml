@@ -1,0 +1,241 @@
+    <tr>
+        <th>Nom Prenom</th>
+        <th>Login</th>
+        <th>Actions</th>
+        <th>Profil</th>
+    </tr>
+<?php if (!$this->utilisateurs): ?>
+    <tr><td colspan="2" align="center">Aucuns utilisateurs pour le moment</td></tr>
+<?php else: ?>
+    <?php foreach ($this->utilisateurs as $user): ?>
+    <tr>
+        <td><?php echo $user->getUtinom();?> <?php echo $user->getUtiprenom(); ?></td>
+        <td><?php echo $user->getUtilogin(); ?></td>
+        <td>
+            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
+            <input type="hidden" name="user_firstname" value="<?php echo $user->getUtiprenom(); ?>">
+            <input type="hidden" name="user_lastname" value="<?php echo $user->getUtinom();?>">
+            <input type="hidden" name="user_login" value="<?php echo $user->getUtilogin();?>">
+            <input type="hidden" name="user_mail" value="<?php echo $user->getUtimail();?>">
+            <input type="hidden" name="user_tel" value="<?php echo $user->getUtitel();?>">
+            <p>
+                <img src="<?php echo $this->baseUrl('images/user_edit.png'); ?>" class="userEdit" alt="Modifier" title="Modifier">
+                <img src="<?php echo $this->baseUrl('images/user_delete.png'); ?>" class="userDelete" alt="Supprimer" title="Supprimer">
+            </p>
+        </td>
+        <td>
+            <select name="profils" id="<?php echo $user->getId(); ?>" multiple="multiple" class="select_profil">
+                <?php foreach ($this->profils as $profil): ?>
+                <option value="<?php echo $profil->getId(); ?>" <?php echo (isset($this->profils_used[$user->getId()]) && in_array($profil->getId(), $this->profils_used[$user->getId()])) ? 'selected': ''; ?>><?php echo $profil->getProflib(); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="select_profil_updated">
+                <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Profils modifies
+            </div>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    
+   
+    
+<?php endif; ?>
+
+    
+    <style>
+        img {
+            cursor: pointer;
+            text-align: left;
+            margin: 0px 5px;
+            width: 25px;
+        }
+    </style>    
+    
+<script>
+    var urlUtilisateurChangeProfil = "<?php echo $this->baseUrl('admin/userchangeprofil'); ?>";
+    var urlUtilisateurList = "<?php echo $this->baseUrl('admin/userlist'); ?>";
+        
+    $(document).ready(function() {
+                
+        $(".select_profil").multiselect({
+            header: false,
+            height: 200,
+            minWidht: "auto",
+            checkAllText: "Tous",
+            uncheckAllText: "Aucuns",
+            noneSelectedText : "Choisir",
+            selectedText : "#/# s&eacute;lectionn&eacute;s",
+            beforeopen: function() {
+                $(".select_profil_updated").hide();
+            },
+            close: function() {
+                var item = $(this);
+                var Id_Utilisateur = item.attr('id');
+                var profils = item.multiselect("getChecked").map(function() {
+                    return this.value;	
+                }).get();
+                if (profils.length == 0) {
+                    profils = 0;
+                }
+                $.ajax({
+                    url:        urlUtilisateurChangeProfil,
+                    data:       { id_utilisateur: Id_Utilisateur, profils: profils},
+                    type:       'POST',
+                    dataType:   'html',
+                    success:    function(data) {
+                        item.parent().children(".select_profil_updated").show();
+//                        loadUser();
+                    },
+                    error :     function(data){
+        //                alert(data.responseText);
+                    }
+                });
+            }
+        });
+        
+        
+        
+    });
+    
+    
+    $(".userEdit").click(function() {
+        var id = $(this).parent().parent().children("input[name=user_id]").val();
+        var firstname = $(this).parent().parent().children("input[name=user_firstname]").val();
+        var lastname = $(this).parent().parent().children("input[name=user_lastname]").val();
+        var login = $(this).parent().parent().children("input[name=user_login]").val();
+        var mail = $(this).parent().parent().children("input[name=user_mail]").val();
+        var tel = $(this).parent().parent().children("input[name=user_tel]").val();
+        $("#user_edit_id").val(id);
+        $("#user_edit_firstname").val(firstname);
+        $("#user_edit_lastname").val(lastname);
+        $("#user_edit_login").val(login);
+        $("#user_edit_mail").val(mail);
+        $("#user_edit_tel").val(tel);
+
+        $("#popup_user_edit").dialog({
+            modal : true,
+            width : 500,
+            buttons: {
+                "Fermer" : function() {
+                    $(this).dialog("close");
+                },
+                "Modifier" : function() {
+                    var error = '';
+                    var success = '';
+                    var id = $("#user_edit_id").val();
+                    var firstname = $("#user_edit_firstname").val();
+                    var lastname = $("#user_edit_lastname").val();
+                    var login = $("#user_edit_login").val();
+                    var passwd1 = $("#user_edit_passwd1").val();
+                    var passwd2 = $("#user_edit_passwd2").val();
+                    var email = $("#user_edit_mail").val();
+                    var tel = $("#user_edit_tel").val();
+                    
+                    $("#user_edit_error").hide();
+                    $("#user_edit_success").hide();
+                    if (login == '') {
+                        error = "Vous devez au moins saisir un login";
+                    } else if (passwd1 != passwd2) {
+                        error = "Les deux mots de passe doivent etre identique";
+                    }
+                    if (error != '') {
+                        $("#user_edit_error").html(error).show();
+                    } else {
+                        $.ajax({
+                            url:        urlUserEdit,
+                            data:       {
+                                id: id,
+                                firstname: firstname,
+                                lastname: lastname,
+                                login: login,
+                                passwd: passwd1,
+                                email: email,
+                                tel: tel
+                            },
+                            type:       'POST',
+                            dataType:   'html',
+                            success:    function(data) {
+                                $("#user_edit_error").hide();
+                                $("#user_edit_success").hide();
+                                if (data == '') {
+                                    $("#user_edit_success").html("Utilisateur modifie avec succes").show();
+                                } else {
+                                    $("#user_edit_error").html(data).show();
+                                }
+                            },
+                            error :     function(data){
+                                $("#user_edit_success").hide();
+                                $("#user_edit_error").html(data.responseText).show();
+                            }
+                        });
+                    }
+                }
+            },
+            open: function(event, ui) {
+                var id = $(this).parent().parent().children("input[name=user_id]").val();
+                var firstname = $(this).parent().parent().children("input[name=user_firstname]").val();
+                var lastname = $(this).parent().parent().children("input[name=user_lastname]").val();
+                var login = $(this).parent().parent().children("input[name=user_login]").val();
+                var mail = $(this).parent().parent().children("input[name=user_mail]").val();
+                var tel = $(this).parent().parent().children("input[name=user_tel]").val();
+                var error = '';
+                var success = '';
+                $("#user_edit_error").hide();
+                $("#user_edit_success").hide();
+            },
+            close: function(event, ui) {
+                $("#user_edit_firstname").val('');
+                $("#user_edit_lastname").val('');
+                $("#user_edit_login").val('');
+                $("#user_edit_passwd1").val('');
+                $("#user_edit_passwd2").val('');
+                $("#user_edit_mail").val('');
+                $("#user_edit_tel").val('');
+                $("#user_edit_success").hide();
+                $("#user_edit_error").hide();
+                loadUser();
+            }
+        });
+    });
+    
+    
+    
+    $(".userDelete").click(function() {
+        var id = $(this).parent().parent().children("input[name=user_id]").val();
+        var firstname = $(this).parent().parent().children("input[name=user_firstname]").val();
+        var lastname = $(this).parent().parent().children("input[name=user_lastname]").val();
+        $("#popup_user_delete").children("input[name=user_id]").val(id);
+        $("#popup_user_delete").children("b.user_name").html(firstname + " " + lastname);
+        $("#popup_user_delete").dialog({
+            modal : true,
+            width : 400,
+            buttons: {
+                "Non" : function() {
+                    $(this).dialog("close");
+                },
+                "Oui" : function() {
+                    var error = false;
+                    $.ajax({
+                        url:        urlUserDelete,
+                        data:       { id: id },
+                        type:       'POST',
+                        dataType:   'html',
+                        success:    function(data) {
+                            $(this).dialog("close");
+                        },
+                        error :     function(data){
+                            error = true;
+                            $("#user_delete_error").html(data).show();
+                        }
+                    });
+                    if (!error) {
+                        $(this).dialog("close");
+                    }
+                }
+            },
+            close: function(event, ui) {
+                loadUser();
+            }
+        });
+    });
+        
+</script>

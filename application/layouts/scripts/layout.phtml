@@ -1,0 +1,67 @@
+<?php
+$instance = Zend_Controller_Front::getInstance();
+$controller = $instance->getRequest()->getControllerName();
+$action = $instance->getRequest()->getActionName();
+?>
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <?php echo $this->doctype(); ?>
+<head>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . '/css/reset.css'); ?>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . '/css/style.css'); ?>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . '/css/black-tie/jquery-ui-1.8.18.custom.css'); ?>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . "/css/jquery.multiselect.css"); ?>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . "/css/style_help.css"); ?>
+    <?php $this->headLink()->appendStylesheet($this->baseUrl() . "/css/jquery.dataTables.css"); ?>
+    <?php echo $this->headLink(); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . '/js/jquery.js'); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . '/js/help.js'); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . '/js/jquery-timers.js'); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . "/js/jquery-ui-1.8.18.custom.min.js"); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . "/js/ui.datepicker-fr.js"); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . "/js/jquery.multiselect.min.js"); ?>
+    <?php $this->headScript()->appendFile($this->baseUrl() . "/js/easypaginate.min.js"); ?>
+    <?php //$this->headScript()->appendFile($this->baseUrl() . "/js/jquery.spager.js"); ?>
+    <?php  //$this->headScript()->appendFile($this->baseUrl() . "/js/jquery.uitablefilter.js"); ?>
+     <?php  $this->headScript()->appendFile($this->baseUrl() . "/js/jquery.dataTables.min.js"); ?>
+
+    
+    <?php echo $this->headScript(); ?>
+    <?php echo $this->headTitle() ?>
+</head>
+<body>    
+    
+    <?php echo $this->render('common/header.phtml'); ?>
+    <div id="main">
+        <?php if ($this->isLoggedUser() || $this->isLoggedClient()): ?>
+            <?php echo $this->render('common/menu.phtml'); ?>
+        <?php endif; ?>
+        
+        <div id="topMain" <?php if($this->ControllerAction()->controller == 'Login'){ echo 'style="width:100%"';}  ?>>
+            <span><?php echo $this->ControllerAction()->controller . ' > ' . $action; ?></span>
+        </div>
+        <div id="content">
+            <?php if ($this->isLoggedUser() || $this->isLoggedClient()): ?>
+               <?php  // echo $this->render('common/onglets.phtml'); ?>
+            <?php endif; ?>
+            <?php echo $this->layout()->content; ?>
+        </div>
+    </div>
+    <div id="dialog-overlay"></div>
+<div id="dialog-box">
+    <div class="dialog-content">
+        <div id="dialog-message"></div>
+        <a href="#" class="btn-ok">Fermer</a>
+    </div>
+</div>
+    
+<div id="msg-overlay"></div>
+<div id="msg-box">
+    <div class="msg-content">
+        <div id="msg-message"></div>
+        <a href="#" class="btn-ok">Fermer</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+#admin_profil_table {
+    width: 100%;
+}
+#admin_profil_table th {
+    font-weight: bold;
+    padding: 5px 0;
+    text-align: center;
+}
+#admin_profil_table th+th {
+    text-align: left;
+}
+#admin_profil_table td {
+    padding: 5px 0;
+    text-align: center;
+}
+#admin_profil_table td+td {
+    text-align: left;
+}
+.ui-multiselect-checkboxes li label input {
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-size: medium;
+}
+.ui-multiselect-header {
+    font-size: medium;
+}
+.select_right_updated {
+    color: green;
+    display: inline;
+    display: none;
+}
+.select_right_updated img {
+    vertical-align: middle;
+    width: 32px;
+    
+}

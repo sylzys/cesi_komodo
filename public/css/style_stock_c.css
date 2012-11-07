@@ -1,0 +1,43 @@
+/* 
+    Document   : style_stock_c
+    Created on : 1 mai 2012, 12:26:49
+    Author     : Cora 
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+#fournisseurs {
+    margin: 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#fournisseurs .beautifulArray button {
+    width: 28px;
+    height: 23px;
+    line-height: 23px;
+}
+#fournisseurs .beautifulArray li input[type="text"] {
+    float: left;
+}
+#fournisseurs .beautifulArray li .adressBlock {
+    width:160px;
+}
+#fournisseurs .beautifulArray li .buttonBlock {
+    width: 70px;
+}
+#fournisseurs .beautifulArray li.firstLine {
+    font-weight: bold;
+}

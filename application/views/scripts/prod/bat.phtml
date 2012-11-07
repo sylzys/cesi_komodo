@@ -1,0 +1,142 @@
+<?php
+/*
+ * BAT
+ */
+echo '<h1>' . $this->titre . '</h1>';
+?>
+
+<div id="batPage">
+ <ul class="beautifulArray">
+    <li class="firstLine" style="padding-top:20px;">
+        <div class="px300">
+            N° de commande
+        </div>
+        <div class="px300" style="margin-left:30px;">
+            Chaîne de production
+        </div>
+
+    </li>
+    <li class="row">
+        <div class="px300">
+            <select name="comid" id="comid">
+                <option value="">N° de commande</option>
+                <?php
+                foreach ($this->commande as $comm) {
+                    ?>
+
+                    <option value="<?php echo $comm->getId() ?>"><?php echo $comm->getId(); ?></option>
+                    <?php } ?>
+                </select>
+
+            </div>
+            <div class="px300" style="margin-left:30px;">
+                <select name="chaineid" id="chaineid">
+                    <option value="">Choisir une chaîne de production</option>
+                    <?php
+                    foreach ($this->chaine as $chaine) {
+                        ?>
+                        <option value="<?php echo $chaine->getId() ?>"><?php echo $chaine->getId(); ?></option>
+                        <?php } ?>	
+                    </select>
+                </div>
+            </li>
+
+            <li class="row">
+                <div style="width:600px; margin:0 auto;">
+                   <div id="nom_cli" style="margin-top:2px; text-decoration:underline;" class="px200"></div>
+              
+               
+                   <div id="infos" style="clear:both;"></div>
+               
+                   <div id ="val_btn" style="float:right; margin-right:10px;margin-top:-30px;"><input type="button" id="valid_bat" value="Valider" /></div>
+              
+               
+           </div>
+       </li>
+           </ul>
+       </div>
+           <div id="nom" style="display:none"></div>
+           <script type="text/javascript">
+
+           var urlGetClientName = "<?php echo $this->baseUrl('prod/getbatinfos'); ?>";
+           var urlValidateBat = "<?php echo $this->baseUrl('prod/processbat'); ?>";
+
+           $(document).ready(function(){
+            $('#val_btn').hide();
+            function convert_time(nb) {
+                var res = "";
+                var min, heure, jour = 0;
+
+                if (nb > 60) {
+                    var d = Math.floor(nb / 1440);
+                    var h = Math.floor((nb - d * 1440) / 60);
+                    var m = nb - (d * 1440) - (h * 60);
+                    res += d + " jours " + h +" heures " + m + " minutes.";
+                }
+                else 
+                    res = nb + "minutes."
+                return res;
+            }
+            $('#valid_bat').click(function(event) {
+                var tab_param = { 'id': $('#comid').val(), 'chaine': $('#chaineid').val(), 'nom': $('#nom').html() };
+                $.ajax({
+                    url:  urlValidateBat,
+                    data: tab_param,
+                    type:       'POST',
+                    dataType:   'html',
+                    success: function(data) {
+                        var resultat = data.search("Attention");
+                        if(resultat != -1) {
+                        //Matière manquante
+                        $('#infos').html('<br>'+data);
+            }
+            else{
+                $('#infos').html('').delay(500);
+                $('#val_btn').hide();
+                var idBon = data.split("lastId=");
+                        //Redirection vers le pdf
+                        $(location).attr('href','../pdf/BAT/bat_'+idBon[1]+'.pdf');
+                    }
+                },
+                error : function(data){
+                    alert(data.responseText);
+                }
+            });
+            }); 
+$('#comid').change(function(event) {
+    var iD = $("#comid").val();
+    if (iD == '') {
+        $('#infos').html('');
+        $('#val_btn').hide();
+        return;
+    }
+    $.ajax({
+        url:        urlGetClientName,
+        data: { 'id': iD},
+        type:       'POST',
+        dataType:   'json',
+        success: function(data) {
+            $('#infos').html('<div>Les nomenclatures '+data[1]+' seront utilisées.<br />Le temps estimé de production est : ' + convert_time(data[2])+'</div>');
+            $('#nom_cli').html("<b>Client:</b> "+data[0] + "<br />");
+            if ($('#chaineid').val() != '')
+                $('#val_btn').show(); 
+            $('#nom').html(data[1]);
+        },
+        error : function(data){
+                    //alert(data.responseText);
+                }
+            });
+}); 
+$('#chaineid').change(function(event) {
+    var iD = $("#chaineid").val();
+    if (iD != '' && $("#comid").val() != '')
+        $('#val_btn').show();
+    else if ($("#comid").val() != '')
+        $('#val_btn').hide();
+
+}); 
+
+});     
+
+
+</script>

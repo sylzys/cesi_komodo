@@ -1,0 +1,82 @@
+<div id="histCmd">
+    <?php
+    echo '<h1>' . $this->titre .'</h1>';
+    ?>
+    <div id="histoCom">
+    <table id="tabcmdmat">
+        <thead>
+        <tr>
+            <th>Numéro</th>
+            <th>Désignation</th>
+            <th>Fournisseur</th>
+            <th>Date de la commande</th>
+            <th>Quantité</th>
+            <th style="cursor:default">PDF</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach($this->cmdMat as $key => $cmdMat)
+        {
+            ?>
+
+                <tr>
+                    <td>
+                        <?php
+                        echo 'N°'.$cmdMat['cmdmatid'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $cmdMat['matlib'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $cmdMat['fournom'];
+                        ?>
+                    </td>
+                    <td style="width:250px">
+                        <?php
+                        echo $cmdMat['datecmdmat'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $cmdMat['qtecmdmat'].' '.$cmdMat['unitelbl'];
+                        ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('pdf/commandeMat/cmdmat_'.$cmdMat['cmdmatid'].'.pdf');?>"><img style="width:32px; height:32px;" src="<?php echo $this->baseUrl('images/pdf_icone.png'); ?>" alt="Afficher le bon de commande" title="Afficher le bon de commande" /></a>
+                    </td>
+                </tr>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $("#tabcmdmat").dataTable({
+        "iDisplayLength": 7,
+            "oLanguage": {
+                "sUrl": "<?php echo $this->baseUrl('js/traduction_fr_datatable.txt'); ?>"
+            },
+            "bStateSave":true,
+            "sPaginationType": "full_numbers",
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aoColumns": [
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": false }
+            ]
+        } );       
+ });
+</script>

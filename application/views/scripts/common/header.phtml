@@ -1,0 +1,162 @@
+<script type="text/javascript">
+    var urlNotif = "<?php echo $this->baseUrl('home/getnotifs'); ?>";
+    var logiD = "<?php echo $this->session->utiid; ?>"
+
+    $("#header").ready(function(){
+        $.ajax({
+            url:  urlNotif,
+            data: {'id': logiD},
+            type:       'POST',
+            dataType:   'json',
+            success: function(data) {
+                //alert (data);
+                $('.notifications').attr('data-notification', data);
+            },
+            error : function(data){
+                // alert(data.responseText);
+            }
+        });
+        $('#messages').hide();
+        var iD = $(".uti_id").attr('name');
+        $("#msg-message").delegate('#all_msg a', 'click', function(event) {
+            var that = this;
+            $.ajax({
+                url:  urlNotif,
+                data: {'id': $(that).prev().attr('name'), 'show_msg': 'y'},
+                type:       'POST',
+                dataType:   'html',
+                success: function(data_) {  
+                    $(that).prev().text(data_);
+                    //alert(data_);
+                    $(that).prev().slideDown("slow");    
+                    setTimeout(function(){
+                        $(that).prev().prev().css("font-weight", "normal");
+                        mark_as_read($(that).prev().attr('name'));
+                    }, 2000);
+
+                    if ($(that).text() == "Afficher") {
+                        $(that).text("Fermer");
+                    }
+                    else {
+                        $(that).prev().slideUp("slow"); 
+                        $(that).text("Afficher");
+                    }
+
+                },
+                error : function(data){
+                    // alert(data.responseText);
+                }
+            });
+        });
+        function mark_as_read(id) {
+            $.ajax({
+                url:  urlNotif,
+                data: {'id': id, 'read': 'y'},
+                type:       'POST',
+                dataType:   'html',
+                success: function(data_) {
+                    //alert(data);
+                },
+                error: function(data){
+                    // alert(data.responseText);
+                }
+            });
+        }
+        $('.notifications').click(function(event) {
+            //alert("msg");
+            $.ajax({
+                url:  urlNotif,
+                data: {'id': iD, 'show_header': 'y'},
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    // $('#messages').html(data);
+
+                    popup(data, 'msg');
+                },
+                error : function(data){
+                    alert(data.responseText);
+                }
+            });
+        }); 
+
+        //   $(this).oneTime(1, function() {
+        //              //
+        //              //alert(iD);
+        //              $.ajax({
+        //               url:  urlNotif,
+        //               data: {'id': iD},
+        //               type:       'POST',
+        //               dataType:   'json',
+        //               success: function(data) {
+        //          //alert (data);
+        //          $('.notifications').attr('data-notification', data);
+        //      },
+        //      error : function(data){
+        //         // alert(data.responseText);
+        //     }
+        // });
+        //          });
+        $(this).everyTime(30000, function() {
+            //
+            //alert(iD);
+            $.ajax({
+                url:  urlNotif,
+                data: {'id': iD},
+                type:       'POST',
+                dataType:   'json',
+                success: function(data) {
+                    //alert (data);
+                    $('.notifications').attr('data-notification', data);
+                },
+                error : function(data){
+                    // alert(data.responseText);
+                }
+            });
+        });		
+
+
+    });
+</script>
+<span class="uti_id" name="<?php echo @$this->session->utiid ?>" style="display:none;"></span>
+<div id="header">
+
+    <div id="logIt">
+
+        <?php if ($this->isLoggedUser()): ?>
+            <b><?php echo $this->session->utinom; ?> <?php echo $this->session->utinom; ?> (<?php echo $this->session->utilogin; ?>)</b>
+            <a href="<?php echo $this->baseUrl('Login/logoutuser'); ?>">
+                <img src="<?php echo $this->baseUrl('images/logout.png'); ?>" alt="logout" id ="logout" />
+                <span>Deconnexion</span>
+            </a>
+        <?php elseif ($this->isLoggedClient()): ?>
+            <b><?php echo $this->session->clinom; ?> <?php echo $this->session->clinom; ?> (<?php echo $this->session->clilogin; ?>)</b>
+            <a href="<?php echo $this->baseUrl('Login/logoutclient'); ?>">
+                <img src="<?php echo $this->baseUrl('images/logout.png'); ?>" alt="logout" id ="logout" />
+                <span>Deconnexion</span>
+            </a>
+        <?php endif; ?>
+
+        <?php $controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+        if (strtolower($controller) != 'login') { ?>
+            <div id="notifs">
+                <a href="#" data-notification="" class="notifications"><img src="<?php echo $this->baseUrl('images/pictos/blanc/chat_exclamation_info.png'); ?>" alt="notifs" id ="notifs" title="Notifications" /></a>
+
+            </div>
+        <?php } ?>
+        <div id="help">   <?php
+        if (strtolower($controller) != "login" && strtolower($controller) != "error") {
+            $_HELP = parse_ini_file(APPLICATION_PATH . '/configs/help.ini', true);
+            echo "<a href=\"javascript:popup('" . $_HELP[$controller]['help'] . "', 'dialog')\">"
+            ?>
+                <img src="<?php echo $this->baseUrl('images/pictos/blanc/questionmark.png'); ?>" /></a>
+            <?php } ?>
+        </div>
+
+
+        <a href="<?php echo $this->baseUrl('home'); ?>" alt="homePage" title="Accueil" id="homeLink"><img src="<?php echo $this->baseUrl('images/logo2.png'); ?>" alt="logo" /></a>
+    </div>
+</div>
+
+
+

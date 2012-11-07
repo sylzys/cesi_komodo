@@ -1,0 +1,15 @@
+<?php
+if (file_exists($this->urlDocument)) {
+//header("Content-Type: " . $this->mime); //Ici par exemple c'est pour un fichier XML, a changer en fonction du type mime du fichier voulu.
+    header('Content-Disposition: attachment; filename=' . $this->name);
+    header('Last-Modified: ' . $this->date . ' GMT');
+    header('Expires: ' . $this->date);
+    if (preg_match('/msie|(microsoft internet explorer)/i', $_SERVER['HTTP_USER_AGENT'])) {
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Pragma: public');
+    } else {
+        header('Pragma: no-cache');
+    }
+    echo readfile($this->urlDocument);
+}
+?>

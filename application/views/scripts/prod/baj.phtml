@@ -1,0 +1,83 @@
+<?php
+
+/*
+ * BAT
+ */
+echo '<h1>' . $this->titre .'</h1>';?>
+<div id="bajPage">
+<div class="firstLine">
+        N° de commande
+</div>
+<select name="comid" id="comid">
+    <option value="">Choisir un N° de commande</option>
+    <?php	
+    foreach ($this->commande as $comm)
+     { ?>
+
+ <option value="<?php echo $comm->getId() ?>"><?php echo $comm->getId(); ?></option>
+ <?php } ?>
+</select>
+<div style="margin-top:10px" id="nom_cli"></div><br><br>
+<!--Chaînes disponibles:
+<select name="chaineid" id="chaineid">
+	<option value="">Choisir une chaîne de production</option>
+	<?php	
+  foreach ($this->chaine as $chaine)
+     { ?>
+ <option value="<?php echo $chaine->getId() ?>"><?php echo $chaine->getId(); ?></option>
+ <?php } ?>	
+</select>
+<div id="infos"></div> -->
+<div id ="val_btn"><input type="button" id="valid_bat" value="Valider" /></div>
+</div>
+<script type="text/javascript">
+
+var urlGetClientName = "<?php echo $this->baseUrl('prod/getbajinfos'); ?>";
+var urlValidateBaj = "<?php echo $this->baseUrl('prod/processbaj'); ?>";
+
+$(document).ready(function(){
+  $('#val_btn').hide();
+
+$('#valid_bat').click(function(event) {
+    var tab_param = { 'id': $('#comid').val()};
+    $.ajax({
+        url:  urlValidateBaj,
+        data: tab_param,
+        type:       'POST',
+        dataType:   'html',
+        success: function(data) {
+    	var idBon = data.split("lastId=");
+        //Redirection vers le pdf
+        $(location).attr('href','../pdf/BAJ/baj_'+idBon[1]+'.pdf');
+        },
+        error : function(data){
+            alert(data.responseText);
+        }
+    });
+}); 
+$('#comid').change(function(event) {
+    var iD = $("#comid").val();
+    if (iD == '') {
+        $('#infos').html('');
+         $('#val_btn').hide();
+        return;
+    }
+    $.ajax({
+        url:        urlGetClientName,
+        data: { 'id': iD},
+        type:       'POST',
+        dataType:   'html',
+        success: function(data) {
+         var four = JSON.parse(data);
+         $('#nom_cli').html('Client : '+four[0]);
+         $('#val_btn').show();
+   },
+   error : function(data){
+                   //alert(data.responseText);
+               }
+           });
+}); 
+
+
+});     
+</script>

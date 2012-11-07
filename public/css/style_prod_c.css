@@ -1,0 +1,225 @@
+/* 
+    Document   : style_prod_c
+    Created on : 23 avr. 2012, 17:21:21
+    Author     : Cora 
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+#editNom h6 {
+    font-weight: bold;
+    font-size: 18px;
+}
+#editNom {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#editNom ul#infosNom {
+    float:left;
+}
+#editNom ul#infosNom li {
+    height:40px;
+    float:left;
+    width:370px;
+}
+#editNom ul#infosNom li#qr{
+    padding: 5px;
+    border: 1px solid #333;
+    background-color: rgba(251, 251, 251, 1);
+    width: 150px;
+    height: 150px;
+}
+#editNom ul#infosNom li label {
+    width:80px;
+    float:left;
+}
+#editNom ul#infosNom li input {
+    width:100px;
+}
+#editNom input[type='button'] {
+    margin: 15px 25px 0px 0px;
+    float: left;
+}
+#editNom .px60 input[type='button'] {
+    margin: 0px;
+    background-position: 50% 50%;
+    width: 30px;
+}
+#editNom input[type='button']:hover {
+    color: #333;
+    border: 1px solid #333;
+}
+#editNom ul#infosNom li textarea {
+    height: 80px;
+    width: 200px;
+}
+
+#indexProd{
+    margin: 30px 15px 0px 30px;
+    padding: 8px 10px 20px 15px;
+    border: 1px solid #333;
+    background-color: rgba(248, 245, 240, 0.9);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    width: 300px;
+    height: 60px;
+}
+#indexProd label, #alertes label{
+    margin: 5px 0px 10px 0px;
+    font-weight: bold;
+    font-size: 14px;
+}
+#indexProd #listNom, #alertes .selectMat {
+    width: 200px;
+    padding: 3px 4px 3px 2px;
+    float: left;
+    margin-right: 15px;
+}
+#indexProd {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    border-top: 0px;
+}
+#alertes .selectMat {
+    width: 295px;
+}
+#indexProd #editNom, #alertes #updateAlerts {
+    height: 28px;
+    float: left;
+}
+#blockResults {
+    padding: 8px 10px 20px 15px;
+    border: 1px solid #333;
+    float:left;
+    position:relative;
+    height:60px;
+}
+#blockResults label {
+    float:left;
+    width:70px;
+    font-size:13px;
+    font-weight:bold;
+}
+#blockResults #minAlert, #blockResults #maxAlert {
+    width: 60px;
+    float:left;
+    text-align: right;
+    height: 25px;
+}
+#blockResults #minAlert {
+    margin: 0px 30px 0px 0px;
+}
+#blockResults #updateAlerts {
+    position:absolute;
+    bottom: 10px;
+    right: 87px;
+}
+
+
+#alerts {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    float: left;
+}
+#listChain {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#listChain li.firstLine div{
+    float:left;
+    width: 200px;
+    height: 40px;
+    line-height: 30px;
+}
+#listChain li div div, #listChain li div button{
+    float:left;
+    width: 200px;
+}
+#listChain li div button{
+    width: 40px;
+    height:37px;
+    margin-left: 50px;
+}
+
+
+
+#batPage, #bajPage {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    float:left;
+}
+#batPage label {
+    float:left;
+    width:100%;
+    font-size:13px;
+    font-weight:bold;
+}
+#batPage span {
+    width: 200px;
+    padding: 3px 4px 3px 2px;
+    float: left;
+}
+#batPage select {
+    width: 200px;
+    padding: 3px 4px 3px 2px;
+    float: left;
+    margin-right: 170px;
+}
+
+#newNom {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#newNom label {
+    float:left;
+    width:135px;
+    font-size:13px;
+    font-weight:bold;
+}
+#newNom input[type="text"] {
+    float:left;
+    width:175px;
+    margin-right:50px;
+}
+#newNom h6 {
+    font-size:16px;
+    font-weight:bold;
+    margin: 10px 0px
+}

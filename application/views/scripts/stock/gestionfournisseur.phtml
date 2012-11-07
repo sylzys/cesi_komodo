@@ -1,0 +1,100 @@
+<?php
+/*
+ * Gestion des fournisseurs
+ */
+echo '<h1>' . $this->titre .'</h1>';
+?>
+<div id="frn">
+	<div class="divAddFrn">
+       <a href="#" id="btnAddFrn">
+          <img style="width:35px; height:35px;" src="<?php echo $this->baseUrl('images/ajouter.png'); ?>" alt="Ajouter un fournisseur" title="Ajouter un fournisseur" />
+       </a> 
+    </div>
+    <table id="tabfrn">
+        <thead>
+        <tr>
+            <th>Forme juridique</th>
+            <th>Raison sociale</th>
+            <th>Adresse</th>
+            <th>CP</th>
+            <th>Ville</th>
+            <th style="border:none; cursor:default;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach($this->frn as $key => $frn)
+        {
+            ?>
+
+                <tr>
+                    <td>
+                        <?php
+                        echo $frn['fourrais'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $frn['fournom'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $frn['fouradresse'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $frn['fourcp'];
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        echo $frn['fourville'];
+                        ?>
+                    </td>
+                     <td style="width:100px">
+                     		<a class="btnIntFrn" onclick="interFrn('<?php echo $frn['interid']; ?>')" href="#">
+                                <img style="width:30px; height:30px;" src="<?php echo $this->baseUrl('images/interlocuteur.png'); ?>" alt="Coordonnées de l'interlocuteur" title="Coordonnées de l'interlocuteur" />
+                            </a>
+                            <a class="btnUpdFrn" onclick="formUpdtFrn('<?php echo $frn['fourid']; ?>')" href="#">
+                                <img style="width:30px; height:30px;" src="<?php echo $this->baseUrl('images/modifier.png'); ?>" alt="Modifier le fournisseur" title="Modifier le fournisseur" />
+                            </a>
+                            <a class="btnDelFrn" onclick="delFrn('<?php echo $frn['fourid']; ?>')" href="#">
+                                <img style="width:30px; height:30px;" src="<?php echo $this->baseUrl('images/corbeille.png'); ?>" alt="Supprimer le fournisseur" title="Supprimer le fournisseur" />
+                            </a>
+                     </td>
+                </tr>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+</div>
+<div style="display:none" id="jdialog"></div>
+<script>
+$(document).ready(function() {
+    $("#tabfrn").dataTable({
+        "iDisplayLength": 7,
+            "oLanguage": {
+                "sUrl": "<?php echo $this->baseUrl('js/traduction_fr_datatable.txt'); ?>"
+            },
+            "bStateSave":true,
+            "sPaginationType": "full_numbers",
+            "bLengthChange": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "aoColumns": [
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": true },
+            { "bSortable": false }
+            ]
+        } );       
+ });
+$("#btnAddFrn").click(function() {
+	formAddFrn();
+});
+</script>

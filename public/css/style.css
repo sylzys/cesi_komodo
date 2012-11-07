@@ -1,0 +1,509 @@
+/* 
+    Document   : style
+    Created on : 15 janv. 2012, 15:48:06
+    Author     : Pc
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+html {
+    background-image: url('../images/noise.png');
+    color:#4F4F4F;
+    background-color: rgba(126, 172, 179, 0.57);
+    font-family: arial;
+}
+a {
+    color: #666;
+    font-style: italic;
+    text-decoration: none;
+}
+/*info bulle menu*/
+.onglets a:focus{
+    background:red;
+    box-shadow:0 1px 0 rgba(255,255,255,.4);
+}
+.onglets a span{
+    position:absolute;                
+    margin-top:-43px;
+    margin-left:-235px;
+    color:#000000;
+    width:200px;
+    height:15px;
+    font-size:13px;
+    background-color: #d8e2d2; 
+    padding:15px;
+    border-radius:3px;
+    box-shadow:0 0 2px rgba(0,0,0,.5);
+    transform:scale(0) rotate(-12deg);
+    transition:all .25s;
+    opacity:0;
+    z-index: -1;
+}
+.onglets a:hover span, .onglets a:focus span{
+    transform:scale(1) rotate(0);  
+    opacity:1;
+    z-index: 500;
+}
+/*fin infobulle */
+a:hover {
+    color: #000000;
+}
+h1 {
+    color: #333;
+    font-weight: 200;
+    font-style: italic;
+    font-size: 15px;
+    margin:10px 0px 5px 0px;
+}
+label, p, input {
+    font-size: 12px;
+    display:block;
+}
+input[type="file"] {
+    width: 500px;  
+}
+input[type='text'] {
+    width:180px;
+    height: 20px;
+}
+#listClient input[type='text'] {
+    width:171px;
+}
+input[type='submit'], input[type='button'] {
+    color: #666;
+    border: 1px solid #555;
+    border-radius:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px 10px;
+    cursor:pointer;
+}
+input[type='submit']:hover, input[type='button']:hover {
+    color: #000;
+    border: 1px solid #000;
+    background-color: #dedede;
+}
+
+.clear {
+    display: block;
+    clear:both;
+}
+#header,#main,#footer {
+    width:1080px;
+    margin: 0px auto;
+}
+#main {
+    position:relative;
+    min-height: 600px;
+    height:100%;
+    overflow: auto;
+    background-color: #8A939A;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    width: 1002px;
+    -moz-box-shadow: 0px 3px 5px #000000;
+    -webkit-box-shadow: 0px 3px 5px #000000;
+    box-shadow: 0px 3px 5px #000000;
+}
+#topMain span {
+    line-height: 40px;
+    margin-left: 20px;
+    color: #3c3c3c;
+    font-size: 12px;
+}
+/*-------------------HEADER---------------------------------*/
+#header {
+    width: 100%;
+    height:52px;
+    color:#fff;
+    margin-bottom: 30px;
+    position: relative;
+    position: relative;
+    background: #000;
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#FF3c3c3c, endColorstr=#FF101010);
+    background-image: -webkit-gradient(linear,left top, left bottom,from(#3c3c3c),to(#101010));
+    background-image: -moz-linear-gradient(top,#3c3c3c,#101010);
+    background-image: -o-linear-gradient(top,#3c3c3c,#101010);
+    background-image: linear-gradient(top,#3c3c3c,#101010);
+    background-image: -webkit-linear-gradient(top,#3c3c3c,#101010);
+}
+#header a#homeLink {
+    margin: -16px -20px;
+    float: right;
+    height: 40px;
+}
+#header a#homeLink img{
+    width: 115px;
+}
+#header a:hover {
+    color: #fff;
+}
+#header #logIt, #header #notifs {
+    float: left;
+    margin: -5px 0px 0px 10px;
+    font-style: italic;
+    font-size: 12px;
+}
+#header #logIt img, #header #notifs img{
+    float: left;
+    width: 24px;
+    margin: -4px 3px 0px 15px;
+    cursor:pointer;
+}
+#header #logIt {
+    width: 1000px;
+    margin: 0 auto;
+    float: none;
+    margin-top: 0;
+    padding-top:30px;
+}
+#header #logIt b, #header #logIt span {
+    float:left;
+}
+
+h1 {
+    width: 715px;
+    height: 35px;
+    margin: 0px;
+    padding-left: 10px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+    background: #fbfbfb; /* Old browsers */
+    background: -moz-linear-gradient(top, #fbfbfb 0%, #e3e3e3 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fbfbfb), color-stop(100%,#e3e3e3)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fbfbfb 0%,#e3e3e3 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fbfbfb 0%,#e3e3e3 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #fbfbfb 0%,#e3e3e3 100%); /* IE10+ */
+    background: linear-gradient(top, #fbfbfb 0%,#e3e3e3 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#e3e3e3',GradientType=0 ); /* IE6-8 */
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright:10px;
+    -moz-border-radius-bottomleft:0px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-left-radius:10px;
+    -webkit-border-top-right-radius:10px;
+    -webkit-border-bottom-left-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+}
+/*-----------------------------------MENU----------------------------*/
+#menu {
+    float: left;
+    width: 250px;
+    background-color: #8a939a;
+    height:100%;
+    min-height:600px;
+    border-right: 1px solid #5b5f6b;
+
+}
+#menuList {
+    width: 250px;
+    background-color: #8a939a;
+    height:100%;
+}
+#menuList li a {
+    background: #4b545b; /* Old browsers */
+    background: -moz-linear-gradient(top, #4b545b 0%, #333c43 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4b545b), color-stop(100%,#333c43)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #4b545b 0%,#333c43 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #4b545b 0%,#333c43 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #4b545b 0%,#333c43 100%); /* IE10+ */
+    background: linear-gradient(top, #4b545b 0%,#333c43 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4b545b', endColorstr='#333c43',GradientType=0 ); /* IE6-8 */
+    position: relative;
+    width: 250px;
+    height: 40px;
+    display: block;
+    margin: 0px;
+    line-height: 40px;
+    color:#fff;
+    position:relative;
+}
+#menuList li a:hover {
+    background: #333c43; /* Old browsers */
+    background: -moz-linear-gradient(top, #333c43 0%, #4b545b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333c43), color-stop(100%,#4b545b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #333c43 0%,#4b545b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #333c43 0%,#4b545b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #333c43 0%,#4b545b 100%); /* IE10+ */
+    background: linear-gradient(top, #333c43 0%,#4b545b 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333c43', endColorstr='#4b545b',GradientType=0 ); /* IE6-8 */
+}
+#menuList li a span {
+    position:absolute;
+    left:40px;
+}
+#menuList li a img {
+    width: 20px;
+    height: 20px;
+    position:absolute;
+    left:10px;
+    top: 10px;
+}
+#menuList li.ssMenu a {
+    background: none;
+    background-color: #8a939a;
+    border-bottom: #959ea3 1px solid;
+}
+#hideMenu {
+    height:40px;
+    width:40px;
+    margin-left:80px;
+}
+#hideMenu img{
+    height:40px;
+    width:40px;
+}
+#menuList li .active {
+    background-color: #111;
+    border-color: white;
+}
+#menuList li .active:hover {
+    background-color: #111;
+    border-color: white;
+    color: #999;
+}
+/*---------------------------------------MAIN---------------------------------------*/
+#topMain {
+    background: #f8faf9; /* Old browsers */
+    background: -moz-linear-gradient(top, #f8faf9 0%, #d1d2d4 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8faf9), color-stop(100%,#d1d2d4)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f8faf9 0%,#d1d2d4 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f8faf9 0%,#d1d2d4 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f8faf9 0%,#d1d2d4 100%); /* IE10+ */
+    background: linear-gradient(top, #f8faf9 0%,#d1d2d4 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8faf9', endColorstr='#d1d2d4',GradientType=0 ); /* IE6-8 */
+    height: 40px;
+    width: 750px;
+    float:left;
+}
+#content {
+    float: left;
+    width: 730px;
+    min-height:540px;
+    height:100%;
+    background-color: #ffffff;
+    padding: 9px;
+}
+.onglets {
+    position: absolute;
+    right: 0px;
+    top:50px;
+}
+.onglets ul {
+    background-color: #111;
+    padding: 5px 0px;
+}
+.onglets ul li{
+    margin: 5px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    width: auto;
+    margin-right:5px;
+    width:40px;
+    height: 40px;
+}
+.onglets ul li:hover{
+    background-color: #333;
+}
+.onglets ul li img{
+    max-width:30px;
+    margin: 5px;
+}
+
+/*-------------------------------Tableaux ---------------------------------*/
+
+.beautifulArray {
+    margin-top: 20px;
+    width: 665px;
+    height:auto;
+    padding:15px 15px 25px 15px;
+    border:1px solid #333;
+    background-color: rgba(251, 251, 251, 1);
+    float: left;
+}
+.beautifulArray li{
+    float:left;
+    display: block;
+    height: 30px;
+}
+.beautifulArray li input[type='text'] {
+    width:180px;
+    height: 30px;
+    margin:0px auto;
+}
+#editNomProductList.beautifulArray li input[type='text'] {
+    height: 18px;
+}
+#newNom .beautifulArray li input[type='text'] {
+    height: 18px;
+}
+.beautifulArray .px300 {
+    width:300px;
+    float:left;
+}
+.beautifulArray .px200 {
+    width:200px;
+    float:left;
+}
+.beautifulArray .px100 {
+    width:100px;
+    float:left;
+    overflow: hidden;
+    height: 22px;
+}
+.beautifulArray .px60 {
+    width:60px;
+    float:left;
+}
+.beautifulArray li .px60 input[type="text"]{
+    width:50px;
+}
+.hideElement {
+    display:none;
+}
+
+th {
+    font-weight: bold;
+    text-align: center;
+}
+
+td {
+    padding: 3px;
+}
+
+/*---------------------Page login ------------------------------*/
+#contentLogin {
+    float:left;
+    width:385px;
+    margin: 35px 0px 0px 50px;
+}
+#contentLogin p{
+    margin: 20px 0px 30px 0px;
+    font-size: 14px;
+}
+#contentLogin p span{
+    display:block;
+    font-size: 11px;
+    margin-top:5px;
+}
+#contentLogin input[type='text'], #contentLogin input[type='password'] {
+    height: 20px;
+    width: 180px;
+}
+#contentLogin input[type='submit'] {
+    height: 30px;
+    width: 120px;
+    color: #999;
+    border: 1px solid #999;
+    border-radius:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    margin-left: 154px;
+}
+#contentLogin input[type='submit']:hover {
+    color: #333;
+    border: 1px solid #333;
+}
+#contentLogin label {
+    float: left;
+    margin: 3px 10px 0px 0px;
+    width: 80px;
+}
+#contentLogin #login_form-element {
+    margin-bottom: 10px;
+}
+
+#help {
+    width: 30px;
+    float: right;
+    margin-left: 20px;
+}
+#help img {
+    max-width:20px;
+    max-height:20px;
+}
+.notifications:after { content:attr(data-notification); }
+#notifs .notifications {
+    color:orange;
+
+    /*border-radius: 50%;
+    -moz-border-radius: 50%;
+    --webkit-border-radius: 50%;
+    background-color: red;*/
+    padding:3px;
+    float:left;
+}
+
+
+#access_denied {
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-top: 150px;
+}
+#access_denied img {
+    vertical-align: middle;
+    margin-right: 15px;
+}
+
+/*------------Chat server-----------*/
+#content_chat { 
+    width : 200px;
+    height : 200px;
+    overflow: scroll;
+    padding:5px; 
+    background:#ddd; 
+    border-radius:5px;
+    border:1px solid #CCC; 
+    margin-top:10px; }
+#input_chat { 
+    border-radius:2px; 
+    border:1px solid #ccc;
+    margin-top:10px; 
+    padding:5px; 
+    width:110px; 
+}
+#status { 
+    width:88px; 
+    display:block; 
+    float:left; 
+    margin-top:15px; 
+}
+#chat{
+    width : 300px;
+    background-color: #CCC;
+    position:fixed;
+    left:-250px;
+    overflow:hidden;
+    top:25%;    
+    background-image: url('../images/users.png');
+    background-repeat: no-repeat;
+    background-position: 95% 10%;
+    border: 2px solid black;
+    z-index: 50;
+}
+
+
+#listClient, #adminIndex, #adminUser, #adminClient, #homeSweetHome {
+    margin: 0px 15px 0px 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#adminIndex {
+    float:left;
+}

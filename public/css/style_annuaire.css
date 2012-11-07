@@ -1,0 +1,37 @@
+.prog25 {
+    height:30px;
+    background-color:#ff0b11;
+}
+
+.prog50 {
+    height:30px;
+    background-color:#ff7516;
+}
+
+.prog75 {
+    height:30px;    
+    background-color:#7bbe16;
+}
+
+.prog100 {
+    height:30px;
+    background-color:#07be47;
+}
+
+.box {
+  height:30px; width:30px; background:#ff0b11; 
+ /* -moz-transition: background  1s, width 2s;*/
+  -webkit-transition: background 1s, 2s;
+ /* -o-transition: background  1s, width 2s;
+  -ms-transition: background 1s, width 2s;*/
+  transition: background 1s, width 2s;
+}
+.box:hover {
+    background:#ff7516; width:200px
+}
+.btn_cli {
+    float:right;
+}
+.txt_cli {
+    float:left;
+}

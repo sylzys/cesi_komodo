@@ -1,0 +1,68 @@
+<?php 
+$i = 0;
+$o_matiereMapper = new Application_Model_MatiereMapper();
+foreach($this->nomenclatures as $nom){
+            $matId = $nom->getMatid();
+            $matQte = $nom->getMatqte();
+            $detailsMatiere = $o_matiereMapper->find($matId);
+            $reqMat = "SELECT matiere.matlib, stock.stockpu, matiere.matid
+            FROM matiere , stock WHERE stock.matid = " . $matId . " AND matiere.matid = " . $matId;
+            $dbAdapter = Zend_Registry::get('dbAdapter');
+            $res = $dbAdapter->fetchAll($reqMat);
+            foreach($res as $matiere){
+                $matLib = $matiere["matlib"];
+                $matPrix = $matiere["stockpu"];
+                $matRef = $matiere["matid"];
+            }
+            
+            ?>
+            <li class="rowLi" id="row_<?php echo $i; ?>">
+        <div class="px200">
+            <select  name="listProd_<?php echo $i; ?>" id="listProd_<?php echo $i; ?>">
+                <option selected="selected" value="<?php echo $matRef . '_' . $matPrix . '_' . $matLib?>" ><?php echo $matLib; ?></option>
+            </select>
+        </div>
+        <div class="px200">
+            <input type="text" name="prod_<?php echo $i; ?>" id="prod_<?php echo $i; ?>" value="<?php echo $matId; ?>" /> 
+        </div>
+        <div class="px100">
+            <input type="text" name="prix_<?php echo $i; ?>" id="prix_<?php echo $i; ?>"  value="<?php echo $matPrix; ?>"  style="width: 50px;" /> 
+        </div>
+        <input type="hidden" name="matName_<?php echo $i; ?>" id="matName_<?php echo $i; ?>" value="<?php echo $matLib; ?>" /> 
+        <div class="px100">
+            <input type="text" name="qte_<?php echo $i; ?>" id="qte_<?php echo $i; ?>"  value="<?php echo $matQte; ?>" style="width: 50px;" /> 
+        </div>
+        <div class="px60">
+            <input style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close.png'); ?>)" type="button"  class="deleteThisRow"  />
+        </div>
+    </li>
+    <?php
+    $i += 1;
+}
+?>
+
+    <li class="rowLi" id="row_<?php echo $i; ?>">
+        <div class="px200">
+            <select class="selectMat" name="listProd_<?php echo $i; ?>" id="listProd_<?php echo $i; ?>">
+                <option>Selectionner un produit</option>
+                <?php
+                foreach ($this->matieres as $matiere) {
+                    echo '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '">' . $matiere["matlib"] . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="px200">
+            <input type="text" name="prod_<?php echo $i; ?>" id="prod_<?php echo $i; ?>"   /> 
+        </div>
+        <div class="px100">
+            <input type="text" name="prix_<?php echo $i; ?>" id="prix_<?php echo $i; ?>"  style="width: 50px;" /> 
+        </div>
+        <input type="hidden" name="matName_<?php echo $i; ?>" id="matName_<?php echo $i; ?>" value="" /> 
+        <div class="px100">
+            <input type="text" name="qte_<?php echo $i; ?>" id="qte_<?php echo $i; ?>" style="width: 50px;" /> 
+        </div>
+        <div class="px60">
+            <input style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close.png'); ?>)" type="button"  class="deleteThisRow" />
+        </div>
+    </li>

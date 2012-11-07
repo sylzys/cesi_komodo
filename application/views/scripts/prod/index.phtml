@@ -1,0 +1,26 @@
+<?php
+echo '<h1>' . $this->titre . '</h1>';
+echo '<div id="indexProd"><label>Sélectionnez une nomenclature</label><select id="listNom">';
+echo '<option>Nomenclatures</option>';
+foreach ($this->nomenclatures as $nom) {
+    echo '<option id=' . $nom->getId() . '>' . $nom->getNomLib() . '</option>';
+}
+echo '</select><input type="button" value="Accèder" id="editNomBtn" />
+</div>'
+?>
+<script type="text/javascript">
+    var urlEditPdf = '<?php echo $this->baseUrl('prod/editnom'); ?>';
+    $(document).ready(function(){
+        
+        $('#editNomBtn').click(function(){
+            var lblNom = $('#listNom option:selected').val();
+            var lblId = $('#listNom option:selected').attr('id');
+            if(lblNom != 'Nomenclatures'){
+               var url = urlEditPdf+'?idnom=' + lblId;
+                $(location).attr('href', url); 
+            }
+        });
+        
+        
+    });
+</script>

@@ -1,0 +1,32 @@
+<?php echo '<h1>' . $this->titre .'</h1>'; ?>
+
+<a href="<?php echo $this->baseUrl('admin/profiladd'); ?>">ajout profil</a>
+<table id="admin_profil_table">
+
+</table>
+
+  
+<script type="text/javascript">
+    var urlProfilChangeRight = "<?php echo $this->baseUrl('admin/profilchangeright'); ?>";
+    var urlProfilList = "<?php echo $this->baseUrl('admin/profillist'); ?>";
+       
+    $(document).ready(function(){
+        loadProfil();
+    });     
+            
+    function loadProfil(){
+        $.ajax({
+            url:        urlProfilList,
+            type:       'POST',
+            dataType:   'html',
+            success: function(data) {
+                $('#admin_profil_table').html(data);
+            },
+            error : function(data){
+//                alert(data.responseText);
+            }
+        });
+    }
+          
+    
+</script>

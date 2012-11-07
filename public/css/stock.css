@@ -1,0 +1,210 @@
+/* 
+    Document   : stock
+    Created on : 21 mars 2012, 17:41:17
+    Author     : Lavie
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+/*Table des matières premières*/
+#tabmat {
+    clear:both;
+    max-width:720px;
+    margin: 0 auto;
+    margin-top:5px;
+    padding: 20px;
+    border:1px solid #333;
+    background-color: rgba(248, 245, 240, 0.9);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+#tabmat th {
+    border:1px solid black;
+    padding:10px;
+    font-size:13px;
+}
+#tabmat td {
+    border:1px solid black;
+    padding: 5px;
+}
+#tabmat p {
+    text-align: center;
+}
+.lienMat {
+	text-align:center;
+}
+.lienMat a {
+	color:black;
+	font-size:16px; 
+	font-weight:normal;
+}
+.lienMat a:hover {
+	text-decoration: underline;
+}
+/*Paragraphe de la div désignation*/
+#thead p {
+    text-align: center;
+}
+#matiere {
+    position: relative;
+    margin: 0px;
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #CCC;
+    border-top: 0px;
+}
+.matiere {
+    clear: both;
+    text-align:center;
+    margin:0 auto;
+}
+.matiere input {
+    width:40px;
+    height:40px;
+}
+.btnStock {
+    display:block;
+    float:left;
+    margin-left:5px;
+}
+#detail {
+    min-height: 600px;
+}
+.formStock {
+    margin : 5px;
+    padding: 10px;
+}
+ol#pagination{overflow:hidden; }
+ol#pagination li{
+    float:left;
+    list-style:none;
+    cursor:pointer;
+    margin:0 0 0 .5em;
+    font-size:13px;
+    color:grey;
+}
+ol#pagination li.current{color:black;font-weight:bold;}
+/*Contrôle de la pagination*/
+#mycontrols {
+    margin-top:20px;
+}
+#mycontrols a:hover {
+    text-decoration:underline;
+    cursor:pointer
+}
+/*Formulaire détail d'une matière (stock)*/
+#formstock fieldset{
+    border: 1px solid gray ;
+    padding:10px;
+    margin:10px;
+    font-size : 14px;
+    width:90%;
+}
+#formstock legend p {
+    font-family:Verdana;
+    font-size:14px;
+    font-weight: bold;
+}
+#formstock label {
+    font-size: 14px;
+    text-align : left;
+    margin-left: 22%;
+    padding-bottom:5px;
+}
+#formstock p {
+    font-size:16px;
+}
+#left {
+    clear:both;
+    float:left;
+    width:50%;
+}
+#right {
+    float:left;
+    width:50%;
+}
+#leftFour {
+    clear:both;
+    float:left;
+    width:50%;
+}
+#rightFour {
+    float:left;
+    width:50%;
+}
+#leftFour p {
+    font-size: 14px;
+    text-align : left;
+    margin-left: 22%;
+    margin-top:5px;
+}
+#rightFour p {
+    font-size: 14px;
+    text-align : left;
+    margin-left: 22%;
+    margin-top:5px;
+}
+.divDel {
+    clear:both;
+    float:left;
+    margin:0;
+    padding:0;
+}
+.refStock {
+    float:left;
+    text-align:left;
+    padding-left:35%;
+}
+.seuil p{
+    font-size:15px;
+    color:red;
+    font-weight: bold;
+}
+.seuilOk p{
+    font-size:15px;
+    color:green;
+    font-weight: bold;
+}
+.submitMat {
+    margin-top:10px;
+}
+.formMat {
+    font-size:14px;
+}
+.formMat label {
+    margin-top:20px;
+}
+.formMat input[type="button"] {
+    margin-top:20px;
+}
+#addunite {
+clear:both;
+margin:0 auto;
+margin-top:10px;
+margin-bottom : 10px;
+width:59%;
+height:8%;
+}
+#tabUnite {
+	font-size: 14px;
+	width:100%;
+	text-align:center;
+}
+#tabUnite th {
+	border:1px solid black;
+    padding:10px;
+    font-size:13px;
+}
+#tabUnite td {
+	padding : 7px;
+	 border:1px solid black;
+}

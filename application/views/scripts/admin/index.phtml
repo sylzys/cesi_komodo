@@ -1,0 +1,67 @@
+<?php
+
+/*
+ * Admin
+ */
+echo '<h1>' . $this->titre .'</h1>';
+?><div id="adminIndex">
+<fieldset id="admin_fdset_users">
+    <legend>
+        <img src="<?php echo $this->baseUrl('images/user.png'); ?>">
+        Utilisateurs
+    </legend>
+    <p>Nombre d'utilisateurs : <?php echo $this->users_nb; ?></p><br />
+    <p>Les derniers utilisateurs connect&eacute;s : </p>
+    <?php
+    foreach ($this->users_last as $user) {
+        echo '<p>';
+        echo '<a href="'.$this->baseUrl('admin/user/'.$user->getId()).'">'.$user->getUtiprenom().''.$user->getUtinom().'</a>';
+        echo ' (jj/mm/aaaa)';
+//        echo ' ('.$user->getLastlogged().')';
+        echo '</p>';
+    }
+    ?>
+</fieldset>
+
+<fieldset id="admin_fdset_clients">
+    <legend>
+        <img src="<?php echo $this->baseUrl('images/client.png'); ?>">
+        Clients
+    </legend>
+    <p>Nombre de clients : <?php echo $this->clients_nb; ?></p>
+    <p>Nombre de clients avec acc&egrave;s distant : <?php echo $this->clients_nb_remote; ?></p><br />
+    <p>Les derniers clients connect&eacute;s : </p>
+    <?php
+    foreach ($this->clients_last as $client) {
+        echo '<p>';
+        echo $client->getClirais() . ' ' . $client->getClinom();
+        echo ' (jj/mm/aaaa)';
+//        echo ' ('.$client->getClilastlogged().')';
+        echo '</p>';
+    }
+    ?>
+</fieldset>
+
+</div>
+<style>
+    #admin_fdset_users {
+        width: 45%;
+        float: left;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 5px;
+    }
+    #admin_fdset_users legend img {
+        vertical-align: middle;
+    }
+    #admin_fdset_clients {
+        width: 45%;
+        float: left;
+        border: 1px solid black;
+        margin: 10px;
+        padding: 5px;
+    }
+    #admin_fdset_clients legend img {
+        vertical-align: middle;
+    }
+</style>
