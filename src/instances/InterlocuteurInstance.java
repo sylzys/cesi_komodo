@@ -1,12 +1,15 @@
 package instances;
 
 import controllers.Synchro;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Client;
 import models.Commande;
 import models.CurrentDatas;
@@ -49,9 +52,9 @@ public class InterlocuteurInstance {
     public synchronized List<Interlocuteur> GetInterlocuteurs(String where, Hashtable h) {
         this.where = where;
         this.h = h;
-        //on récupère le "where", et les paramètres
+        //on r��cup��re le "where", et les param��tres
         chargerDepuisBaseDeDonnees();
-        //on retourne la liste correspondant à la requete
+        //on retourne la liste correspondant �� la requete
         return inter;
     }
 
@@ -59,10 +62,10 @@ public class InterlocuteurInstance {
 
         if (inter == null)
         {
-            //si pas déjà fait de requetes, on crée une liste vide
+            //si pas d��j�� fait de requetes, on cr��e une liste vide
             inter = new ArrayList<Interlocuteur>();
         }
-        else //sinon on vide la liste déjà créee
+        else //sinon on vide la liste d��j�� cr��ee
         {
             inter.clear();
         }
@@ -92,7 +95,7 @@ public class InterlocuteurInstance {
                     query.setParameter(str, h.get(str));
                 }
             }
-            //on met le resultat dans la liste renvoyée
+            //on met le resultat dans la liste renvoy��e
             this.inter = query.list();
 
         }
@@ -105,19 +108,34 @@ public class InterlocuteurInstance {
 
     public synchronized void updaterBaseDeDonnees(Interlocuteur inter) {
         Transaction tx = null;
+        if (HibernateConnection.online == false)
+        {
+            Synchro writereq = new Synchro();
+            CurrentDatas cli = CurrentDatas.getInstance();
+            int cliid = cli.getSoc_id();
+            String cliname = writereq.cliNom(cliid);
+//            System.out.println("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
+//                        + "cliid = '" + inter.getCliid() + "', internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
+//                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "', interposte = '" + inter.getInterposte() + "',"
+//                        + "interdteadd = " + inter.getInterdteadd() + ", intersuppr = '" + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid());
+           try
+            {
+                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
+                        + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
+                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "',"
+                        + "intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         try
         {
-//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
-//            session = sessionFactory.openSession();
-//            tx = session.beginTransaction();
             tx = HibernateConnection.getSession().beginTransaction();
             System.out.println("Updating Record");
-//			  Utilisateur uti = new Utilisateur();
-//			  .setUtiid(10);
-//			  uti.setUtinom("test");
-            //session.update(inter);
-            HibernateConnection.getSession().update(inter); 
+            HibernateConnection.getSession().update(inter);
             tx.commit();
             System.out.println("Done");
 
@@ -127,28 +145,37 @@ public class InterlocuteurInstance {
             System.out.println(e.getMessage());
         }
     }
-    
+
     public synchronized void insererEnBaseDeDonnees(Interlocuteur inter) {
         Transaction tx = null;
-        try
+        if (HibernateConnection.online == false)
         {
-           tx = HibernateConnection.getSession().beginTransaction();            
-           HibernateConnection.getSession().save(inter);     
-           tx.commit();
-           if (HibernateConnection.online == false)
+            Synchro writereq = new Synchro();
+            CurrentDatas cli = CurrentDatas.getInstance();
+            int cliid = cli.getSoc_id();
+            String cliname = writereq.cliNom(cliid);
+            try
             {
-                Synchro writereq = new Synchro();
-                CurrentDatas cli = CurrentDatas.getInstance();
-                int cliid = cli.getSoc_id();
-                String cliname = writereq.cliNom(cliid);
                 writereq.SaveReq("INSERT INTO interlocuteur (cliid, internom, interprenom, intermail, intertel, "
                         + " interdteadd, intersuppr)"
-                        + " VALUES ("+cliid+",'"+inter.getInternom()+"','"
-                        +inter.getInterprenom()+"','"+inter.getIntermail()+"','"+inter.getIntertel()+"','"
-                        +Calendar.getInstance().getTime()+"',"
+                        + " VALUES (" + cliid + ",'" + inter.getInternom() + "','"
+                        + inter.getInterprenom() + "','" + inter.getIntermail() + "','" + inter.getIntertel() + "','"
+                        + Calendar.getInstance().getTime() + "',"
                         + "'f')"
                         + "", -1, cliname);
             }
+            catch (IOException ex)
+            {
+                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        try
+        {
+            tx = HibernateConnection.getSession().beginTransaction();
+            HibernateConnection.getSession().save(inter);
+            tx.commit();
+
         }
         catch (Exception e)
         {

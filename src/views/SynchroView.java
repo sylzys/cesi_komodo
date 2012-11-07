@@ -5,6 +5,7 @@
 package views;
 
 import classes.CheckBoxData;
+import classes.LabelData;
 import controllers.Synchro;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -42,6 +43,7 @@ public class SynchroView extends KContainer {
     private String libreq;
     private JCheckBox chkslct = new JCheckBox();
     private List<CheckBoxData> listchk;
+    private List<LabelData> listlbl;
     JLabel title = new JLabel ();
     public SynchroView(UserActif user) {
     super();
@@ -53,6 +55,7 @@ public class SynchroView extends KContainer {
     protected
     void initPanel() {
         listchk = new ArrayList<CheckBoxData>();
+        listlbl = new ArrayList<LabelData>();
         JPanel content = new JPanel();
         JPanel center = new JPanel();
         JScrollPane scroll = new JScrollPane(center);
@@ -86,7 +89,7 @@ public class SynchroView extends KContainer {
             lbl1.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbl2.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbl3.setBorder(new EmptyBorder(0, 10, 0, 0));
-            chkslct.setBorder(new EmptyBorder(0, 10, 0, 0));
+            chkslct.setBorder(new EmptyBorder(0, 12, 0, 0));
             chkslct.setOpaque(false);
             lbl1.setOpaque(true);
             lbl1.setBackground(Color.lightGray);
@@ -96,11 +99,11 @@ public class SynchroView extends KContainer {
             lbl3.setBackground(Color.lightGray);
             chkslct.setOpaque(true);
             chkslct.setBackground(Color.lightGray);
-            chkslct.setPreferredSize(new Dimension(70, 20));
+            chkslct.setPreferredSize(new Dimension(80, 20));
             chkslct.setSelected(true);
-            lbl1.setPreferredSize(new Dimension(180, 20));
-            lbl2.setPreferredSize(new Dimension(180, 20));
-            lbl3.setPreferredSize(new Dimension(300, 20));
+            lbl1.setPreferredSize(new Dimension(190, 20));
+            lbl2.setPreferredSize(new Dimension(190, 20));
+            lbl3.setPreferredSize(new Dimension(240, 20));
             center.setLayout(flchk1);
             center.add(chkslct);
             center.add(lbl1);
@@ -114,26 +117,40 @@ public class SynchroView extends KContainer {
                 req = strtok.nextToken();
                 String[] decoup = req.split("interlocuteur:");
                 int interid = -1;
+                String requete ="";
                 if(decoup.length > 1)
                 {
                     interid = Integer.parseInt(decoup[1]);
+                    requete = decoup[0];
                 }
-                decoup = req.split("client:");
+                String[] decoup2 = req.split("client:");
                 String nomclient = "";
-                if(decoup.length > 1)
+                if(decoup2.length > 1)
                 {
-                    nomclient = decoup[1];
+                    nomclient = decoup2[1];
+                    requete = decoup2[0];
                 }
-                String requete = decoup[0];
+                
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 Hashtable ht = new Hashtable();
                 ht.put("requete", requete);
                 ht.put("type",req);
+                
+                Hashtable ht2 = new Hashtable();
+                ht2.put("requete",req);
                 //NEW CHKBOXDATA
                 CheckBoxData chkbox = new CheckBoxData(i, ht);
+                //LabelData imgico = new LabelData();
+                //imgico.putData(String.valueOf(i), req);
+                LabelData lblimg = new LabelData(i, ht2); 
+                lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
+                lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 chkbox.setSelected(true);
                 listchk.add(chkbox);
+                listlbl.add(lblimg);
+                lblimg.setBorder(new EmptyBorder(0, 10, 0, 0));
+                lblimg.setPreferredSize(new Dimension(70, 35));
                 JLabel lblclient = new JLabel(action[0].toUpperCase());
                 JLabel lbltable = new JLabel(action[1].toUpperCase());
                 JLabel lblaction = new JLabel(action[2].toUpperCase());
@@ -141,22 +158,30 @@ public class SynchroView extends KContainer {
                 lbltable.setBorder(new EmptyBorder(0, 10, 0, 0));
                 lblaction.setBorder(new EmptyBorder(0, 10, 0, 0));
                 chkbox.setBorder(new EmptyBorder(0, 10, 0, 0));
-                chkbox.setPreferredSize(new Dimension(70, 35));
-                lblclient.setPreferredSize(new Dimension(180, 35));
-                lbltable.setPreferredSize(new Dimension(180, 35));
-                lblaction.setPreferredSize(new Dimension(300, 35));
+                chkbox.setPreferredSize(new Dimension(80, 35));
+                lblclient.setPreferredSize(new Dimension(190, 35));
+                lbltable.setPreferredSize(new Dimension(190, 35));
+                lblaction.setPreferredSize(new Dimension(160, 35));
                 center.setLayout(flchk);
                 center.add(chkbox);
                 center.add(lblclient);
                 center.add(lbltable);
                 center.add(lblaction);
-                chkbox.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                         CheckBoxData chk = (CheckBoxData)e.getSource();
-                        System.out.println(chk.getId());
-                    }
-                });
+                center.add(lblimg);
+                lblimg.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent me) {  
+                        JOptionPane jop = new JOptionPane();			
+                        int option = jop.showConfirmDialog(null, "Voulez-vous supprimer cette action ?", "Suppression de l'action", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if(option == JOptionPane.OK_OPTION){
+                           LabelData lbldata = (LabelData)me.getComponent();
+                           Synchro sync = new Synchro();
+                           Hashtable tmp = lbldata.getData();   
+                           sync.delReq(tmp.get("requete").toString());
+                           Fenetre fen = Fenetre.getInstance();
+                           fen.RenewSnchro();			
+                        }       
+                }
+            });
             }
             chkslct.addActionListener(new ActionListener() {
                 @Override

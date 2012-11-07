@@ -48,6 +48,7 @@ public class Creation extends KContainer {
     JTextField cli_nom = new JTextField(),
             cli_add = new JTextField(),
             cli_cp = new JTextField(),
+            cli_ville = new JTextField(),
             cli_tel = new JTextField(),
             cli_fax = new JTextField(),
             cli_mail = new JTextField(),
@@ -60,7 +61,8 @@ public class Creation extends KContainer {
             cli_ca = new JTextField();
     JLabel lbl_clinom = new JLabel("Nom société *"),
             lbl_cliadd = new JLabel("N° - Rue *"),
-            lbl_clicp = new JLabel("CP - Ville *"),
+            lbl_clicp = new JLabel("CP *"),
+            lbl_cliville = new JLabel("Ville *"),
             lbl_clitel = new JLabel("Téléphone *"),
             lbl_clifax = new JLabel("Fax"),
             lbl_climail = new JLabel("Mail"),
@@ -107,7 +109,7 @@ public class Creation extends KContainer {
         cli_add.setAlignmentX(Box.RIGHT_ALIGNMENT);
         addr.add(cli_add);
         left.add(addr);
-        //cp ville
+        //cp 
         JPanel cp = new JPanel();
         // cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
@@ -116,6 +118,15 @@ public class Creation extends KContainer {
         cli_cp.setAlignmentX(Box.RIGHT_ALIGNMENT);
         cp.add(cli_cp);
         left.add(cp);
+        //ville
+        JPanel ville = new JPanel();
+        // cp.setBackground(Color.WHITE);
+        ville.setLayout(new FlowLayout());
+        ville.add(lbl_cliville);
+        cli_ville.setPreferredSize(new Dimension(200, 30));
+        cli_ville.setAlignmentX(Box.RIGHT_ALIGNMENT);
+        ville.add(cli_ville);
+        left.add(ville);
         left.add(Box.createVerticalStrut(30));
         //tel
         JPanel tel = new JPanel();
@@ -266,7 +277,7 @@ public class Creation extends KContainer {
         cli.setClinom(cli_nom.getText());
         cli.setCliadresse(cli_add.getText());
         cli.setClicp(cli_cp.getText().substring(0, 4));
-        cli.setCliville(cli_cp.getText().substring(5, cli_cp.getText().length()));
+        cli.setCliville(cli_ville.getText());
         cli.setClitel(cli_tel.getText());
         cli.setClifax(cli_fax.getText());
         cli.setClimail(cli_mail.getText());
@@ -324,7 +335,11 @@ public class Creation extends KContainer {
         }
         if (Strings.isNullOrEmpty(cli_cp.getText()) || cli_cp.getText().trim().isEmpty())
         {
-            str += "<html>Le champ <i>CP - Ville</i> ne peut être vide<br />";
+            str += "<html>Le champ <i>CP</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(cli_ville.getText()) || cli_ville.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Ville</i> ne peut être vide<br />";
         }
         if (Strings.isNullOrEmpty(cli_tel.getText()) || cli_tel.getText().trim().isEmpty())
         {

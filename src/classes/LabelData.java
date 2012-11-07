@@ -24,7 +24,11 @@ public class LabelData extends JLabel {
         super(label);
         Id = id;
     }
-    
+    public LabelData(Integer id, Hashtable<String, Object> data) {
+        super();
+        Id = id;
+        Data = data;
+    }
     public LabelData(String label, Hashtable<String, Object> data) {
         super(label);
         Data = data;

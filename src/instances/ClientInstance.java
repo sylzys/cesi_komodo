@@ -110,14 +110,6 @@ public class ClientInstance {
         Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-            System.out.println("REQUEST : UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
-                    + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + ", "
-                    + "clicp = '" + cli.getClicp() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
-                    + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + ", "
-                    + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
-                    + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin() + "', "
-                    + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + ", "
-                    + "clidteadd = '" + cli.getClidteadd() + "', clinaf = " + cli.getClinaf());
             try
             {
                 writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
@@ -126,18 +118,17 @@ public class ClientInstance {
                         + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
                         + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
                         + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
-                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + "', "
-                        + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = "+ cli.getCliid(),
+                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ",  "
+                        + "clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
                         -1, cli.getClinom());
-                return true;
+                //return true;
             }
             catch (IOException ex)
             {
                 Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
+        
             try
             {
                 tx = HibernateConnection.getSession().beginTransaction();
@@ -152,7 +143,7 @@ public class ClientInstance {
                 System.out.println("Update failed");
                 return false;
             }
-        }
+        
         return true;
     }
 
@@ -172,15 +163,13 @@ public class ClientInstance {
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
                         + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
                         + "", -1, this.client.getClinom());
-                return true;
             }
             catch (IOException ex)
             {
                 Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else
-        {
+        
             try
             {
                 Transaction tx = HibernateConnection.getSession().beginTransaction();
@@ -196,7 +185,6 @@ public class ClientInstance {
             {
                 return false;
             }
-        }
         return true;
     }
 }

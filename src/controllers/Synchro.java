@@ -54,20 +54,18 @@ public class Synchro {
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.OFF);
                 sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory() ;
-             } catch (Throwable ex) {
-               Logger log = Logger.getLogger("org.hibernate");
-               log.setLevel(Level.WARNING);  
+             } catch (Throwable ex) { 
+               System.out.println(ex);
                return false;
              }
-        Logger log = Logger.getLogger("org.hibernate");
-        log.setLevel(Level.WARNING);  
+            Logger log = Logger.getLogger("org.hibernate");
+//            log.setLevel(Level.WARNING);
         sessionFactory.close();
         return true;
     }
     //Sauvegarde de la requete dans le fichier
     public void SaveReq(String req, int interid, String nomclient) throws IOException
     {
-        System.err.println ("saving request : " +req);
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
            BufferedWriter bw = new BufferedWriter(fichier);
@@ -180,7 +178,7 @@ public class Synchro {
         }
         else
         {
-            if(req.indexOf("suppr") != -1)
+            if(req.indexOf("suppr = true") != -1)
             {
                 name = req.split("UPDATE");
                 table = name[1];
@@ -211,7 +209,7 @@ public class Synchro {
             try 
             {
                 Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
-                query.setParameter("interid", 1);
+                query.setParameter("interid", interid);
                 List<Interlocuteur> interlist = query.list();
                 for (Interlocuteur inter : interlist) 
                 {
