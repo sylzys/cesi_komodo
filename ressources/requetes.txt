@@ -1,1 +1,0 @@
-UPDATE interlocuteur SET utiid = 1, cliid = 1, internom = 'plop', interprenom = 'meuh', intermail = 'fghj', intertel = '0987', interposte = 'null', WHERE interid = 1interlocuteur:1||
