@@ -67,7 +67,6 @@ public class Synchro {
     //Sauvegarde de la requete dans le fichier
     public void SaveReq(String req, int interid, String nomclient) throws IOException
     {
-        System.err.println ("saving request : " +req);
         try {
            FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
            BufferedWriter bw = new BufferedWriter(fichier);
@@ -180,7 +179,7 @@ public class Synchro {
         }
         else
         {
-            if(req.indexOf("suppr") != -1)
+            if(req.indexOf("suppr = true") != -1)
             {
                 name = req.split("UPDATE");
                 table = name[1];
