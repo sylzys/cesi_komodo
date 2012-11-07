@@ -75,7 +75,6 @@ public class Replication extends Thread {
         commd.add("-f"); // fichier
         commd.add(PATH_BAK);
         commd.add("projetcesi");//Nom de la base
-        System.out.println("sauvegarde :" +commd.toString());
         ProcessBuilder PrcBld = new ProcessBuilder(commd);
         try
         {
@@ -148,7 +147,6 @@ public class Replication extends Thread {
         commd.add("-U"); // utilisateur
         commd.add("cesi");
         commd.add("projetcesi2");//Nom de la base
-        System.out.println("suppression = " +commd.toString());
         PrcBld = new ProcessBuilder(commd);
         try
         {
@@ -214,7 +212,6 @@ public class Replication extends Thread {
         commd.add("-U"); // utilisateur
         commd.add("cesi");
         commd.add("projetcesi2");//Nom de la base
-        System.out.println("creation locale :" +commd.toString());
         PrcBld = new ProcessBuilder(commd);
         try
         {
@@ -281,7 +278,6 @@ public class Replication extends Thread {
         commd.add("-U"); // utilisateur
         commd.add("cesi");
         commd.add(PATH_BAK);
-        System.out.println("restau locale :" +commd.toString());
         PrcBld = new ProcessBuilder(commd);
         try
         {

@@ -54,13 +54,12 @@ public class Synchro {
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.OFF);
                 sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory() ;
-             } catch (Throwable ex) {
-               Logger log = Logger.getLogger("org.hibernate");
-               log.setLevel(Level.WARNING);  
+             } catch (Throwable ex) { 
+               System.out.println(ex);
                return false;
              }
-        Logger log = Logger.getLogger("org.hibernate");
-        log.setLevel(Level.WARNING);  
+            Logger log = Logger.getLogger("org.hibernate");
+//            log.setLevel(Level.WARNING);
         sessionFactory.close();
         return true;
     }
