@@ -1,7 +1,7 @@
 package views;
 
+import classes.WhitePanel;
 import controllers.getInterlocuteurInfos;
-import controllers.getLoginInfos;
 import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.Interlocuteur;
-import classes.WhitePanel;
 
 public class InterlocuteurDialog extends JDialog {
 
@@ -66,7 +65,6 @@ public class InterlocuteurDialog extends JDialog {
         fax.setPreferredSize(new Dimension(250, 25));
         mail = new JTextField();
         mail.setPreferredSize(new Dimension(250, 25));
-        // panInfos.setBorder(new EmptyBorder(60, 60, 60, 60) );
         panInfos.setBorder(BorderFactory.createTitledBorder("Informations interlocuteur"));
         WhitePanel name = new WhitePanel();
         name.setLayout(new FlowLayout());
@@ -125,7 +123,6 @@ public class InterlocuteurDialog extends JDialog {
         WhitePanel control = new WhitePanel();
         JButton okBouton = new JButton("OK");
         //recupere infos BDD
-        System.out.println("DIALOG SHOWING INTER ID " + inter_id);
         interInstance = InterlocuteurInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("interid", inter_id);
@@ -141,7 +138,6 @@ public class InterlocuteurDialog extends JDialog {
         }
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                // zInfo = new getInterlocuteurInfos(login.getText(), pass.getText());
                 setVisible(false);
             }
         });
@@ -196,22 +192,19 @@ public class InterlocuteurDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             String buttonText = ((JButton) e.getSource()).getText();
-            System.out.println("Button is : " + buttonText);
             if ("Modifier".equals(buttonText))
             {
                 enable_all();
                 btn_modif.setText("Valider");
-               
+
             }
             else
             {
                 for (Interlocuteur in : inter)
                 {
-                   // System.out.println("FOUR ID :" +in.getFourid());
                     in.setInternom(nom.getText());
                     in.setInterprenom(prenom.getText());
                     in.setIntertel(tel.getText());
-                    //in.setInter(nom.getText());
                     in.setIntermail(mail.getText());
                     interInstance.updaterBaseDeDonnees(in);
                 }

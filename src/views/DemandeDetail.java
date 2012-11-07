@@ -15,8 +15,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -28,16 +26,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableColumn;
-import models.DetailDmd;
-import models.ModelesTables;
+import models.Commande;
 import models.CurrentDatas;
 import models.Demande;
-import models.Commande;
-import models.Suivdossier;
-import org.hibernate.Hibernate;
+import models.DetailDmd;
+import models.ModelesTables;
 
 /**
  *
@@ -58,8 +51,6 @@ public class DemandeDetail extends KContainer {
     public DemandeDetail(int id) {
         super();
         demande_id = id;
-        //CurrentDatas cur = CurrentDatas.getInstance();
-        //cur.setSoc_id(demande_id);
         initPanel();
     }
 
@@ -90,8 +81,6 @@ public class DemandeDetail extends KContainer {
         content.setPreferredSize(new Dimension(1000, 750));
         detailDmd.setPreferredSize(new Dimension(650, 750));
         detailDmd.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
-        //  System.out.println("CMD-ID: "+this.demande_id);
-        //title.setText("DETAIL COMMANDE "+ this.demande_id);
         TableDispatcher cp = new TableDispatcher();
         TableDispatcher ld = new TableDispatcher();
         /**
@@ -125,8 +114,8 @@ public class DemandeDetail extends KContainer {
         listeDevis.setLayout(new BorderLayout());
         bottom_bottom.setLayout(new BoxLayout(bottom_bottom, BoxLayout.LINE_AXIS));
 
-        
-            HibernateConnection.newConnect(HibernateConnection.online);
+
+        HibernateConnection.newConnect(HibernateConnection.online);
         //get cmd-detail from DB
         DetailDmdInstance DetailDdeInstance = DetailDmdInstance.getInstance();
         Hashtable h = new Hashtable();
@@ -158,7 +147,8 @@ public class DemandeDetail extends KContainer {
         ab5.add(jLabel14);
 
         int etat = dd.get(0).getDemandeetat();
-        if (etat == 100) {
+        if (etat == 100)
+        {
             JButton generateDemande = new JButton("Valider la commande");
             ab5.add(generateDemande);
             generateDemande.addActionListener(new DemandeDetail.generateDemandeListener());
@@ -235,9 +225,6 @@ public class DemandeDetail extends KContainer {
         //    @Override
         public void actionPerformed(ActionEvent e) {
 
-//            JOptionPane jop4 = new JOptionPane();
-//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("devis pour demande n° :" + idDemande);
             Createdevis devisForm = new Createdevis(user, idDemande);
             fen.RenewContener(devisForm.getPanel());
         }
@@ -254,22 +241,22 @@ public class DemandeDetail extends KContainer {
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
         }
     }
-    
-    private  class generateDemandeListener implements ActionListener {
+
+    private class generateDemandeListener implements ActionListener {
 
         public generateDemandeListener() {
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-        DemandeInstance DmdeInstance = DemandeInstance.getInstance();
-        Hashtable h = new Hashtable();
-        h.put("demandeid", demande_id);
-        ddd = DmdeInstance.GetDemandes("where demandeid = :demandeid", h);
-            
-            
-            
+
+            DemandeInstance DmdeInstance = DemandeInstance.getInstance();
+            Hashtable h = new Hashtable();
+            h.put("demandeid", demande_id);
+            ddd = DmdeInstance.GetDemandes("where demandeid = :demandeid", h);
+
+
+
             Commande cmd = new Commande();
             cmd.setUtiid(ddd.get(0).getUtiid());
             cmd.setInterid(ddd.get(0).getInterid());
@@ -281,20 +268,20 @@ public class DemandeDetail extends KContainer {
             cmd.setComsuppr(false);
 
             HibernateConnection connection = HibernateConnection.getInstance();
-            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE deviid = "+ddd.get(0).getDemandeid()+"  and devetat = 'Accepté'").uniqueResult();
+            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE deviid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
             cmd.setComprix(value);
-            
+
             CommandeInstance cmd_inst = CommandeInstance.getInstance();
             cmd_inst.setCommande(cmd);
             cmd_inst.ajouterDansBaseDeDonnees();
-            
-            
-            
+
+
+
             CurrentDatas cur = CurrentDatas.getInstance();
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
-            
-            
-            
+
+
+
         }
     }
 }

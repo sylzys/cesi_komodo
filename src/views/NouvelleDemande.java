@@ -4,47 +4,13 @@
  */
 package views;
 
-import classes.BackgroundPanel;
-import classes.LinkLabelData;
-import com.google.common.base.Strings;
-import controllers.UserActif;
-import instances.ClientInstance;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import models.Client;
 import classes.WhitePanel;
 import controllers.getDemandeInfos;
 import instances.DemandeInstance;
 import instances.InterlocuteurInstance;
-import instances.SuivDossierInstance;
-import java.util.Hashtable;
-import java.util.List;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.border.EmptyBorder;
-import models.Demande;
-import models.Interlocuteur;
-import models.Suivdossier;
-import controllers.getLoginInfos;
-import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -53,8 +19,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
-import org.hibernate.Hibernate;
-import org.hibernate.Transaction;
+import models.Demande;
+import models.Interlocuteur;
 
 public class NouvelleDemande extends JDialog {
 
@@ -83,7 +49,6 @@ public class NouvelleDemande extends JDialog {
         this.setSize(400, 270);
         this.setLocationRelativeTo(null);
         this.dmd_id = id;
-        //this.cli_id = cli_id;
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.initComponent();
@@ -145,10 +110,7 @@ public class NouvelleDemande extends JDialog {
         cb_interlo.addItem("Interlocuteurs");
         for (final Interlocuteur in : inter)
         {
-            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
-            cb_interlo.addItem((in.getInterid()+ ". " +in.getInterprenom() + " " + in.getInternom()));
-           // LinkLabelData LblInter = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
-        
+            cb_interlo.addItem((in.getInterid()+ ". " +in.getInterprenom() + " " + in.getInternom()));        
         
         }
         lbl_interlo.setPreferredSize(new Dimension(130, 30));
@@ -171,7 +133,6 @@ public class NouvelleDemande extends JDialog {
         panel3.add(label6, BorderLayout.WEST);
         panel3.setBorder(new EmptyBorder(30, 5, 30, 5));
       
-       // panInfos.add(left);
 
         content.setBackground(Color.white);
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -210,33 +171,7 @@ public class NouvelleDemande extends JDialog {
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 
-    private void disable_all() {
-//        nom.setDisabledTextColor(Color.black);
-//        nom.setEnabled(false);
-//        prenom.setDisabledTextColor(Color.black);
-//        prenom.setEnabled(false);
-//        tel.setDisabledTextColor(Color.black);
-//        tel.setEnabled(false);
-//        fax.setDisabledTextColor(Color.black);
-//        fax.setEnabled(false);
-//        mail.setDisabledTextColor(Color.black);
-//        mail.setEnabled(false);
-//        btn_cancel.setEnabled(false);
-    }
-
-    private void enable_all() {
-//        nom.setDisabledTextColor(Color.black);
-//        nom.setEnabled(true);
-//        prenom.setDisabledTextColor(Color.black);
-//        prenom.setEnabled(true);
-//        tel.setDisabledTextColor(Color.black);
-//        tel.setEnabled(true);
-//        fax.setDisabledTextColor(Color.black);
-//        fax.setEnabled(true);
-//        mail.setDisabledTextColor(Color.black);
-//        mail.setEnabled(true);
-//        btn_cancel.setEnabled(true);
-    }
+  
     
     private void addToDataBase() {
             Demande dmde = new Demande();

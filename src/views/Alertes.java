@@ -4,30 +4,23 @@
  */
 package views;
 
-import classes.ButtonData;
-import classes.LabelData;
 import classes.LinkLabelData;
 import controllers.UserActif;
 import controllers.getInterlocuteurInfos;
 import instances.AlerteInstance;
 import instances.HibernateConnection;
 import instances.SuivDossierInstance;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.plaf.IconUIResource;
 import models.GetAlerte;
 import models.Suivdossier;
 
@@ -41,7 +34,10 @@ public class Alertes extends KContainer{
     List<GetAlerte> l_alerts;
     Boolean histo = false;
     Integer filter_ste = -1;
-    
+    AlerteInstance AlertInstance = AlerteInstance.getInstance();
+    SuivDossierInstance AltInstance = SuivDossierInstance.getInstance();
+
+
     public Alertes (UserActif user) {
         // pour affichage nouvelles alertes
         super();
@@ -170,7 +166,6 @@ public class Alertes extends KContainer{
     
     private List<GetAlerte> getAlertes() {
         // get alertes
-        AlerteInstance AlertInstance = AlerteInstance.getInstance();
         String where = "";
         if (this.filter_ste > -1) {
             where = "cliid=" + this.filter_ste;
@@ -191,7 +186,6 @@ public class Alertes extends KContainer{
     private void openInter(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
         InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, lbl_tmp.getId());
-        System.out.println("SHOWING INTER ID " + lbl_tmp.getId());
         getInterlocuteurInfos interInfos = interd.showZDialog(lbl_tmp.getId());
     }
     
@@ -203,7 +197,6 @@ public class Alertes extends KContainer{
     private void readCmd(MouseEvent evt) {
         LinkLabelData lbl_tmp = (LinkLabelData)evt.getComponent();
         
-        SuivDossierInstance AltInstance = SuivDossierInstance.getInstance();
         Suivdossier alerte;
         List<Suivdossier> alts = AltInstance.GetSuivDossier("suivdosid = " + lbl_tmp.getId(), new Hashtable());
         alerte = alts.get(0);

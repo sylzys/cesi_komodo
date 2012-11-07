@@ -49,7 +49,6 @@ public class loginDialog extends JDialog {
         login.setPreferredSize(new Dimension(150, 25));
         pass = new JPasswordField();
         pass.setPreferredSize(new Dimension(150, 25));
-        // panInfos.setBorder(new EmptyBorder(60, 60, 60, 60) );
         panInfos.setBorder(BorderFactory.createTitledBorder("Entrez vos identifiants"));
         loginLabel = new JLabel("Identifiant :");
         panInfos.add(loginLabel);

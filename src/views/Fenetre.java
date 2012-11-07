@@ -1,24 +1,21 @@
 package views;
 
 import controllers.Replication;
-import controllers.UserActif;
 import controllers.Synchro;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import javax.swing.*;
+import controllers.UserActif;
 import controllers.getLoginInfos;
-import instances.ClientInstance;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.Graphics;
 import models.CurrentDatas;
 
 /**
@@ -42,24 +39,9 @@ public class Fenetre extends JFrame {
             alertes_histo = new JMenuItem("Historique"),
             afficher = new JMenuItem("Afficher"),
             creer = new JMenuItem("Creer");
+    private CurrentDatas cd = CurrentDatas.getInstance();
     //toolbar
     private JToolBar toolbar = new JToolBar() ;
-//    {
-//        @Override
-//        protected void paintComponent(Graphics g) {
-//
-//            //Image image = getToolkit().getImage("src/MainFrame/Images/xtremeCalliBottom.png");
-//            Image image = getToolkit().getImage("ressources/images/skeletal.jpg");
-//            super.paintComponent(g);
-//            if (image != null)
-//            {
-//                if (image != null)
-//                {
-//                    g.drawImage(image, (this.getWidth() / 2) - (image.getWidth(this) / 2), (this.getHeight() / 2) - (image.getHeight(this) / 2), image.getWidth(this), image.getHeight(this), this); //(image,location x, location y, size x, size y)
-//                }
-//            }
-//        }
-//    };
 
     
     private JButton logout = new JButton("Deconnexion");
@@ -78,39 +60,39 @@ public class Fenetre extends JFrame {
             this.setResizable(false);
             boolean login_ok = false;
 
-//        while (!login_ok)
-//        {
-//            loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
-//            getLoginInfos zInfos = zd.showZDialog();
-//            JOptionPane jop = new JOptionPane();
-//            System.out.println(zInfos.toString());
-//            if ("-NA-".equals(zInfos.toString()))
-//            {
-//                System.exit(0);
-//            }
-//            String[] login = zInfos.toString().split("#");
-//            if (!login[0].isEmpty() && !login[1].isEmpty())
-//            {
-//                user = new UserActif(login[0]);
-//                if (user.verify(login[1]))
-//                {
-//                    break;
-//                }
-//                else
-//                {
-//                    JOptionPane jop3 = new JOptionPane();
-//                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-//                }
-//            }
-//            else
-//            {
-//                JOptionPane jop4 = new JOptionPane();
-//                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+        while (!login_ok)
+        {
+            loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
+            getLoginInfos zInfos = zd.showZDialog();
+            JOptionPane jop = new JOptionPane();
+            System.out.println(zInfos.toString());
+            if ("-NA-".equals(zInfos.toString()))
+            {
+                System.exit(0);
+            }
+            String[] login = zInfos.toString().split("#");
+            if (!login[0].isEmpty() && !login[1].isEmpty())
+            {
+                user = new UserActif(login[0]);
+                if (user.verify(login[1]))
+                {
+                    break;
+                }
+                else
+                {
+                    JOptionPane jop3 = new JOptionPane();
+                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            else
+            {
+                JOptionPane jop4 = new JOptionPane();
+                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+            }
+        }
             //menu
-            user = new UserActif("admin");
-            CurrentDatas cd = CurrentDatas.getInstance();
+            //user = new UserActif("admin");
+            
             cd.setUser(user);
             afficher.addActionListener(new DisplayListener());
             this.societes.add(afficher);
@@ -152,7 +134,6 @@ public class Fenetre extends JFrame {
             username.setText(user.getFullName());
             username.setBorder(new EmptyBorder(0, 20, 0, 20));
             toolbar.add(Box.createHorizontalGlue());
-            //toolbar.setBackground(Color.red);
             lblOnline.setToolTipText("Passer en mode hors ligne");
             lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             lblReseau.setText("Vous n'êtes pas connecté");

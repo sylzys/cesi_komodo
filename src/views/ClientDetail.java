@@ -38,7 +38,6 @@ import models.CurrentDatas;
 import models.Demande;
 import models.DetailCommande;
 import models.Interlocuteur;
-import org.dom4j.CDATA;
 import org.hibernate.Query;
 
 /**
@@ -54,16 +53,15 @@ public class ClientDetail extends KContainer {
     private List<Demande> demande;
     private JComboBox cb_demande = new JComboBox(),
             cb_commande = new JComboBox();
-    private InterlocuteurInstance interInstance;
     private List<Interlocuteur> inter;
     private Client cli = null;
-
+    private InterlocuteurInstance interInstance = InterlocuteurInstance.getInstance();
+    private DemandeInstance dd = DemandeInstance.getInstance();
+    private ClientInstance ci = ClientInstance.getInstance();
+    
     public ClientDetail(int id) {
         super();
         cli_id = id;
-        System.out.println("IN client detail");
-//        CurrentDatas cur = CurrentDatas.getInstance();
-//        cur.setSoc_id(cli_id);
         initPanel();
 
     }
@@ -88,11 +86,6 @@ public class ClientDetail extends KContainer {
                 newDemand = new JButton("Creer une demande"),
                 validateDmd = new JButton("Rechercher"),
                 validateCmd = new JButton("Rechercher");
-//        //JComboBox
-//        JComboBox cb_demande = new JComboBox(),
-//                cb_commande = new JComboBox();
-
-
 
         content.setLayout(new BorderLayout());
         content.setPreferredSize(new Dimension(1000, 768));
@@ -104,24 +97,15 @@ public class ClientDetail extends KContainer {
         {
             Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
             query.setParameter("cliid", cli_id);
-            //  query.setParameter("utiid", this.user.getId());
             cli = (Client) query.uniqueResult();
-
-            System.out.println("CLIENT USED : " + cli);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }//END DB CONNECTION
-//            ClientInstance ci = ClientInstance.getInstance();
-//            Hashtable h = new Hashtable();
-//            h.put("cliid", cli_id);
-//            //récupère la liste.
-//            cli.GetClients("where cliid = :cliid", h);
-        // top.setBackground(Color.J);
+
         top.setLayout(new BorderLayout());
 
-        //cliInfos.setBackground(Color.J);
         cliDetail.setPreferredSize(new Dimension(780, 150));
 
         //ajout des Listeners sur les boutons
@@ -131,13 +115,12 @@ public class ClientDetail extends KContainer {
         newDemand.addActionListener(new newDmdListener());
         //adresse, contacts raison sociale etc
 
-        //cliDetail.setBackground(Color.J);
+        
         cliDetail.setLayout(new BorderLayout());
         cliInfos.setLayout(new FlowLayout(0, 50, 0));
 
         //adresse
         JPanel cliAddr = new JPanel();
-        //cliAddr.setBackground(Color.J);
         JLabel addr = new JLabel("<html>" + cli.getCliadresse() + "<br />"
                 + cli.getClicp() + "<br>"
                 + cli.getCliville() + "<br>"
@@ -149,7 +132,6 @@ public class ClientDetail extends KContainer {
 
         //contacts
         JPanel cliContact = new JPanel();
-        //cliContact.setBackground(Color.J);
         JLabel contact = new JLabel("<html>Tel: " + cli.getClitel() + "<br>Fax: "
                 + cli.getClifax() + "<br>Mail: "
                 + cli.getClimail() + "<br>Web Site: "
@@ -161,7 +143,6 @@ public class ClientDetail extends KContainer {
 
         //raison sociale
         JPanel cliRS = new JPanel();
-        //  cliRS.setBackground(Color.J);
         JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
                 + cli.getCliactivite() + "<br>SIRET: "
                 + cli.getClisiret() + "<br>CA: "
@@ -171,17 +152,15 @@ public class ClientDetail extends KContainer {
 
         //Boutons contact
 
-        //cliButtons.setBackground(Color.J);
         cliButtons.setLayout(new FlowLayout());
         cliButtons.add(new JLabel("Contacts : "));
-        interInstance = InterlocuteurInstance.getInstance();
+        
         Hashtable hh = new Hashtable();
         hh.put("cliid", cli_id);
         hh.put("intersuppr", false);
         inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
         for (final Interlocuteur in : inter)
         {
-            System.out.println("INTER : " + in.getInternom() + in.getInterprenom());
             LinkLabelData LblInter = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
             LblInter.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
@@ -206,7 +185,6 @@ public class ClientDetail extends KContainer {
 
                 private void supprInter(MouseEvent evt) {
                     int userChoice = JOptionPane.showConfirmDialog(null, "Supprimer l'interlocuteur ?", "Supprimer l'interlocuteur ?", JOptionPane.YES_NO_OPTION);
-                    //JOptionPane.showMessageDialog(null, userChoice, "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
                     if (userChoice == 0)
                     {
                         LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
@@ -220,9 +198,6 @@ public class ClientDetail extends KContainer {
             cliButtons.add(LblSupprInter);
             cliButtons.add(Box.createHorizontalStrut(5));
         }
-//        LinkLabelData LblCmd = new LinkLabelData("Commande n. 10", 10);
-//        LblCmd.setIcon(new ImageIcon("ressources/images/eye.gif"));
-
 
         cliButtons.add(addContact);
 
@@ -230,17 +205,15 @@ public class ClientDetail extends KContainer {
         cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
         //Panneau des combos box
-        // comboPanel.setBackground(Color.J);
         comboPanel.setLayout(new BorderLayout());
         comboPanel.add(newDemand, BorderLayout.NORTH);
 
         //ComboBox demandes
         JPanel comboDmd_panel = new JPanel();
-        // comboDmd_panel.setBackground(Color.J);
         comboDmd_panel.setLayout(new FlowLayout());
 
         //get detail demande
-        DemandeInstance dd = DemandeInstance.getInstance();
+        
         Hashtable hhh = new Hashtable();
         hhh.put("cliid", cli_id);
         demande = dd.GetDemandes("where cliid = :cliid", hhh);
@@ -248,7 +221,6 @@ public class ClientDetail extends KContainer {
         cb_demande.addItem("Demandes");
         for (Demande dddd : demande)
         {
-            System.out.println("Etat : " + dddd.getDemandeetat());
             cb_demande.addItem((dddd.getDemandeid()));
         }
 
@@ -269,11 +241,6 @@ public class ClientDetail extends KContainer {
         cb_commande.addItem("Commandes");
         for (DetailCommande dcc : detail)
         {
-            System.out.println("Name : " + dcc.getInternom());
-            System.out.println("Prénom : " + dcc.getInteprenom());
-            System.out.println("Prix : " + dcc.getComprix());
-            System.out.println("Etat : " + dcc.getCometat());
-            System.out.println("date ?  : " + dcc.getComdate());
             cb_commande.addItem(dcc.getComid());
         }
 
@@ -304,17 +271,14 @@ public class ClientDetail extends KContainer {
         LblSupprSte.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                System.out.println("CLICKED");
                 goSupprSte(evt);
             }
 
             private void goSupprSte(MouseEvent evt) {
-//                LinkLabelData lbl_tmp = (LinkLabelData) evt.getComponent();
-//                modif_ste(lbl_tmp.getId());
+
                 //oui = 0
                 //non = 1
                 int userChoice = JOptionPane.showConfirmDialog(null, "upprimer le client ?", "Supprimer le client ?", JOptionPane.YES_NO_OPTION);
-                //JOptionPane.showMessageDialog(null, userChoice, "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
                 if (userChoice == 0)
                 {
                     deleteClient();
@@ -341,7 +305,6 @@ public class ClientDetail extends KContainer {
 
         //suivi satisfaction
         JPanel suivi_satisfaction = new JPanel();
-        //   suivi_satisfaction.setBackground(Color.J);
         suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
         suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
         bottom.add(suivi_satisfaction);
@@ -349,7 +312,6 @@ public class ClientDetail extends KContainer {
 
         //alertes
         JPanel alertes = new JPanel();
-        // alertes.setBackground(Color.J);
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
         alertes.setPreferredSize(new Dimension(120, 50));
         JButton btn_view_alertes = new JButton("Voir les alertes");
@@ -375,12 +337,11 @@ public class ClientDetail extends KContainer {
 
 
         //refresh de la fenetre
-        //JOptionPane.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
 
         fen.conteneur.setVisible(false);
         fen.RenewContener(this.getPanel());
         fen.conteneur.setVisible(true);
-        // }
+
     }
 
     private class addContactListener implements ActionListener {
@@ -402,11 +363,6 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //Fenetre fen = Fenetre.getInstance();
-            //JOptionPane jop4 = new JOptionPane();
-            //jop4.showMessageDialog(null, "Affichage commande séléctionnée\n" + cb_commande.getSelectedItem().toString(), "ValidateCmd", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("type :" + (cb_commande.getSelectedItem()).getClass());
-            // CommandeDetail cd = new CommandeDetail(user, cli_id, (Integer)(cb_commande.getSelectedItem()));
             CommandeDetail cd = new CommandeDetail((Integer) (cb_commande.getSelectedItem()));
             fen.RenewContener(cd.getPanel());
         }
@@ -420,9 +376,6 @@ public class ClientDetail extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-//            JOptionPane jop4 = new JOptionPane();
-//            jop4.showMessageDialog(null, "Affichage demmande séléctionnée", "ValidateDmd", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("type :" + (cb_demande.getSelectedItem()).getClass());
             DemandeDetail demande = new DemandeDetail((Integer) cb_demande.getSelectedItem());
             fen.RenewContener(demande.getPanel());
         }
@@ -446,9 +399,7 @@ public class ClientDetail extends KContainer {
 
     private void showInterlocuteur(int id) {
         InterlocuteurDialog interd = new InterlocuteurDialog(null, "Information interlocuteur", true, id);
-        System.out.println("SHOWING INTER ID " + id);
         getInterlocuteurInfos interInfos = interd.showZDialog(id);
-        //JOptionPane jop = new JOptionPane();
 
         if (HibernateConnection.online == false)
         {
@@ -462,10 +413,9 @@ public class ClientDetail extends KContainer {
     }
 
     public void deleteClient() {
-        ClientInstance ci = ClientInstance.getInstance();
+        
         cli.setClisuppr(true);
         ci.updaterBaseDeDonnees(cli);
-        Fenetre fen = Fenetre.getInstance();
         CurrentDatas cd = CurrentDatas.getInstance();
         Affichage af = new Affichage(cd.getUser());
         fen.RenewContener(af.getPanel());
@@ -490,8 +440,6 @@ public class ClientDetail extends KContainer {
         addInterlocuteurDialog addInter = new addInterlocuteurDialog(null, "Ajouter un interlocuteur", true, cli_id);
 
         getInterlocuteurInfos interInfos = addInter.showZDialog(cli_id);
-        // JOptionPane jop = new JOptionPane();
-        System.out.println(interInfos.toString());
 
         if ("N/A" != interInfos.toString())
         {
@@ -515,15 +463,13 @@ public class ClientDetail extends KContainer {
             {
                 HibernateConnection.newConnect(true);
             }
-            new ClientDetail(cli_id);
+            ClientDetail cdet = new ClientDetail(cli_id);
         }
     }
 
     private void modif_ste(int id) {
         ModifSteDialog modif = new ModifSteDialog(null, "Modification client", true, id);
-        System.out.println("MODIFYING CLIENT ID " + id);
         getSteInfos interInfos = modif.showZDialog(id);
-        //JOptionPane jop = new JOptionPane();
 
         if (HibernateConnection.online == false)
         {

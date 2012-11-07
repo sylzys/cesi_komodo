@@ -1,29 +1,20 @@
 package views;
 
 import classes.BackgroundPanel;
+import com.google.common.base.Strings;
 import controllers.getSteInfos;
-import controllers.getLoginInfos;
-import instances.InterlocuteurInstance;
+import instances.ClientInstance;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import models.Interlocuteur;
-import classes.WhitePanel;
-import com.google.common.base.Strings;
-import instances.ClientInstance;
-import instances.HibernateConnection;
-import java.awt.Font;
-import java.awt.Image;
 import models.Client;
-import org.hibernate.Query;
-import sun.java2d.pipe.DrawImage;
 
 public class ModifSteDialog extends JDialog {
 
@@ -69,10 +60,8 @@ public class ModifSteDialog extends JDialog {
         super(parent, title, modal);
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
-        //this.inter_id = id;
         this.cli_id = id;
         this.setResizable(false);
-        //this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         this.initComponent();
     }
 
@@ -86,14 +75,12 @@ public class ModifSteDialog extends JDialog {
         BackgroundPanel content = new BackgroundPanel();
 
         content.setLayout(new FlowLayout());
-        //content.setBorder(BorderFactory.createEmptyBorder(60, 0, 0, 0));
-        //content.setBackground(Color.WHITE);
+        
         //LEFT PANEL
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
         left.setPreferredSize(new Dimension(400, 450));
         //nom ste
         JPanel nom = new JPanel();
-        //nom.setBackground(Color.WHITE);
         nom.setLayout(new FlowLayout());
         nom.add(lbl_clinom);
         cli_nom.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -103,7 +90,6 @@ public class ModifSteDialog extends JDialog {
         left.add(Box.createVerticalStrut(30));
         //addr
         JPanel addr = new JPanel();
-        //addr.setBackground(Color.WHITE);
         addr.setLayout(new FlowLayout());
         addr.add(lbl_cliadd);
         cli_add.setPreferredSize(new Dimension(200, 30));
@@ -112,17 +98,14 @@ public class ModifSteDialog extends JDialog {
         left.add(addr);
         //cp
         JPanel cp = new JPanel();
-        // cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
         cp.add(lbl_clicp);
         cli_cp.setPreferredSize(new Dimension(200, 30));
         cli_cp.setAlignmentX(Box.RIGHT_ALIGNMENT);
         cp.add(cli_cp);
         left.add(cp);
-        //left.add(Box.createVerticalStrut(30));
         //ville
         JPanel ville = new JPanel();
-        // cp.setBackground(Color.WHITE);
         ville.setLayout(new FlowLayout());
         ville.add(lbl_cliville);
         cli_ville.setPreferredSize(new Dimension(200, 30));
@@ -132,7 +115,6 @@ public class ModifSteDialog extends JDialog {
         left.add(Box.createVerticalStrut(30));
         //tel
         JPanel tel = new JPanel();
-        //tel.setBackground(Color.WHITE);
         tel.setLayout(new FlowLayout());
         tel.add(lbl_clitel);
         cli_tel.setPreferredSize(new Dimension(200, 30));
@@ -141,7 +123,6 @@ public class ModifSteDialog extends JDialog {
         left.add(tel);
         //fax
         JPanel fax = new JPanel();
-        // fax.setBackground(Color.WHITE);
         fax.setLayout(new FlowLayout());
         fax.add(lbl_clifax);
         cli_fax.setPreferredSize(new Dimension(200, 30));
@@ -151,7 +132,6 @@ public class ModifSteDialog extends JDialog {
         left.add(Box.createVerticalStrut(30));
         //mail
         JPanel mail = new JPanel();
-        // mail.setBackground(Color.WHITE);
         mail.setLayout(new FlowLayout());
         mail.add(lbl_climail);
         cli_mail.setPreferredSize(new Dimension(200, 30));
@@ -160,7 +140,6 @@ public class ModifSteDialog extends JDialog {
         left.add(mail);
         //fax
         JPanel web = new JPanel();
-        // web.setBackground(Color.WHITE);
         web.setLayout(new FlowLayout());
         web.add(lbl_clisite);
         cli_site.setPreferredSize(new Dimension(200, 30));
@@ -175,7 +154,6 @@ public class ModifSteDialog extends JDialog {
         right.setPreferredSize(new Dimension(400, 450));
         //dirigeant
         JPanel dir = new JPanel();
-        //   dir.setBackground(Color.WHITE);
         dir.setLayout(new FlowLayout());
         dir.add(lbl_clidir);
         cli_dir.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -185,7 +163,6 @@ public class ModifSteDialog extends JDialog {
         right.add(Box.createVerticalStrut(30));
         //addr
         JPanel naf = new JPanel();
-        //  naf.setBackground(Color.WHITE);
         naf.setLayout(new FlowLayout());
         naf.add(lbl_clinaf);
         cli_naf.setPreferredSize(new Dimension(200, 30));
@@ -194,7 +171,6 @@ public class ModifSteDialog extends JDialog {
         right.add(naf);
         //activité
         JPanel act = new JPanel();
-        // act.setBackground(Color.WHITE);
         act.setLayout(new FlowLayout());
         act.add(lbl_cliact);
         cli_act.setPreferredSize(new Dimension(200, 30));
@@ -204,7 +180,6 @@ public class ModifSteDialog extends JDialog {
         right.add(Box.createVerticalStrut(30));
         //siren
         JPanel siren = new JPanel();
-        // siren.setBackground(Color.WHITE);
         siren.setLayout(new FlowLayout());
         siren.add(lbl_clisiren);
         cli_siren.setPreferredSize(new Dimension(200, 30));
@@ -213,7 +188,6 @@ public class ModifSteDialog extends JDialog {
         right.add(siren);
         //siret
         JPanel siret = new JPanel();
-        //   siret.setBackground(Color.WHITE);
         siret.setLayout(new FlowLayout());
         siret.add(lbl_clisiret);
         cli_siret.setPreferredSize(new Dimension(200, 30));
@@ -236,7 +210,6 @@ public class ModifSteDialog extends JDialog {
         JButton cancel = new JButton("Annuler");
         val.addActionListener(new saveListener());
         cancel.addActionListener(new cancelListener());
-        //val.setHorizontalAlignment(SwingConstants.CENTER);
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout());
         buttons.add(val);
@@ -250,16 +223,13 @@ public class ModifSteDialog extends JDialog {
         Font f = new Font("Euphemia", Font.PLAIN, 14);
         title.setFont(f);
         title.setPreferredSize(new Dimension(1000, 30));
-        //this.panel.add(icon, BorderLayout.PAGE_START);
         content.add(left);
         content.add(right);
 
-        //this.getContentPane() = new BackgroundPanel();
         this.getContentPane().add(icon, BorderLayout.PAGE_START);
         this.getContentPane().add(title, BorderLayout.AFTER_LINE_ENDS);
         this.getContentPane().add(content, BorderLayout.PAGE_END);
-        //this.getContentPane().add(content, BorderLayout.CENTER);
-        // this.getContentPane().add(control, BorderLayout.SOUTH);
+        
         fill_all();
     }
 
@@ -321,9 +291,7 @@ public class ModifSteDialog extends JDialog {
             }
             else
             {
-                System.out.println("Champs NOK -> ");
-                JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, str, "Attention", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, str, "Attention", JOptionPane.ERROR_MESSAGE);
             }
             
         }
@@ -342,10 +310,8 @@ public class ModifSteDialog extends JDialog {
     }
     private String check_fields() {
         String str = "";
-        System.out.println("NOM -> " + cli_nom.getText());
         if (Strings.isNullOrEmpty(cli_nom.getText()) || cli_nom.getText().trim().isEmpty())
         {
-            // System.out.println("EMPTY STRING");
             str += "<html>Le champ <i>Nom Société</i> ne peut être vide<br />";
         }
         if (Strings.isNullOrEmpty(cli_add.getText()) || cli_add.getText().trim().isEmpty())
@@ -383,7 +349,6 @@ public class ModifSteDialog extends JDialog {
         {
             str += "</html>";
         }
-        System.out.println("RETURNING CHECKED : "+str);
         return str;
     }
 }

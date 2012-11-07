@@ -6,7 +6,6 @@ package views;
 
 import controllers.UserActif;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.ImageIcon;
@@ -14,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import models.ModelesTables;
 
 /**
  *
@@ -52,6 +50,5 @@ public class Accueil extends KContainer {
         
         this.panel.add(title, BorderLayout.PAGE_START);
         this.panel.add(icon, BorderLayout.PAGE_END);
-       // this.panel.add(content, BorderLayout.PAGE_END);
     }
 }

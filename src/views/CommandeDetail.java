@@ -5,15 +5,9 @@
 package views;
 
 import classes.ButtonData;
-import classes.LinkLabelData;
 import controllers.TableDispatcher;
-import controllers.UserActif;
-import controllers.getInterlocuteurInfos;
-import instances.CommandeInstance;
 import instances.DetailCdeInstance;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -24,14 +18,9 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.border.EmptyBorder;
-import models.Client;
-import models.Commande;
-import models.CurrentDatas;
 import models.DetailCommande;
 import models.ModelesTables;
 
@@ -54,9 +43,7 @@ public class CommandeDetail extends KContainer {
 
     @Override
     protected void initPanel() {
-//        ClientDetail cd_ = ClientDetail.getThis();
-//        System.out.println ("GETTIN LAST USED ID : " + cd_.cli_id);
-        JPanel content = new JPanel(),
+       JPanel content = new JPanel(),
                 listeCmd = new JPanel(),
                 detailCmd = new JPanel(),
                 top_right = new JPanel(),
@@ -65,14 +52,13 @@ public class CommandeDetail extends KContainer {
 
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
-        // listeCmd.setPreferredSize(new Dimension(500, 768));
+        
         detailCmd.setPreferredSize(new Dimension(450, 700));
 
         //demande un tabledispatcher
         TableDispatcher cp = new TableDispatcher();
         content.setBackground(Color.white);
         listeCmd.setBackground(Color.white);
-        // listeCmd.setBorder(new EmptyBorder(0, 0, 0, 20));
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 
         //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
@@ -122,9 +108,7 @@ public class CommandeDetail extends KContainer {
         public void actionPerformed(ActionEvent e) {
             ButtonData tmp = (ButtonData)e.getSource();
             ClientDetail cd = new ClientDetail(tmp.getId());
-            // System.out.println("RETOUR");
-            //CurrentDatas cur = CurrentDatas.getInstance();
-            //ClientDetail cd = new ClientDetail(cur.getSoc_id());
+           
         }
     }
     

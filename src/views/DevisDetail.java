@@ -6,38 +6,23 @@ package views;
 
 import controllers.TableDispatcher;
 import controllers.UserActif;
-import instances.DemandeInstance;
-import instances.DetailDmdInstance;
-import instances.NomenclatureInstance;
-import instances.DevisInstance;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableColumn;
-import models.Client;
-import models.DetailDmd;
 import models.ModelesTables;
 import models.CurrentDatas;
 import models.Demande;
-import tableModels.NomenclaturelistModel;
-import models.Nomenclature;
 import models.Devis;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -67,8 +52,6 @@ public class DevisDetail extends KContainer {
     public DevisDetail(int id) {
         super();
         devis_id = id;
-        //CurrentDatas cur = CurrentDatas.getInstance();
-        //cur.setSoc_id(demande_id);
         initPanel();
     }
 
@@ -82,7 +65,6 @@ public class DevisDetail extends KContainer {
                 sousTitre = new JPanel();
         JLabel statut = new JLabel();
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
-    //    content.setPreferredSize(new Dimension(1000, 750));
         container.setPreferredSize(new Dimension(702, 451));
 
         content.setBackground(Color.white);
@@ -180,11 +162,10 @@ public class DevisDetail extends KContainer {
         //    @Override
         public void actionPerformed(ActionEvent e) {
 
-            System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider");
+            
             Transaction tx3 = HibernateConnection.getSession().beginTransaction();
             Session session = HibernateConnection.getSession();
             Devis dvs = (Devis) session.get(Devis.class, devis_id);
-            System.out.println("Updating Record");
             dvs.setDevid(devis_id);
             dvs.setDevetat("Accepté");
             session.update(dvs);
@@ -193,13 +174,11 @@ public class DevisDetail extends KContainer {
             Transaction tx4 = HibernateConnection.getSession().beginTransaction();
             Session session2 = HibernateConnection.getSession();
             Demande dmdd = (Demande) session2.get(Demande.class, idDemande);
-            System.out.println("Updating Record");
             dmdd.setDemandeid(idDemande);
             dmdd.setDemandeetat(100);
             session2.update(dmdd);
             tx4.commit();
             
-            System.out.println("Done");
             DemandeDetail devisForm = new DemandeDetail(idDemande);
             HibernateConnection.newConnect(HibernateConnection.online);
             fen.RenewContener(devisForm.getPanel());
@@ -213,16 +192,13 @@ public class DevisDetail extends KContainer {
 
         //    @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("update devis pour devis n° :" + devis_id + "valeur : valider");
             Transaction tx3 = HibernateConnection.getSession().beginTransaction();
             Session session = HibernateConnection.getSession();
             Devis dvs = (Devis) session.get(Devis.class, devis_id);
-            System.out.println("Updating Record");
             dvs.setDevid(devis_id);
             dvs.setDevetat("Refusé");
             session.update(dvs);
             tx3.commit();
-            System.out.println("Done");
             DemandeDetail devisForm = new DemandeDetail(idDemande);
             fen.RenewContener(devisForm.getPanel());
         }

@@ -31,29 +31,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 /**
  *
  * @author slavie
  */
 public class SynchroView extends KContainer {
+
     private String req;
     private String fic;
     private String libreq;
     private JCheckBox chkslct = new JCheckBox();
     private List<CheckBoxData> listchk;
     private List<LabelData> listlbl;
-    JLabel title = new JLabel ();
+    JLabel title = new JLabel();
+
     public SynchroView(UserActif user) {
-    super();
-    this.user = user;
-    initPanel();
+        super();
+        this.user = user;
+        initPanel();
     }
 
     @Override
-    protected
-    void initPanel() {
+    protected void initPanel() {
         listchk = new ArrayList<CheckBoxData>();
         listlbl = new ArrayList<LabelData>();
         JPanel content = new JPanel();
@@ -61,9 +61,9 @@ public class SynchroView extends KContainer {
         JScrollPane scroll = new JScrollPane(center);
         JPanel titre = new JPanel();
         JPanel pnlbtn = new JPanel();
-        JButton button = new JButton("Synchroniser"); 
+        JButton button = new JButton("Synchroniser");
         JLabel lblSynchro = new JLabel(new ImageIcon("ressources/images/synchro.png"));
-        Synchro sync = new Synchro();        
+        Synchro sync = new Synchro();
         titre.setOpaque(false);
         pnlbtn.setOpaque(false);
         titre.add(title, BorderLayout.CENTER);
@@ -71,17 +71,17 @@ public class SynchroView extends KContainer {
         content.setOpaque(false);
         content.setLayout(new BorderLayout());
         center.setLayout(new BorderLayout());
-        scroll.setPreferredSize(new Dimension(800,500));
-        center.scrollRectToVisible(new Rectangle(0,center.getHeight(),10,10));
-        if(HibernateConnection.online == false)
+        scroll.setPreferredSize(new Dimension(800, 500));
+        center.scrollRectToVisible(new Rectangle(0, center.getHeight(), 10, 10));
+        if (HibernateConnection.online == false)
         {
-            title.setPreferredSize(new Dimension(350,100));
+            title.setPreferredSize(new Dimension(350, 100));
             title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=red>"
                     + "Vous ne pouvez pas synchroniser hors ligne</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
         }
-        else if(sync.emptyFic() == true)
-        {      
+        else if (sync.emptyFic() == true)
+        {
             FlowLayout flchk1 = new FlowLayout();
             JLabel lbl1 = new JLabel("<html><p color=blue>CLIENT</p></html>");
             JLabel lbl2 = new JLabel("<html><p color=blue>TABLE</p></html>");
@@ -112,38 +112,39 @@ public class SynchroView extends KContainer {
             fic = sync.readFic();
             StringTokenizer strtok = new StringTokenizer(fic, "||");
             int i = 0;
-            while (strtok.hasMoreTokens()) {
+            while (strtok.hasMoreTokens())
+            {
                 i = i + 1;
                 req = strtok.nextToken();
                 String[] decoup = req.split("interlocuteur:");
                 int interid = -1;
-                String requete ="";
-                if(decoup.length > 1)
+                String requete = "";
+                if (decoup.length > 1)
                 {
                     interid = Integer.parseInt(decoup[1]);
                     requete = decoup[0];
                 }
                 String[] decoup2 = req.split("client:");
                 String nomclient = "";
-                if(decoup2.length > 1)
+                if (decoup2.length > 1)
                 {
                     nomclient = decoup2[1];
                     requete = decoup2[0];
                 }
-                
+
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 Hashtable ht = new Hashtable();
                 ht.put("requete", requete);
-                ht.put("type",req);
-                
+                ht.put("type", req);
+
                 Hashtable ht2 = new Hashtable();
-                ht2.put("requete",req);
+                ht2.put("requete", req);
                 //NEW CHKBOXDATA
                 CheckBoxData chkbox = new CheckBoxData(i, ht);
                 //LabelData imgico = new LabelData();
                 //imgico.putData(String.valueOf(i), req);
-                LabelData lblimg = new LabelData(i, ht2); 
+                LabelData lblimg = new LabelData(i, ht2);
                 lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
                 lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 chkbox.setSelected(true);
@@ -169,102 +170,100 @@ public class SynchroView extends KContainer {
                 center.add(lblaction);
                 center.add(lblimg);
                 lblimg.addMouseListener(new MouseAdapter() {
-                public void mousePressed(MouseEvent me) {  
-                        JOptionPane jop = new JOptionPane();			
-                        int option = jop.showConfirmDialog(null, "Voulez-vous supprimer cette action ?", "Suppression de l'action", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        if(option == JOptionPane.OK_OPTION){
-                           LabelData lbldata = (LabelData)me.getComponent();
-                           Synchro sync = new Synchro();
-                           Hashtable tmp = lbldata.getData();   
-                           sync.delReq(tmp.get("requete").toString());
-                           Fenetre fen = Fenetre.getInstance();
-                           fen.RenewSnchro();			
-                        }       
-                }
-            });
+                    public void mousePressed(MouseEvent me) {
+                        int option = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette action ?", "Suppression de l'action", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if (option == JOptionPane.OK_OPTION)
+                        {
+                            LabelData lbldata = (LabelData) me.getComponent();
+                            Synchro sync = new Synchro();
+                            Hashtable tmp = lbldata.getData();
+                            sync.delReq(tmp.get("requete").toString());
+                            Fenetre fen = Fenetre.getInstance();
+                            fen.RenewSnchro();
+                        }
+                    }
+                });
             }
             chkslct.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(chkslct.isSelected() == true)
+                    if (chkslct.isSelected() == true)
                     {
-                         for(CheckBoxData chkdata: listchk)
-                         {
-                             chkdata.setSelected(true);
-                         }
+                        for (CheckBoxData chkdata : listchk)
+                        {
+                            chkdata.setSelected(true);
+                        }
                     }
                     else
                     {
-                        for(CheckBoxData chkdata: listchk)
-                         {
-                             chkdata.setSelected(false);
-                         }
+                        for (CheckBoxData chkdata : listchk)
+                        {
+                            chkdata.setSelected(false);
+                        }
                     }
                 }
             });
             center.setPreferredSize(new Dimension(750, 50 + (40 * i)));
-            title.setPreferredSize(new Dimension(420,100)); 
+            title.setPreferredSize(new Dimension(420, 100));
             title.setText("<html><center><h2>Synchronisation de la base de données</h2><br><p color=green>Sélectionnez "
                     + "les actions à sauvegarder dans la base de données en ligne</p></center></html>");
             lblSynchro.setVisible(false);
             button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            button.setPreferredSize(new Dimension(120,35));
+            button.setPreferredSize(new Dimension(120, 35));
             button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {  
-                Synchro sync = new Synchro();
-                List<Boolean> tabtest = new ArrayList<Boolean>();
-                JOptionPane jop = new JOptionPane();
-                for(CheckBoxData chkdata: listchk)
-                {
-                    Hashtable tmp = chkdata.getData();
-                    String requete = tmp.get("requete").toString();
-                    String ligne = tmp.get("type").toString();
-                    if(chkdata.isSelected() == true)
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Synchro sync = new Synchro();
+                    List<Boolean> tabtest = new ArrayList<Boolean>();
+                    for (CheckBoxData chkdata : listchk)
                     {
-                        boolean retour = sync.record(requete);
-                        tabtest.add(retour);
-                        if(retour == true)
+                        Hashtable tmp = chkdata.getData();
+                        String requete = tmp.get("requete").toString();
+                        String ligne = tmp.get("type").toString();
+                        if (chkdata.isSelected() == true)
                         {
-                            sync.delReq(ligne);
+                            boolean retour = sync.record(requete);
+                            tabtest.add(retour);
+                            if (retour == true)
+                            {
+                                sync.delReq(ligne);
+                            }
                         }
                     }
-                }
-                boolean valid = true;
-                for(Boolean booltest : tabtest)
-                {
-                    if(booltest == false)
+                    boolean valid = true;
+                    for (Boolean booltest : tabtest)
                     {
-                        valid = false;
+                        if (booltest == false)
+                        {
+                            valid = false;
+                        }
+                    }
+                    if (valid == true)
+                    {
+                        JOptionPane.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+                        Fenetre fen = Fenetre.getInstance();
+                        fen.RenewAccueil();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation. Contactez l'administrateur", "Erreur", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
-                if(valid == true)
-                {
-                      jop.showMessageDialog(null, "Vous êtes synchronisé avec la base en ligne", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
-                      Fenetre fen = Fenetre.getInstance();
-                      fen.RenewAccueil();
-                }
-                else
-                {
-                    jop.showMessageDialog(null, "Une erreur est survenue lors de la synchronisation. Contactez l'administrateur", "Erreur", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
             });
             pnlbtn.setBackground(Color.white);
             pnlbtn.add(button, BorderLayout.CENTER);
             pnlbtn.add(lblSynchro, BorderLayout.EAST);
             content.add(titre, BorderLayout.NORTH);
-            content.add(scroll,BorderLayout.CENTER);  
+            content.add(scroll, BorderLayout.CENTER);
             content.add(pnlbtn, BorderLayout.SOUTH);
         }
         else
         {
-            title.setPreferredSize(new Dimension(350,100));
+            title.setPreferredSize(new Dimension(350, 100));
             title.setText("<html><center<h2>Synchronisation de la base de données</h2><br><p color=red>"
                     + "Vous n'avez aucune action à sauvegarder</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
-        } 
+        }
 
         this.panel.add(content);
     }

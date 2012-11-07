@@ -1,7 +1,6 @@
 package views;
 
 import controllers.getInterlocuteurInfos;
-import controllers.getLoginInfos;
 import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -65,7 +64,6 @@ public class addInterlocuteurDialog extends JDialog {
         fax.setPreferredSize(new Dimension(250, 25));
         mail = new JTextField();
         mail.setPreferredSize(new Dimension(250, 25));
-        // panInfos.setBorder(new EmptyBorder(60, 60, 60, 60) );
         panInfos.setBorder(BorderFactory.createTitledBorder("Informations interlocuteur"));
         JPanel name = new JPanel();
         name.setLayout(new FlowLayout());
@@ -97,21 +95,12 @@ public class addInterlocuteurDialog extends JDialog {
         email.add(new JLabel("Email :"));
         email.add(mail);
 
-//        JPanel modif = new JPanel();
-//        modif.setLayout(new FlowLayout());
-//        modif.setBackground(Color.white);
 
-//        btn_modif.addActionListener(new InterlocuteurDialog.modifListener());
-//        btn_cancel.addActionListener(new InterlocuteurDialog.cancelListener());
-//        modif.add(btn_modif);
-//        modif.add(btn_cancel);
         btn_cancel.setEnabled(false);
         panInfos.add(name);
         panInfos.add(firstname);
         panInfos.add(phone);
         panInfos.add(email);
-        // panInfos.add(modif);
-
 
         JPanel content = new JPanel();
         content.setBackground(Color.white);

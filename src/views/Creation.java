@@ -73,6 +73,8 @@ public class Creation extends KContainer {
             lbl_clisiren = new JLabel("SIREN *"),
             lbl_clisiret = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
+private ClientInstance cli_inst = ClientInstance.getInstance();
+private  CurrentDatas cur_dat = CurrentDatas.getInstance();
 
     public Creation(UserActif user) {
         super();
@@ -264,9 +266,7 @@ public class Creation extends KContainer {
             }
             else
             {
-                System.out.println("Champs NOK -> ");
-                JOptionPane jop3 = new JOptionPane();
-                jop3.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -295,7 +295,7 @@ public class Creation extends KContainer {
             cli.setClica(Integer.parseInt(cli_ca.getText()));
         }
 
-        ClientInstance cli_inst = ClientInstance.getInstance();
+        
         cli_inst.setClient(cli);
         //inserer client
         Boolean is_ok = cli_inst.ajouterDansBaseDeDonnees();
@@ -303,7 +303,6 @@ public class Creation extends KContainer {
         JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.ERROR_MESSAGE);
         HibernateConnection connection = HibernateConnection.getInstance();
         Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
-        // System.out.println ("Recorded client ID :" + query.uniqueResult());
         int last_value = ((BigInteger) query.uniqueResult()).intValue();
 
         
@@ -315,7 +314,7 @@ public class Creation extends KContainer {
         {
             HibernateConnection.newConnect(true);
         }
-        CurrentDatas cur_dat = CurrentDatas.getInstance();
+       
         cur_dat.setSoc_id(last_value);
         ClientDetail cd = new ClientDetail(last_value);
         cd.addInterlocuteur(last_value);

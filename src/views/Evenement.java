@@ -10,19 +10,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.*;
-//import com.google.gdata.data.*;
-//import com.google.gdata.data.calendar.*;
-//import com.google.gdata.data.extensions.Recurrence;
-//import com.google.gdata.data.extensions.When;
-//import com.google.gdata.util.ServiceException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -175,7 +163,6 @@ public class Evenement extends KContainer {
 
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-              //  buttonActionPerformed(evt);
                 JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
             }
         });

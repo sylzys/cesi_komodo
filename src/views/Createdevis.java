@@ -4,24 +4,16 @@
  */
 package views;
 
-import com.google.common.base.Strings;
 import controllers.UserActif;
-import instances.ClientInstance;
-import instances.DemandeInstance;
 import instances.DevisInstance;
-import instances.HibernateConnection;
-import instances.SuivDossierInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,17 +21,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import models.Client;
 import models.CurrentDatas;
-import models.Demande;
 import models.Devis;
-import models.Suivdossier;
-import org.hibernate.Hibernate;
 
 /**
  *
@@ -50,9 +36,9 @@ public class Createdevis extends KContainer {
     JLabel title = new JLabel("Créer un devis");
     JPanel left = new JPanel(),
             right = new JPanel();
-        JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        JFormattedTextField jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        int id;
+    JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
+    JFormattedTextField jFormattedTextField2 = new javax.swing.JFormattedTextField();
+    int id;
     private Fenetre fen = Fenetre.getInstance();
 
     public Createdevis(UserActif user, int id) {
@@ -174,29 +160,25 @@ public class Createdevis extends KContainer {
             dvis.setDevprix(Integer.parseInt(jFormattedTextField2.getText()));
             dvis.setDevsuppr(false);
             dvis.setDeviid(id);
-            
+
 
             DevisInstance dvis_inst = DevisInstance.getInstance();
-        
+
             dvis_inst.setDevis(dvis);
-           if(dvis_inst.ajouterDansBaseDeDonnees()){
+            if (dvis_inst.ajouterDansBaseDeDonnees())
+            {
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
-           }
-           
+            }
+
             DemandeDetail devisForm = new DemandeDetail(id);
             fen.RenewContener(devisForm.getPanel());
-       //     HibernateConnection connection = HibernateConnection.getInstance();
-       //     Integer value = (Integer) connection.getSession().createSQLQuery("SELECT last_value FROM demande_demandeid_seq").addScalar("last_value", Hibernate.INTEGER).uniqueResult();
-}
+        }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-    
+
     }
-
-
-
 
     private class RetourListenerDmd implements ActionListener {
 
@@ -206,7 +188,7 @@ public class Createdevis extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
             CurrentDatas cur = CurrentDatas.getInstance();
-            
+
             DemandeDetail devisForm = new DemandeDetail(id);
             fen.RenewContener(devisForm.getPanel());
         }

@@ -4,32 +4,22 @@
  */
 package views;
 
-import controllers.UserActif;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Table;
-import com.google.common.collect.TreeBasedTable;
-import controllers.TableDispatcher;
-import java.lang.reflect.Array;
-import java.util.List;
-import javax.swing.JFrame;
-import models.Client;
-import instances.HibernateConnection;
-import instances.clientCommInstance;
-import javax.swing.ImageIcon;
-import models.Client_Comm;
 import classes.BackgroundPanel;
+import controllers.TableDispatcher;
+import controllers.UserActif;
+import instances.clientCommInstance;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Hashtable;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import models.Client_Comm;
 import models.ModelesTables;
-import models.Utilisateur;
-import org.hibernate.Query;
 /**
  *
  * @author sylv
@@ -37,7 +27,7 @@ import org.hibernate.Query;
 public class Affichage extends KContainer {
     JLabel title = new JLabel ("Liste des sociétés");
     public List<Client_Comm> liste;
-    
+    private clientCommInstance cci = clientCommInstance.getInstance();
     public Affichage(UserActif user) {
     super();
     this.user = user;
@@ -48,12 +38,10 @@ public class Affichage extends KContainer {
     protected
     void initPanel() {
         JPanel content = new BackgroundPanel();
-        //content.setBackground(new ImageIcon("ressources/images/komodo.gif"));
         content.setLayout(new BorderLayout());
         content.add(title, BorderLayout.CENTER);      
         
         getCompanyList();
-
         
         //show table
         
@@ -75,7 +63,7 @@ public class Affichage extends KContainer {
        
     }
     private void getCompanyList(){
-        clientCommInstance cci = clientCommInstance.getInstance();
+       
         Hashtable h = new Hashtable();
         h.put("utiid", user.getId());
         h.put("clisuppr", false);
