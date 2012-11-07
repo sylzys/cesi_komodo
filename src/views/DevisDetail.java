@@ -8,6 +8,7 @@ import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.DemandeInstance;
 import instances.DetailDmdInstance;
+import instances.NomenclatureInstance;
 import instances.DevisInstance;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
@@ -35,6 +36,8 @@ import models.DetailDmd;
 import models.ModelesTables;
 import models.CurrentDatas;
 import models.Demande;
+import tableModels.NomenclaturelistModel;
+import models.Nomenclature;
 import models.Devis;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -97,14 +100,14 @@ public class DevisDetail extends KContainer {
         jLabel8.setFont(g);
         statut.setFont(h);
                 
-        top.setPreferredSize(new Dimension(700, 235));
-        middle.setPreferredSize(new Dimension(700, 150));
+        top.setPreferredSize(new Dimension(700, 200));
+        middle.setPreferredSize(new Dimension(250, 170));
         bottom.setPreferredSize(new Dimension(500, 30));
         sousTitre.setPreferredSize(new Dimension(700, 235));
         title.setPreferredSize(new Dimension(400, 25));
         jLabel7.setPreferredSize(new Dimension(200, 25));
         jLabel8.setPreferredSize(new Dimension(600, 10));
-        statut.setPreferredSize(new Dimension(500, 200));
+        statut.setPreferredSize(new Dimension(500, 165));
         
         jLabel8.setBorder(new EmptyBorder(0, 0, 0, 100));
         container.setBorder(new EmptyBorder(150, 0, 0, 0));
@@ -148,7 +151,15 @@ public class DevisDetail extends KContainer {
             sousTitre.add(statut, BorderLayout.CENTER);
         }
         top.add(sousTitre);
-
+        
+        
+        
+        
+        
+        TableDispatcher ld = new TableDispatcher();
+        ld.setBackground(Color.white);
+        ld.setPreferredSize(new Dimension(240, 140));
+        middle.add(ld.showtable(ModelesTables.NOMENCLATURELIST, dvis.getDevid()), BorderLayout.CENTER);
 
         bottom.add(Retour, BorderLayout.CENTER);
         idDemande = dvis.getDeviid();

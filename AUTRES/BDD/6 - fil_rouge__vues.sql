@@ -83,3 +83,14 @@ JOIN "public".demande ON (("public".demande.cliid = "public".client.cliid))))
 JOIN "public".utilisateur ON (("public".client.utiid = "public".utilisateur.utiid)))
 ;
 
+CREATE OR REPLACE VIEW "public"."listnom" AS 
+SELECT
+"public".nomenclature.nomlib,
+"public".nomenclature.nomdes,
+"public".nomenclature.nomprix,
+"public".nomenclature.nomid, 
+"public".devnom.devid
+FROM (devnom JOIN nomenclature ON ((nomenclature.nomid = devnom.nomid)))
+;
+
+

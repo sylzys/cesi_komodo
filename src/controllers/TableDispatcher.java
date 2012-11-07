@@ -21,6 +21,7 @@ import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
 import tableModels.DevisModel;
+import tableModels.NomenclaturelistModel;
 import views.ClientDetail;
 import views.CommandeDetail;
 import views.DemandeDetail;
@@ -61,6 +62,10 @@ public class TableDispatcher extends JPanel {
                 break;
             case DEMANDELIST:
                 model = new DemandelistModel(id);
+                System.out.println("GETTINGMODEL");
+                break;
+            case NOMENCLATURELIST:
+                model = new NomenclaturelistModel(id);
                 System.out.println("GETTINGMODEL");
                 break;
             
@@ -126,6 +131,27 @@ public class TableDispatcher extends JPanel {
                 col3.setPreferredWidth(colWidth3);
                  
                 break;
+                
+           case NOMENCLATURELIST:
+                // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                // on definit l'index de la colonne et la largeur sohaitée
+                 colIndex = 0;
+                 colWidth = 80;
+                 col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                 colIndex2 = 1;
+                 colWidth2 = 120;
+                 col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                 colIndex3 = 2;
+                 colWidth3 = 40;
+                 col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                 
+                break;
             
         }
         
@@ -175,6 +201,9 @@ public class TableDispatcher extends JPanel {
                             DevisDetail devislist = new DevisDetail((Integer) tm.getValueAt(row, 999));
                             Fenetre fen2 = Fenetre.getInstance();
                             fen2.RenewContener(devislist.getPanel());
+                            break;
+                        case NOMENCLATURELIST:
+                            System.out.println("GETTIN DBL CLIC DEVISLIST");
                             break;
               }
           }

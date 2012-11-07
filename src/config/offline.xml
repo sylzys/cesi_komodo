@@ -26,5 +26,7 @@
   <mapping class="models.Interlocuteur"/>
   <mapping class="models.DetailDmd"/>
   <mapping class="models.Interlocuteur"/>
+  <mapping class="models.Nomenclature"/>
+  <mapping class="models.Nomenclaturelist"/>
 </session-factory>
 </hibernate-configuration>
