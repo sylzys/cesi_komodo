@@ -315,7 +315,7 @@ public class ModifSteDialog extends JDialog {
             cli.setClisiren(cli_siren.getText());
             cli.setClisiret(cli_siret.getText());
             cli.setClica(Integer.valueOf(cli_ca.getText()));
-            Boolean is_ok = ci.updaterBaseDeDonnées(cli);
+            Boolean is_ok = ci.updaterBaseDeDonnees(cli);
             String str2 = is_ok ? "La modification du client a été effectué" : "La modification a échoué";
             JOptionPane.showMessageDialog(null, str2, "Modification du client", JOptionPane.INFORMATION_MESSAGE);
             }

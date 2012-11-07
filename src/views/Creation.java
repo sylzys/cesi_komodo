@@ -287,7 +287,7 @@ public class Creation extends KContainer {
         ClientInstance cli_inst = ClientInstance.getInstance();
         cli_inst.setClient(cli);
         //inserer client
-        Boolean is_ok = cli_inst.ajouterDansBaseDeDonnées();
+        Boolean is_ok = cli_inst.ajouterDansBaseDeDonnees();
         String str = is_ok ? "L'ajout du client a été effectué" : "L'ajout du client a échoué";
         JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.ERROR_MESSAGE);
         HibernateConnection connection = HibernateConnection.getInstance();

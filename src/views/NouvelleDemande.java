@@ -254,7 +254,7 @@ public class NouvelleDemande extends JDialog {
 
             DemandeInstance dmd_inst = DemandeInstance.getInstance();
             dmd_inst.setDemandes(dmde);
-            dmd_inst.ajouterDansBaseDeDonnées();
+            dmd_inst.ajouterDansBaseDeDonnees();
 
     }
 }

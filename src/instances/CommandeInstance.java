@@ -103,7 +103,7 @@ public class CommandeInstance {
     
     
     
-    public void ajouterDansBaseDeDonnées() {
+    public void ajouterDansBaseDeDonnees() {
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();

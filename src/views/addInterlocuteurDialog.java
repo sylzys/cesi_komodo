@@ -195,6 +195,6 @@ public class addInterlocuteurDialog extends JDialog {
 //        i.setInterprenom(prenom.getText());
 //        i.setIntertel(tel.getText());
 //        i.setIntermail(mail.getText());
-//        is.insererEnBaseDeDonnées(i);
+//        is.insererEnBaseDeDonnees(i);
     }
 }

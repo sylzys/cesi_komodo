@@ -464,7 +464,7 @@ public class ClientDetail extends KContainer {
     public void deleteClient() {
         ClientInstance ci = ClientInstance.getInstance();
         cli.setClisuppr(true);
-        ci.updaterBaseDeDonnées(cli);
+        ci.updaterBaseDeDonnees(cli);
         Fenetre fen = Fenetre.getInstance();
         CurrentDatas cd = CurrentDatas.getInstance();
         Affichage af = new Affichage(cd.getUser());
@@ -473,7 +473,7 @@ public class ClientDetail extends KContainer {
 
     public void deleteInterlocuteur(int inter_id, Interlocuteur in) {
         in.setIntersuppr(true);
-        interInstance.updaterBaseDeDonnées(in);
+        interInstance.updaterBaseDeDonnees(in);
         if (HibernateConnection.online == false)
         {
             HibernateConnection.newConnect(false);
@@ -506,7 +506,7 @@ public class ClientDetail extends KContainer {
             i.setIntermail(infos[3]);
             i.setUtiid(cd.getUser().getId());
             InterlocuteurInstance is = InterlocuteurInstance.getInstance();
-            is.insererEnBaseDeDonnées(i);
+            is.insererEnBaseDeDonnees(i);
             if (HibernateConnection.online == false)
             {
                 HibernateConnection.newConnect(false);
