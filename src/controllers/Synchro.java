@@ -210,7 +210,7 @@ public class Synchro {
             try 
             {
                 Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
-                query.setParameter("interid", 1);
+                query.setParameter("interid", interid);
                 List<Interlocuteur> interlist = query.list();
                 for (Interlocuteur inter : interlist) 
                 {

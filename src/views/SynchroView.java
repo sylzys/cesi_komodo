@@ -5,7 +5,7 @@
 package views;
 
 import classes.CheckBoxData;
-import classes.LblData;
+import classes.LabelData;
 import controllers.Synchro;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -43,7 +43,7 @@ public class SynchroView extends KContainer {
     private String libreq;
     private JCheckBox chkslct = new JCheckBox();
     private List<CheckBoxData> listchk;
-    private List<LblData> listlbl;
+    private List<LabelData> listlbl;
     JLabel title = new JLabel ();
     public SynchroView(UserActif user) {
     super();
@@ -55,6 +55,7 @@ public class SynchroView extends KContainer {
     protected
     void initPanel() {
         listchk = new ArrayList<CheckBoxData>();
+        listlbl = new ArrayList<LabelData>();
         JPanel content = new JPanel();
         JPanel center = new JPanel();
         JScrollPane scroll = new JScrollPane(center);
@@ -116,29 +117,38 @@ public class SynchroView extends KContainer {
                 req = strtok.nextToken();
                 String[] decoup = req.split("interlocuteur:");
                 int interid = -1;
+                String requete ="";
                 if(decoup.length > 1)
                 {
                     interid = Integer.parseInt(decoup[1]);
+                    requete = decoup[0];
                 }
                 String[] decoup2 = req.split("client:");
                 String nomclient = "";
-                if(decoup2.length > 1&&interid!=-1)
+                if(decoup2.length > 1)
                 {
-                    nomclient = decoup[1];
+                    nomclient = decoup2[1];
+                    requete = decoup2[0];
                 }
-                String requete = decoup[0];
+                
                 String[] action = sync.readReq(req, interid, nomclient);
                 FlowLayout flchk = new FlowLayout();
                 Hashtable ht = new Hashtable();
                 ht.put("requete", requete);
                 ht.put("type",req);
+                
+                Hashtable ht2 = new Hashtable();
+                ht2.put("requete",req);
                 //NEW CHKBOXDATA
                 CheckBoxData chkbox = new CheckBoxData(i, ht);
-                LblData imgeico = new LblData(i, ht);
-                JLabel lblimg = new JLabel(new ImageIcon("ressources/images/delete.png"));   
+                //LabelData imgico = new LabelData();
+                //imgico.putData(String.valueOf(i), req);
+                LabelData lblimg = new LabelData(i, ht2); 
+                lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
                 lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 chkbox.setSelected(true);
                 listchk.add(chkbox);
+                listlbl.add(lblimg);
                 lblimg.setBorder(new EmptyBorder(0, 10, 0, 0));
                 lblimg.setPreferredSize(new Dimension(70, 35));
                 JLabel lblclient = new JLabel(action[0].toUpperCase());
@@ -160,11 +170,16 @@ public class SynchroView extends KContainer {
                 center.add(lblimg);
                 lblimg.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {  
-                    LblData lbldata = (LblData)me.getComponent();
-                    Synchro sync = new Synchro();
-                    Hashtable tmp = lbldata.getData();
-                    String ligne = tmp.get("requete").toString();
-                    sync.delReq(ligne);
+                        JOptionPane jop = new JOptionPane();			
+                        int option = jop.showConfirmDialog(null, "Voulez-vous supprimer cette action ?", "Suppression de l'action", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if(option == JOptionPane.OK_OPTION){
+                           LabelData lbldata = (LabelData)me.getComponent();
+                           Synchro sync = new Synchro();
+                           Hashtable tmp = lbldata.getData();   
+                           sync.delReq(tmp.get("requete").toString());
+                           Fenetre fen = Fenetre.getInstance();
+                           fen.RenewSnchro();			
+                        }       
                 }
             });
             }
