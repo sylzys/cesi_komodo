@@ -27,5 +27,8 @@
   <mapping class="models.DetailDmd"/>
   <mapping class="models.Nomenclature"/>
   <mapping class="models.Nomenclaturelist"/>
+  <mapping class="models.Nommat"/>
+  <mapping class="models.Matiere"/>
+  <mapping class="models.Unite"/>
 </session-factory>
 </hibernate-configuration>

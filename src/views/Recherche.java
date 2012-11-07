@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import models.Commande;
+import models.Nomenclature;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -198,7 +199,31 @@ public class Recherche extends KContainer {
         }
         if(rbNomenclature.isSelected())
         {
-            //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+            List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomlib LIKE '%" +query+ "%'").addEntity(Nomenclature.class).list();                    
+            Nomenclature nomen = null;
+            JPanel panelNom = null;
+            for (int i = 0; i < list.size(); i++) {
+               
+                nomen = list.get(i);
+                panelNom = new JPanel();
+                panelNom.add(new JLabel("Nomclature n°"+ nomen.getNomid()+""));               
+                panelNom.setBackground(Color.WHITE);
+                panelNom.setPreferredSize(new Dimension(750,100));
+                JLabel nomLabel = new JLabel();
+                nomLabel.setText("Description: " + nomen.getNomdes());
+                panelNom.add(nomLabel);
+                ButtonData btnGoToCmd = new ButtonData("Aller");
+                btnGoToCmd.setId(nomen.getNomid());
+                btnGoToCmd.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                        ButtonData btn_temp = (ButtonData)arg0.getSource();
+                        Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                    }
+                });
+                panelNom.add(btnGoToCmd);
+                panelListSearch.add(panelNom,BorderLayout.CENTER);             
+            }
+            Fenetre.getInstance().RenewContener(panel);
         }
         if(rbDemande.isSelected())
         {
