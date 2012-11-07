@@ -1,1 +1,0 @@
-CREATE DATABASE projetcesi WITH TEMPLATE template0;
