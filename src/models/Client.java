@@ -295,4 +295,5 @@ public class Client {
     public void setClidteadd(Date clidteadd) {
         this.clidteadd = clidteadd;
     }
+    
 }

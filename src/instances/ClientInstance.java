@@ -8,6 +8,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Client;
 import models.Interlocuteur;
 import org.hibernate.Hibernate;
@@ -22,6 +24,7 @@ public class ClientInstance {
     private String where;
     private Hashtable h;
     private Client client;
+    private Synchro writereq = new Synchro();
 
     /**
      * Constructeur prive
@@ -105,42 +108,60 @@ public class ClientInstance {
 
     public synchronized Boolean updaterBaseDeDonnées(Client cli) {
         Transaction tx = null;
+        if (HibernateConnection.online == false)
+        {
+            System.out.println("REQUEST : UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
+                    + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + ", "
+                    + "clicp = '" + cli.getClicp() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
+                    + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + ", "
+                    + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
+                    + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin() + "', "
+                    + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + ", "
+                    + "clidteadd = '" + cli.getClidteadd() + "', clinaf = " + cli.getClinaf());
+            try
+            {
+                writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
+                        + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + "', "
+                        + "clicp = '" + cli.getClicp().trim() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
+                        + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
+                        + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
+                        + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
+                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ", clidtelog ='" + cli.getClidtelog() + "', "
+                        + "clidteadd = '" + cli.getClidteadd() + "', clinaf = '" + cli.getClinaf() + "' WHERE cliid = "+ cli.getCliid(),
+                        -1, cli.getClinom());
+                return true;
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+        {
+            try
+            {
+                tx = HibernateConnection.getSession().beginTransaction();
+                System.out.println("Updating Record");
 
-        try
-        {
-//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
-//            session = sessionFactory.openSession();
-//            tx = session.beginTransaction();
-            tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Updating Record");
-//			  Utilisateur uti = new Utilisateur();
-//			  .setUtiid(10);
-//			  uti.setUtinom("test");
-            //session.update(inter);
-            HibernateConnection.getSession().update(cli);
-            tx.commit();
-            System.out.println("Done");
-            return true;
+                HibernateConnection.getSession().update(cli);
+                tx.commit();
+                System.out.println("Done");
+            }
+            catch (Exception e)
+            {
+                System.out.println("Update failed");
+                return false;
+            }
         }
-        catch (Exception e)
-        {
-            return false;
-        }
+        return true;
     }
 
     public Boolean ajouterDansBaseDeDonnées() {
-        try
+        if (HibernateConnection.online == false)
         {
-            Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-
-            HibernateConnection.getSession().save(this.client);
-            // System.out.println(tx.wasCommitted());       
-            tx.commit();
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
+            try
             {
-                Synchro writereq = new Synchro();
+                // Synchro writereq = new Synchro();
                 writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
                         + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clidteadd, clisuppr)"
                         + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
@@ -149,14 +170,33 @@ public class ClientInstance {
                         + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
                         + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
                         + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
-                        + "" + this.client.getClisiren() + "','"+Calendar.getInstance().getTime()+"','f')"
+                        + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
                         + "", -1, this.client.getClinom());
+                return true;
             }
-            return true;
+            catch (IOException ex)
+            {
+                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        catch (HibernateException | IOException e)
+        else
         {
-            return false;
+            try
+            {
+                Transaction tx = HibernateConnection.getSession().beginTransaction();
+                System.out.println("Nouvel enregistrement en cours d'insertion ...");
+
+                HibernateConnection.getSession().save(this.client);
+                // System.out.println(tx.wasCommitted());       
+                tx.commit();
+                //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
+
+            }
+            catch (HibernateException e)
+            {
+                return false;
+            }
         }
+        return true;
     }
 }

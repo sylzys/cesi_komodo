@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  06/11/2012 16:01:53                      */
+/* Date de création :  07/11/2012 07:56:26                      */
 /*==============================================================*/
 
 
@@ -205,6 +205,7 @@ create table CLIENT (
    CLISUPPR             BOOL                 null,
    CLIDTELOG            DATE                 null,
    CLIDTEADD            DATE                 null,
+   CLIURLTMP            VARCHAR(500)         null,
    constraint PK_CLIENT primary key (CLIID)
 );
 
@@ -289,6 +290,13 @@ create table COMMANDE (
 /*==============================================================*/
 create unique index COMMANDE_PK on COMMANDE (
 COMID
+);
+
+/*==============================================================*/
+/* Index : DEMCOM_FK                                            */
+/*==============================================================*/
+create  index DEMCOM_FK on COMMANDE (
+DEMANDEID
 );
 
 /*==============================================================*/
@@ -413,6 +421,13 @@ create table DEVIS (
 /*==============================================================*/
 create unique index DEVIS_PK on DEVIS (
 DEVID
+);
+
+/*==============================================================*/
+/* Index : DEMDEV_FK                                            */
+/*==============================================================*/
+create  index DEMDEV_FK on DEVIS (
+DEMANDEID
 );
 
 /*==============================================================*/
