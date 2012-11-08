@@ -16,16 +16,16 @@ public class Commande {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int comid;
+    private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
-    private int interid ;
+    private Integer interid ;
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-    private int utiid ; 
+    private Integer utiid ; 
     
     @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
-    private int demandeid ; 
+    private Integer demandeid ; 
     
     @Column(name="comtitre", columnDefinition="VARCHAR(254)", nullable=true)
     private String comtitre ;
@@ -42,7 +42,7 @@ public class Commande {
     private Date comdateprev ;
     
     @Column(name="cometat", columnDefinition="INTEGER", nullable=true)
-    private int cometat ;
+    private Integer cometat ;
     
     @Column(name="comresume", columnDefinition="VARCHAR(1000)", nullable=true)
     private String comresume ;
@@ -56,40 +56,40 @@ public class Commande {
     private Date comprodfin ;
     
     @Column(name="comprix", columnDefinition="INTEGER", nullable=true)
-    private int comprix ;
+    private Integer comprix ;
     
     @Column(name="comsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean comsuppr ;
 
-    public int getComid() {
+    public Integer getComid() {
         return comid;
     }
 
-    public void setComid(int comid) {
+    public void setComid(Integer comid) {
         this.comid = comid;
     }
 
-    public int getInterid() {
+    public Integer getInterid() {
         return interid;
     }
 
-    public void setInterid(int interid) {
+    public void setInterid(Integer interid) {
         this.interid = interid;
     }
 
-    public int getUtiid() {
+    public Integer getUtiid() {
         return utiid;
     }
 
-    public void setUtiid(int utiid) {
+    public void setUtiid(Integer utiid) {
         this.utiid = utiid;
     }
 
-    public int getDemandeid() {
+    public Integer getDemandeid() {
         return demandeid;
     }
 
-    public void setDemandeid(int demandeid) {
+    public void setDemandeid(Integer demandeid) {
         this.demandeid = demandeid;
     }
     
@@ -129,11 +129,11 @@ public class Commande {
         this.comdateprev = comdateprev;
     }
 
-    public int getCometat() {
+    public Integer getCometat() {
         return cometat;
     }
 
-    public void setCometat(int cometat) {
+    public void setCometat(Integer cometat) {
         this.cometat = cometat;
     }
 
@@ -161,11 +161,11 @@ public class Commande {
         this.comprodfin = comprodfin;
     }
 
-    public int getComprix() {
+    public Integer getComprix() {
         return comprix;
     }
 
-    public void setComprix(int comprix) {
+    public void setComprix(Integer comprix) {
         this.comprix = comprix;
     }
 
