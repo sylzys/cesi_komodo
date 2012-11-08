@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import models.Client;
 import models.Commande;
+import models.DetailDevis;
 import models.Nomenclature;
 import org.hibernate.Session;
 
@@ -154,15 +155,17 @@ public class Recherche extends KContainer {
     private void search(String query)
     {
         panelListSearch.removeAll();
-        panelListSearch.revalidate();        
+        panelListSearch.revalidate();  
+        
         if(!query.isEmpty())
         {
-            Boolean flag = false;
             
+            Boolean flag = false;
+            query = query.toUpperCase();
             Session session = HibernateConnection.getSession();
             if(rbCommande.isSelected()) 
             {           
-                List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE comtitre LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
+                List<Commande>list = session.createSQLQuery("SELECT * From commande WHERE upper(comtitre) LIKE '%" +query+ "%'").addEntity(Commande.class).list();                    
                 Commande  com = null;
                 JPanel panelCom = null;
                 for (int i = 0; i < list.size(); i++) {
@@ -191,10 +194,34 @@ public class Recherche extends KContainer {
             if(rbDevis.isSelected())
             {
                 List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
+                models.Devis devis = null;
+                JPanel panelDevis = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    devis = list.get(i);
+                    panelDevis = new JPanel();
+                    panelDevis.add(new JLabel("Devis n°"+ devis.getDevid()+""));               
+                    panelDevis.setBackground(Color.WHITE);
+                    panelDevis.setPreferredSize(new Dimension(750,100));
+                    JLabel nomLabel = new JLabel();
+                    nomLabel.setText("Prix: " + devis.getDevprix());
+                    panelDevis.add(nomLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(devis.getDevid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                        }
+                    });
+                    //panelClient.add(btnGoToCmd);
+                    panelListSearch.add(panelDevis,BorderLayout.CENTER);             
+                }
+                Fenetre.getInstance().RenewContener(panel);
             }
             if(rbContact.isSelected())
             {
-                List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE clinom LIKE '%" +query+ "%' OR cliville LIKE '%" +query+ "%' OR climail LIKE '%" +query+ "%';").addEntity(models.Client.class).list();                    
+                List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE upper(clinom) LIKE '%" +query+ "%' OR upper(cliville) LIKE '%" +query+ "%' OR upper(climail) LIKE '%" +query+ "%';").addEntity(models.Client.class).list();                    
                 Client client = null;
                 JPanel panelClient = null;
                 for (int i = 0; i < list.size(); i++) {
@@ -211,11 +238,11 @@ public class Recherche extends KContainer {
                     btnGoToCmd.setId(client.getCliid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                            ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                            //ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            //Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
                         }
                     });
-                    panelClient.add(btnGoToCmd);
+                    //panelClient.add(btnGoToCmd);
                     panelListSearch.add(panelClient,BorderLayout.CENTER);             
                 }
                 Fenetre.getInstance().RenewContener(panel);
@@ -227,7 +254,7 @@ public class Recherche extends KContainer {
             if(rbNomenclature.isSelected())
             {
                 //il faut remplir les nomnbchaine avec des valeurs sinon il y a une erreur
-                List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomlib LIKE '%" +query+ "%'").addEntity(Nomenclature.class).list();                    
+                List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE upper(nomlib) LIKE '%" +query+ "%'").addEntity(Nomenclature.class).list();                    
                 Nomenclature nomen = null;
                 JPanel panelNom = null;
                 for (int i = 0; i < list.size(); i++) {
