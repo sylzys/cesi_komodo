@@ -109,12 +109,12 @@ public class DevisDetail extends KContainer {
 
 
         String etat = dvis.getDevetat();
-        title.setText("Détails du devis n°" + dvis.getDevid());
-        jLabel7.setText("Montant total : " + dvis.getDevprix() + "€");
-        jLabel8.setText("Créé le : " + dvis.getDevdate());
+        title.setText("DÃ©tails du devis nÂ°" + dvis.getDevid());
+        jLabel7.setText("Montant total : " + dvis.getDevprix() + "â‚¬");
+        jLabel8.setText("CrÃ©Ã© le : " + dvis.getDevdate());
         refuse.setText("Refus du devis");
         validate.setText("Validation du devis");
-        Retour.setText("Retour à la demande");
+        Retour.setText("Retour Ã  la demande");
         refuse.addActionListener(new DevisDetail.refuseListener());
         validate.addActionListener(new DevisDetail.validateListener());
         Retour.addActionListener(new DevisDetail.RetourListener());
@@ -129,7 +129,7 @@ public class DevisDetail extends KContainer {
             statut.setText("Ce devis est en attente de validation");
             sousTitre.add(statut, BorderLayout.CENTER);
         } else {
-            statut.setText("Ce devis a été " + dvis.getDevetat());
+            statut.setText("Ce devis a Ã©tÃ© " + dvis.getDevetat());
             sousTitre.add(statut, BorderLayout.CENTER);
         }
         top.add(sousTitre);
@@ -144,7 +144,7 @@ public class DevisDetail extends KContainer {
         middle.add(ld.showtable(ModelesTables.NOMENCLATURELIST, dvis.getDevid()), BorderLayout.CENTER);
 
         bottom.add(Retour, BorderLayout.CENTER);
-        idDemande = dvis.getDeviid();
+        idDemande = dvis.getDemandeid();
 
         container.add(top);
         container.add((middle));
@@ -168,6 +168,7 @@ public class DevisDetail extends KContainer {
             Devis dvs = (Devis) session.get(Devis.class, devis_id);
             dvs.setDevid(devis_id);
             dvs.setDevetat("Accepté");
+            dvs.setDemandeid(idDemande);
             session.update(dvs);
             tx3.commit();
             
@@ -175,7 +176,7 @@ public class DevisDetail extends KContainer {
             Session session2 = HibernateConnection.getSession();
             Demande dmdd = (Demande) session2.get(Demande.class, idDemande);
             dmdd.setDemandeid(idDemande);
-            dmdd.setDemandeetat(100);
+            dmdd.setDemandeetat(80);
             session2.update(dmdd);
             tx4.commit();
             
@@ -196,7 +197,7 @@ public class DevisDetail extends KContainer {
             Session session = HibernateConnection.getSession();
             Devis dvs = (Devis) session.get(Devis.class, devis_id);
             dvs.setDevid(devis_id);
-            dvs.setDevetat("Refusé");
+            dvs.setDevetat("RefusÃ©");
             session.update(dvs);
             tx3.commit();
             DemandeDetail devisForm = new DemandeDetail(idDemande);

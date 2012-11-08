@@ -21,8 +21,8 @@ public class Nomenclature {
     @Column(name="nomtemps", columnDefinition="INTEGER", nullable=true)
     private int nomtemps ;
 
-    @Column(name="nombnchaine", columnDefinition="INTEGER", nullable=true)
-    private int nombnchaine ;
+    @Column(name="nomnbchaine", columnDefinition="INTEGER", nullable=true)
+    private int nomnbchaine ;
     
     @Column(name="nomqr", columnDefinition="VARCHAR(250)", nullable=true)
     private String nomqr ;
@@ -69,12 +69,12 @@ public class Nomenclature {
         this.nomtemps = nomtemps;
     }
 
-    public int getNombnchaine() {
-        return nombnchaine;
+    public int getNomnbchaine() {
+        return nomnbchaine;
     }
 
-    public void setNombnchaine(int nombnchaine) {
-        this.nombnchaine = nombnchaine;
+    public void setNomnbchaine(int nombnchaine) {
+        this.nomnbchaine = nombnchaine;
     }
 
     public String getNomqr() {

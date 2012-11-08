@@ -132,23 +132,26 @@ public class DemandeDetail extends KContainer {
         ab5.setLayout(new BoxLayout(ab5, BoxLayout.LINE_AXIS));
         ab5.setPreferredSize(new Dimension(600, 30));
         ab5.setBackground(Color.white);
-
-        newDevisBtn.setText("Créer un devis");
-        idDemande = dd.get(0).getDemandeid();
-        newDevisBtn.addActionListener(new DemandeDetail.createdevisListener());
-        JPanel ab7 = new JPanel();
-        ab7.setLayout(new BoxLayout(ab7, BoxLayout.LINE_AXIS));
-        ab7.setPreferredSize(new Dimension(600, 60));
-        ab7.setBackground(Color.white);
-
-        JLabel jLabel14 = new javax.swing.JLabel();
-        jLabel14.setPreferredSize(new Dimension(600, 60));
-        ab5.add(newDevisBtn);
-        ab5.add(jLabel14);
-
+        
         int etat = dd.get(0).getDemandeetat();
-        if (etat == 100)
-        {
+        if(etat != 100){
+            newDevisBtn.setText("Créer un devis");
+            idDemande = dd.get(0).getDemandeid();
+            newDevisBtn.addActionListener(new DemandeDetail.createdevisListener());
+            JPanel ab7 = new JPanel();
+            ab7.setLayout(new BoxLayout(ab7, BoxLayout.LINE_AXIS));
+            ab7.setPreferredSize(new Dimension(600, 60));
+            ab7.setBackground(Color.white);
+
+        
+            JLabel jLabel14 = new javax.swing.JLabel();
+            jLabel14.setPreferredSize(new Dimension(600, 60));
+            ab5.add(newDevisBtn);
+            ab5.add(jLabel14);
+        }
+        
+        
+         if (etat == 80) {
             JButton generateDemande = new JButton("Valider la commande");
             ab5.add(generateDemande);
             generateDemande.addActionListener(new DemandeDetail.generateDemandeListener());
@@ -268,7 +271,7 @@ public class DemandeDetail extends KContainer {
             cmd.setComsuppr(false);
 
             HibernateConnection connection = HibernateConnection.getInstance();
-            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE deviid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
+            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
             cmd.setComprix(value);
 
             CommandeInstance cmd_inst = CommandeInstance.getInstance();

@@ -61,7 +61,7 @@ public class CommandeDetail extends KContainer {
         listeCmd.setBackground(Color.white);
         listeCmd.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 
-        //on affiche dans notre panel, la table renvoyée par le tabledispatcher, correspondant au modèle COMMANDE 
+        //on affiche dans notre panel, la table renvoyÃ©e par le tabledispatcher, correspondant au modÃ¨le COMMANDE 
         listeCmd.add(cp.showtable(ModelesTables.COMMANDE,this.details.getCliid()));
         content.add(listeCmd);
         //detail commandes, panneau de droite
@@ -69,9 +69,9 @@ public class CommandeDetail extends KContainer {
         detailCmd.setLayout(new BoxLayout(detailCmd, BoxLayout.Y_AXIS));
 
         top_right.setLayout(new FlowLayout());
-        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créée le " + details.getComdate() + " par " + details.getUtiprenom() + " " + details.getUtinom() + "</html>"));
+        top_right.add(new JLabel("<html> " + details.getClirais() + " " + details.getClinom() + "<br />Créé le " + details.getComdate() + " par " + details.getUtiprenom() + " " + details.getUtinom() + "</html>"));
         
-        ButtonData retour = new ButtonData("Retour à la société", details.getCliid());
+        ButtonData retour = new ButtonData("Retour à  la société", details.getCliid());
         retour.addActionListener(new RetourListener());
         top_right.add(retour);
         center_right.setBackground(Color.white);
