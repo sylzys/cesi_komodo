@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import models.Client;
 import models.Commande;
+import models.Demande;
 import models.DetailDevis;
 import models.Nomenclature;
 import org.hibernate.Session;
@@ -305,7 +306,31 @@ public class Recherche extends KContainer {
             }
             if(rbDemande.isSelected())
             {
-                //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+                List<models.Demande>list = session.createSQLQuery("SELECT * From demande WHERE upper(demandetitre) LIKE '%" +query+ "%'").addEntity(models.Demande.class).list();                    
+                Demande demande = null;
+                JPanel panelDem = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    demande = list.get(i);
+                    panelDem = new JPanel();
+                    panelDem.add(new JLabel("Demande n°"+ demande.getDemandeid()+""));               
+                    panelDem.setBackground(Color.WHITE);
+                    panelDem.setPreferredSize(new Dimension(750,100));
+                    JLabel nomLabel = new JLabel();
+                    nomLabel.setText("Titre" + demande.getDemandetitre());
+                    panelDem.add(nomLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(demande.getDemandeid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewAlert(btn_temp.getId());
+                        }
+                    });
+                    panelDem.add(btnGoToCmd);
+                    panelListSearch.add(panelDem,BorderLayout.CENTER);             
+                }
+                Fenetre.getInstance().RenewContener(panel);
             }
 
             if(flag == false)

@@ -342,8 +342,11 @@ public class Fenetre extends JFrame {
         }
         public void RenewDetailsDevis(Integer devid){
             DevisDetail detailDevis = new DevisDetail(devid);
-            RenewContener(detailDevis.getPanel());
-                    
+            RenewContener(detailDevis.getPanel());                    
+        }
+        public void RenewDemandeDetail(Integer demandeid){
+            DemandeDetail demande = new DemandeDetail(demandeid);
+            RenewContener(demande.getPanel());
         }
 
         public void RenewCmd(Integer cmd_id) {
