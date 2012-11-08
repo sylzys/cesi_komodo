@@ -1,0 +1,1789 @@
+
+
+
+
+<html>
+<head>
+    <title>Rapport de suivi temporel</title>
+    <meta name="decorator" content="none" />
+    <meta http-equiv="Content-Type" Content="application/vnd.ms-excel; charset=UTF-8" />
+</head>
+<body>
+
+<table id="time_tracking_report_table" border="1">
+<tr>
+    <td bgcolor="#003366" colspan="15" height=30>
+        <img src="/images/jira111x30.png" width="111" height="30" border="0" alt="JIRA">
+    </td>
+</tr>
+<tr>
+    <td bgcolor=#ffffff colspan="15">
+        <a href=""><span class="bluetext">JIRA</span></a>
+    </td>
+</tr>
+<tr>
+    <th bgcolor="#dddddd">Type de demande</th>
+    <th bgcolor="#dddddd"><b>Clé</b></th>
+    <th bgcolor="#dddddd"><b>Etat</b></th>
+    <th bgcolor="#dddddd"><b>Priorité</b></th>
+    <th bgcolor="#dddddd"><b>Résumé</b></th>
+    <th bgcolor="#dddddd"><b>Temps estimé d'origine (min)</b></th>
+            <th bgcolor="#dddddd">&Sigma;</th>
+        <th bgcolor="#dddddd"><b>Temps estimé restant (min)</b></th>
+            <th bgcolor="#dddddd">&Sigma;</th>
+        <th bgcolor="#dddddd"><b>Temps total passé (min)</b></th>
+            <th bgcolor="#dddddd">&Sigma;</th>
+        <th bgcolor="#dddddd"><b>Précision</b></th>
+            <th bgcolor="#dddddd">&Sigma;</th>
+        <th bgcolor="#dddddd"><b>Précision (%)</b></th>
+            <th bgcolor="#dddddd">&Sigma;</th>
+    </tr>
+
+    <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-72">PLAS-72</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                creer les 1ers mappers
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>960</td>
+            <td>
+                            960
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-73">PLAS-73</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creer l&#39;architecture de l&#39;application
+    </td>
+    <td>480</td>
+            <td>
+                            480
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>480</td>
+            <td>
+                            480
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-74">PLAS-74</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                creer vue societés
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>4</td>
+            <td>
+                            4
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-75">PLAS-75</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                creer vue detail societé
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>480</td>
+            <td>
+                            480
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-76">PLAS-76</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                creer vue detail commande
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>240</td>
+            <td>
+                            240
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Nouvelle fonctionnalité</td>
+    <td><a href="/browse/PLAS-78">PLAS-78</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                gerer la connexion / deconnexion
+    </td>
+    <td>2400</td>
+            <td>
+                            2400
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>3360</td>
+            <td>
+                            3360
+                    </td>
+        <td>
+                    -960
+            </td>
+            <td>
+                            -960
+                    </td>
+        <td>
+                    -40
+            </td>
+            <td>
+                            -40
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-80">PLAS-80</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Formulaire de création de nouvelle demande
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>360</td>
+            <td>
+                            360
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-81">PLAS-81</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                Vue demande
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>900</td>
+            <td>
+                            900
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-83">PLAS-83</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Réaliser planning prévisionnel
+    </td>
+    <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-84">PLAS-84</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Modifier la structure de la base de données
+    </td>
+    <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-89">PLAS-89</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                preparation de la soutenance
+    </td>
+    <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>360</td>
+            <td>
+                            360
+                    </td>
+        <td>
+                    -60
+            </td>
+            <td>
+                            -60
+                    </td>
+        <td>
+                    -20
+            </td>
+            <td>
+                            -20
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-90">PLAS-90</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                gerer la recherche sur la base
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>600</td>
+            <td>
+                            600
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-91">PLAS-91</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                vue visu / modification d&#39;interlocuteur
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-92">PLAS-92</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                vue ajout d&#39;interlocuteur
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-93">PLAS-93</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Verifier la presence online / offline des requetes
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>240</td>
+            <td>
+                            240
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-96">PLAS-96</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Verifier la presence online / offline des requetes
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-97">PLAS-97</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                vue ajout de societe
+    </td>
+    <td>180</td>
+            <td>
+                            180
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>180</td>
+            <td>
+                            180
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-99">PLAS-99</a></td>
+    <td>Fermée</td>
+    <td>Blocage</td>
+    <td>
+                Vue evenement
+    </td>
+    <td>3</td>
+            <td>
+                            3
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>
+                    -297
+            </td>
+            <td>
+                            -297
+                    </td>
+        <td>
+                    -9900
+            </td>
+            <td>
+                            -9900
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Amélioration</td>
+    <td><a href="/browse/PLAS-100">PLAS-100</a></td>
+    <td>Fermée</td>
+    <td>Critique</td>
+    <td>
+                Les ids sont passés en dur lors du chargement d&#39;un table model.
+Du coup, on a toujours les même listes quelque soit ce que l&#39;on demande a afficher
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    -60
+            </td>
+            <td>
+                            -60
+                    </td>
+        <td>
+                    -100
+            </td>
+            <td>
+                            -100
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Amélioration</td>
+    <td><a href="/browse/PLAS-104">PLAS-104</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                Gerer la replication multi palteforme
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-109">PLAS-109</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Préparation de la soutenance
+    </td>
+    <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>690</td>
+            <td>
+                            690
+                    </td>
+        <td>
+                    -390
+            </td>
+            <td>
+                            -390
+                    </td>
+        <td>
+                    -130
+            </td>
+            <td>
+                            -130
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Nouvelle fonctionnalité</td>
+    <td><a href="/browse/PLAS-110">PLAS-110</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                Gérer la modification des clients existant
+    </td>
+    <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>90</td>
+            <td>
+                            90
+                    </td>
+        <td>
+                    30
+            </td>
+            <td>
+                            30
+                    </td>
+        <td>
+                    25
+            </td>
+            <td>
+                            25
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Story</td>
+    <td><a href="/browse/PLAS-112">PLAS-112</a></td>
+    <td>Fermée</td>
+    <td>Blocage</td>
+    <td>
+                Vue détail devis
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>240</td>
+            <td>
+                            240
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Story</td>
+    <td><a href="/browse/PLAS-113">PLAS-113</a></td>
+    <td>Résolue</td>
+    <td>Blocage</td>
+    <td>
+                Evolution du table dispatcher (ajout d&#39;un id en parametre pour les requetes, gestion des largeurs de colonnes)
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>240</td>
+            <td>
+                            240
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Story</td>
+    <td><a href="/browse/PLAS-114">PLAS-114</a></td>
+    <td>Résolue</td>
+    <td>Blocage</td>
+    <td>
+                Validation d&#39;une demande
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Bogue</td>
+    <td><a href="/browse/PLAS-119">PLAS-119</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Correction de la structure de la base de données
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Bogue</td>
+    <td><a href="/browse/PLAS-122">PLAS-122</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Correction de bug sur des mappers et dans le code de la synchro
+    </td>
+    <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-123">PLAS-123</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creation surcharge de classe JButton pour stockage DATA (ButtonData)
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-125">PLAS-125</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creation surcharge de classe JLabel pour stockage DATA (LabelData)
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-126">PLAS-126</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creation surcharge de classe LabelData pour style lien hypertexte (LinkLabelData)
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-139">PLAS-139</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creation surcharge de classe JCheckBox pour stockage DATA (CheckBoxData)
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-141">PLAS-141</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                                        <a href="/browse/PLAS-140">PLAS-140</a>
+                                        -&gt;
+                Diagramme de classe
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-142">PLAS-142</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                                        <a href="/browse/PLAS-140">PLAS-140</a>
+                                        -&gt;
+                Diagramme ERD
+    </td>
+    <td></td>
+            <td>
+                            
+                    </td>
+        <td>0</td>
+            <td>
+                            0
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+            </td>
+            <td>
+                    </td>
+        <td>
+            </td>
+            <td>
+                            
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Bogue</td>
+    <td><a href="/browse/PLAS-105">PLAS-105</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                erruer de redirection a la creation de client
+    </td>
+    <td>30</td>
+            <td>
+                            30
+                    </td>
+        <td>15</td>
+            <td>
+                            15
+                    </td>
+        <td>15</td>
+            <td>
+                            15
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-86">PLAS-86</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Créer des fonctions et vues dans postgres
+    </td>
+    <td>180</td>
+            <td>
+                            180
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Bogue</td>
+    <td><a href="/browse/PLAS-98">PLAS-98</a></td>
+    <td>Fermée</td>
+    <td>Important</td>
+    <td>
+                bug sur le bouton &quot;retour societe&quot;
+    </td>
+    <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td>60</td>
+            <td>
+                            60
+                    </td>
+        <td></td>
+            <td>
+                            
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-88">PLAS-88</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                faire l&#39;analyse des risques
+    </td>
+    <td>180</td>
+            <td>
+                            180
+                    </td>
+        <td>90</td>
+            <td>
+                            90
+                    </td>
+        <td>90</td>
+            <td>
+                            90
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-87">PLAS-87</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Peupler la BDD
+    </td>
+    <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td>120</td>
+            <td>
+                            120
+                    </td>
+        <td></td>
+            <td>
+                            
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-108">PLAS-108</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Préparation de la soutenance
+    </td>
+    <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>296</td>
+            <td>
+                            296
+                    </td>
+        <td>4</td>
+            <td>
+                            4
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-107">PLAS-107</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Préparation de la soutenance
+    </td>
+    <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td>300</td>
+            <td>
+                            300
+                    </td>
+        <td></td>
+            <td>
+                            
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-102">PLAS-102</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Vue creation de devis
+    </td>
+    <td>720</td>
+            <td>
+                            720
+                    </td>
+        <td>720</td>
+            <td>
+                            720
+                    </td>
+        <td></td>
+            <td>
+                            
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-132">PLAS-132</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Complétion de la vue des commandes
+    </td>
+    <td>960</td>
+            <td>
+                            1140
+                    </td>
+        <td>960</td>
+            <td>
+                            1020
+                    </td>
+        <td></td>
+            <td>
+                            120
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-133">PLAS-133</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Modification du mappeur + instance de la vue detailcommande
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-134">PLAS-134</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Modification de la vue BDD detailcommande
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-135">PLAS-135</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Modification du tabledispatcher pour les commandes
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td></td>
+            <td>
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>        <tr valign="top">
+    <td>
+                Tâche</td>
+    <td><a href="/browse/PLAS-118">PLAS-118</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                Creation vue des alertes
+    </td>
+    <td>1920</td>
+            <td>
+                            2460
+                    </td>
+        <td>1920</td>
+            <td>
+                            1920
+                    </td>
+        <td></td>
+            <td>
+                            540
+                    </td>
+        <td>
+                    
+            </td>
+            <td>
+                            0
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-120">PLAS-120</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Creation mapper table suivdossier + Instance
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-121">PLAS-121</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Création mapper vue getAlerte + Instance
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-129">PLAS-129</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Rendre accessible la fiche client via un lien
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-130">PLAS-130</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Rendre accessible la fiche utilisateur via un lien
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-131">PLAS-131</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Rendre accessible une commande via un lien
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-136">PLAS-136</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Modif mapper suivdossier suite au renommage de champs
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-137">PLAS-137</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Mapping de la vue avec le menu
+    </td>
+    <td>60</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>60</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>            <tr valign="top">
+    <td>
+                    -&gt;
+                Sous-tâche</td>
+    <td><a href="/browse/PLAS-138">PLAS-138</a></td>
+    <td>Résolue</td>
+    <td>Important</td>
+    <td>
+                                -&gt;
+                Gestion instanciation de la vue Alerte
+    </td>
+    <td>120</td>
+            <td>
+                    </td>
+        <td>0</td>
+            <td>
+                    </td>
+        <td>120</td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                    </td>
+        <td>
+                    0
+            </td>
+            <td>
+                            0
+                    </td>
+    </tr>    
+<tr>
+    <td colspan="4" align="right">
+        &nbsp;
+    </td>
+    <td><b>Total</b></td>
+    <td>10053</td>
+            <td>10053</td>
+        <td>4601</td>
+            <td>4601</td>
+        <td>12233</td>
+            <td>12233</td>
+        <td>-6781</td>
+            <td>-6781</td>
+        <td>-67</td>
+            <td>-67</td>
+    </tr>
+
+<tr>
+    <td bgcolor="#ffffff" colspan="15">&nbsp;</td>
+</tr>
+<tr>
+    <td bgcolor="#dddddd" colspan="15"><font size=1>
+                    Généré à 08/11/12 13:04 par CCO avec JIRA 5.0.4#731-sha1:3aa7374293d111f571925889c44fdf45364dfd21.
+            </font></td>
+</tr>
+</table>
+
+
+</body>
+</html>
