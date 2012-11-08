@@ -193,7 +193,7 @@ public class Recherche extends KContainer {
             }
             if(rbDevis.isSelected())
             {
-                List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
+                List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid =" +query).addEntity(models.Devis.class).list();        
                 models.Devis devis = null;
                 JPanel panelDevis = null;
                 for (int i = 0; i < list.size(); i++) {
@@ -211,10 +211,10 @@ public class Recherche extends KContainer {
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
                             ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                            Fenetre.getInstance().RenewDetailsDevis(btn_temp.getId());
                         }
                     });
-                    //panelClient.add(btnGoToCmd);
+                    panelDevis.add(btnGoToCmd);
                     panelListSearch.add(panelDevis,BorderLayout.CENTER);             
                 }
                 Fenetre.getInstance().RenewContener(panel);
@@ -242,14 +242,37 @@ public class Recherche extends KContainer {
                             //Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
                         }
                     });
-                    //panelClient.add(btnGoToCmd);
+                    panelClient.add(btnGoToCmd);
                     panelListSearch.add(panelClient,BorderLayout.CENTER);             
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
             if(rbSociete.isSelected())
             {
-                //List<models.>list = session.createSQLQuery("SELECT * From devis WHERE comtitre LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();                    
+                List<models.Client>list = session.createSQLQuery("SELECT * From client WHERE upper(clinom) LIKE '%" +query+ "%' OR upper(cliville) LIKE '%" +query+ "%' OR upper(climail) LIKE '%" +query+ "%';").addEntity(models.Client.class).list();                    
+                 Client client = null;
+                JPanel panelClient = null;
+                for (int i = 0; i < list.size(); i++) {
+                    flag = true;
+                    client = list.get(i);
+                    panelClient = new JPanel();
+                    panelClient.add(new JLabel("Client n°"+ client.getCliid()+""));               
+                    panelClient.setBackground(Color.WHITE);
+                    panelClient.setPreferredSize(new Dimension(750,100));
+                    JLabel nomLabel = new JLabel();
+                    nomLabel.setText("Nom: " + client.getClinom());
+                    panelClient.add(nomLabel);
+                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    btnGoToCmd.setId(client.getCliid());
+                    btnGoToCmd.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent arg0) {
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                        }
+                    });                    
+                    panelClient.add(btnGoToCmd);
+                    panelListSearch.add(panelClient,BorderLayout.CENTER);             
+                }
             }
             if(rbNomenclature.isSelected())
             {

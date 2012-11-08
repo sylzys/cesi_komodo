@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
+import models.DetailDevis;
 
 /**
  *
@@ -338,6 +339,11 @@ public class Fenetre extends JFrame {
         public void RenewClientdDetail(Integer cli_id){
             ClientDetail clientDetail = new ClientDetail(cli_id);
             RenewContener(clientDetail.getPanel());                    
+        }
+        public void RenewDetailsDevis(Integer devid){
+            DevisDetail detailDevis = new DevisDetail(devid);
+            RenewContener(detailDevis.getPanel());
+                    
         }
 
         public void RenewCmd(Integer cmd_id) {
