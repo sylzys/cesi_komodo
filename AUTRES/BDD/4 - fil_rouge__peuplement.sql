@@ -178,9 +178,9 @@ UTISUPPR
 )
 VALUES 
 (nextval('utilisateur_utiid_seq'), 'Administrateur', 'admin' , 'admin', MD5( 'admin' ) , 'admin@plastprod.fr', '0654637643', false), 
-(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', MD5( 'commercial1' ) , 'commercial1@plastprod.fr', '0689764365', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', MD5( 'commercial2' ) , 'commercial2@plastprod.fr', '0689344365', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', MD5( 'commercial3' ) , 'commercial3@plastprod.fr', '0689762315', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', MD5( 'com1' ) , 'commercial1@plastprod.fr', '0689764365', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', MD5( 'com2' ) , 'commercial2@plastprod.fr', '0689344365', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', MD5( 'com3' ) , 'commercial3@plastprod.fr', '0689762315', false),
 (nextval('utilisateur_utiid_seq'), 'Stock', NULL , 'stock', MD5( 'stock' ) , 'stock@plastprod.fr', '066543643', false),
 (nextval('utilisateur_utiid_seq'), 'Production', NULL , 'prod', MD5( 'prod' ) , 'prod@plastprod.fr', '0676543465', false);
 
