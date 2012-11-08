@@ -29,8 +29,8 @@ public class Matiere {
     @Column(name="matlib", columnDefinition="VARCHAR(100)", nullable=true)
     private String matlib;
     
-    @Column(name="mattsuppr", columnDefinition="BOOLEAN", nullable=true)
-    private Boolean mattsuppr;  
+    @Column(name="matsuppr", columnDefinition="BOOLEAN", nullable=true)
+    private Boolean matsuppr;  
 
     public int getMatid() {
         return matid;
@@ -56,11 +56,11 @@ public class Matiere {
         this.matlib = matlib;
     }
 
-    public Boolean getMattsuppr() {
-        return mattsuppr;
+    public Boolean getMatsuppr() {
+        return matsuppr;
     }
 
-    public void setMattsuppr(Boolean mattsuppr) {
-        this.mattsuppr = mattsuppr;
+    public void setMatsuppr(Boolean mattsuppr) {
+        this.matsuppr = mattsuppr;
     }
 }
