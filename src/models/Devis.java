@@ -24,8 +24,8 @@ public class Devis {
     @Column(name="devsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean devsuppr ;
     
-    @Column(name="deviid", columnDefinition="INTEGER", nullable=true)
-    private int deviid ;
+    @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
+    private int demandeid ;
 
     public int getDevid() {
         return devid;
@@ -69,14 +69,14 @@ public class Devis {
         this.devsuppr = devsuppr;
     }
 
-    public int getDeviid() {
-        return deviid;
+    public int getDemandeid() {
+        return demandeid;
     }
 
-    public void setDeviid(int deviid) {
-        this.deviid = deviid;
+    public void setDemandeid(int demandeid) {
+        this.demandeid = demandeid;
     }
-    
+
     
 }
 

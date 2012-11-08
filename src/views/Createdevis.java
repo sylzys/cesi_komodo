@@ -6,6 +6,8 @@ package views;
 
 import controllers.UserActif;
 import instances.DevisInstance;
+import models.Demande;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,6 +28,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
 import models.Devis;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import models.Suivdossier;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -159,7 +167,7 @@ public class Createdevis extends KContainer {
             dvis.setDevdate(new Date());
             dvis.setDevprix(Integer.parseInt(jFormattedTextField2.getText()));
             dvis.setDevsuppr(false);
-            dvis.setDeviid(id);
+            dvis.setDemandeid(id);
 
 
             DevisInstance dvis_inst = DevisInstance.getInstance();
@@ -169,7 +177,14 @@ public class Createdevis extends KContainer {
             {
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
             }
-
+            Transaction tx4 = HibernateConnection.getSession().beginTransaction();
+            Session session2 = HibernateConnection.getSession();
+            Demande dmdd = (Demande) session2.get(Demande.class, id);
+            System.out.println("Updating Record");
+            dmdd.setDemandeid(id);
+            dmdd.setDemandeetat(60);
+            session2.update(dmdd);
+            tx4.commit();
             DemandeDetail devisForm = new DemandeDetail(id);
             fen.RenewContener(devisForm.getPanel());
         }
