@@ -47,7 +47,7 @@ nextval('action_actionid_seq'), 1, 'clientlist','Consultation de la liste des cl
 ), (
 nextval('action_actionid_seq'), 1, 'clientchangeacces','Changement de l''accès du client', false
 ), (
-nextval('action_actionid_seq'), 1, 'user','', false
+nextval('action_actionid_seq'), 1, 'user','Module utilisateur', false
 ), (
 nextval('action_actionid_seq'), 1, 'userlist','Consultation de la liste des utilisateurs', false
 ), (
@@ -101,7 +101,7 @@ nextval('action_actionid_seq'), 5, 'gestionstock','Accès à la gestion des stoc
 ), (
 nextval('action_actionid_seq'), 5, 'historiquecommande','Accès à l''historique des commandes', false
 ), (
-nextval('action_actionid_seq'), 5, 'rechercheproduit','', true
+nextval('action_actionid_seq'), 5, 'rechercheproduit','Rechercher une nomenclature', true
 ), (
 nextval('action_actionid_seq'), 5, 'gestionfournisseur','Accès à la gestion des fournisseurs', false
 ), (
@@ -174,16 +174,18 @@ UTILOGIN ,
 UTIMDP ,
 UTIMAIL ,
 UTITEL ,
+UTIDTELOG,
 UTISUPPR
 )
 VALUES 
-(nextval('utilisateur_utiid_seq'), 'Administrateur', 'admin' , 'admin', MD5( 'admin' ) , 'admin@plastprod.fr', '0654637643', false), 
-(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', MD5( 'com1' ) , 'commercial1@plastprod.fr', '0689764365', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', MD5( 'com2' ) , 'commercial2@plastprod.fr', '0689344365', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', MD5( 'com3' ) , 'commercial3@plastprod.fr', '0689762315', false),
-(nextval('utilisateur_utiid_seq'), 'Stock', NULL , 'stock', MD5( 'stock' ) , 'stock@plastprod.fr', '066543643', false),
-(nextval('utilisateur_utiid_seq'), 'Production', NULL , 'prod', MD5( 'prod' ) , 'prod@plastprod.fr', '0676543465', false);
+(nextval('utilisateur_utiid_seq'), 'Administrateur', 'admin' , 'admin', MD5( 'admin' ) , 'admin@plastprod.fr', '0654637643','2012-12-05', false), 
+(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', MD5( 'com1' ) , 'commercial1@plastprod.fr', '0689764365','2012-11-25', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', MD5( 'com2' ) , 'commercial2@plastprod.fr', '0689344365','2012-10-15', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', MD5( 'com3' ) , 'commercial3@plastprod.fr', '0689762315','2012-12-08', false),
+(nextval('utilisateur_utiid_seq'), 'Stock', 'stock' , 'stock', MD5( 'stock' ) , 'stock@plastprod.fr', '066543643','2012-12-12', false),
+(nextval('utilisateur_utiid_seq'), 'Production', 'prod' , 'prod', MD5( 'prod' ) , 'prod@plastprod.fr', '0676543465','2012-11-24', false);
 
+/*
 INSERT INTO fonction (
 FONCID,
 FONCLIB,
@@ -215,7 +217,7 @@ VALUES (
 '5', '3'
 ), (
 '6', '4'
-);
+);*/
 
 INSERT INTO utiProf (
 UTIID,
@@ -244,23 +246,32 @@ CLINOM ,
 CLIADRESSE ,
 CLICP ,
 CLIVILLE ,
+CLIPAYS,
+CLITEL,
+CLIFAX,
+CLIMAIL,
+CLISIRET,
 CLICA,
+CLIDG,
 CLIETAT ,
 CLILOGIN ,
 CLIMDP ,
 CLIACCES ,
-CLISUPPR
+CLISUPPR,
+CLIDTELOG,
+CLIDTEADD,
+CLISIREN
 )
 VALUES (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 55000, '100', 'client1', MD5( 'client1' ) , '1', false
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 'FRANCE', '0235458745', '0235458748', 'autoconstruct@outlook.com', '65z7841fr25', 55000, 'Paul Arthur', '100', 'client1', MD5( 'client1' ) , '1', false,'2012-03-14','2012-03-14', '784FDFFD54'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 65478, '100', 'client2', MD5( 'client2' ) , '1', false
+nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 'FRANCE', '0154789875', '0154789878', 'autord@outlook.com', '78r45125gt', 65478, 'Yves Dupont', '100', 'client2', MD5( 'client2' ) , '1', false,'2012-11-21','2012-03-14','SDSDQ5465465'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 78545, '100', 'client3', MD5( 'client3' ) , '1', false
+nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 'FRANCE', '0154789856', '0154789858', 'renot@outlook.com', '54dfd2155415', 78545, 'Dohn Carlos', '100', 'client3', MD5( 'client3' ) , '1', false,'2012-02-08','2012-03-14', 'JHJK564564'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 10005465, '100', 'client4', MD5( 'client4' ) , '1', false
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 'FRANCE', '0358745689', '0358745688', 'autosas@outlook.com', '4578dfre2145', 10005465, 'Jean Allezy', '100', 'client4', MD5( 'client4' ) , '1', false,'2012-09-17','2012-03-14','DZS54654'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 6554654, '100', 'client5', MD5( 'client5' ), '1', false
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 'FRANCE', '0254879852', '0254879858', 'prodsas@outlook.com', '75845fg5454', 6554654, 'Pierre Antoine', '100', 'client5', MD5( 'client5' ), '1', false,'2012-05-16','2012-03-14','ESDRZE56465'
 );
 
 INSERT INTO fournisseur (
@@ -459,15 +470,26 @@ nextval('stock_stockid_seq'), '2', '7', '2012-03-11', '2012-03-31', NULL , '20',
 INSERT INTO agenda (
 AGEID ,
 UTIID ,
+AGEINTITULE,
 AGEDEB ,
 AGEFIN ,
 AGELIEU ,
+AGEDESC,
+AGEETAT,
 AGESUPPR
 )
 VALUES (
-nextval('agenda_ageid_seq'), '2', '2012-03-28 16:00:00', '2012-03-28 17:00:00', 'Salle de reunion 1', false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupont', '2012-03-28 16:00:00', '2012-03-28 17:00:00', 'Salle de reunion 1', 'Description du rendez-vous 1', false, false
 ), (
-nextval('agenda_ageid_seq'), '5', '2012-03-31 08:30:00', '2012-03-14 10:00:00', 'Salle de reunion 2', false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Allezy', '2012-08-21 11:30:00', '2012-08-21 12:30:00', 'Salle de reunion 2', 'Description du rendez-vous 2', false, false
+), (
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupuis', '2012-04-14 14:30:00', '2012-04-14 16:30:00', 'Salle de reunion 3', 'Description du rendez-vous 3', false, false
+), (
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Duval', '2012-05-16 13:30:00', '2012-05-16 14:30:00', 'Salle de reunion 1', 'Description du rendez-vous 4', false, false
+), (
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Jean', '2012-12-17 08:30:00', '2012-12-17 10:30:00', 'Salle de reunion 2', 'Description du rendez-vous 5', false, false
+), (
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Cover', '2012-10-22 10:30:00', '2012-10-22 17:30:00', 'Salle de reunion 3', 'Description du rendez-vous 6', false, false
 );
 
 INSERT INTO alerte (
@@ -489,11 +511,11 @@ QTEMAT
 VALUES(
 '1', '1', 10
 ), (
-'2', '1', 20
+'2', '1', 5000
 ), (
 '1', '2', 20
 ), (
-'2', '2', 40
+'2', '2', 2000
 ), (
 '1', '3', 5
 ), (
@@ -507,9 +529,9 @@ VALUES(
 ), (
 '2', '5', 2000
 ), (
-'1', '6', 1
+'1', '6', 10
 ), (
-'2', '6', 50
+'2', '6', 500
 ), (
 '1', '7', 10
 ), (
@@ -738,6 +760,29 @@ UPDATE production SET BONATIRERID = '1' WHERE PRODID = 1;
 UPDATE production SET BONATIRERID = '2' WHERE PRODID = 2;
 UPDATE production SET BONATIRERID = '3', BONAJETERID = '1' WHERE PRODID = 3;
 UPDATE production SET BONATIRERID = '4' WHERE PRODID = 4;
+
+INSERT INTO enquete (
+ENQID ,
+UTIID ,
+INTERID ,
+ENQDOS,
+ENQIDDOS,
+ENQDTE,
+ENQINT,
+ENQDESC,
+ENQPOS,
+ENQTYPE,
+ENQSUPPR
+)
+VALUES (
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos1', 10, '2012-12-05', '564dffd', 'Description de l''enquete 1',  false, true, false
+), (
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos2', 45, '2012-11-20', 'fgdsfg54', 'Description de l''enquete 2',  false, false, false
+), (
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos3', 100, '2012-10-14', 'ghg56', 'Description de l''enquete 3',  false, true, false
+), (
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos4', 50, '2012-09-04', 'hgjh8512', 'Description de l''enquete 4',  false, false, false
+);
 
 INSERT INTO profAction (
 ACTIONID,

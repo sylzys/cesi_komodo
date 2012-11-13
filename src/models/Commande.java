@@ -21,8 +21,8 @@ public class Commande {
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
     private Integer interid ;
     
-    @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-    private Integer utiid ; 
+//    @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
+//    private Integer utiid ; 
     
     @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
     private Integer demandeid ; 
@@ -77,13 +77,13 @@ public class Commande {
         this.interid = interid;
     }
 
-    public Integer getUtiid() {
-        return utiid;
-    }
-
-    public void setUtiid(Integer utiid) {
-        this.utiid = utiid;
-    }
+//    public Integer getUtiid() {
+//        return utiid;
+//    }
+//
+//    public void setUtiid(Integer utiid) {
+//        this.utiid = utiid;
+//    }
 
     public Integer getDemandeid() {
         return demandeid;

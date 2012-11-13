@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  07/11/2012 07:56:26                      */
+/* Date de création :  13/11/2012 07:35:27                      */
 /*==============================================================*/
 
 
@@ -194,7 +194,7 @@ create table CLIENT (
    CLIFAX               VARCHAR(10)          null,
    CLIMAIL              VARCHAR(100)         null,
    CLIACTIVITE          VARCHAR(254)         null,
-   CLISIRET             VARCHAR(50)          null,
+   CLISIRET             VARCHAR(20)          null,
    CLICA                INT4                 null,
    CLISITE              VARCHAR(100)         null,
    CLIDG                VARCHAR(100)         null,
@@ -206,6 +206,8 @@ create table CLIENT (
    CLIDTELOG            DATE                 null,
    CLIDTEADD            DATE                 null,
    CLIURLTMP            VARCHAR(500)         null,
+   CLISIREN             VARCHAR(20)          null,
+   CLINAF               VARCHAR(20)          null,
    constraint PK_CLIENT primary key (CLIID)
 );
 
@@ -480,7 +482,7 @@ create table ENQUETE (
    ENQIDDOS             INT4                 null,
    ENQDTE               DATE                 null,
    ENQINT               VARCHAR(50)          null,
-   ENQDESC              VARCHAR(1)           null,
+   ENQDESC              VARCHAR(500)         null,
    ENQPOS               BOOL                 null,
    ENQTYPE              BOOL                 null,
    ENQSUPPR             BOOL                 null,

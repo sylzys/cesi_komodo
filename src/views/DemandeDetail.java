@@ -261,7 +261,7 @@ public class DemandeDetail extends KContainer {
 
 
             Commande cmd = new Commande();
-            cmd.setUtiid(ddd.get(0).getUtiid());
+            //cmd.setUtiid(ddd.get(0).getUtiid());
             cmd.setInterid(ddd.get(0).getInterid());
             cmd.setComtitre(ddd.get(0).getDemandetitre());
             cmd.setComdesc(ddd.get(0).getDemandedesc());

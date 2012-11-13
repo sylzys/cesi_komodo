@@ -47,7 +47,7 @@ public class Client {
     @Column(name="cliactivite", columnDefinition="VARCHAR(254)", nullable=true)
     private String cliactivite ;
     
-    @Column(name="clisiret", columnDefinition="VARCHAR(50)", nullable=true)
+    @Column(name="clisiret", columnDefinition="VARCHAR(20)", nullable=true)
     private String clisiret ;
     
     @Column(name="clica", columnDefinition="INTEGER", nullable=true)
@@ -82,10 +82,10 @@ public class Client {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date clidteadd ;
     
-    @Column(name="clinaf", columnDefinition="VARCHAR(50)", nullable=true)
+    @Column(name="clinaf", columnDefinition="VARCHAR(20)", nullable=true)
     private String clinaf ;
     
-    @Column(name="clisiren", columnDefinition="VARCHAR(50)", nullable=true)
+    @Column(name="clisiren", columnDefinition="VARCHAR(20)", nullable=true)
     private String clisiren ;
 
     public String getClinaf() {
