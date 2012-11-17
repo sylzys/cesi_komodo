@@ -150,24 +150,29 @@ public class ClientInstance {
     public Boolean ajouterDansBaseDeDonnees() {
         if (HibernateConnection.online == false)
         {
-            try
-            {
-                // Synchro writereq = new Synchro();
-                writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
-                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clidteadd, clisuppr)"
-                        + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
-                        + "'" + this.client.getClinom() + "','" + this.client.getCliadresse() + "','" + this.client.getClicp() + "','"
-                        + "" + this.client.getClitel() + "','" + this.client.getClifax() + "','"
-                        + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
-                        + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
-                        + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
-                        + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
-                        + "", -1, this.client.getClinom());
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            List<Object> lst = new ArrayList();
+            lst.add(this.client);
+            Object obj = new Object();            
+            Synchro sync = new Synchro();
+            //sync.objSerializable(this.client);
+//            try
+//            {
+//                // Synchro writereq = new Synchro();
+//                writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
+//                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clidteadd, clisuppr)"
+//                        + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
+//                        + "'" + this.client.getClinom() + "','" + this.client.getCliadresse() + "','" + this.client.getClicp() + "','"
+//                        + "" + this.client.getClitel() + "','" + this.client.getClifax() + "','"
+//                        + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
+//                        + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
+//                        + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
+//                        + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
+//                        + "", -1, this.client.getClinom());
+//            }
+//            catch (IOException ex)
+//            {
+//                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         
             try

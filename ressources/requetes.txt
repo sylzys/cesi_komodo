@@ -1,0 +1,1 @@
+INSERT INTO interlocuteur (cliid, internom, interprenom, intermail, intertel,  interdteadd, intersuppr) VALUES (6,'fdfsdf','dfdsf','gsdfgfdg','2424','Wed Nov 14 08:04:31 CET 2012','f')client:dfsdfds||

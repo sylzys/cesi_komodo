@@ -9,10 +9,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +39,7 @@ import org.hibernate.Transaction;
  * @author lavie
  */
 //Class pour la synchronisation en ligne
-public class Synchro {
+public class Synchro implements Serializable {
     private static SessionFactory sessionFactory;
     private String lib;
     private String libreq;
@@ -328,6 +331,19 @@ public class Synchro {
            bw.close();
         } catch(IOException e) {
            System.out.println(e);
+        }
+    }
+    public void objSerializable(List<Object> obj)
+    {
+        try {
+        FileOutputStream fichier = new FileOutputStream("ressources/object.dat");
+        ObjectOutputStream oos = new ObjectOutputStream(fichier);
+        oos.writeObject(obj);
+        oos.flush();
+        oos.close();
+        }
+        catch (java.io.IOException e) {
+            System.out.println(e);
         }
     }
 }
