@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -31,6 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import models.ParamSync;
 
 /**
  *
@@ -80,7 +82,7 @@ public class SynchroView extends KContainer {
                     + "Vous ne pouvez pas synchroniser hors ligne</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
         }
-        else if (sync.emptyFic() == true)
+        else if (sync.emptyDir() == false)
         {
             FlowLayout flchk1 = new FlowLayout();
             JLabel lbl1 = new JLabel("<html><p color=blue>CLIENT</p></html>");
@@ -109,67 +111,48 @@ public class SynchroView extends KContainer {
             center.add(lbl1);
             center.add(lbl2);
             center.add(lbl3);
-            fic = sync.readFic();
-            StringTokenizer strtok = new StringTokenizer(fic, "||");
-            int i = 0;
-            while (strtok.hasMoreTokens())
+            int i;
+            String[] dir = new File("ressources/ser/").list();
+            for(i=0; i<dir.length; i++ )
             {
-                i = i + 1;
-                req = strtok.nextToken();
-                String[] decoup = req.split("interlocuteur:");
-                int interid = -1;
-                String requete = "";
-                if (decoup.length > 1)
-                {
-                    interid = Integer.parseInt(decoup[1]);
-                    requete = decoup[0];
-                }
-                String[] decoup2 = req.split("client:");
-                String nomclient = "";
-                if (decoup2.length > 1)
-                {
-                    nomclient = decoup2[1];
-                    requete = decoup2[0];
-                }
-
-                String[] action = sync.readReq(req, interid, nomclient);
-                FlowLayout flchk = new FlowLayout();
-                Hashtable ht = new Hashtable();
-                ht.put("requete", requete);
-                ht.put("type", req);
-
-                Hashtable ht2 = new Hashtable();
-                ht2.put("requete", req);
-                //NEW CHKBOXDATA
-                CheckBoxData chkbox = new CheckBoxData(i, ht);
-                //LabelData imgico = new LabelData();
-                //imgico.putData(String.valueOf(i), req);
-                LabelData lblimg = new LabelData(i, ht2);
-                lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
-                lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                chkbox.setSelected(true);
-                listchk.add(chkbox);
-                listlbl.add(lblimg);
-                lblimg.setBorder(new EmptyBorder(0, 10, 0, 0));
-                lblimg.setPreferredSize(new Dimension(70, 35));
-                JLabel lblclient = new JLabel(action[0].toUpperCase());
-                JLabel lbltable = new JLabel(action[1].toUpperCase());
-                JLabel lblaction = new JLabel(action[2].toUpperCase());
-                lblclient.setBorder(new EmptyBorder(0, 10, 0, 0));
-                lbltable.setBorder(new EmptyBorder(0, 10, 0, 0));
-                lblaction.setBorder(new EmptyBorder(0, 10, 0, 0));
-                chkbox.setBorder(new EmptyBorder(0, 10, 0, 0));
-                chkbox.setPreferredSize(new Dimension(80, 35));
-                lblclient.setPreferredSize(new Dimension(190, 35));
-                lbltable.setPreferredSize(new Dimension(190, 35));
-                lblaction.setPreferredSize(new Dimension(160, 35));
-                center.setLayout(flchk);
-                center.add(chkbox);
-                center.add(lblclient);
-                center.add(lbltable);
-                center.add(lblaction);
-                center.add(lblimg);
-                lblimg.addMouseListener(new MouseAdapter() {
+                 ArrayList<Object> lsobj = sync.objDeserializable(dir[i]);
+                 ParamSync param = (ParamSync)lsobj.get(1); 
+                 String clinom = param.getClinom();
+                 String type = param.getType();
+                 String table = sync.table(dir[i]);
+                 FlowLayout flchk = new FlowLayout();
+                 Hashtable ht = new Hashtable();
+                 ht.put("objet", dir[i]);
+                 ht.put("type", type);
+                 Hashtable ht2 = new Hashtable();
+                 ht2.put("objet", dir[i]);
+                 CheckBoxData chkbox = new CheckBoxData(i, ht);
+                 LabelData lblimg = new LabelData(i, ht2);
+                 lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
+                 lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                 chkbox.setSelected(true);
+                 listchk.add(chkbox);
+                 listlbl.add(lblimg);
+                 lblimg.setBorder(new EmptyBorder(0, 10, 0, 0));
+                 lblimg.setPreferredSize(new Dimension(70, 35));
+                 JLabel lblclient = new JLabel(clinom.toUpperCase());
+                 JLabel lbltable = new JLabel(table.toUpperCase());
+                 JLabel lblaction = new JLabel(type.toUpperCase());
+                 lblclient.setBorder(new EmptyBorder(0, 10, 0, 0));
+                 lbltable.setBorder(new EmptyBorder(0, 10, 0, 0));
+                 lblaction.setBorder(new EmptyBorder(0, 10, 0, 0));
+                 chkbox.setBorder(new EmptyBorder(0, 10, 0, 0));
+                 chkbox.setPreferredSize(new Dimension(80, 35));
+                 lblclient.setPreferredSize(new Dimension(190, 35));
+                 lbltable.setPreferredSize(new Dimension(190, 35));
+                 lblaction.setPreferredSize(new Dimension(160, 35));
+                 center.setLayout(flchk);
+                 center.add(chkbox);
+                 center.add(lblclient);
+                 center.add(lbltable);
+                 center.add(lblaction);
+                 center.add(lblimg);
+                 lblimg.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent me) {
                         int option = JOptionPane.showConfirmDialog(null, "Voulez-vous supprimer cette action ?", "Suppression de l'action", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                         if (option == JOptionPane.OK_OPTION)
@@ -177,13 +160,13 @@ public class SynchroView extends KContainer {
                             LabelData lbldata = (LabelData) me.getComponent();
                             Synchro sync = new Synchro();
                             Hashtable tmp = lbldata.getData();
-                            sync.delReq(tmp.get("requete").toString());
+                            sync.delFic(tmp.get("objet").toString());
                             Fenetre fen = Fenetre.getInstance();
                             fen.RenewSnchro();
                         }
                     }
-                });
-            }
+                 });                 
+             }
             chkslct.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -218,15 +201,15 @@ public class SynchroView extends KContainer {
                     for (CheckBoxData chkdata : listchk)
                     {
                         Hashtable tmp = chkdata.getData();
-                        String requete = tmp.get("requete").toString();
-                        String ligne = tmp.get("type").toString();
+                        String objet = tmp.get("objet").toString();
+                        String type = tmp.get("type").toString();
                         if (chkdata.isSelected() == true)
                         {
-                            boolean retour = sync.record(requete);
+                            boolean retour = sync.record(objet);
                             tabtest.add(retour);
                             if (retour == true)
                             {
-                                sync.delReq(ligne);
+                               sync.delFic(objet);
                             }
                         }
                     }
@@ -264,7 +247,6 @@ public class SynchroView extends KContainer {
                     + "Vous n'avez aucune action à sauvegarder</p><center></html>");
             content.add(titre, BorderLayout.NORTH);
         }
-
         this.panel.add(content);
     }
 }

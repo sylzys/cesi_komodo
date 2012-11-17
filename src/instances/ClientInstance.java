@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Client;
 import models.Interlocuteur;
+import models.ParamSync;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -110,23 +111,23 @@ public class ClientInstance {
         Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-            try
-            {
-                writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
-                        + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + "', "
-                        + "clicp = '" + cli.getClicp().trim() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
-                        + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
-                        + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
-                        + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
-                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ",  "
-                        + "clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
-                        -1, cli.getClinom());
-                //return true;
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try
+//            {
+//                writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
+//                        + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + "', "
+//                        + "clicp = '" + cli.getClicp().trim() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
+//                        + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
+//                        + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
+//                        + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
+//                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ",  "
+//                        + "clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
+//                        -1, cli.getClinom());
+//                //return true;
+//            }
+//            catch (IOException ex)
+//            {
+//                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         
             try
@@ -150,46 +151,25 @@ public class ClientInstance {
     public Boolean ajouterDansBaseDeDonnees() {
         if (HibernateConnection.online == false)
         {
-            List<Object> lst = new ArrayList();
-            lst.add(this.client);
-            Object obj = new Object();            
+            ParamSync param = new ParamSync();
+            param.setClinom(this.client.getClinom());
+            param.setType("Ajout");
             Synchro sync = new Synchro();
-            //sync.objSerializable(this.client);
-//            try
-//            {
-//                // Synchro writereq = new Synchro();
-//                writereq.SaveReq("INSERT INTO client (utiid, uti_utiid, clinom, cliadresse, clicp, clitel, clifax, climail,"
-//                        + "cliactivite, clisiret, clica, clisite, clidg, clietat, cliacces, clinaf, clisiren, clidteadd, clisuppr)"
-//                        + " VALUES (" + this.client.getUtiid() + "," + this.client.getUti_utiid() + ","
-//                        + "'" + this.client.getClinom() + "','" + this.client.getCliadresse() + "','" + this.client.getClicp() + "','"
-//                        + "" + this.client.getClitel() + "','" + this.client.getClifax() + "','"
-//                        + "" + this.client.getClimail() + "','" + this.client.getCliactivite() + "','" + this.client.getClisiret() + "'," + this.client.getClica() + ",'"
-//                        + "" + this.client.getClisite() + "','" + this.client.getClidg() + "'," + this.client.getClietat() + ","
-//                        + "" + this.client.isCliacces() + ",'" + this.client.getClinaf() + "','"
-//                        + "" + this.client.getClisiren() + "','" + Calendar.getInstance().getTime() + "','f')"
-//                        + "", -1, this.client.getClinom());
-//            }
-//            catch (IOException ex)
-//            {
-//                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            sync.objSerializable(this.client, param);
         }
         
             try
             {
-                Transaction tx = HibernateConnection.getSession().beginTransaction();
-                System.out.println("Nouvel enregistrement en cours d'insertion ...");
-
+                Transaction tx = null;
+                tx = HibernateConnection.getSession().beginTransaction();
                 HibernateConnection.getSession().save(this.client);
-                // System.out.println(tx.wasCommitted());       
                 tx.commit();
-                //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-
+                return true;
             }
             catch (HibernateException e)
             {
+                System.out.println(e);
                 return false;
             }
-        return true;
     }
 }

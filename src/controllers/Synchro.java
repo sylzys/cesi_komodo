@@ -5,345 +5,211 @@
 package controllers;
 
 import instances.HibernateConnection;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.hibernate.Query;
+import models.Client;
+import models.Interlocuteur;
+import models.ParamSync;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import views.Fenetre;
-import java.util.*;
-import javax.swing.JFrame;
-import models.Client;
-import models.Commande;
-import models.Interlocuteur;
-import views.ReplicView;
-import java.util.List;
-import javax.swing.JOptionPane;
-import org.hibernate.HibernateException;
-import org.hibernate.Transaction;
 
 /**
  *
  * @author lavie
  */
-//Class pour la synchronisation en ligne
-public class Synchro implements Serializable {
+//Class qui gère la synchronisation
+public class Synchro {
+
     private static SessionFactory sessionFactory;
-    private String lib;
-    private String libreq;
-    private String req;
-    private String table;
-    private String[] name;
-    private String[] decTable;
-    private String nameclient;
+    private String path = "ressources/ser/";
     
     //Test la connection en ligne
-    public boolean InitConnect()
-    {
-            try {
+    public boolean InitConnect() {
+        try {
             //Désactivation du log Warning hibernate
             Logger log = Logger.getLogger("org.hibernate");
             log.setLevel(Level.OFF);
-                sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory() ;
-             } catch (Throwable ex) { 
-               System.out.println(ex);
-               return false;
-             }
-            Logger log = Logger.getLogger("org.hibernate");
-//            log.setLevel(Level.WARNING);
+            //On test la connection à la base en ligne
+            sessionFactory = new Configuration().configure("config/connect.xml").buildSessionFactory();
+        } catch (Throwable ex) {
+            System.out.println(ex);
+            //Si erreur on n'est pas connecté
+            return false;
+        }
+        Logger log = Logger.getLogger("org.hibernate");
+        //DECOMMENTER POUR AFFICHER LES ERREUR HIBERNATE
+        //log.setLevel(Level.WARNING);
+        //On ferme la session
         sessionFactory.close();
+        //on renvoie true car on est en ligne
         return true;
     }
-    //Sauvegarde de la requete dans le fichier
-    public void SaveReq(String req, int interid, String nomclient) throws IOException
-    {
-        try {
-           FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
-           BufferedWriter bw = new BufferedWriter(fichier);
-           if(!nomclient.equals(""))
-           {
-               bw.write(req + "client:" + nomclient + "||");
-           }
-           else
-           {
-               bw.write(req + "interlocuteur:" + interid + "||");
-           }
-           bw.close();
-        } catch(IOException e) {
-           System.out.println(e);
-        }
-    }
-    //Test si fichier vide renvoi false si il est vide
-    public boolean emptyFic()
-    {
-        try {
-            File fich = new File("ressources/requetes.txt");
-            if(fich.length() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;   
-            }
-        }
-        catch(Exception e) {
-           System.out.println(e);
-           return false;
-        }
-    }
-    //Remise à 0 du fichier de requete
-    public void eraseFic()
-    {
-        try
-        {
-            File fich = new File("ressources/requetes.txt");
-            if(fich.exists() == true)
-            {
-                fich.delete();
-                fich.createNewFile();
-            }
-        }
-        catch (IOException e)
-        {
-            System.out.println(e);
-        }
-    }
-    public void onlinemod()
-    {
+    
+    //Test si il y a des actions à synchroniser et redirection vers la page synchro
+    public void onlinemod() {
+        //Connection hibernate en ligne
         HibernateConnection.online();
         Fenetre fen = Fenetre.getInstance();
-        boolean fic = emptyFic();
-        if(fic == true)
-        {
+        //on vérifie qu'il y a des actions à synchroniser
+        boolean fic = emptyDir();
+        if (fic == false) {
+            //Si il y en a on redirige vers la page synchro
             fen.RenewSnchro();
-        }
-        else
-        {
+        } else {
             fen.RenewAccueil();
         }
     }
-    //Lecture du fichier
-    public String readFic()
-    {
-        req = "";
-        String filePath = "ressources/requetes.txt";
-        try{
-        // Création du flux bufférisé sur un FileReader, immédiatement suivi par un 
-        // try/finally, ce qui permet de ne fermer le flux QUE s'il le reader
-        // est correctement instancié (évite les NullPointerException)
-        BufferedReader buff = new BufferedReader(new FileReader(filePath));
+    
+    //Serialisation de l'objet et des paramètres
+    public void objSerializable(Object obj, Object param) {
         try {
-            String line;
-            // Lecture du fichier ligne par ligne. Cette boucle se termine
-            // quand la méthode retourne la valeur null.
-            while ((line = buff.readLine()) != null) {
-                req+= line;
-                }
-        } finally {
-            // dans tous les cas, on ferme nos flux
-            buff.close();
+            //Nom de l'objet passé en paramètre
+            String objName = obj.getClass().getName();
+            //Nb de fichier sérialisé de cet objet
+            int nbFic = nbFic(objName);
+            //Nouveau fichier
+            FileOutputStream fichier = new FileOutputStream(path + objName + "_" + nbFic + ".ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fichier);
+            //On écrit les objets dans le fichier
+            oos.writeObject(obj);
+            oos.writeObject(param);
+            //Vidage buffer
+            oos.flush();
+            //Fermeture du fichier
+            oos.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        } catch (IOException ioe) {
-            // erreur de fermeture des flux
-            System.out.println("Erreur --" + ioe.toString());
-        }
-        return req;
     }
-    //Lecture des requete dans le fichier
-    public String[] readReq(String req, int interid, String nomclient)
-    {
-        nameclient = "";
-        table = ""; 
-        libreq = "";
-        name = null;
-        decTable = null;
-        libreq = req.substring(0,6);
-        if("INSERT".equals(libreq))
-        {
-            libreq = "Ajout"; 
-            name = req.split("INSERT INTO");
-            table = name[1];
-            decTable = table.split("\\(");
-            table = decTable[0].replaceAll(" ", "");
+
+    //Désérialisation des objets (renvoi une liste d'objet)
+    public ArrayList<Object> objDeserializable(String ficName) {
+        try {
+            //Nouvelle liste d'objet
+            ArrayList<Object> lsobj = new ArrayList<>();
+            //Fichier (nom passé en paramètre)
+            FileInputStream fichier = new FileInputStream(path + ficName);
+            ObjectInputStream ois = new ObjectInputStream(fichier);
+            //On ajoute le premier objet à la liste
+            lsobj.add(ois.readObject());
+            //On ajoute l'objet de paramètre à la liste
+            ParamSync param = (ParamSync) ois.readObject();
+            lsobj.add(param);
+            //Fermeture du fichier
+            ois.close();
+            //On renvoi la liste d'objet
+            return lsobj;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+            return null;
         }
-        else
-        {
-            if(req.indexOf("suppr = true") != -1)
-            {
-                name = req.split("UPDATE");
-                table = name[1];
-                decTable = table.split("SET");
-                table = decTable[0].replaceAll(" ", "");
-                libreq = "Supression";
-            }
-            else if("DELETE".equals(libreq))
-            {
-                name = req.split("FROM");
-                table = name[1];
-                decTable = table.split("WHERE");
-                table = decTable[0].replaceAll(" ", "");
-                libreq = "Supression";
-            }
-            else
-            {
-                name = req.split("UPDATE");
-                table = name[1];
-                decTable = table.split("SET");
-                table = decTable[0].replaceAll(" ", "");
-                libreq = "Mise à jour" ;
-            }    
-        } 
-        if(interid != -1 && table.equals("client") == false)
-        {
-            int clientid = 0;
-            try 
-            {
-                Query query = HibernateConnection.getSession().createQuery("from Interlocuteur where interid = :interid");
-                query.setParameter("interid", interid);
-                List<Interlocuteur> interlist = query.list();
-                for (Interlocuteur inter : interlist) 
-                {
-                    clientid = inter.getCliid();
-                }
-            }
-            catch(Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-            try 
-            {
-                Query query = HibernateConnection.getSession().createQuery("from Client where cliid = :cliid");
-                query.setParameter("cliid", clientid);
-                List<Client> clilist = query.list();
-                for (Client client : clilist) 
-                {
-                    nameclient = client.getClinom();
-                }
-            }
-            catch(Exception e)
-            {
-                System.out.println(e.getMessage());
-            }  
-        }
-        else if(!nomclient.equals("") || table.equals("client") == true)
-        {
-            nameclient = nomclient;
-        }
-        else
-        {
-            nameclient = "Aucun client concerné"; 
-        }
-        String action[] = {nameclient, table, libreq};
-        return action;
+
     }
-    //Envoi des requete dans la base en ligne
-    public boolean record(String requete)
-    {
-        boolean empty = emptyFic();
-        if(empty == true)
-        {
-            Transaction tx = null;
-            try {
-                tx = HibernateConnection.getSession().beginTransaction();
-                // Ordre Hibernate             
-                Query q = HibernateConnection.getSession().createSQLQuery(requete);
-                q.executeUpdate();
-                tx.commit();
-                return true;
-            } catch (HibernateException ex) {
-                System.out.println(ex.toString());  
-                return false;
+
+    //Compte le nombre de fichier de l'objet passé en paramètre
+    public int nbFic(String objName) {
+        int nbFic = 0;
+        //List les fichiers du dossier
+        String[] dir = new File(path).list();
+        //Parcours le dossier
+        for (int i = 0; i < dir.length; i++) {
+            //Si le nom correspond au nom de l'objet
+            if (dir[i].indexOf(objName) != -1) {
+                //Un fichier de plus
+                nbFic = nbFic + 1;
             }
         }
-        else
-        {
+        //Renvoi le nombre de fichier
+        return nbFic;
+    }
+
+    //Test si le dossier est vide (renvoi true si il est vide)
+    public boolean emptyDir() {
+        File file = new File(path);
+        //Si il y a plu de 0 fichiers
+        if (file.list().length > 0) {
+            //Renvoi false le dossier n'est pas vide
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //Supprime le fichier de l'action passé en paramètre
+    public boolean delFic(String fic) {
+        try {
+            File file = new File(path + fic);
+            //Suppression du fichier
+            file.delete();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return false;
         }
     }
-    public String cliNom(int cliid)
-    {
-        String cliNom = "";
-        try 
-        {
-            Query query = HibernateConnection.getSession().createQuery("from Client where cliid = :cliid");
-            query.setParameter("cliid", cliid);
-            List<Client> clilist = query.list();
-            for (Client client : clilist)
-            {
-                cliNom = client.getClinom();
+
+    //Sauvegarde l'action passé en paramètre dans la base en ligne
+    public boolean record(String fic) {
+        //Liste d'objet de l'action
+        ArrayList<Object> lsobj = objDeserializable(fic);
+        //Découpe le nom du fichier
+        String[] decoup = fic.split("_");
+        //Nom de l'objet
+        String nameObj = decoup[0];
+        //Nouvel objet
+        Object obj = new Object();
+        //Switch le nom de l'objet
+        switch (nameObj) {
+            case "models.Interlocuteur":
+                //On converti l'objet
+                obj = (Interlocuteur) lsobj.get(0);
+                break;
+            case "models.Client":
+                obj = (Client) lsobj.get(0);
+                break;
+        }
+        //Objet paramètre
+        ParamSync param = (ParamSync) lsobj.get(1);
+        //Si le type est ajout
+        if (param.getType().equals("Ajout")) {
+            try {
+                //Transaction hibernate
+                Transaction tx = null;
+                tx = HibernateConnection.getSession().beginTransaction();
+                //Enregistrement de l'objet dans la base
+                HibernateConnection.getSession().save(obj);
+                tx.commit();
+                return true;
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return false;
             }
         }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }  
-        return cliNom;
+        return true;
     }
-    public void delReq(String ligne)
-    {
-        String fic= readFic();
-        String newFic="";
-        StringTokenizer strtok = new StringTokenizer(fic, "||");
-        while (strtok.hasMoreTokens()) {
-            String requete = req = strtok.nextToken();
-            if(!requete.equals(ligne))
-            {
-                newFic+=requete+"||";
-            }
-        }
-        eraseFic();
-        createFic();
-        writeFic(newFic);
-    }
-    public void createFic(){
-        try
-        {
-            File fichier = new java.io.File("ressources/requetes.txt");
-            if(fichier.exists() == false)
-            {
-                fichier.createNewFile();
-            }
-        }
-        catch (IOException e)
-        {
-            System.out.println(e);
-        }
-    }
-    public void writeFic(String contenu)
-    {
-        try {
-           FileWriter fichier = new FileWriter("ressources/requetes.txt", true);
-           BufferedWriter bw = new BufferedWriter(fichier);
-           bw.write(contenu);
-           bw.close();
-        } catch(IOException e) {
-           System.out.println(e);
-        }
-    }
-    public void objSerializable(List<Object> obj)
-    {
-        try {
-        FileOutputStream fichier = new FileOutputStream("ressources/object.dat");
-        ObjectOutputStream oos = new ObjectOutputStream(fichier);
-        oos.writeObject(obj);
-        oos.flush();
-        oos.close();
-        }
-        catch (java.io.IOException e) {
-            System.out.println(e);
-        }
+
+    //Renvoi la table concernée par l'action
+    public String table(String fic) {
+        //Découpe le nom du fichier
+        String[] decoup = fic.split("_");
+        String table = decoup[0];
+        //Découpe le terme models
+        String[] decoup2 = table.split("models.");
+        table = decoup2[1];
+        //Renvoi le nom de la table
+        return table;
     }
 }

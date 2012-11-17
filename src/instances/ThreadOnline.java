@@ -51,8 +51,8 @@ public class ThreadOnline extends Thread
         {
             //Nouvelle connection en ligne
             HibernateConnection.newConnect(true);
-            boolean fich = connect.emptyFic();
-            if(fich == true)
+            boolean fich = connect.emptyDir();
+            if(fich == false)
             {
                 fen.RenewSnchro();
             }

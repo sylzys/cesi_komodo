@@ -14,6 +14,7 @@ import models.Client;
 import models.Commande;
 import models.CurrentDatas;
 import models.Interlocuteur;
+import models.ParamSync;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -110,21 +111,21 @@ public class InterlocuteurInstance {
         Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-            Synchro writereq = new Synchro();
-            CurrentDatas cli = CurrentDatas.getInstance();
-            int cliid = cli.getSoc_id();
-            String cliname = writereq.cliNom(cliid);
-       try
-            {
-                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
-                        + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
-                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "',"
-                        + "intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            Synchro writereq = new Synchro();
+//            CurrentDatas cli = CurrentDatas.getInstance();
+//            int cliid = cli.getSoc_id();
+//            String cliname = writereq.cliNom(cliid);
+//       try
+//            {
+//                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
+//                        + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
+//                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "',"
+//                        + "intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
+//            }
+//            catch (IOException ex)
+//            {
+//                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
 
         try
@@ -143,31 +144,27 @@ public class InterlocuteurInstance {
     }
 
     public synchronized void insererEnBaseDeDonnees(Interlocuteur inter) {
-        Transaction tx = null;
+        //Test si on est hors ligne
         if (HibernateConnection.online == false)
         {
-            Synchro writereq = new Synchro();
             CurrentDatas cli = CurrentDatas.getInstance();
             int cliid = cli.getSoc_id();
-            String cliname = writereq.cliNom(cliid);
-            try
-            {
-                writereq.SaveReq("INSERT INTO interlocuteur (cliid, internom, interprenom, intermail, intertel, "
-                        + " interdteadd, intersuppr)"
-                        + " VALUES (" + cliid + ",'" + inter.getInternom() + "','"
-                        + inter.getInterprenom() + "','" + inter.getIntermail() + "','" + inter.getIntertel() + "','"
-                        + Calendar.getInstance().getTime() + "',"
-                        + "'f')"
-                        + "", -1, cliname);
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //Nouvel objet de paramètre
+            ParamSync param = new ParamSync();
+            //Nom du client
+            param.setClinom(cliid, "client");
+            //Type d'action
+            param.setType("Ajout");
+            //Id du client concerné
+            param.setIdWhere(cliid);
+            Synchro sync = new Synchro();
+            //sérialisation des objets
+            sync.objSerializable(inter, param);
         }
-
         try
         {
+            //Transaction hibernate
+            Transaction tx = null;
             tx = HibernateConnection.getSession().beginTransaction();
             HibernateConnection.getSession().save(inter);
             tx.commit();

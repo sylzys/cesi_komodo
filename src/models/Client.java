@@ -1,11 +1,12 @@
 package models;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 @Entity
 @Table(name="client")
-public class Client {
+public class Client implements Serializable {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

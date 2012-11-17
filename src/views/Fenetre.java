@@ -171,8 +171,8 @@ public class Fenetre extends JFrame {
                     boolean status = connect.InitConnect();
                     if (HibernateConnection.online == true || status == true)
                     {
-                        Synchro sync = new Synchro();
-                        sync.onlinemod();
+                        //Connection en ligne (renvoi sur la page synchro si des actions sont à sauvegarder)
+                        connect.onlinemod();
                     }
                     else
                     {

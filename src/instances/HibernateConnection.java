@@ -1,7 +1,6 @@
 package instances;
 
 import controllers.Synchro;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,8 +34,6 @@ public class HibernateConnection {
 	{
                 online = false;
                 confHib = "/config/offline.xml";
-                Synchro sync = new Synchro();
-                sync.createFic();
 	}
         
 	public static void connectOnline()
