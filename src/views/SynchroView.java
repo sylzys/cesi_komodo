@@ -33,7 +33,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import models.ParamSync;
-
+import java.util.Arrays;
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
+ 
+import java.io.File;
+import java.util.Arrays;
 /**
  *
  * @author slavie
@@ -112,17 +116,19 @@ public class SynchroView extends KContainer {
             center.add(lbl2);
             center.add(lbl3);
             int i;
-            String[] dir = new File("ressources/ser/").list();
+            File path = new File("ressources/ser/");
+            File[] dir = path.listFiles();
+            Arrays.sort(dir, LastModifiedFileComparator.LASTMODIFIED_COMPARATOR);
             for(i=0; i<dir.length; i++ )
             {
-                 ArrayList<Object> lsobj = sync.objDeserializable(dir[i]);
+                 ArrayList<Object> lsobj = sync.objDeserializable(dir[i].getName());
                  ParamSync param = (ParamSync)lsobj.get(1); 
                  String clinom = param.getClinom();
                  String type = param.getType();
-                 String table = sync.table(dir[i]);
+                 String table = sync.table(dir[i].getName());
                  FlowLayout flchk = new FlowLayout();
                  Hashtable ht = new Hashtable();
-                 ht.put("objet", dir[i]);
+                 ht.put("objet", dir[i].getName());
                  ht.put("type", type);
                  Hashtable ht2 = new Hashtable();
                  ht2.put("objet", dir[i]);
