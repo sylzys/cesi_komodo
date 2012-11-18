@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="client")
 public class Client implements Serializable {
-	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int cliid;

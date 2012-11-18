@@ -183,6 +183,10 @@ public class Synchro {
                 }   
                 //Comit la transaction
                 tx.commit();
+                //Vide la session en cours (persistence des objets)
+                HibernateConnection.getSession().flush();
+                //Détache l'objet de la session
+                HibernateConnection.getSession().evict(obj);
                 return true;
         } catch (Exception e) {
                 System.out.println(e.getMessage());

@@ -216,10 +216,20 @@ public class Fenetre extends JFrame {
 
             this.setLocationRelativeTo(null);
             this.setVisible(true);
-
-            //Affiachage accueil
-            Accueil home = new Accueil(user);
-            RenewContener(home.getPanel());
+            Synchro sync = new Synchro();
+            //Si on est en ligne et qu'il y a des actions à sauvegarder
+            if(HibernateConnection.online == true && sync.emptyDir() == false)
+            {
+                //Redirection vers la page de synchro
+                RenewSnchro();
+            }
+            //Sinon
+            else
+            {
+                //Redirection vers l'accueil
+                Accueil home = new Accueil(user);
+                RenewContener(home.getPanel());
+            }
         }
 
         //LISTENERS
@@ -355,7 +365,6 @@ public class Fenetre extends JFrame {
         }
 
         public void RenewSnchro() {
-            user = new UserActif("admin");
             if (HibernateConnection.online == false)
             {
                 lblOnline.setVisible(false);
@@ -373,7 +382,6 @@ public class Fenetre extends JFrame {
         }
 
         public void RenewAccueil() {
-            user = new UserActif("admin");
             if (HibernateConnection.online == false)
             {
                 lblOnline.setVisible(false);
