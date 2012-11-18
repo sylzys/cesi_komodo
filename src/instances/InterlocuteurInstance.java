@@ -53,9 +53,9 @@ public class InterlocuteurInstance {
     public synchronized List<Interlocuteur> GetInterlocuteurs(String where, Hashtable h) {
         this.where = where;
         this.h = h;
-        //on r��cup��re le "where", et les param��tres
+        //on récupère le "where", et les paramètres
         chargerDepuisBaseDeDonnees();
-        //on retourne la liste correspondant �� la requete
+        //on retourne la liste correspondant à la requete
         return inter;
     }
 
@@ -63,10 +63,10 @@ public class InterlocuteurInstance {
 
         if (inter == null)
         {
-            //si pas d��j�� fait de requetes, on cr��e une liste vide
+            //si pas déjà fait de requetes, on crée une liste vide
             inter = new ArrayList<Interlocuteur>();
         }
-        else //sinon on vide la liste d��j�� cr��ee
+        else //sinon on vide la liste déjà crée
         {
             inter.clear();
         }
@@ -79,7 +79,6 @@ public class InterlocuteurInstance {
         {
             sql += where;
         }
-
         try
         {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
@@ -96,46 +95,36 @@ public class InterlocuteurInstance {
                     query.setParameter(str, h.get(str));
                 }
             }
-            //on met le resultat dans la liste renvoy��e
+            //on met le resultat dans la liste renvoyée
             this.inter = query.list();
-
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-
     }
 
     public synchronized void updaterBaseDeDonnees(Interlocuteur inter) {
-        Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-//            Synchro writereq = new Synchro();
-//            CurrentDatas cli = CurrentDatas.getInstance();
-//            int cliid = cli.getSoc_id();
-//            String cliname = writereq.cliNom(cliid);
-//       try
-//            {
-//                writereq.SaveReq("UPDATE interlocuteur SET utiid = " + cli.getUser().getId() + ", "
-//                        + "cliid = " + inter.getCliid() + ", internom = '" + inter.getInternom() + "', interprenom = '" + inter.getInterprenom() + "', "
-//                        + "intermail = '" + inter.getIntermail() + "', intertel = '" + inter.getIntertel() + "',"
-//                        + "intersuppr = " + inter.isIntersuppr() + " WHERE interid = " + inter.getInterid(), inter.getInterid(), "");
-//            }
-//            catch (IOException ex)
-//            {
-//                Logger.getLogger(InterlocuteurInstance.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            ParamSync param = new ParamSync();
+            param.setClinom(inter.getInterid(), "inter");
+            if(inter.isIntersuppr() == true)
+            {
+                param.setType("Suppression");
+            }
+            else
+            {
+                param.setType("Mise à jour");   
+            }
+            Synchro sync = new Synchro();
+            sync.objSerializable(inter, param);
         }
-
         try
         {
-            tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Updating Record");
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
             HibernateConnection.getSession().update(inter);
             tx.commit();
-            System.out.println("Done");
-
         }
         catch (Exception e)
         {
@@ -164,11 +153,9 @@ public class InterlocuteurInstance {
         try
         {
             //Transaction hibernate
-            Transaction tx = null;
-            tx = HibernateConnection.getSession().beginTransaction();
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
             HibernateConnection.getSession().save(inter);
             tx.commit();
-
         }
         catch (Exception e)
         {

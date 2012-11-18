@@ -1,6 +1,7 @@
 package models;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 import org.hibernate.search.annotations.Analyze;
@@ -12,7 +13,7 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 @Table(name="commande")
-public class Commande {
+public class Commande implements Serializable {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

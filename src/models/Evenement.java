@@ -1,11 +1,12 @@
 package models;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 @Entity
 @Table(name="agenda")
-public class Evenement {
+public class Evenement implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int ageid;

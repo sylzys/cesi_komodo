@@ -278,7 +278,7 @@ public class ClientDetail extends KContainer {
 
                 //oui = 0
                 //non = 1
-                int userChoice = JOptionPane.showConfirmDialog(null, "upprimer le client ?", "Supprimer le client ?", JOptionPane.YES_NO_OPTION);
+                int userChoice = JOptionPane.showConfirmDialog(null, "Supprimer le client ?", "Supprimer le client ?", JOptionPane.YES_NO_OPTION);
                 if (userChoice == 0)
                 {
                     deleteClient();

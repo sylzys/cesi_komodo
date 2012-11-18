@@ -108,44 +108,33 @@ public class ClientInstance {
     }
 
     public synchronized Boolean updaterBaseDeDonnees(Client cli) {
-        Transaction tx = null;
         if (HibernateConnection.online == false)
         {
-//            try
-//            {
-//                writereq.SaveReq("UPDATE client SET utiid = " + cli.getUtiid() + ", uti_utiid = " + cli.getUti_utiid() + ","
-//                        + "clirais = '" + cli.getClirais() + "', clinom = '" + cli.getClinom() + "', cliadresse = '" + cli.getCliadresse() + "', "
-//                        + "clicp = '" + cli.getClicp().trim() + "', cliville = '" + cli.getCliville() + "', clipays = '" + cli.getClipays() + "',"
-//                        + "clitel = '" + cli.getClitel() + "', clifax = '" + cli.getClifax() + "', climail = '" + cli.getClimail() + "', cliactivite = '" + cli.getCliactivite() + "', "
-//                        + "clisiret = '" + cli.getClisiret() + "', clisiren = '" + cli.getClisiren() + "', clica = " + cli.getClica() + ", "
-//                        + "clisite = '" + cli.getClisite() + "', clidg = '" + cli.getClidg() + "', clietat = " + cli.getClietat() + ", clilogin = '" + cli.getClilogin().trim() + "', "
-//                        + "climdp = '" + cli.getClimdp() + "', cliacces = " + cli.isCliacces() + ", clisuppr = " + cli.isClisuppr() + ",  "
-//                        + "clinaf = '" + cli.getClinaf() + "' WHERE cliid = " + cli.getCliid(),
-//                        -1, cli.getClinom());
-//                //return true;
-//            }
-//            catch (IOException ex)
-//            {
-//                Logger.getLogger(ClientInstance.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            ParamSync param = new ParamSync();
+            param.setClinom(cli.getClinom());
+            if(cli.isClisuppr() == true)
+            {
+                param.setType("Suppression");
+            }
+            else
+            {
+                param.setType("Mise à jour");   
+            }
+            Synchro sync = new Synchro();
+            sync.objSerializable(cli, param);
+        }       
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            HibernateConnection.getSession().update(cli);
+            tx.commit();
+            return true;
         }
-        
-            try
-            {
-                tx = HibernateConnection.getSession().beginTransaction();
-                System.out.println("Updating Record");
-
-                HibernateConnection.getSession().update(cli);
-                tx.commit();
-                System.out.println("Done");
-            }
-            catch (Exception e)
-            {
-                System.out.println("Update failed");
-                return false;
-            }
-        
-        return true;
+        catch (Exception e)
+        {
+            System.out.println("Update failed");
+            return false;
+        }       
     }
 
     public Boolean ajouterDansBaseDeDonnees() {
@@ -156,20 +145,18 @@ public class ClientInstance {
             param.setType("Ajout");
             Synchro sync = new Synchro();
             sync.objSerializable(this.client, param);
+        }        
+        try
+        {
+            Transaction tx = HibernateConnection.getSession().beginTransaction();
+            HibernateConnection.getSession().save(this.client);
+            tx.commit();
+            return true;
         }
-        
-            try
-            {
-                Transaction tx = null;
-                tx = HibernateConnection.getSession().beginTransaction();
-                HibernateConnection.getSession().save(this.client);
-                tx.commit();
-                return true;
-            }
-            catch (HibernateException e)
-            {
-                System.out.println(e);
-                return false;
-            }
+        catch (HibernateException e)
+        {
+            System.out.println(e);
+            return false;
+        }
     }
 }

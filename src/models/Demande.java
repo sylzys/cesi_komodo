@@ -1,9 +1,10 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 @Entity(name="demande")
-public class Demande {
+public class Demande implements Serializable {
 	
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

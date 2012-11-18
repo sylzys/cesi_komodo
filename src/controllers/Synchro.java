@@ -14,8 +14,6 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.Client;
-import models.Interlocuteur;
 import models.ParamSync;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -164,41 +162,32 @@ public class Synchro {
     public boolean record(String fic) {
         //Liste d'objet de l'action
         ArrayList<Object> lsobj = objDeserializable(fic);
-        //Découpe le nom du fichier
-        String[] decoup = fic.split("_");
-        //Nom de l'objet
-        String nameObj = decoup[0];
-        //Nouvel objet
-        Object obj = new Object();
-        //Switch le nom de l'objet
-        switch (nameObj) {
-            case "models.Interlocuteur":
-                //On converti l'objet
-                obj = (Interlocuteur) lsobj.get(0);
-                break;
-            case "models.Client":
-                obj = (Client) lsobj.get(0);
-                break;
-        }
+        //Objet à insérer en base
+        Object obj = lsobj.get(0);
         //Objet paramètre
         ParamSync param = (ParamSync) lsobj.get(1);
-        //Si le type est ajout
-        if (param.getType().equals("Ajout")) {
-            try {
-                //Transaction hibernate
-                Transaction tx = null;
-                tx = HibernateConnection.getSession().beginTransaction();
-                //Enregistrement de l'objet dans la base
-                HibernateConnection.getSession().save(obj);
+        //Session hibernate
+        Transaction tx = HibernateConnection.getSession().beginTransaction();
+        try {
+                //Switch le type de requete insert ou update
+                switch(param.getType()) {
+                    case "Ajout" :
+                        //Enregistrement de l'objet dans la base
+                        HibernateConnection.getSession().save(obj); 
+                    break;
+                    case "Mise à jour" :
+                    case "Suppression" :
+                        //Modification de l'objet en base
+                        HibernateConnection.getSession().update(obj);
+                    break;
+                }   
+                //Comit la transaction
                 tx.commit();
                 return true;
-
-            } catch (Exception e) {
+        } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return false;
-            }
         }
-        return true;
     }
 
     //Renvoi la table concernée par l'action
