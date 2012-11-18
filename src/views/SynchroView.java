@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import models.ParamSync;
-import java.util.Arrays;
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
  
 import java.io.File;
@@ -215,7 +213,7 @@ public class SynchroView extends KContainer {
                             tabtest.add(retour);
                             if (retour == true)
                             {
-                               sync.delFic(objet);
+                               sync.delFic("ressources/ser/"+objet);
                             }
                         }
                     }

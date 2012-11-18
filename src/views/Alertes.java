@@ -5,6 +5,7 @@
 package views;
 
 import classes.LinkLabelData;
+import controllers.Synchro;
 import controllers.UserActif;
 import controllers.getInterlocuteurInfos;
 import instances.AlerteInstance;
@@ -22,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import models.GetAlerte;
+import models.ParamSync;
 import models.Suivdossier;
 
 /**
@@ -204,6 +206,11 @@ public class Alertes extends KContainer{
         AltInstance.update(alerte);
         if (HibernateConnection.online == false)
         {
+            ParamSync param = new ParamSync();
+            param.setClinom(alerte.getInterid(), "inter");
+            param.setType("Suppression");
+            Synchro sync = new Synchro();
+            sync.objSerializable(alerte, param);
             HibernateConnection.newConnect(false);
         }
         else

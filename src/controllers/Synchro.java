@@ -148,7 +148,7 @@ public class Synchro {
     //Supprime le fichier de l'action passé en paramètre
     public boolean delFic(String fic) {
         try {
-            File file = new File(path + fic);
+            File file = new File(fic);
             //Suppression du fichier
             file.delete();
             return true;
@@ -202,6 +202,10 @@ public class Synchro {
         //Découpe le terme models
         String[] decoup2 = table.split("models.");
         table = decoup2[1];
+        if(table.equals("Suivdossier"))
+        {
+            table = "Alerte";
+        }
         //Renvoi le nom de la table
         return table;
     }
