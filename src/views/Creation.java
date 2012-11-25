@@ -6,6 +6,8 @@ package views;
 
 import classes.BackgroundPanel;
 import com.google.common.base.Strings;
+import controllers.EmailValidator;
+import controllers.SendEmail;
 import controllers.UserActif;
 import instances.ClientInstance;
 import instances.HibernateConnection;
@@ -20,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+import java.util.UUID;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -65,7 +69,7 @@ public class Creation extends KContainer {
             lbl_cliville = new JLabel("Ville *"),
             lbl_clitel = new JLabel("Téléphone *"),
             lbl_clifax = new JLabel("Fax"),
-            lbl_climail = new JLabel("Mail"),
+            lbl_climail = new JLabel("Mail *"),
             lbl_clisite = new JLabel("Site web"),
             lbl_clidir = new JLabel("Dirigeant"),
             lbl_clinaf = new JLabel("Code NAF"),
@@ -294,13 +298,24 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         {
             cli.setClica(Integer.parseInt(cli_ca.getText()));
         }
-
-        
+        String uuid = (UUID.randomUUID().toString()).replace("-", "");
+       // System.out.println("uuid = " + uuid);
+        cli.setCliurltmp(uuid);
+        Random rand = new Random(System.currentTimeMillis());
+        int randomNum = rand.nextInt(66666 - 11111 + 1) + 11111;
+        cli.setClilogin("client_"+Integer.toString(randomNum));
+//        SendEmail send = new SendEmail();
         cli_inst.setClient(cli);
         //inserer client
         Boolean is_ok = cli_inst.ajouterDansBaseDeDonnees();
         String str = is_ok ? "L'ajout du client a été effectué" : "L'ajout du client a échoué";
-        JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.ERROR_MESSAGE);
+        String msg = "<html>Cher client,\n\n"+
+                "Afin de pouvoir suivre vos commandes chez Plast'Prod, voici votre login:<b>"+
+                cli.getClilogin()+"</b>\n\nPour finaliser la création de votre accès, merce de créer votre mot"+
+                "de passe en vous rendant à l'adresse ci-dessous:\n\nhttp://cesi2/dev/client/register/?login="+cli.getClilogin()+"&url="+cli.getCliurltmp()+
+                "\n\nCordialement,\n\nL'équipe Plast'Prod</html>";
+        SendEmail send = new SendEmail(msg, "Votre accès à l'interface client Plast'Prod", cli_mail.getText());
+        JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.INFORMATION_MESSAGE);
         HibernateConnection connection = HibernateConnection.getInstance();
         Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
         int last_value = ((BigInteger) query.uniqueResult()).intValue();
@@ -322,7 +337,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
 
     private String check_fields() {
         String str = "";
-        System.out.println("NOM -> " + cli_nom.getText());
+        //System.out.println("NOM -> " + cli_nom.getText());
         if (Strings.isNullOrEmpty(cli_nom.getText()) || cli_nom.getText().trim().isEmpty())
         {
             // System.out.println("EMPTY STRING");
@@ -343,6 +358,16 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         if (Strings.isNullOrEmpty(cli_tel.getText()) || cli_tel.getText().trim().isEmpty())
         {
             str += "<html>Le champ <i>Téléphone</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(cli_mail.getText()) || cli_mail.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Email</i> ne peut être vide<br />";
+        }
+        else {
+             EmailValidator ev = new EmailValidator();
+            if (!ev.validate(cli_mail.getText())){
+                str += "<html>L'adresse <i>Email</i> est invalide<br />";
+            }
         }
         if (Strings.isNullOrEmpty(cli_act.getText()) || cli_act.getText().trim().isEmpty())
         {

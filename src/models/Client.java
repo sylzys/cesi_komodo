@@ -65,6 +65,9 @@ public class Client implements Serializable {
     @Column(name="clilogin", columnDefinition="CHAR(50)", nullable=true)
     private String clilogin ;
     
+    @Column(name="cliurltmp", columnDefinition="CHAR(500)", nullable=true)
+    private String cliurltmp ;
+    
     @Column(name="climdp", columnDefinition="VARCHAR(32)", nullable=true)
     private String climdp ;
     
@@ -294,6 +297,14 @@ public class Client implements Serializable {
 
     public void setClidteadd(Date clidteadd) {
         this.clidteadd = clidteadd;
+    }
+
+    public String getCliurltmp() {
+        return cliurltmp;
+    }
+
+    public void setCliurltmp(String cliurltmp) {
+        this.cliurltmp = cliurltmp;
     }
     
 }
