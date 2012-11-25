@@ -92,7 +92,6 @@ public class NomenclaturelistInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
@@ -111,18 +110,9 @@ public class NomenclaturelistInstance {
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
 
-            HibernateConnection.getSession().save(this.nomenclaturelist);
-            // System.out.println(tx.wasCommitted());       
+            HibernateConnection.getSession().save(this.nomenclaturelist);    
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
-            {
-//                Synchro writereq = new Synchro();
-//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
-            }
         }
         catch (Exception e)
         {

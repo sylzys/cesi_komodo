@@ -28,7 +28,6 @@ public class DemandelistModel extends AbstractTableModel {
     public DemandelistModel(int id) {
         super();
         DetailDmdInstance DmdInstance = DetailDmdInstance.getInstance();
-        System.out.println("in model list");
         Hashtable h = new Hashtable();
         h.put("cliid", id);
         demandes = DmdInstance.GetDetaildemande("cliid", id, h);

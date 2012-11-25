@@ -36,7 +36,6 @@ public class CurrentDatas {
         {
             instance = new CurrentDatas();
         }
-        //System.out.println("INSTANCE :"+instance);
         return instance;
     }
     

@@ -42,7 +42,6 @@ public class TableDispatcher extends JPanel {
         modeleTable = mt;
         //selon la constante, on prépare le modèle qu'on utilisera pour mapper à la table
         //cf les declarations de constantes dans ModelesTables.java
-        System.out.println("MODELE UTILISE = " + mt);
         switch (mt)
         {
             case CLIENT:
@@ -54,19 +53,15 @@ public class TableDispatcher extends JPanel {
                 break;
             case DEMANDE:
                 model = new DemandeModel(id);
-                System.out.println("GETTINGMODEL");
                 break;
             case DEVIS:
                 model = new DevisModel(id);
-                System.out.println("GETTINGMODEL");
                 break;
             case DEMANDELIST:
                 model = new DemandelistModel(id);
-                System.out.println("GETTINGMODEL");
                 break;
             case NOMENCLATURELIST:
                 model = new NomenclaturelistModel(id);
-                System.out.println("GETTINGMODEL");
                 break;
             
         }
@@ -155,8 +150,6 @@ public class TableDispatcher extends JPanel {
             
         }
         
-        
-        System.out.println("Or here?");
         //gestion du double click
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -171,13 +164,10 @@ public class TableDispatcher extends JPanel {
                     TableModel tm = table.getModel();
                     //on renvoie la valeur liée à l'id 999
                     Object value = tm.getValueAt(row, 999); //999 = id dans le model
-                    System.out.println("Selection : " + value);
-                    System.out.println("DOUBLE CLICKED " + row + "/" + column + "->" + value);
                     switch (modeleTable)
                     {
                         //on récupère la valeur correspondant au bon modèle
                         case CLIENT:
-                            System.out.println("GETTIN DBL CLIC CLIENT : " + tm.getValueAt(row, 999));
                             CurrentDatas cur = CurrentDatas.getInstance();
                             cur.setSoc_id((Integer) tm.getValueAt(row, 999));
                             ClientDetail cd = new ClientDetail((Integer) tm.getValueAt(row, 999));
@@ -186,24 +176,20 @@ public class TableDispatcher extends JPanel {
                             Fenetre.getInstance().RenewCmd((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEMANDE:
-                            System.out.println("GETTIN DBL CLIC DEMANDE");
                             DemandeDetail dmd = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEMANDELIST:
-                            System.out.println("GETTIN DBL CLIC DEMANDELIST");
                             DemandeDetail demande = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             Fenetre fen = Fenetre.getInstance();
                             fen.RenewContener(demande.getPanel());
                         //    DemandeDetail dmdlist = new DemandeDetail((Integer) tm.getValueAt(row, 999));
                             break;
                         case DEVIS:
-                            System.out.println("GETTIN DBL CLIC DEVISLIST");
                             DevisDetail devislist = new DevisDetail((Integer) tm.getValueAt(row, 999));
                             Fenetre fen2 = Fenetre.getInstance();
                             fen2.RenewContener(devislist.getPanel());
                             break;
                         case NOMENCLATURELIST:
-                            System.out.println("GETTIN DBL CLIC DEVISLIST");
                             break;
               }
           }

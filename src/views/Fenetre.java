@@ -66,7 +66,6 @@ public class Fenetre extends JFrame {
             loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
             getLoginInfos zInfos = zd.showZDialog();
             JOptionPane jop = new JOptionPane();
-            System.out.println(zInfos.toString());
             if ("-NA-".equals(zInfos.toString()))
             {
                 System.exit(0);

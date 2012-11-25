@@ -112,7 +112,6 @@ public class addInterlocuteurDialog extends JDialog {
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
         //recupere infos BDD
-        System.out.println("DIALOG SHOWING INTER ID " + inter_id);
         interInstance = InterlocuteurInstance.getInstance();
         Hashtable h = new Hashtable();
         h.put("interid", inter_id);

@@ -51,7 +51,6 @@ public class ClientInstance {
     public synchronized List<Client> GetClients(String where, Hashtable h) {
         this.where = where;
         this.h = h;
-        System.out.println("Loading from DB");
         chargerDepuisBaseDeDonnees();
         return clients;
     }
@@ -65,12 +64,10 @@ public class ClientInstance {
         if (clients == null)
         {
             //return;
-            System.out.println("new client");
             clients = new ArrayList<Client>();
         }
         else
         {
-            System.out.println("clearing client");
             clients.clear();
         }
 
@@ -86,18 +83,14 @@ public class ClientInstance {
             Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
             if (!h.isEmpty())
             {
-                System.out.println("got parameters");
                 Set<String> set = h.keySet();
                 Iterator<String> itr = set.iterator();
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
-                    System.out.println("setting params");
                 }
             }
-            System.out.println("QUERY : " + query.getQueryString());// query.toString());
             this.clients = query.list();
         }
         catch (Exception e)
@@ -132,7 +125,7 @@ public class ClientInstance {
         }
         catch (Exception e)
         {
-            System.out.println("Update failed");
+            System.out.println(e);
             return false;
         }       
     }

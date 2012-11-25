@@ -76,7 +76,6 @@ public class SuivDossierInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
@@ -94,18 +93,9 @@ public class SuivDossierInstance {
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
 
-            HibernateConnection.getSession().save(suivdoss);
-            // System.out.println(tx.wasCommitted());       
+            HibernateConnection.getSession().save(suivdoss);       
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
-            {
-//                Synchro writereq = new Synchro();
-//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
-            }
         }
         catch (Exception e)
         {
@@ -118,19 +108,9 @@ public class SuivDossierInstance {
 
         try
         {
-//            SessionFactory sessionFactory = new AnnotationConfiguration().configure("config/online.xml").buildSessionFactory();
-//            session = sessionFactory.openSession();
-//            tx = session.beginTransaction();
             tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Updating Record");
-//			  Utilisateur uti = new Utilisateur();
-//			  .setUtiid(10);
-//			  uti.setUtinom("test");
-            //session.update(inter);
             HibernateConnection.getSession().update(alerte); 
             tx.commit();
-            System.out.println("Done");
-
         }
         catch (Exception e)
         {
