@@ -136,11 +136,19 @@ public class Synchro {
     //Test si le dossier est vide (renvoi true si il est vide)
     public boolean emptyDir() {
         File file = new File(path);
-        //Si il y a plu de 0 fichiers
-        if (file.list().length > 0) {
-            //Renvoi false le dossier n'est pas vide
-            return false;
-        } else {
+        if(file.exists())
+        {
+            //Si il y a plus de 0 fichiers
+            if (file.list().length > 0) {
+                //Renvoi false le dossier n'est pas vide
+                return false;
+            } else {
+                return true;
+            }
+        }
+        else
+        {  
+            file.mkdir();
             return true;
         }
     }
