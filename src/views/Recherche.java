@@ -86,7 +86,7 @@ public class Recherche extends KContainer {
         
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
-        header.setPreferredSize(new Dimension(800,50));
+        header.setPreferredSize(new Dimension(800,25));
         //content.setLayout(new BorderLayout());
         //content.add(title, BorderLayout.CENTER);
         //content.setPreferredSize(new Dimension(500,100));
@@ -128,11 +128,16 @@ public class Recherche extends KContainer {
         group.add(rbDemande);
 
         
+        JPanel panelInter = new JPanel();
+        panelInter.setPreferredSize(new Dimension(120,20));
+        
         JButton btnSearch = new JButton("Rechercher");
-        btnSearch.setPreferredSize(new Dimension(120,20));
+        btnSearch.setPreferredSize(new Dimension(115,20));
         //add(btnSearch,BorderLayout.);
+        panelInter.add(btnSearch);
+        header.add(panelInter,BorderLayout.EAST);
         header.add(groupRb,BorderLayout.WEST);
-        header.add(btnSearch,BorderLayout.EAST);
+        //header.add(btnSearch,BorderLayout.EAST);
         
         //content.add(header,BorderLayout.NORTH);
         
