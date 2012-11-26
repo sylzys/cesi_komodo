@@ -16,6 +16,7 @@ import models.CurrentDatas;
 import models.Demande;
 import models.Devis;
 import models.ModelesTables;
+import tableModels.AlerteClientModel;
 import tableModels.ClientCommModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
@@ -62,6 +63,9 @@ public class TableDispatcher extends JPanel {
                 break;
             case NOMENCLATURELIST:
                 model = new NomenclaturelistModel(id);
+                break;
+            case ALERTE:
+                model = new AlerteClientModel(id);
                 break;
             
         }
@@ -147,6 +151,9 @@ public class TableDispatcher extends JPanel {
                 col3.setPreferredWidth(colWidth3);
                  
                 break;
+           case ALERTE:
+               table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+               break;
             
         }
         
@@ -190,6 +197,9 @@ public class TableDispatcher extends JPanel {
                             fen2.RenewContener(devislist.getPanel());
                             break;
                         case NOMENCLATURELIST:
+                            break;
+                        case ALERTE:
+                            Fenetre.getInstance().RenewCmd((Integer) tm.getValueAt(row, 999));
                             break;
               }
           }
