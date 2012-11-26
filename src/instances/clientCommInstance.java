@@ -83,7 +83,6 @@ public class clientCommInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }

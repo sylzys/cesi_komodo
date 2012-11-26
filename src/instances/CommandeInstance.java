@@ -1,5 +1,6 @@
 package instances;
 
+import controllers.Synchro;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Set;
 import models.Client;
 import models.Commande;
 import models.Demande;
+import models.ParamSync;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 
@@ -87,7 +89,6 @@ public class CommandeInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
@@ -100,25 +101,21 @@ public class CommandeInstance {
         }
 
     }
-    
-    
-    
+       
     public void ajouterDansBaseDeDonnees() {
+        if (HibernateConnection.online == false)
+        {
+            ParamSync param = new ParamSync();
+            param.setClinom(this.commande.getInterid(), "inter");
+            param.setType("Ajout");
+            Synchro sync = new Synchro();
+            sync.objSerializable(this.commande, param);
+        }  
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-
-            HibernateConnection.getSession().save(this.commande);
-            // System.out.println(tx.wasCommitted());       
+            HibernateConnection.getSession().save(this.commande);    
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
-            {
-//                Synchro writereq = new Synchro();
-//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
-            }
         }
         catch (Exception e)
         {

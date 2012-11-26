@@ -31,7 +31,6 @@ public class NomenclaturelistModel extends AbstractTableModel {
     public NomenclaturelistModel(int id) {
         super();
         NomenclaturelistInstance NomclaturelisteInstance = NomenclaturelistInstance.getInstance();
-        System.out.println("in model");
         Hashtable h = new Hashtable();
         h.put("devid", id);
         nomenclatures = NomclaturelisteInstance.GetNomenclatureslist("where devid = :devid", h);
@@ -58,15 +57,12 @@ public class NomenclaturelistModel extends AbstractTableModel {
         {
 
             case 0:
-                System.out.println("Libellé:" + nomenclatures.get(rowIndex).getNomlib());
                 return nomenclatures.get(rowIndex).getNomlib();
 
             case 1:
-                System.out.println("Etat:" + nomenclatures.get(rowIndex).getNomdes());
                 return nomenclatures.get(rowIndex).getNomdes();
                 
             case 2:
-                System.out.println("prix:" + nomenclatures.get(rowIndex).getNomprix());
                 return nomenclatures.get(rowIndex).getNomprix();
 
             case 999:

@@ -28,7 +28,6 @@ public class DevisModel extends AbstractTableModel {
     public DevisModel(int id) {
         super();
         DevisInstance DvsInstance = DevisInstance.getInstance();
-        System.out.println("in model list");
         Hashtable h = new Hashtable();
         h.put("demandeid", id);
         devis = DvsInstance.Getdevis("where demandeid = :demandeid", h);

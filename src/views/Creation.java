@@ -337,10 +337,8 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
 
     private String check_fields() {
         String str = "";
-        //System.out.println("NOM -> " + cli_nom.getText());
         if (Strings.isNullOrEmpty(cli_nom.getText()) || cli_nom.getText().trim().isEmpty())
         {
-            // System.out.println("EMPTY STRING");
             str += "<html>Le champ <i>Nom Société</i> ne peut être vide<br />";
         }
         if (Strings.isNullOrEmpty(cli_add.getText()) || cli_add.getText().trim().isEmpty())

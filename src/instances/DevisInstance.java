@@ -1,5 +1,6 @@
 package instances;
 
+import controllers.Synchro;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Set;
 import models.Client;
 import models.Demande;
 import models.Devis;
+import models.ParamSync;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 
@@ -86,7 +88,6 @@ public class DevisInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
@@ -101,24 +102,21 @@ public class DevisInstance {
         
         
     }
-
-    
-    
-    
+ 
     public boolean ajouterDansBaseDeDonnees() {
+        if (HibernateConnection.online == false)
+        {
+            ParamSync param = new ParamSync();
+            param.setClinom(this.dvis.getInterid(), "inter");
+            param.setType("Ajout");
+            Synchro sync = new Synchro();
+            sync.objSerializable(this.dvis, param);
+        }  
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-
-            HibernateConnection.getSession().save(this.dvis);
-            // System.out.println(tx.wasCommitted());       
+            HibernateConnection.getSession().save(this.dvis);      
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
-            {
-            }
             return true;
         }
         catch (Exception e)

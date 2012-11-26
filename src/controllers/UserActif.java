@@ -30,7 +30,6 @@ public class UserActif {
         this.login = login;
         this.pass = pass;
         GetActiveUser();
-        //System.out.println("New user: " + this.login + "/" + this.pass);
     }
 
     public boolean verify(String pass) {

@@ -257,7 +257,6 @@ public class ClientDetail extends KContainer {
         LblSte.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                System.out.println("CLICKED");
                 goModifSte(evt);
             }
 
@@ -445,7 +444,6 @@ public class ClientDetail extends KContainer {
         {
             CurrentDatas cd = CurrentDatas.getInstance();
             String[] infos = interInfos.toString().split("#-#");
-            System.out.println("add inter with cli_id : " + cli_id);
             Interlocuteur i = new Interlocuteur();
             i.setCliid(cli_id);
             i.setInternom(infos[0]);

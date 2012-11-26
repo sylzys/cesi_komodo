@@ -4,6 +4,7 @@
  */
 package views;
 
+import controllers.Synchro;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.HibernateConnection;
@@ -24,6 +25,7 @@ import models.ModelesTables;
 import models.CurrentDatas;
 import models.Demande;
 import models.Devis;
+import models.ParamSync;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -171,7 +173,21 @@ public class DevisDetail extends KContainer {
             dvs.setDemandeid(idDemande);
             session.update(dvs);
             tx3.commit();
-            
+            if (HibernateConnection.online == false)
+            {
+                ParamSync param = new ParamSync();
+                param.setClinom(dvs.getInterid(),"inter");
+                if(dvs.isDevsuppr() == true)
+                {
+                    param.setType("Suppression");
+                }
+                else
+                {
+                    param.setType("Mise à jour");   
+                }
+                Synchro sync = new Synchro();
+                sync.objSerializable(dvs, param);
+            } 
             Transaction tx4 = HibernateConnection.getSession().beginTransaction();
             Session session2 = HibernateConnection.getSession();
             Demande dmdd = (Demande) session2.get(Demande.class, idDemande);
@@ -179,7 +195,21 @@ public class DevisDetail extends KContainer {
             dmdd.setDemandeetat(80);
             session2.update(dmdd);
             tx4.commit();
-            
+            if (HibernateConnection.online == false)
+            {
+                ParamSync param = new ParamSync();
+                param.setClinom(dmdd.getInterid(),"inter");
+                if(dmdd.getDemandesuppr() == true)
+                {
+                    param.setType("Suppression");
+                }
+                else
+                {
+                    param.setType("Mise à jour");   
+                }
+                Synchro sync = new Synchro();
+                sync.objSerializable(dmdd, param);
+            } 
             DemandeDetail devisForm = new DemandeDetail(idDemande);
             HibernateConnection.newConnect(HibernateConnection.online);
             fen.RenewContener(devisForm.getPanel());
@@ -200,6 +230,21 @@ public class DevisDetail extends KContainer {
             dvs.setDevetat("Refusé");
             session.update(dvs);
             tx3.commit();
+            if (HibernateConnection.online == false)
+            {
+                ParamSync param = new ParamSync();
+                param.setClinom(dvs.getInterid(),"inter");
+                if(dvs.isDevsuppr() == true)
+                {
+                    param.setType("Suppression");
+                }
+                else
+                {
+                    param.setType("Mise à jour");   
+                }
+                Synchro sync = new Synchro();
+                sync.objSerializable(dvs, param);
+            }
             DemandeDetail devisForm = new DemandeDetail(idDemande);
             fen.RenewContener(devisForm.getPanel());
         }

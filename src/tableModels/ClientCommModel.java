@@ -60,15 +60,12 @@ public class ClientCommModel extends AbstractTableModel {
 
             case 0:
                 // Nom
-                System.out.println("Nom:" + clients.get(rowIndex).getClinom());
                 return clients.get(rowIndex).getClinom();
 
             case 1:
-                System.out.println("Créateur:" + clients.get(rowIndex).getUtinom());
                 return clients.get(rowIndex).getUtiprenom() + " "+ clients.get(rowIndex).getUtinom() ;
 
             case 2:
-                System.out.println("Date:" + clients.get(rowIndex).getClidteadd());
                 return clients.get(rowIndex).getClidteadd();
                 
             case 999:

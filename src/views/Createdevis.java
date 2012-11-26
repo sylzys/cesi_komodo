@@ -168,24 +168,28 @@ public class Createdevis extends KContainer {
             dvis.setDevprix(Integer.parseInt(jFormattedTextField2.getText()));
             dvis.setDevsuppr(false);
             dvis.setDemandeid(id);
+            
 
-
+            Session session2 = HibernateConnection.getSession();
+            Demande dmdd = (Demande) session2.get(Demande.class, id);
+            dvis.setInterid(dmdd.getInterid());
+            
             DevisInstance dvis_inst = DevisInstance.getInstance();
-
             dvis_inst.setDevis(dvis);
             if (dvis_inst.ajouterDansBaseDeDonnees())
             {
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
             }
-            Transaction tx4 = HibernateConnection.getSession().beginTransaction();
-            Session session2 = HibernateConnection.getSession();
-            Demande dmdd = (Demande) session2.get(Demande.class, id);
-            System.out.println("Updating Record");
+            
             dmdd.setDemandeid(id);
             dmdd.setDemandeetat(60);
+
             session2.update(dmdd);
+            
+            Transaction tx4 = HibernateConnection.getSession().beginTransaction();
             tx4.commit();
             DemandeDetail devisForm = new DemandeDetail(id);
+            
             fen.RenewContener(devisForm.getPanel());
         }
         catch (Exception e)

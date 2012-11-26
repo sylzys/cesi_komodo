@@ -43,7 +43,6 @@ public class DetailDmdInstance {
          this.where = demandeid;
          this.clause = clause;
         this.h = h;
-        System.out.println("CHARGER DPS BDD"+h+" --- "+where);
         chargerDepuisBaseDeDonnees();
         return clients;
     }
@@ -64,9 +63,7 @@ public class DetailDmdInstance {
         {
             clients.clear();
         }
-        System.out.println("INSTANCE");
-        HibernateConnection connection = HibernateConnection.getInstance();
-        System.out.println("INSTANCE OK");        
+        HibernateConnection connection = HibernateConnection.getInstance();       
         String sql = " from detailsdemande ";
         if (where != 0)
         {
@@ -75,13 +72,8 @@ public class DetailDmdInstance {
 
         try
         {
-//            System.out.println("GETTING SESSION"+sql+" =>>> "+where);
-//            Query query = connection.getSession().createQuery(sql);//"from Detailcde where utiid = :utiid");
-//            query.setParameter("utiid", 1);
               Query query = connection.getSession().createQuery(sql);
               query.setParameter(clause, where);
-              //System.out.println(query);
-              System.out.println("GETTING SESSION OK");
             if (!h.isEmpty())
             {
                 Set<String> set = h.keySet();
@@ -89,11 +81,9 @@ public class DetailDmdInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println("PARAIMS " + str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
-            System.out.println("GETTING SQL RESULTS");
             this.clients = query.list();
         }
         catch (Exception e)

@@ -27,6 +27,17 @@ public class Devis implements Serializable {
     
     @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
     private int demandeid ;
+    
+    @Column(name="interid", columnDefinition="INTEGER", nullable=true)
+    private int interid ;
+
+    public int getInterid() {
+        return interid;
+    }
+
+    public void setInterid(int interid) {
+        this.interid = interid;
+    }
 
     public int getDevid() {
         return devid;

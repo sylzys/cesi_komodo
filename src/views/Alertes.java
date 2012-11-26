@@ -80,7 +80,6 @@ public class Alertes extends KContainer{
         PanelListPane.setBackground(new java.awt.Color(255, 255, 255));
         
         l_alerts = this.getAlertes();
-        System.out.println("nb_alerts : " + l_alerts.size());
         for (GetAlerte tmp : l_alerts) {
             JPanel jp = new JPanel();
             jp.setPreferredSize(new Dimension(730, 120));

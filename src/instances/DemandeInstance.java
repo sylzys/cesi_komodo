@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import models.Client;
 import models.Demande;
+import models.ParamSync;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -90,7 +91,6 @@ public class DemandeInstance {
                 while (itr.hasNext())
                 {
                     String str = itr.next();
-                    System.out.println(str + ": " + h.get(str));
                     query.setParameter(str, h.get(str));
                 }
             }
@@ -106,21 +106,19 @@ public class DemandeInstance {
     
     
     public void ajouterDansBaseDeDonnees() {
+         if (HibernateConnection.online == false)
+        {
+            ParamSync param = new ParamSync();
+            param.setClinom(this.demande.getInterid(), "inter");
+            param.setType("Ajout");
+            Synchro sync = new Synchro();
+            sync.objSerializable(this.demande, param);
+        }      
         try
         {
             Transaction tx = HibernateConnection.getSession().beginTransaction();
-            System.out.println("Nouvel enregistrement en cours d'insertion ...");
-
-            HibernateConnection.getSession().save(this.demande);
-            // System.out.println(tx.wasCommitted());       
+            HibernateConnection.getSession().save(this.demande);      
             tx.commit();
-            System.out.println("Insertion de l'enregistrement terminé");
-            //POUR VERIFIER SI LE CLIENT N'EST PAS EN LIGNE / SI C'EST LE CAS ON ECRIT LA REQUETE DANS UN FICHIER
-            if (HibernateConnection.online == false)
-            {
-//                Synchro writereq = new Synchro();
-//                writereq.SaveReq("INSERT INTO demande (clinom) VALUES ('" + this.demande.getCliid() + "')", -1, this.demande.getUtiid());
-            }
         }
         catch (Exception e)
         {

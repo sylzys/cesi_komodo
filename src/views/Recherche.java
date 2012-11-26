@@ -13,12 +13,15 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneLayout;
 import models.Client;
 import models.Commande;
 import models.Demande;
@@ -37,6 +40,8 @@ public class Recherche extends KContainer {
     JTextField searchTextField ;
 
     JPanel panelListSearch;
+    
+    JScrollPane scroller;
      // creation des bouton radio
     JRadioButton rbCommande = new JRadioButton("Commande");
     
@@ -83,10 +88,20 @@ public class Recherche extends KContainer {
 
         JPanel global = new JPanel();
         global.setLayout(new BorderLayout());     
+        global.setBackground(new java.awt.Color(255, 255, 255));
+        global.setBorder(javax.swing.BorderFactory.createTitledBorder("Recherche"));
         
         JPanel header = new JPanel();
+        header.setBackground(new java.awt.Color(255, 255, 255));
         header.setLayout(new BorderLayout());
-        header.setPreferredSize(new Dimension(800,50));
+        header.setPreferredSize(new Dimension(800,25));
+       
+        
+       scroller = new JScrollPane();
+        //scroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
+        scroller.setPreferredSize(new Dimension(700, 300));
+        scroller.setBackground(new java.awt.Color(255, 255, 255));
+        scroller.getVerticalScrollBar().setUnitIncrement(10);
         //content.setLayout(new BorderLayout());
         //content.add(title, BorderLayout.CENTER);
         //content.setPreferredSize(new Dimension(500,100));
@@ -107,6 +122,7 @@ public class Recherche extends KContainer {
        // content.add(searchTextField);
         
         JPanel groupRb = new JPanel();
+        groupRb.setBackground(new java.awt.Color(255, 255, 255));
         groupRb.setPreferredSize(new Dimension(700,50));
         groupRb.add(searchTextField,BorderLayout.CENTER);
         groupRb.add(rbCommande,BorderLayout.CENTER);
@@ -128,21 +144,33 @@ public class Recherche extends KContainer {
         group.add(rbDemande);
 
         
+        JPanel panelInter = new JPanel();
+        panelInter.setBackground(new java.awt.Color(255, 255, 255));
+        panelInter.setPreferredSize(new Dimension(120,20));
+        
         JButton btnSearch = new JButton("Rechercher");
-        btnSearch.setPreferredSize(new Dimension(120,20));
+        btnSearch.setPreferredSize(new Dimension(115,20));
         //add(btnSearch,BorderLayout.);
+        panelInter.add(btnSearch);
+        header.add(panelInter,BorderLayout.EAST);
         header.add(groupRb,BorderLayout.WEST);
-        header.add(btnSearch,BorderLayout.EAST);
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        //header.add(btnSearch,BorderLayout.EAST);
         
         //content.add(header,BorderLayout.NORTH);
         
-        panelListSearch = new JPanel();        
-        panelListSearch.add(new JLabel(""));
+        panelListSearch = new JPanel();         
+        panelListSearch.setLayout(new BorderLayout());
         panelListSearch.setPreferredSize(new Dimension(800,500));
+        panelListSearch.setBackground(new java.awt.Color(255, 255, 255));
+        panelListSearch.add(new JLabel(""));
         
-        global.add(panelListSearch,BorderLayout.CENTER);
+        //scroller.add(panelListSearch);
+        scroller.setViewportView(panelListSearch);
+        global.add(scroller,BorderLayout.CENTER);
 
         // ajout au panel principal
+        this.panel.setBackground(new java.awt.Color(255, 255, 255));
         this.panel.add(global);      
 
 
@@ -157,7 +185,8 @@ public class Recherche extends KContainer {
     {
         panelListSearch.removeAll();
         panelListSearch.revalidate();  
-        
+        scroller.removeAll();
+        scroller.revalidate();
         if(!query.isEmpty())
         {
             
@@ -174,12 +203,13 @@ public class Recherche extends KContainer {
                     com = list.get(i);      
                     panelCom = new JPanel();
                     panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
-                    panelCom.setBackground(Color.WHITE);
+                    //panelCom.setBackground(Color.WHITE);
+                    panelCom.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
                     panelCom.setPreferredSize(new Dimension(750,100));
                     JLabel comLabel = new JLabel();
                     comLabel.setText("Titre : " + com.getComtitre());
                     panelCom.add(comLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(com.getComid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -207,7 +237,7 @@ public class Recherche extends KContainer {
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Prix: " + devis.getDevprix());
                     panelDevis.add(nomLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(devis.getDevid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -235,7 +265,7 @@ public class Recherche extends KContainer {
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Nom: " + client.getClinom());
                     panelClient.add(nomLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(client.getCliid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -263,7 +293,7 @@ public class Recherche extends KContainer {
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Nom: " + client.getClinom());
                     panelClient.add(nomLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(client.getCliid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -291,7 +321,7 @@ public class Recherche extends KContainer {
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Description: " + nomen.getNomdes());
                     panelNom.add(nomLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(nomen.getNomid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
@@ -319,7 +349,7 @@ public class Recherche extends KContainer {
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Titre" + demande.getDemandetitre());
                     panelDem.add(nomLabel);
-                    ButtonData btnGoToCmd = new ButtonData("Aller");
+                    ButtonData btnGoToCmd = new ButtonData("Voir");
                     btnGoToCmd.setId(demande.getDemandeid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
