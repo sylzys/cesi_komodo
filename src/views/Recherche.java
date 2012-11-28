@@ -97,9 +97,9 @@ public class Recherche extends KContainer {
         header.setPreferredSize(new Dimension(800,25));
        
         
-       scroller = new JScrollPane();
+        scroller = new JScrollPane();
         //scroller.setBorder(javax.swing.BorderFactory.createTitledBorder("Alertes"));
-        scroller.setPreferredSize(new Dimension(700, 300));
+        scroller.setPreferredSize(new Dimension(750, 550));
         scroller.setBackground(new java.awt.Color(255, 255, 255));
         scroller.getVerticalScrollBar().setUnitIncrement(10);
         //content.setLayout(new BorderLayout());
@@ -160,8 +160,8 @@ public class Recherche extends KContainer {
         //content.add(header,BorderLayout.NORTH);
         
         panelListSearch = new JPanel();         
-        panelListSearch.setLayout(new BorderLayout());
-        panelListSearch.setPreferredSize(new Dimension(800,500));
+        panelListSearch.setLayout(new BoxLayout(panelListSearch, BoxLayout.Y_AXIS));
+        panelListSearch.setPreferredSize(new Dimension(750,540));
         panelListSearch.setBackground(new java.awt.Color(255, 255, 255));
         panelListSearch.add(new JLabel(""));
         
@@ -185,8 +185,8 @@ public class Recherche extends KContainer {
     {
         panelListSearch.removeAll();
         panelListSearch.revalidate();  
-        scroller.removeAll();
-        scroller.revalidate();
+       
+        scroller.setViewportView(panelListSearch);
         if(!query.isEmpty())
         {
             
