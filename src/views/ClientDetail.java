@@ -63,7 +63,7 @@ public class ClientDetail extends KContainer {
     private DemandeInstance dd = DemandeInstance.getInstance();
     private ClientInstance ci = ClientInstance.getInstance();
     private AlerteInstance ai = AlerteInstance.getInstance();
-    
+    CurrentDatas cd = CurrentDatas.getInstance();
     public ClientDetail(int id) {
         super();
         cli_id = id;
@@ -120,7 +120,7 @@ public class ClientDetail extends KContainer {
         newDemand.addActionListener(new newDmdListener());
         //adresse, contacts raison sociale etc
 
-        
+
         cliDetail.setLayout(new BorderLayout());
         cliInfos.setLayout(new FlowLayout(0, 50, 0));
 
@@ -159,7 +159,7 @@ public class ClientDetail extends KContainer {
 
         cliButtons.setLayout(new FlowLayout());
         cliButtons.add(new JLabel("Contacts : "));
-        
+
         Hashtable hh = new Hashtable();
         hh.put("cliid", cli_id);
         hh.put("intersuppr", false);
@@ -210,15 +210,21 @@ public class ClientDetail extends KContainer {
         cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
         //Panneau des combos box
-        comboPanel.setLayout(new BorderLayout());
-        comboPanel.add(newDemand, BorderLayout.NORTH);
-
+        JButton retour = new JButton("Retour");
+        retour.addActionListener(new retourListener());
+        JPanel r = new JPanel();
+        r.setLayout(new FlowLayout());
+        //comboPanel.setLayout(new BorderLayout());
+        comboPanel.setLayout(new BoxLayout(comboPanel, BoxLayout.Y_AXIS));
+        r.add(newDemand);
+        r.add(retour);
+        comboPanel.add(r);
         //ComboBox demandes
         JPanel comboDmd_panel = new JPanel();
         comboDmd_panel.setLayout(new FlowLayout());
 
         //get detail demande
-        
+
         Hashtable hhh = new Hashtable();
         hhh.put("cliid", cli_id);
         demande = dd.GetDemandes("where cliid = :cliid", hhh);
@@ -253,8 +259,8 @@ public class ClientDetail extends KContainer {
         comboCmd_panel.add(validateCmd);
 
         //ajout des combobox a droite
-        comboPanel.add(comboDmd_panel, BorderLayout.CENTER);
-        comboPanel.add(comboCmd_panel, BorderLayout.SOUTH);
+        comboPanel.add(comboDmd_panel);
+        comboPanel.add(comboCmd_panel);
 
         //ajout des panels au JPanel principal
         top.add(comboPanel, BorderLayout.EAST);
@@ -352,6 +358,18 @@ public class ClientDetail extends KContainer {
 
     }
 
+    private class retourListener implements ActionListener {
+
+        public retourListener() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Affichage af = new Affichage(cd.getUser());
+            fen.RenewContener(af.getPanel());
+        }
+    }
+
     private class addContactListener implements ActionListener {
 
         public addContactListener() {
@@ -421,10 +439,9 @@ public class ClientDetail extends KContainer {
     }
 
     public void deleteClient() {
-        
+
         cli.setClisuppr(true);
         ci.updaterBaseDeDonnees(cli);
-        CurrentDatas cd = CurrentDatas.getInstance();
         Affichage af = new Affichage(cd.getUser());
         fen.RenewContener(af.getPanel());
     }
@@ -488,6 +505,4 @@ public class ClientDetail extends KContainer {
         }
         ClientDetail cd = new ClientDetail(cli_id);
     }
-    
-    
 }
