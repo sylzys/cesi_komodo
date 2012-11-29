@@ -6,9 +6,11 @@ package views;
 
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
+import controllers.TableDispatcher;
 import controllers.getDemandeInfos;
 import controllers.getInterlocuteurInfos;
 import controllers.getSteInfos;
+import instances.AlerteInstance;
 import instances.ClientInstance;
 import instances.DemandeInstance;
 import instances.DetailCdeInstance;
@@ -37,7 +39,9 @@ import models.Client;
 import models.CurrentDatas;
 import models.Demande;
 import models.DetailCommande;
+import models.GetAlerte;
 import models.Interlocuteur;
+import models.ModelesTables;
 import org.hibernate.Query;
 
 /**
@@ -58,6 +62,7 @@ public class ClientDetail extends KContainer {
     private InterlocuteurInstance interInstance = InterlocuteurInstance.getInstance();
     private DemandeInstance dd = DemandeInstance.getInstance();
     private ClientInstance ci = ClientInstance.getInstance();
+    private AlerteInstance ai = AlerteInstance.getInstance();
     
     public ClientDetail(int id) {
         super();
@@ -313,14 +318,18 @@ public class ClientDetail extends KContainer {
         JPanel alertes = new JPanel();
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
         alertes.setPreferredSize(new Dimension(120, 50));
-        JButton btn_view_alertes = new JButton("Voir les alertes");
+        // lisye alertes
+        TableDispatcher cp = new TableDispatcher();
+        alertes.add(cp.showtable(ModelesTables.ALERTE, this.cli_id), BorderLayout.NORTH);
+        // bouton voir tout
+        JButton btn_view_alertes = new JButton("Voir toutes les alertes");
         btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Fenetre.getInstance().RenewAlert(cli_id);
             }
         });
-        alertes.add(btn_view_alertes);
+        alertes.add(btn_view_alertes, BorderLayout.SOUTH);
         bottom.add(alertes);
         bottom.add(Box.createVerticalStrut(10));
 
@@ -479,4 +488,6 @@ public class ClientDetail extends KContainer {
         }
         ClientDetail cd = new ClientDetail(cli_id);
     }
+    
+    
 }

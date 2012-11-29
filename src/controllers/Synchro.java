@@ -4,7 +4,9 @@
  */
 package controllers;
 
+import instances.ClientInstance;
 import instances.HibernateConnection;
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,7 +16,10 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Interlocuteur;
+import models.Client;
 import models.ParamSync;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -136,11 +141,19 @@ public class Synchro {
     //Test si le dossier est vide (renvoi true si il est vide)
     public boolean emptyDir() {
         File file = new File(path);
-        //Si il y a plu de 0 fichiers
-        if (file.list().length > 0) {
-            //Renvoi false le dossier n'est pas vide
-            return false;
-        } else {
+        if(file.exists())
+        {
+            //Si il y a plus de 0 fichiers
+            if (file.list().length > 0) {
+                //Renvoi false le dossier n'est pas vide
+                return false;
+            } else {
+                return true;
+            }
+        }
+        else
+        {  
+            file.mkdir();
             return true;
         }
     }
@@ -157,43 +170,7 @@ public class Synchro {
             return false;
         }
     }
-
-    //Sauvegarde l'action passé en paramètre dans la base en ligne
-    public boolean record(String fic) {
-        //Liste d'objet de l'action
-        ArrayList<Object> lsobj = objDeserializable(fic);
-        //Objet à insérer en base
-        Object obj = lsobj.get(0);
-        //Objet paramètre
-        ParamSync param = (ParamSync) lsobj.get(1);
-        //Session hibernate
-        Transaction tx = HibernateConnection.getSession().beginTransaction();
-        try {
-                //Switch le type de requete insert ou update
-                switch(param.getType()) {
-                    case "Ajout" :
-                        //Enregistrement de l'objet dans la base
-                        HibernateConnection.getSession().save(obj); 
-                    break;
-                    case "Mise à jour" :
-                    case "Suppression" :
-                        //Modification de l'objet en base
-                        HibernateConnection.getSession().update(obj);
-                    break;
-                }   
-                //Comit la transaction
-                tx.commit();
-                //Vide la session en cours (persistence des objets)
-                HibernateConnection.getSession().flush();
-                //Détache l'objet de la session
-                HibernateConnection.getSession().evict(obj);
-                return true;
-        } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return false;
-        }
-    }
-
+    
     //Renvoi la table concernée par l'action
     public String table(String fic) {
         //Découpe le nom du fichier
@@ -209,4 +186,111 @@ public class Synchro {
         //Renvoi le nom de la table
         return table;
     }
+    
+    //Sauvegarde l'action passé en paramètre dans la base en ligne
+    public boolean record(String fic) {
+        //Liste d'objet de l'action
+        ArrayList<Object> lsobj = objDeserializable(fic);
+        //Objet à insérer en base
+        Object obj = lsobj.get(0);
+        //Objet paramètre
+        ParamSync param = (ParamSync) lsobj.get(1);
+        obj = sirencli(obj, param);
+        //Session hibernate
+        Transaction tx = HibernateConnection.getSession().beginTransaction();
+        try {
+                //Switch le type de requete insert ou update
+                switch(param.getType()) {
+                    case "Ajout" :
+                        //Enregistrement de l'objet dans la base
+                        HibernateConnection.getSession().save(obj); 
+                    break;
+                    case "Mise à jour" :
+                    case "Suppression" :
+                        //Modification de l'objet en base
+                        HibernateConnection.getSession().merge(obj);
+                    break;
+                }   
+                //Comit la transaction
+                tx.commit();
+                //Vide la session en cours (persistence des objets)
+                HibernateConnection.getSession().flush();
+                //Détache l'objet de la session
+                HibernateConnection.getSession().evict(obj);
+                return true;
+        } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return false;
+        }
+    }
+    public Object sirencli(Object obj, ParamSync param)
+    {
+        String nameobj = obj.getClass().getName();
+        switch(nameobj)
+        {
+            case "models.Interlocuteur" :
+                obj = chkinter(obj, param);
+                return obj;
+            case "models.Client" :
+                obj = chkcli(obj, param);
+                return obj;
+            default:
+                return obj;
+        }       
+    }
+    public Object chkcli(Object obj, ParamSync param)
+    {
+        if(!param.getType().equals("Ajout"))
+            {
+                Client clioff = (Client)obj;
+                try
+                {
+                    String clisirenoff = clioff.getClisiren();
+                    HibernateConnection connection = HibernateConnection.getInstance();
+                    Query query = connection.getSession().createQuery("from Client where clisiren = :clisiren");
+                    query.setParameter("clisiren",clisirenoff);
+                    Client clionline = (Client) query.uniqueResult();
+                    int cliidonline = clionline.getCliid();
+                    clioff.setCliid(cliidonline);
+                    return clioff;
+                }
+                catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+            }
+            else 
+            {
+                return obj;
+            }
+    }
+    public Object chkinter(Object obj, ParamSync param)
+    {
+        Interlocuteur inter = (Interlocuteur)obj;
+        int cliid = inter.getCliid();
+        try
+        {
+            HibernateConnection.offline();
+            HibernateConnection connection = HibernateConnection.getInstance();
+            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
+            query.setParameter("cliid", cliid);
+            Client cli = (Client) query.uniqueResult();
+            String clisiren = cli.getClisiren();
+            HibernateConnection.online();
+            connection = HibernateConnection.getInstance();
+            query = connection.getSession().createQuery("from Client where clisiren = :clisiren");
+            query.setParameter("clisiren",clisiren);
+            Client clionline = (Client) query.uniqueResult();
+            int cliidonline = clionline.getCliid();
+            inter.setCliid(cliidonline);
+            return inter;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+   
 }
