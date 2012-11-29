@@ -92,9 +92,8 @@ public class Fenetre extends JFrame {
 //            }
 //        }
             //menu
-            user = new UserActif("admin");
-            
-            //cd.setUser(user);
+            user = new UserActif("admin");            
+            cd.setUser(user);
             afficher.addActionListener(new DisplayListener());
             this.societes.add(afficher);
             creer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
