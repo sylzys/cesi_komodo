@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import models.Client_Comm;
+import models.CurrentDatas;
 import models.ModelesTables;
 /**
  *
@@ -27,6 +28,7 @@ import models.ModelesTables;
 public class Affichage extends KContainer {
     JLabel title = new JLabel ("Liste des sociétés");
     public List<Client_Comm> liste;
+    CurrentDatas cd = CurrentDatas.getInstance();
     private clientCommInstance cci = clientCommInstance.getInstance();
     public Affichage(UserActif user) {
     super();
@@ -47,7 +49,7 @@ public class Affichage extends KContainer {
         
         TableDispatcher cp = new TableDispatcher();
         //;
-        content.add(cp.showtable(ModelesTables.CLIENT, 1), BorderLayout.SOUTH);
+        content.add(cp.showtable(ModelesTables.CLIENT, cd.getUser().getId()), BorderLayout.SOUTH);
          title.setHorizontalAlignment(SwingConstants.CENTER);  
         title.setBorder(new EmptyBorder(0, 0, 10, 0));
         Font f = new Font("Euphemia", Font.PLAIN, 22);

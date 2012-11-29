@@ -18,7 +18,7 @@ public class loginDialog extends JDialog {
 
     public loginDialog(JFrame parent, String title, boolean modal) {
         super(parent, title, modal);
-        this.setSize(550, 270);
+        this.setSize(650, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
