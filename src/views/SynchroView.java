@@ -201,6 +201,7 @@ public class SynchroView extends KContainer {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Synchro sync = new Synchro();
+                    HibernateConnection.openConnectionBisOff();
                     List<Boolean> tabtest = new ArrayList<Boolean>();
                     for (CheckBoxData chkdata : listchk)
                     {
@@ -217,6 +218,7 @@ public class SynchroView extends KContainer {
                             }
                         }
                     }
+                    HibernateConnection.closeConnectionBis();
                     boolean valid = true;
                     for (Boolean booltest : tabtest)
                     {

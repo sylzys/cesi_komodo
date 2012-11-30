@@ -54,7 +54,7 @@ public class Uniqid {
             }
             return hash;
     }
-    //Retournb le string du cryptage
+    //Retourne le string du cryptage
     public String hashToString(byte[] hash) {  
         StringBuilder sb = new StringBuilder(); 
         for (int i = 0; i < hash.length; i++) {  

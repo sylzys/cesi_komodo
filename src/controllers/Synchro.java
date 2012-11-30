@@ -195,7 +195,7 @@ public class Synchro {
         Object obj = lsobj.get(0);
         //Objet paramètre
         ParamSync param = (ParamSync) lsobj.get(1);
-        obj = sirencli(obj, param);
+        obj = conflitid(obj, param);
         //Session hibernate
         Transaction tx = HibernateConnection.getSession().beginTransaction();
         try {
@@ -223,7 +223,7 @@ public class Synchro {
                 return false;
         }
     }
-    public Object sirencli(Object obj, ParamSync param)
+    public Object conflitid(Object obj, ParamSync param)
     {
         String nameobj = obj.getClass().getName();
         switch(nameobj)
@@ -245,10 +245,10 @@ public class Synchro {
                 Client clioff = (Client)obj;
                 try
                 {
-                    String clisirenoff = clioff.getClisiren();
+                    String cliuniqidoff = clioff.getCliuniqid();
                     HibernateConnection connection = HibernateConnection.getInstance();
-                    Query query = connection.getSession().createQuery("from Client where clisiren = :clisiren");
-                    query.setParameter("clisiren",clisirenoff);
+                    Query query = connection.getSession().createQuery("from Client where cliuniqid = :cliuniqid");
+                    query.setParameter("cliuniqid",cliuniqidoff);
                     Client clionline = (Client) query.uniqueResult();
                     int cliidonline = clionline.getCliid();
                     clioff.setCliid(cliidonline);
@@ -269,18 +269,32 @@ public class Synchro {
     {
         Interlocuteur inter = (Interlocuteur)obj;
         int cliid = inter.getCliid();
+        HibernateConnection connection = HibernateConnection.getInstance();
+        if(!param.getType().equals("Ajout"))
+        {
+            try
+            {
+                String interuniqidoff = inter.getInteruniqid();
+                Query query = connection.getSession().createQuery("from Interlocuteur where interuniqid = :interuniqid");
+                query.setParameter("interuniqid",interuniqidoff);
+                Interlocuteur interonline = (Interlocuteur) query.uniqueResult();
+                int interidonline = interonline.getInterid();
+                inter.setInterid(interidonline);
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+                return false;
+            }
+        }
         try
         {
-            HibernateConnection.offline();
-            HibernateConnection connection = HibernateConnection.getInstance();
-            Query query = connection.getSession().createQuery("from Client where cliid = :cliid");
+            Query query = connection.getSessionBis().createQuery("from Client where cliid = :cliid");
             query.setParameter("cliid", cliid);
             Client cli = (Client) query.uniqueResult();
-            String clisiren = cli.getClisiren();
-            HibernateConnection.online();
-            connection = HibernateConnection.getInstance();
-            query = connection.getSession().createQuery("from Client where clisiren = :clisiren");
-            query.setParameter("clisiren",clisiren);
+            String cliuniqid = cli.getCliuniqid();
+            query = connection.getSession().createQuery("from Client where cliuniqid = :cliuniqid");
+            query.setParameter("cliuniqid",cliuniqid);
             Client clionline = (Client) query.uniqueResult();
             int cliidonline = clionline.getCliid();
             inter.setCliid(cliidonline);

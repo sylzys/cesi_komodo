@@ -14,6 +14,8 @@ public class HibernateConnection {
 	private static HibernateConnection instance;
 	private static Session session; 
 	private static SessionFactory sessionFactory;
+        private static Session session2; 
+	private static SessionFactory sessionFactory2;
         private static String confHib;
         public static boolean online;
         private static boolean status;
@@ -29,7 +31,15 @@ public class HibernateConnection {
         {
 		HibernateConnection.session = session;
 	}
-        
+        public static Session getSessionBis() 
+        {
+		return HibernateConnection.session2;
+	}
+
+	public static void setSessionBis(Session session) 
+        {
+		HibernateConnection.session2 = session;
+	}
         public static void connectOffline()
 	{
                 online = false;
@@ -84,6 +94,15 @@ public class HibernateConnection {
 		HibernateConnection.session.close();
 	}
         
+        //Ferme la deuxième connection
+        public static void closeConnectionBis()
+        {
+           //Vidage mémoire
+            HibernateConnection.sessionFactory2.close();
+            HibernateConnection.session2.flush();
+            HibernateConnection.session2.close();
+        }
+        
         //Nouvelle connection
         public static void newConnect(boolean bool)
         {
@@ -122,5 +141,12 @@ public class HibernateConnection {
             HibernateConnection.sessionFactory = new AnnotationConfiguration().configure(confHib).buildSessionFactory();
             //Ouverture de la session
             HibernateConnection.session = HibernateConnection.sessionFactory.openSession();
+        }
+        public static void openConnectionBisOff()
+        {
+            //Chargement du fichier de configuration de hibernate
+            HibernateConnection.sessionFactory2 = new AnnotationConfiguration().configure("/config/offline.xml").buildSessionFactory();
+            //Ouverture de la session
+            HibernateConnection.session2 = HibernateConnection.sessionFactory2.openSession();
         }
 }
