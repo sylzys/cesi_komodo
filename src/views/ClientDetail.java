@@ -6,6 +6,7 @@ package views;
 
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
+import classes.Uniqid;
 import controllers.TableDispatcher;
 import controllers.getDemandeInfos;
 import controllers.getInterlocuteurInfos;
@@ -477,6 +478,8 @@ public class ClientDetail extends KContainer {
             i.setIntertel(infos[2]);
             i.setIntermail(infos[3]);
             i.setUtiid(cd.getUser().getId());
+            Uniqid uniqid = new Uniqid(cd.getUser().getId());
+            i.setInteruniqid(uniqid.getUniqid());
             InterlocuteurInstance is = InterlocuteurInstance.getInstance();
             is.insererEnBaseDeDonnees(i);
             if (HibernateConnection.online == false)

@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.Uniqid;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.CommandeInstance;
@@ -257,11 +258,10 @@ public class DemandeDetail extends KContainer {
             Hashtable h = new Hashtable();
             h.put("demandeid", demande_id);
             ddd = DmdeInstance.GetDemandes("where demandeid = :demandeid", h);
-
-
-
             Commande cmd = new Commande();
-            //cmd.setUtiid(ddd.get(0).getUtiid());
+            CurrentDatas cur = CurrentDatas.getInstance();
+            Uniqid uniqid = new Uniqid(cur.getUser().getId());
+            cmd.setComuniqid(uniqid.getUniqid());
             cmd.setInterid(ddd.get(0).getInterid());
             cmd.setComtitre(ddd.get(0).getDemandetitre());
             cmd.setComdesc(ddd.get(0).getDemandedesc());
@@ -280,7 +280,7 @@ public class DemandeDetail extends KContainer {
 
 
 
-            CurrentDatas cur = CurrentDatas.getInstance();
+            
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
 
 

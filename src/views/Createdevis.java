@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.Uniqid;
 import controllers.UserActif;
 import instances.DevisInstance;
 import models.Demande;
@@ -162,14 +163,16 @@ public class Createdevis extends KContainer {
     private void addToDataBase() {
         try
         {
+            CurrentDatas cd = CurrentDatas.getInstance();
             Devis dvis = new Devis();
             dvis.setDevetat("En cours");
             dvis.setDevdate(new Date());
             dvis.setDevprix(Integer.parseInt(jFormattedTextField2.getText()));
             dvis.setDevsuppr(false);
             dvis.setDemandeid(id);
+            Uniqid uniqid = new Uniqid(cd.getUser().getId());
+            dvis.setDevuniqid(uniqid.getUniqid());
             
-
             Session session2 = HibernateConnection.getSession();
             Demande dmdd = (Demande) session2.get(Demande.class, id);
             dvis.setInterid(dmdd.getInterid());

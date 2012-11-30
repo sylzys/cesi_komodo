@@ -5,6 +5,7 @@
 package views;
 
 import classes.BackgroundPanel;
+import classes.Uniqid;
 import com.google.common.base.Strings;
 import controllers.EmailValidator;
 import controllers.SendEmail;
@@ -294,6 +295,9 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         cli.setUtiid(this.user.getId());
         cli.setUti_utiid(this.user.getId());
         cli.setClidteadd(Calendar.getInstance().getTime());
+        Uniqid uniqid = new Uniqid(user);
+        cli.setCliuniqid(uniqid.getUniqid());
+        
         if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
         {
             cli.setClica(Integer.parseInt(cli_ca.getText()));

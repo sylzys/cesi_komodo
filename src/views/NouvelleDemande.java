@@ -4,6 +4,7 @@
  */
 package views;
 
+import classes.Uniqid;
 import classes.WhitePanel;
 import controllers.getDemandeInfos;
 import instances.DemandeInstance;
@@ -174,9 +175,13 @@ public class NouvelleDemande extends JDialog {
   
     
     private void addToDataBase() {
+            CurrentDatas cd = CurrentDatas.getInstance();
             Demande dmde = new Demande();
             dmde.setCliid(dmd_id);
-            dmde.setUtiid(1);
+            //dmde.setUtiid(1);
+            dmde.setUtiid(cd.getUser().getId());
+            Uniqid uniqid = new Uniqid(cd.getUser().getId());
+            dmde.setDemandeuniqid(uniqid.getUniqid());
             String interlo = (String) cb_interlo.getSelectedItem();
             String str[]=interlo.split(". ");
             
