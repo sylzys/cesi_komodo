@@ -35,6 +35,9 @@ public class Suivdossier implements Serializable {
     
     @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
     private Boolean suividossuppr ;
+    
+    @Column(name="suivdosuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String suivdosuniqid ;
 
      
    public Integer getSuivdosid() {
@@ -107,6 +110,14 @@ public class Suivdossier implements Serializable {
 
     public void setSuividossuppr(Boolean suivdossuppr) {
         this.suividossuppr = suivdossuppr;
+    }
+
+    public String getSuivdosuniqid() {
+        return suivdosuniqid;
+    }
+
+    public void setSuivdosuniqid(String suivdosuniqid) {
+        this.suivdosuniqid = suivdosuniqid;
     }
 }
 

@@ -30,6 +30,9 @@ public class Devis implements Serializable {
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
     private int interid ;
+    
+    @Column(name="devuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String devuniqid ;
 
     public int getInterid() {
         return interid;
@@ -87,6 +90,14 @@ public class Devis implements Serializable {
 
     public void setDemandeid(int demandeid) {
         this.demandeid = demandeid;
+    }
+
+    public String getDevuniqid() {
+        return devuniqid;
+    }
+
+    public void setDevuniqid(String devuniqid) {
+        this.devuniqid = devuniqid;
     }
 
     

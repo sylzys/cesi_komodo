@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  13/11/2012 07:35:27                      */
+/* Date de création :  30/11/2012 15:03:42                      */
 /*==============================================================*/
 
 
@@ -43,6 +43,7 @@ create table AGENDA (
    AGEDESC              VARCHAR(1000)        null,
    AGEETAT              BOOL                 null,
    AGESUPPR             BOOL                 null,
+   AGEUNIQID            VARCHAR(500)         null,
    constraint PK_AGENDA primary key (AGEID)
 );
 
@@ -208,6 +209,7 @@ create table CLIENT (
    CLIURLTMP            VARCHAR(500)         null,
    CLISIREN             VARCHAR(20)          null,
    CLINAF               VARCHAR(20)          null,
+   CLIUNIQID            VARCHAR(500)         null,
    constraint PK_CLIENT primary key (CLIID)
 );
 
@@ -272,6 +274,7 @@ FOURID
 /*==============================================================*/
 create table COMMANDE (
    COMID                SERIAL               not null,
+   ENQID                INT4                 null,
    INTERID              INT4                 null,
    DEMANDEID            INT4                 null,
    COMTITRE             VARCHAR(254)         null,
@@ -284,6 +287,7 @@ create table COMMANDE (
    COMPRODFIN           DATE                 null,
    COMPRIX              INT4                 null,
    COMSUPPR             BOOL                 null,
+   COMUNIQID            VARCHAR(500)         null,
    constraint PK_COMMANDE primary key (COMID)
 );
 
@@ -306,6 +310,13 @@ DEMANDEID
 /*==============================================================*/
 create  index INTERCOM_FK on COMMANDE (
 INTERID
+);
+
+/*==============================================================*/
+/* Index : ENQCOM_FK                                            */
+/*==============================================================*/
+create  index ENQCOM_FK on COMMANDE (
+ENQID
 );
 
 /*==============================================================*/
@@ -371,6 +382,7 @@ create table DEMANDE (
    DEMANDEETAT          INT4                 null,
    DEMANDEDTEADD        DATE                 null,
    DEMANDESUPPR         BOOL                 null,
+   DEMANDEUNIQID        VARCHAR(500)         null,
    constraint PK_DEMANDE primary key (DEMANDEID)
 );
 
@@ -415,6 +427,7 @@ create table DEVIS (
    DEVDATE              DATE                 null,
    DEVPRIX              INT4                 null,
    DEVSUPPR             BOOL                 null,
+   DEVUNIQID            VARCHAR(500)         null,
    constraint PK_DEVIS primary key (DEVID)
 );
 
@@ -486,6 +499,7 @@ create table ENQUETE (
    ENQPOS               BOOL                 null,
    ENQTYPE              BOOL                 null,
    ENQSUPPR             BOOL                 null,
+   ENQUNIQID            VARCHAR(500)         null,
    constraint PK_ENQUETE primary key (ENQID)
 );
 
@@ -628,6 +642,7 @@ create table INTERLOCUTEUR (
    INTERPOSTE           VARCHAR(100)         null,
    INTERDTEADD          DATE                 null,
    INTERSUPPR           BOOL                 null,
+   INTERUNIQID          VARCHAR(500)         null,
    constraint PK_INTERLOCUTEUR primary key (INTERID)
 );
 
@@ -889,6 +904,7 @@ create table SUIVDOSSIER (
    SUIVDOSDATE          DATE                 null,
    SUIVDOSCOM           VARCHAR(1000)        null,
    SUIVIDOSSUPPR        BOOL                 null,
+   SUIVDOSUNIQID        VARCHAR(1)           null,
    constraint PK_SUIVDOSSIER primary key (SUIVDOSID)
 );
 
@@ -1058,6 +1074,11 @@ alter table CMDMAT
 alter table COMMANDE
    add constraint FK_COMMANDE_DEMCOM_DEMANDE foreign key (DEMANDEID)
       references DEMANDE (DEMANDEID)
+      on delete restrict on update restrict;
+
+alter table COMMANDE
+   add constraint FK_COMMANDE_ENQCOM_ENQUETE foreign key (ENQID)
+      references ENQUETE (ENQID)
       on delete restrict on update restrict;
 
 alter table COMMANDE

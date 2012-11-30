@@ -42,36 +42,39 @@ public class Interlocuteur implements Serializable {
     
     @Column(name="intersuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean intersuppr ;
+    
+    @Column(name="interuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String interuniqid ;
 
-    public int getInterid() {
+    public Integer getInterid() {
         return interid;
     }
 
-    public void setInterid(int interid) {
+    public void setInterid(Integer interid) {
         this.interid = interid;
     }
 
-    public int getFourid() {
+    public Integer getFourid() {
         return fourid;
     }
 
-    public void setFourid(int fourid) {
+    public void setFourid(Integer fourid) {
         this.fourid = fourid;
     }
 
-    public int getUtiid() {
+    public Integer getUtiid() {
         return utiid;
     }
 
-    public void setUtiid(int utiid) {
+    public void setUtiid(Integer utiid) {
         this.utiid = utiid;
     }
 
-    public int getCliid() {
+    public Integer getCliid() {
         return cliid;
     }
 
-    public void setCliid(int cliid) {
+    public void setCliid(Integer cliid) {
         this.cliid = cliid;
     }
 
@@ -129,6 +132,14 @@ public class Interlocuteur implements Serializable {
 
     public void setIntersuppr(boolean intersuppr) {
         this.intersuppr = intersuppr;
+    }
+
+    public String getInteruniqid() {
+        return interuniqid;
+    }
+
+    public void setInteruniqid(String interuniqid) {
+        this.interuniqid = interuniqid;
     }
     
 }

@@ -34,6 +34,9 @@ public class Demande implements Serializable {
     
     @Column(name="demandesuppr", columnDefinition="BOOLEAN", nullable=true)
     private Boolean demandesuppr ;
+    
+    @Column(name="demandeuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String demandeuniqid ;
 
     public int getDemandeid() {
         return demandeid;
@@ -107,6 +110,13 @@ public class Demande implements Serializable {
         this.demandesuppr = demandesuppr;
     }
 
-  
+    public String getDemandeuniqid() {
+        return demandeuniqid;
+    }
+
+    public void setDemandeuniqid(String demandeuniqid) {
+        this.demandeuniqid = demandeuniqid;
+    }
+
 }
 

@@ -90,6 +90,9 @@ public class Client implements Serializable {
     
     @Column(name="clisiren", columnDefinition="VARCHAR(20)", nullable=true)
     private String clisiren ;
+    
+    @Column(name="cliuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String cliuniqid ;
 
     public String getClinaf() {
         return clinaf;
@@ -305,6 +308,14 @@ public class Client implements Serializable {
 
     public void setCliurltmp(String cliurltmp) {
         this.cliurltmp = cliurltmp;
+    }
+
+    public String getCliuniqid() {
+        return cliuniqid;
+    }
+
+    public void setCliuniqid(String cliuniqid) {
+        this.cliuniqid = cliuniqid;
     }
     
 }

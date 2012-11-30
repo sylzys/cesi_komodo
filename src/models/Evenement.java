@@ -82,6 +82,14 @@ public class Evenement implements Serializable {
     public void setAgesuppr(boolean agesuppr) {
         this.agesuppr = agesuppr;
     }
+
+    public String getAgeuniqid() {
+        return ageuniqid;
+    }
+
+    public void setAgeuniqid(String ageuniqid) {
+        this.ageuniqid = ageuniqid;
+    }
     
     @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
     private int utiid ;
@@ -108,5 +116,8 @@ public class Evenement implements Serializable {
     
     @Column(name="agesuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean agesuppr ;
+    
+    @Column(name="ageuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String ageuniqid ;
 }
 

@@ -20,10 +20,7 @@ public class Commande implements Serializable {
     private Integer comid;
     
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
-    private Integer interid ;
-    
-//    @Column(name="utiid", columnDefinition="INTEGER", nullable=true)
-//    private Integer utiid ; 
+    private Integer interid ; 
     
     @Column(name="demandeid", columnDefinition="INTEGER", nullable=true)
     private Integer demandeid ; 
@@ -61,6 +58,12 @@ public class Commande implements Serializable {
     
     @Column(name="comsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean comsuppr ;
+    
+    @Column(name="comuniqid", columnDefinition="VARCHAR(500)", nullable=true)
+    private String comuniqid ;
+    
+    @Column(name="enqid", columnDefinition="INTEGER", nullable=true)
+    private Integer enqid ;
 
     public Integer getComid() {
         return comid;
@@ -78,14 +81,6 @@ public class Commande implements Serializable {
         this.interid = interid;
     }
 
-//    public Integer getUtiid() {
-//        return utiid;
-//    }
-//
-//    public void setUtiid(Integer utiid) {
-//        this.utiid = utiid;
-//    }
-
     public Integer getDemandeid() {
         return demandeid;
     }
@@ -95,7 +90,6 @@ public class Commande implements Serializable {
     }
     
     
-
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     public String getComtitre() {
         return comtitre;
@@ -176,5 +170,21 @@ public class Commande implements Serializable {
 
     public void setComsuppr(boolean comsuppr) {
         this.comsuppr = comsuppr;
+    }
+
+    public String getComuniqid() {
+        return comuniqid;
+    }
+
+    public void setComuniqid(String comuniqid) {
+        this.comuniqid = comuniqid;
+    }
+
+    public Integer getEnqid() {
+        return enqid;
+    }
+
+    public void setEnqid(Integer enqid) {
+        this.enqid = enqid;
     }
 }
