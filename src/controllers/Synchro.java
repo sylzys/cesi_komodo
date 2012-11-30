@@ -18,7 +18,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Interlocuteur;
 import models.Client;
+import models.Commande;
+import models.Demande;
+import models.Devis;
 import models.ParamSync;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -223,88 +227,168 @@ public class Synchro {
                 return false;
         }
     }
+    //Switch le modele et set les id en conflit
     public Object conflitid(Object obj, ParamSync param)
     {
         String nameobj = obj.getClass().getName();
+        String uniqid;
+        int id;
         switch(nameobj)
         {
             case "models.Interlocuteur" :
-                obj = chkinter(obj, param);
-                return obj;
+                Interlocuteur inter = (Interlocuteur)obj;
+                if(!param.getType().equals("Ajout"))
+                {
+                    uniqid = uniqueid(inter.getInterid(), "Interlocuteur", "interid");
+                    id = idonline(uniqid, "Interlocuteur", "interuniqid");
+                    inter.setInterid(id);
+                }
+                uniqid = uniqueid(inter.getCliid(), "Client", "cliid");
+                id = idonline(uniqid, "Client", "cliuniqid");
+                inter.setCliid(id);
+                return inter;
             case "models.Client" :
-                obj = chkcli(obj, param);
-                return obj;
+                if(!param.getType().equals("Ajout"))
+                {
+                    Client cli = (Client)obj;
+                    uniqid = uniqueid(cli.getCliid(), "Client", "cliid");
+                    id = idonline(uniqid, "Client", "cliuniqid");
+                    cli.setCliid(id);
+                    return cli;
+                }
+                else
+                {
+                   return obj; 
+                }
+            case "models.Demande" :
+                Demande dmd = (Demande)obj;
+                if(!param.getType().equals("Ajout"))
+                {                  
+                    uniqid = uniqueid(dmd.getDemandeid(), "demande", "demandeid");
+                    id = idonline(uniqid, "demande", "demandeuniqid");
+                    dmd.setDemandeid(id);
+                }
+                uniqid = uniqueid(dmd.getCliid(), "Client", "cliid");
+                id = idonline(uniqid, "Client", "cliuniqid");
+                dmd.setCliid(id);
+                uniqid = uniqueid(dmd.getInterid(), "Interlocuteur", "interid");
+                id = idonline(uniqid, "Interlocuteur", "interuniqid");
+                dmd.setInterid(id);
+                return dmd;
+            case "models.Devis" :
+                Devis dvi = (Devis)obj;
+                if(!param.getType().equals("Ajout"))
+                {                  
+                    uniqid = uniqueid(dvi.getDevid(), "Devis", "devid");
+                    id = idonline(uniqid, "Devis", "devuniqid");
+                    dvi.setDevid(id);
+                }
+                uniqid = uniqueid(dvi.getDemandeid(), "demande", "demandeid");
+                id = idonline(uniqid, "demande", "demandeuniqid");
+                dvi.setDemandeid(id);
+                uniqid = uniqueid(dvi.getInterid(), "Interlocuteur", "interid");
+                id = idonline(uniqid, "Interlocuteur", "interuniqid");
+                dvi.setInterid(id);
+                return dvi;
+            case "models.Commande" :
+                Commande cmd = (Commande)obj;
+                if(!param.getType().equals("Ajout"))
+                {                  
+                    uniqid = uniqueid(cmd.getComid(), "commande", "comid");
+                    id = idonline(uniqid, "commande", "comuniqid");
+                    cmd.setComid(id);
+                }
+//                uniqid = uniqueid(cmd.getEnqid(), "Enquete", "enqid");
+//                id = idonline(uniqid, "Enquete", "enquniqid");
+//                cmd.setEnqid(id);
+                uniqid = uniqueid(cmd.getInterid(), "Interlocuteur", "interid");
+                id = idonline(uniqid, "Interlocuteur", "interuniqid");
+                cmd.setInterid(id);
+                uniqid = uniqueid(cmd.getDemandeid(), "demande", "demandeid");
+                id = idonline(uniqid, "demande", "demandeuniqid");
+                cmd.setDemandeid(id);
+                return cmd;
             default:
                 return obj;
-        }       
-    }
-    public Object chkcli(Object obj, ParamSync param)
-    {
-        if(!param.getType().equals("Ajout"))
-            {
-                Client clioff = (Client)obj;
-                try
-                {
-                    String cliuniqidoff = clioff.getCliuniqid();
-                    HibernateConnection connection = HibernateConnection.getInstance();
-                    Query query = connection.getSession().createQuery("from Client where cliuniqid = :cliuniqid");
-                    query.setParameter("cliuniqid",cliuniqidoff);
-                    Client clionline = (Client) query.uniqueResult();
-                    int cliidonline = clionline.getCliid();
-                    clioff.setCliid(cliidonline);
-                    return clioff;
-                }
-                catch (Exception e)
-                {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
-            else 
-            {
-                return obj;
-            }
-    }
-    public Object chkinter(Object obj, ParamSync param)
-    {
-        Interlocuteur inter = (Interlocuteur)obj;
-        int cliid = inter.getCliid();
-        HibernateConnection connection = HibernateConnection.getInstance();
-        if(!param.getType().equals("Ajout"))
-        {
-            try
-            {
-                String interuniqidoff = inter.getInteruniqid();
-                Query query = connection.getSession().createQuery("from Interlocuteur where interuniqid = :interuniqid");
-                query.setParameter("interuniqid",interuniqidoff);
-                Interlocuteur interonline = (Interlocuteur) query.uniqueResult();
-                int interidonline = interonline.getInterid();
-                inter.setInterid(interidonline);
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-                return false;
-            }
-        }
-        try
-        {
-            Query query = connection.getSessionBis().createQuery("from Client where cliid = :cliid");
-            query.setParameter("cliid", cliid);
-            Client cli = (Client) query.uniqueResult();
-            String cliuniqid = cli.getCliuniqid();
-            query = connection.getSession().createQuery("from Client where cliuniqid = :cliuniqid");
-            query.setParameter("cliuniqid",cliuniqid);
-            Client clionline = (Client) query.uniqueResult();
-            int cliidonline = clionline.getCliid();
-            inter.setCliid(cliidonline);
-            return inter;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return false;
-        }
+        }      
     }
    
+    public String uniqueid(int id, String table, String champs)
+    {
+       String uniqid = "";
+       try 
+       {
+           HibernateConnection connection = HibernateConnection.getInstance();
+           Query query = connection.getSessionBis().createQuery("from "+table+ " where "+champs+" = :"+champs+"");
+           query.setParameter(champs, id);
+           switch(table)
+           {
+               case "Interlocuteur" :
+               Interlocuteur inter = (Interlocuteur) query.uniqueResult();
+               uniqid = inter.getInteruniqid();
+                   break;
+               case "Client" :
+               Client client = (Client) query.uniqueResult();
+               uniqid = client.getCliuniqid(); 
+                   break;
+               case "demande" :
+               Demande demande = (Demande) query.uniqueResult();
+               uniqid = demande.getDemandeuniqid();
+                   break;
+               case "Devis" :
+               Devis devis = (Devis) query.uniqueResult();
+               uniqid = devis.getDevuniqid();
+                   break;
+               case "commande" :
+               Commande commande = (Commande) query.uniqueResult();
+               uniqid = commande.getComuniqid();
+                   break;
+           }
+           return uniqid;
+       }
+       catch(Exception e)
+       {
+           System.out.println(e.getMessage());
+           return uniqid;
+       }
+    }
+    public int idonline(String uniqid, String table, String champs)
+    {
+        int id = 0;
+        try 
+        {
+            HibernateConnection connection = HibernateConnection.getInstance();
+            Query query = connection.getSession().createQuery("from "+table+" where "+champs+" = :"+champs+"");
+            query.setParameter(champs,uniqid);
+            switch(table)
+            {
+                case "Interlocuteur" :
+                Interlocuteur inter = (Interlocuteur) query.uniqueResult();
+                id = inter.getInterid();
+                    break;
+                case "Client" :
+                Client client = (Client) query.uniqueResult();
+                id = client.getCliid(); 
+                    break;
+                case "demande" :
+                Demande demande = (Demande) query.uniqueResult();
+                id = demande.getDemandeid();
+                    break;
+                case "Devis" :
+                Devis devis = (Devis) query.uniqueResult();
+                id = devis.getDevid();
+                    break;
+                case "commande" :
+                Commande commande = (Commande) query.uniqueResult();
+                id = commande.getComid();
+                    break;
+            }
+            return id;
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
 }
