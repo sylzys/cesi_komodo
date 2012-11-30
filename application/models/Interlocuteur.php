@@ -34,6 +34,8 @@ class Application_Model_Interlocuteur  extends Application_Model_Element_Abstrac
     
     protected $_interdteadd;
     
+    protected $_interuniqid;
+    
     public function getInterdteadd() {
         return $this->_interdteadd;
     }
@@ -123,6 +125,15 @@ class Application_Model_Interlocuteur  extends Application_Model_Element_Abstrac
     public function setInterprenom($interprenom) {
 	$this->interprenom = $interprenom;
     }
+    public function getInteruniqid() {
+        return $this->_interuniqid;
+    }
+
+    public function setInteruniqid($interuniqid) {
+        $this->_interuniqid = $interuniqid;
+    }
+
+
 }
 
 ?>

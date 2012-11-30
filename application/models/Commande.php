@@ -15,6 +15,8 @@ class Application_Model_Commande extends Application_Model_Element_Abstract {
     protected $_comtitre;
     protected $_comdesc;
     protected $_utiid;
+    protected $_enqid;
+    protected $_comuniqid;
     
     public function getUtiid() {
         return $this->_utiid;
@@ -127,5 +129,22 @@ class Application_Model_Commande extends Application_Model_Element_Abstract {
         $this->_comsuppr = $comsuppr;
     }
     
+    public function getEnqid() {
+        return $this->_enqid;
+    }
+
+    public function setEnqid($enqid) {
+        $this->_enqid = $enqid;
+    }
+
+    public function getComuniqid() {
+        return $this->_comuniqid;
+    }
+
+    public function setComuniqid($comuniqid) {
+        $this->_comuniqid = $comuniqid;
+    }
+
+
 }
 ?>

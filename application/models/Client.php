@@ -28,6 +28,8 @@ class Application_Model_Client extends Application_Model_Element_Abstract {
     protected $_cliurltmp;
     protected $_clinaf;
     protected $_clisiren;
+    protected $_cliuniqid;
+    protected $_suivdosuniqid;
     
     public function getClisiret() {
         return $this->_clisiret;
@@ -235,6 +237,24 @@ class Application_Model_Client extends Application_Model_Element_Abstract {
     public function setClidteadd($clidteadd) {
         $this->_clidteadd = $clidteadd;
     }
+    
+    public function getCliuniqid() {
+        return $this->_cliuniqid;
+    }
+
+    public function setCliuniqid($cliuniqid) {
+        $this->_cliuniqid = $cliuniqid;
+    }
+
+    public function getSuivdosuniqid() {
+        return $this->_suivdosuniqid;
+    }
+
+    public function setSuivdosuniqid($suivdosuniqid) {
+        $this->_suivdosuniqid = $suivdosuniqid;
+    }
+
+
 }
 
 ?>

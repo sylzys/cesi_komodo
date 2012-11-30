@@ -8,6 +8,7 @@ class Application_Model_Agenda extends Application_Model_Element_Abstract {
     protected $_agefin;
     protected $_agelieu;
     protected $_agesuppr;
+    protected $_ageuniqid;
     
     public function getUtiid() {
         return $this->_utiid;
@@ -56,7 +57,14 @@ class Application_Model_Agenda extends Application_Model_Element_Abstract {
     public function setAgesuppr($agesuppr) {
         $this->_agesuppr = $agesuppr;
     }
+    
+    public function getAgeuniqid() {
+        return $this->_ageuniqid;
+    }
 
+    public function setAgeuniqid($ageuniqid) {
+        $this->_ageuniqid = $ageuniqid;
+    }
 
 
 
