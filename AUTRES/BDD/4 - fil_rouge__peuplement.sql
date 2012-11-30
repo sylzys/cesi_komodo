@@ -260,18 +260,19 @@ CLIACCES ,
 CLISUPPR,
 CLIDTELOG,
 CLIDTEADD,
-CLISIREN
+CLISIREN,
+CLIUNIQID
 )
 VALUES (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 'FRANCE', '0235458745', '0235458748', 'autoconstruct@outlook.com', '65z7841fr25', 55000, 'Paul Arthur', '100', 'client1', MD5( 'client1' ) , '1', false,'2012-03-14','2012-03-14', '784FDFFD54'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 'FRANCE', '0235458745', '0235458748', 'autoconstruct@outlook.com', '65z7841fr25', 55000, 'Paul Arthur', '100', 'client1', MD5( 'client1' ) , '1', false,'2012-03-14','2012-03-14', '784FDFFD54', 'gfdgdfgfd56454'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 'FRANCE', '0154789875', '0154789878', 'autord@outlook.com', '78r45125gt', 65478, 'Yves Dupont', '100', 'client2', MD5( 'client2' ) , '1', false,'2012-11-21','2012-03-14','SDSDQ5465465'
+nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 'FRANCE', '0154789875', '0154789878', 'autord@outlook.com', '78r45125gt', 65478, 'Yves Dupont', '100', 'client2', MD5( 'client2' ) , '1', false,'2012-11-21','2012-03-14','SDSDQ5465465','gfhgfh5464564fghgfh'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 'FRANCE', '0154789856', '0154789858', 'renot@outlook.com', '54dfd2155415', 78545, 'Dohn Carlos', '100', 'client3', MD5( 'client3' ) , '1', false,'2012-02-08','2012-03-14', 'JHJK564564'
+nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 'FRANCE', '0154789856', '0154789858', 'renot@outlook.com', '54dfd2155415', 78545, 'Dohn Carlos', '100', 'client3', MD5( 'client3' ) , '1', false,'2012-02-08','2012-03-14', 'JHJK564564','fdgfffffff2222222'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 'FRANCE', '0358745689', '0358745688', 'autosas@outlook.com', '4578dfre2145', 10005465, 'Jean Allezy', '100', 'client4', MD5( 'client4' ) , '1', false,'2012-09-17','2012-03-14','DZS54654'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 'FRANCE', '0358745689', '0358745688', 'autosas@outlook.com', '4578dfre2145', 10005465, 'Jean Allezy', '100', 'client4', MD5( 'client4' ) , '1', false,'2012-09-17','2012-03-14','DZS54654','gdfdfdsddd5545674'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 'FRANCE', '0254879852', '0254879858', 'prodsas@outlook.com', '75845fg5454', 6554654, 'Pierre Antoine', '100', 'client5', MD5( 'client5' ), '1', false,'2012-05-16','2012-03-14','ESDRZE56465'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 'FRANCE', '0254879852', '0254879858', 'prodsas@outlook.com', '75845fg5454', 6554654, 'Pierre Antoine', '100', 'client5', MD5( 'client5' ), '1', false,'2012-05-16','2012-03-14','ESDRZE56465','dgfdfgfdgfdgfdgfd'
 );
 
 INSERT INTO fournisseur (
@@ -304,28 +305,29 @@ INTERNOM ,
 INTERPRENOM ,
 INTERMAIL ,
 INTERTEL ,
-INTERSUPPR
+INTERSUPPR,
+INTERUNIQID
 )
 VALUES (
-nextval('interlocuteur_interid_seq'), '1', NULL, NULL , 'Lefevre', 'Harry', 'harrylevefre@gmail.com', '0665434321', false
+nextval('interlocuteur_interid_seq'), '1', NULL, NULL , 'Lefevre', 'Harry', 'harrylevefre@gmail.com', '0665434321', false, 'dsfdsfdsfdsf5456416'
 ), (
-nextval('interlocuteur_interid_seq'), '2', NULL, NULL , 'Fournier', 'Jean', 'jeanfournier@gmail.com', '0634231265', false
+nextval('interlocuteur_interid_seq'), '2', NULL, NULL , 'Fournier', 'Jean', 'jeanfournier@gmail.com', '0634231265', false, 'dsfdsfdsfdsfdsfdsfds'
 ), (
-nextval('interlocuteur_interid_seq'), NULL, 2 , '1', 'Jacques', 'Jean', 'jeanjacques@gmail.com', '0654678798', false
+nextval('interlocuteur_interid_seq'), NULL, 2 , '1', 'Jacques', 'Jean', 'jeanjacques@gmail.com', '0654678798', false, 'sddddddfggghghh525885'
 ), (
-nextval('interlocuteur_interid_seq'), NULL, 3 , '3', 'Marie', 'Anne', 'annemarie@gmail.com', '0676894523', false
+nextval('interlocuteur_interid_seq'), NULL, 3 , '3', 'Marie', 'Anne', 'annemarie@gmail.com', '0676894523', false, 'fdgfdgfgggggfddhghfgh'
 ), (
-nextval('interlocuteur_interid_seq'), NULL, 2 , '5', 'Claude', 'Jean', 'jeanclaude@gmail.com', '0623438756', false
+nextval('interlocuteur_interid_seq'), NULL, 2 , '5', 'Claude', 'Jean', 'jeanclaude@gmail.com', '0623438756', false, 'dfgfdgdfghfgdhgfhgfh'
 ), (
-nextval('interlocuteur_interid_seq'), '3', NULL , NULL, 'Paul', 'Dupres', 'pauldupres@gmail.com', '0685454548', false
+nextval('interlocuteur_interid_seq'), '3', NULL , NULL, 'Paul', 'Dupres', 'pauldupres@gmail.com', '0685454548', false, 'gdfdfgfdgghgfhgfhjhgj'
 ), (
-nextval('interlocuteur_interid_seq'), '4', NULL , NULL, 'Henry', 'Charles', 'henrycharles@gmail.com', '0652121417', false
+nextval('interlocuteur_interid_seq'), '4', NULL , NULL, 'Henry', 'Charles', 'henrycharles@gmail.com', '0652121417', false, 'fghfghssddsfgdhgfjhgjhh'
 ), (
-nextval('interlocuteur_interid_seq'), '5', NULL , NULL, 'Maxime', 'Dupond', 'maximedupond@gmail.com', '0687454578', false
+nextval('interlocuteur_interid_seq'), '5', NULL , NULL, 'Maxime', 'Dupond', 'maximedupond@gmail.com', '0687454578', false, 'gsqsqsdghkjjkkk'
 ),(
-nextval('interlocuteur_interid_seq'), NULL, NULL , '2', 'Antoine', 'Dumet', 'antoinedumet@gmail.com', '0676894523', false
+nextval('interlocuteur_interid_seq'), NULL, NULL , '2', 'Antoine', 'Dumet', 'antoinedumet@gmail.com', '0676894523', false, 'kjkkkkkkkkkkkk'
 ),(
-nextval('interlocuteur_interid_seq'), NULL, NULL , '4', 'Yves', 'paul', 'yvespaul@gmail.com', '0676894523', false
+nextval('interlocuteur_interid_seq'), NULL, NULL , '4', 'Yves', 'paul', 'yvespaul@gmail.com', '0676894523', false, 'gfsqsdgfhjklkjtr45456'
 );
 
 INSERT INTO chaine (
@@ -476,20 +478,21 @@ AGEFIN ,
 AGELIEU ,
 AGEDESC,
 AGEETAT,
-AGESUPPR
+AGESUPPR,
+AGEUNIQID
 )
 VALUES (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupont', '2012-03-28 16:00:00', '2012-03-28 17:00:00', 'Salle de reunion 1', 'Description du rendez-vous 1', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupont', '2012-03-28 16:00:00', '2012-03-28 17:00:00', 'Salle de reunion 1', 'Description du rendez-vous 1', false, false, '21245gfhgfhjghghgfh'
 ), (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Allezy', '2012-08-21 11:30:00', '2012-08-21 12:30:00', 'Salle de reunion 2', 'Description du rendez-vous 2', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Allezy', '2012-08-21 11:30:00', '2012-08-21 12:30:00', 'Salle de reunion 2', 'Description du rendez-vous 2', false, false, 'fcgghjhjhhj45564'
 ), (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupuis', '2012-04-14 14:30:00', '2012-04-14 16:30:00', 'Salle de reunion 3', 'Description du rendez-vous 3', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Dupuis', '2012-04-14 14:30:00', '2012-04-14 16:30:00', 'Salle de reunion 3', 'Description du rendez-vous 3', false, false, 'fhngfjhjhdsfgffhfgt54645'
 ), (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Duval', '2012-05-16 13:30:00', '2012-05-16 14:30:00', 'Salle de reunion 1', 'Description du rendez-vous 4', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Duval', '2012-05-16 13:30:00', '2012-05-16 14:30:00', 'Salle de reunion 1', 'Description du rendez-vous 4', false, false, 'dfghhjhjkjjk564654546'
 ), (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Jean', '2012-12-17 08:30:00', '2012-12-17 10:30:00', 'Salle de reunion 2', 'Description du rendez-vous 5', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Jean', '2012-12-17 08:30:00', '2012-12-17 10:30:00', 'Salle de reunion 2', 'Description du rendez-vous 5', false, false, 'fdhhjhjsddfghhj546546354'
 ), (
-nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Cover', '2012-10-22 10:30:00', '2012-10-22 17:30:00', 'Salle de reunion 3', 'Description du rendez-vous 6', false, false
+nextval('agenda_ageid_seq'), '1', 'Rendez-vous avec Mr Cover', '2012-10-22 10:30:00', '2012-10-22 17:30:00', 'Salle de reunion 3', 'Description du rendez-vous 6', false, false, 'dffghfghdsfdfgghfhj546546'
 );
 
 INSERT INTO alerte (
@@ -546,16 +549,17 @@ DEMANDETITRE,
 DEMANDEDESC,
 DEMANDEETAT ,
 DEMANDEDTEADD ,
-DEMANDESUPPR
+DEMANDESUPPR,
+DEMANDEUNIQID
 )
 VALUES (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 1', 'Description de la demande 1', 50, '2012-03-14', false
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 1', 'Description de la demande 1', 50, '2012-03-14', false, 'frdghgfhgjhjhfgdsgfh54654'
 ), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 2', 'Description de la demande 1', 50, '2012-03-15', false
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 2', 'Description de la demande 1', 50, '2012-03-15', false, 'dsgfdghfhjhjjh5465646'
 ), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 3', 'Description de la demande 1', 30, '2012-03-14', false
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 3', 'Description de la demande 1', 30, '2012-03-14', false, 'fgdhgfhgkjh456654'
 ), (
-nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 4', 'Description de la demande 1', 30, '2012-04-13', false
+nextval('demande_demandeid_seq'), 3, 1, 1, 'Titre de la demande 4', 'Description de la demande 1', 30, '2012-04-13', false, 'hjghfddsfdfgjh5654546546'
 );
 INSERT INTO devis (
 DEVID ,
@@ -566,18 +570,19 @@ DEVDESC,
 DEVETAT,
 DEVDATE ,
 DEVPRIX ,
-DEVSUPPR
+DEVSUPPR,
+DEVUNIQID
 )
 VALUES (
-nextval('devis_devid_seq'), 1, 3, 'Titre du devis 1', 'Description du devis 1', 50, '2012-03-08', '1900', false
+nextval('devis_devid_seq'), 1, 3, 'Titre du devis 1', 'Description du devis 1', 50, '2012-03-08', '1900', false, 'fdhgfghjhkhjk45654645'
 ), (
-nextval('devis_devid_seq'), 2, 3, 'Titre du devis 2', 'Description du devis 2', 20,  '2012-03-13', '20050', false
+nextval('devis_devid_seq'), 2, 3, 'Titre du devis 2', 'Description du devis 2', 20,  '2012-03-13', '20050', false, 'fdhhgfhjhhkjhkjkl54546546'
 ), (
-nextval('devis_devid_seq'), 3, 3, 'Titre du devis 3', 'Description du devis 3', 80,  '2012-03-20', '7654', false
+nextval('devis_devid_seq'), 3, 3, 'Titre du devis 3', 'Description du devis 3', 80,  '2012-03-20', '7654', false, 'fghjhgkjhjkhjk54664545645'
 ), (
-nextval('devis_devid_seq'), 1, 3, 'Titre du devis 4', 'Description du devis 4', 100,  '2012-03-04', '72630', false
+nextval('devis_devid_seq'), 1, 3, 'Titre du devis 4', 'Description du devis 4', 100,  '2012-03-04', '72630', false, 'fghjhfdsqdfsfgdfh456456'
 ), (
-nextval('devis_devid_seq'), 2, 3, 'Titre du devis 5', 'Description du devis 5', 0,  '2012-03-13', '2309', false
+nextval('devis_devid_seq'), 2, 3, 'Titre du devis 5', 'Description du devis 5', 0,  '2012-03-13', '2309', false, 'fgfhkjksdqdsgfhhgkjlk4564'
 );
 
 INSERT INTO devnom (
@@ -613,16 +618,17 @@ COMETAT ,
 COMPRODDEB ,
 COMPRODFIN ,
 COMPRIX ,
-COMSUPPR
+COMSUPPR,
+COMUNIQID
 )
 VALUES (
-nextval('commande_comid_seq'), 3, 1, 'Titre commande 1', 'Description commande 1', '2012-03-14', '2012-03-16', '80', '2012-03-14', NULL , '2309', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 1', 'Description commande 1', '2012-03-14', '2012-03-16', '80', '2012-03-14', NULL , '2309', false, 'dfghhgjhjhkjl456456'
 ), (
-nextval('commande_comid_seq'), 3, 1, 'Titre commande 2', 'Description commande 2', '2012-03-15', '2012-03-31', '10', '2012-03-15', NULL , '70987', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 2', 'Description commande 2', '2012-03-15', '2012-03-31', '10', '2012-03-15', NULL , '70987', false, 'gfhkiumpopopopoopo54566'
 ), (
-nextval('commande_comid_seq'), 3, 1, 'Titre commande 3', 'Description commande 3', '2012-03-14', '2012-04-02', '100', '2012-03-14', '2012-04-01', '26543', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 3', 'Description commande 3', '2012-03-14', '2012-04-02', '100', '2012-03-14', '2012-04-01', '26543', false, 'zqsezzarertyrytru5254'
 ), (
-nextval('commande_comid_seq'), 3, 1, 'Titre commande 4', 'Description commande 4', '2012-04-13', '2012-04-14', '100', '2012-04-13', '2012-04-14', '346543', false
+nextval('commande_comid_seq'), 3, 1, 'Titre commande 4', 'Description commande 4', '2012-04-13', '2012-04-14', '100', '2012-04-13', '2012-04-14', '346543', false, 'rhyghfwgjghkjhjk45646'
 );
 
 INSERT INTO comnom (
@@ -660,40 +666,41 @@ DEVID ,
 UTIID ,
 SUIVDOSDATE ,
 SUIVDOSCOM ,
-SUIVIDOSSUPPR
+SUIVIDOSSUPPR,
+SUIVDOSUNIQID
 )
 VALUES (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-15', 'Commentaire 1 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-15', 'Commentaire 1 au sujet de la commande numero 1', false, 'gffhjgjhkhjkljl45646'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-16', 'Commentaire 2 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-16', 'Commentaire 2 au sujet de la commande numero 1', false, 'zzaezetrretrteyret45656'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-17', 'Commentaire 3 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-17', 'Commentaire 3 au sujet de la commande numero 1', false, 'dfghjhjkjhkjhkl456456'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-18', 'Commentaire 4 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-18', 'Commentaire 4 au sujet de la commande numero 1', false, 'gfdhgfjghkjljklmm5664'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-14', 'Commentaire 5 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-14', 'Commentaire 5 au sujet de la commande numero 1', false, 'dfsqdsqqsdfgshgf546645'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-15', 'Commentaire 6 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-15', 'Commentaire 6 au sujet de la commande numero 1', false, 'fhjhgjhkjhklj546546'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-16', 'Commentaire 7 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-16', 'Commentaire 7 au sujet de la commande numero 1', false, 'gfhhjjhkjklkjl54456'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-19', 'Commentaire 8 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-19', 'Commentaire 8 au sujet de la commande numero 1', false, 'gfhhytrytryurt546546'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-20', 'Commentaire 9 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-20', 'Commentaire 9 au sujet de la commande numero 1', false, 'hgfhjgkjhjk456456'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-21', 'Commentaire 10 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-03-21', 'Commentaire 10 au sujet de la commande numero 1', false, 'ghhgujhgkijhjk546456'
 ), (
-nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-05-17', 'Commentaire 11 au sujet de la commande numero 1', false
+nextval('suivdossier_suivdosid_seq'), '1', '3', NULL , '1' , '2012-05-17', 'Commentaire 11 au sujet de la commande numero 1', false, 'tyutrutyuyt45645654'
 ), (
-nextval('suivdossier_suivdosid_seq'), NULL , '1', '3', NULL , '2012-03-15', 'Commentaire suite au devis numero 3', false
+nextval('suivdossier_suivdosid_seq'), NULL , '1', '3', NULL , '2012-03-15', 'Commentaire suite au devis numero 3', false, 'fdghfguuyuytuytuuytuyt'
 ), (
-nextval('suivdossier_suivdosid_seq'), '2', '4' , NULL , '1', '2012-03-15', 'Commentaire de l''utilisateur numero 1 pour la commande numero 2', false
+nextval('suivdossier_suivdosid_seq'), '2', '4' , NULL , '1', '2012-03-15', 'Commentaire de l''utilisateur numero 1 pour la commande numero 2', false, '456gfdghfhfhgfhgfh'
 ), (
-nextval('suivdossier_suivdosid_seq'), NULL , '2' , '3', '5', '2012-03-16', 'Commentaire de l''utilisateur numero 5 pour le devis numero 3', false
+nextval('suivdossier_suivdosid_seq'), NULL , '2' , '3', '5', '2012-03-16', 'Commentaire de l''utilisateur numero 5 pour le devis numero 3', false, '7788787fdsfgdgfghgfh'
 ), (
-nextval('suivdossier_suivdosid_seq'), '3', '5', NULL , '5', '2012-03-23', 'Commande', false
+nextval('suivdossier_suivdosid_seq'), '3', '5', NULL , '5', '2012-03-23', 'Commande', false, '54645dfghgfhgfhgfhgfh'
 ), (
-nextval('suivdossier_suivdosid_seq'), '4', '4', NULL , '5', '2012-03-23', 'Commande', false
+nextval('suivdossier_suivdosid_seq'), '4', '4', NULL , '5', '2012-03-23', 'Commande', false, 'fdgdfhggfhjhkjljkmkl54654'
 );
 
 INSERT INTO production (
@@ -772,16 +779,17 @@ ENQINT,
 ENQDESC,
 ENQPOS,
 ENQTYPE,
-ENQSUPPR
+ENQSUPPR,
+ENQUNIQID
 )
 VALUES (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos1', 10, '2012-12-05', '564dffd', 'Description de l''enquete 1',  false, true, false
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos1', 10, '2012-12-05', '564dffd', 'Description de l''enquete 1',  false, true, false, 'fhfgjhgjhgjhg45656'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos2', 45, '2012-11-20', 'fgdsfg54', 'Description de l''enquete 2',  false, false, false
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos2', 45, '2012-11-20', 'fgdsfg54', 'Description de l''enquete 2',  false, false, false, 'gfjhkjhlkjl546546'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos3', 100, '2012-10-14', 'ghg56', 'Description de l''enquete 3',  false, true, false
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos3', 100, '2012-10-14', 'ghg56', 'Description de l''enquete 3',  false, true, false, 'ghjhkhkjl45645645654'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos4', 50, '2012-09-04', 'hgjh8512', 'Description de l''enquete 4',  false, false, false
+nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos4', 50, '2012-09-04', 'hgjh8512', 'Description de l''enquete 4',  false, false, false, 'jhkjhkljljklmk45651654'
 );
 
 INSERT INTO profAction (

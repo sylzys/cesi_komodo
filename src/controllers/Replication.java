@@ -70,6 +70,52 @@ public class Replication extends Thread {
         commd.add("-p"); // port du serveur de bdd
         commd.add("5432");
         commd.add("-Fc"); // recreer toutes les TABLES pour backup
+        commd.add("-t");
+        commd.add("utilisateur");
+        commd.add("-t");
+        commd.add("fournisseur");
+        commd.add("-t");
+        commd.add("client");
+        commd.add("-t");
+        commd.add("interlocuteur");
+        commd.add("-t");
+        commd.add("unite");
+        commd.add("-t");
+        commd.add("matiere");
+        commd.add("-t");
+        commd.add("nomenclature"); 
+        commd.add("-t");
+        commd.add("agenda");
+        commd.add("-t");
+        commd.add("enquete");
+        commd.add("-t");
+        commd.add("demande");
+        commd.add("-t");
+        commd.add("devis");
+        commd.add("-t");
+        commd.add("devnom");
+        commd.add("-t");
+        commd.add("commande");
+        commd.add("-t");
+        commd.add("comnom");
+        commd.add("-t");
+        commd.add("cmdmat");
+        commd.add("-t");
+        commd.add("nommat");
+        commd.add("-t");
+        commd.add("suivdossier");
+        commd.add("-t");
+        commd.add("client_comm");
+        commd.add("-t");
+        commd.add("detailcommande");
+        commd.add("-t");
+        commd.add("detaildevis");
+        commd.add("-t");
+        commd.add("detailsdemande");
+        commd.add("-t");
+        commd.add("getalerte");
+        commd.add("-t");
+        commd.add("listnom");
         commd.add("-U"); // utilisateur
         commd.add("cesi");
         commd.add("-f"); // fichier

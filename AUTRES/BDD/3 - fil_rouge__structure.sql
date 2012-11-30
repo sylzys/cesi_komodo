@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  30/11/2012 15:03:42                      */
+/* Date de création :  30/11/2012 21:42:26                      */
 /*==============================================================*/
 
 
@@ -904,7 +904,7 @@ create table SUIVDOSSIER (
    SUIVDOSDATE          DATE                 null,
    SUIVDOSCOM           VARCHAR(1000)        null,
    SUIVIDOSSUPPR        BOOL                 null,
-   SUIVDOSUNIQID        VARCHAR(1)           null,
+   SUIVDOSUNIQID        VARCHAR(500)         null,
    constraint PK_SUIVDOSSIER primary key (SUIVDOSID)
 );
 
