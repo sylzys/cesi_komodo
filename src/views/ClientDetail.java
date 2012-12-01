@@ -369,6 +369,9 @@ public class ClientDetail extends KContainer {
         // reporting.setBackground(Color.J);
         reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
         reporting.setPreferredSize(new Dimension(120, 40));
+        ReportView rv = new ReportView();
+        JPanel pnlreport = rv.initPanel(cli);
+        reporting.add(pnlreport, BorderLayout.CENTER);
         bottom.add(reporting);
         bottom.add(Box.createVerticalStrut(10));
 

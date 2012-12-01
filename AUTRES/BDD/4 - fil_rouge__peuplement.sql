@@ -783,13 +783,13 @@ ENQSUPPR,
 ENQUNIQID
 )
 VALUES (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos1', 10, '2012-12-05', '564dffd', 'Description de l''enquete 1',  false, true, false, 'fhfgjhgjhgjhg45656'
+nextval('enquete_enqid_seq'), 1, 3 , 'Enqdos1', 10, '2012-12-05', '564dffd', 'Description de l''enquete 1',  false, true, false, 'fhfgjhgjhgjhg45656'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos2', 45, '2012-11-20', 'fgdsfg54', 'Description de l''enquete 2',  false, false, false, 'gfjhkjhlkjl546546'
+nextval('enquete_enqid_seq'), 1, 3 , 'Enqdos2', 45, '2012-11-20', 'fgdsfg54', 'Description de l''enquete 2',  false, false, false, 'gfjhkjhlkjl546546'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos3', 100, '2012-10-14', 'ghg56', 'Description de l''enquete 3',  false, true, false, 'ghjhkhkjl45645645654'
+nextval('enquete_enqid_seq'), 1, 3 , 'Enqdos3', 100, '2012-10-14', 'ghg56', 'Description de l''enquete 3',  false, true, false, 'ghjhkhkjl45645645654'
 ), (
-nextval('enquete_enqid_seq'), 1, 1 , 'Enqdos4', 50, '2012-09-04', 'hgjh8512', 'Description de l''enquete 4',  false, false, false, 'jhkjhkljljklmk45651654'
+nextval('enquete_enqid_seq'), 1, 3 , 'Enqdos4', 50, '2012-09-04', 'hgjh8512', 'Description de l''enquete 4',  false, false, false, 'jhkjhkljljklmk45651654'
 );
 
 INSERT INTO profAction (

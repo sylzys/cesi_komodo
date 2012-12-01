@@ -31,5 +31,7 @@
   <mapping class="models.Nommat"/>
   <mapping class="models.Matiere"/>
   <mapping class="models.Unite"/>
+  <mapping class="models.Enquete"/>
+  <mapping class="models.GetReporting"/>
 </session-factory>
 </hibernate-configuration>

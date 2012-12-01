@@ -115,6 +115,8 @@ public class Replication extends Thread {
         commd.add("-t");
         commd.add("getalerte");
         commd.add("-t");
+        commd.add("getreporting");
+        commd.add("-t");
         commd.add("listnom");
         commd.add("-U"); // utilisateur
         commd.add("cesi");
