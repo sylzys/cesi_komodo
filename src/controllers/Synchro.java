@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import com.google.gdata.data.ExtensionDescription;
 import instances.ClientInstance;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
@@ -390,5 +391,104 @@ public class Synchro {
             System.out.println(e.getMessage());
             return 0;
         }
+    }
+    public boolean chkobject(String uniqid, String objName)
+    {
+         //List les fichiers du dossier
+        File file = new File(path);
+        File[] files = file.listFiles();
+        //Parcours le dossier
+        for (int i = 0; i < files.length; i++) {
+             String[] decoup = files[i].getName().split("_");
+             String model = decoup[0];
+            //Si le nom correspond au nom de l'objet
+            if (model.equals(objName)) {
+                ArrayList<Object> obj = objDeserializable(files[i].getName());
+                String nameobj = obj.get(0).getClass().getName();
+                switch(nameobj)
+                {
+                    case "models.Interlocuteur":
+                        Interlocuteur inter = (Interlocuteur)obj.get(0);
+                        String interuniqid = inter.getInteruniqid();
+                        if(uniqid.equals(interuniqid))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                   case "models.Client":
+                   Client cli = (Client)obj.get(0);
+                   String cliuniqid = cli.getCliuniqid();
+                   if(uniqid.equals(cliuniqid))
+                   {
+                       return true;
+                   }
+                   else
+                   {
+                       break;
+                   }
+                   default:
+                        return false;
+                }
+            }
+        }
+        if(objName.equals("models.Client"))
+        {
+            boolean chk = chkother(uniqid);
+            return chk;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean chkother(String uniqid)
+    {
+         //List les fichiers du dossier
+        File file = new File(path);
+        File[] files = file.listFiles();
+        //Parcours le dossier
+        for (int i = 0; i < files.length; i++) {
+            ArrayList<Object> obj = objDeserializable(files[i].getName());
+            String nameobj = obj.get(0).getClass().getName();
+            int cliid = 0;
+            switch(nameobj)
+            {
+                case "models.Demande":
+                    Demande dmd = (Demande)obj.get(0);
+                    cliid = dmd.getCliid();
+                    break;   
+                default:
+                if(nameobj.equals("models.Devis")||nameobj.equals("models.Commande"))
+                {
+                    int interid = 0;
+                    switch(nameobj)
+                    {
+                        case "models.Devis":
+                            Devis devis = (Devis)obj.get(0);
+                            interid = devis.getInterid();
+                            break;
+                        case "models.Commande": 
+                            Commande cmd = (Commande)obj.get(0);
+                            interid = cmd.getInterid();
+                            break;
+                    }
+                    HibernateConnection connection = HibernateConnection.getInstance();
+                    Query query = connection.getSession().createQuery("from Interlocuteur where interid = :interid");
+                    query.setParameter("interid",interid);
+                    Interlocuteur inter = (Interlocuteur)query.uniqueResult();
+                    cliid = inter.getCliid();
+                }
+
+                String cliuniqid = uniqueid(cliid, "Client", "cliid");
+                if(cliuniqid.equals(uniqid))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

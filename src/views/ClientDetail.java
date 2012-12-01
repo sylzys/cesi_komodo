@@ -7,6 +7,7 @@ package views;
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
 import classes.Uniqid;
+import controllers.Synchro;
 import controllers.TableDispatcher;
 import controllers.getDemandeInfos;
 import controllers.getInterlocuteurInfos;
@@ -74,6 +75,7 @@ public class ClientDetail extends KContainer {
 
     //@Override
     protected void initPanel() {
+        Synchro sync = new Synchro();
         BackgroundPanel content = new BackgroundPanel(),
                 top = new BackgroundPanel(),
                 bottom = new BackgroundPanel();
@@ -94,7 +96,7 @@ public class ClientDetail extends KContainer {
                 validateCmd = new JButton("Rechercher");
 
         content.setLayout(new BorderLayout());
-        content.setPreferredSize(new Dimension(1000, 768));
+        content.setPreferredSize(new Dimension(1000, 712));
         this.panel.add(content);
 
         //DB CONNECTION
@@ -112,7 +114,7 @@ public class ClientDetail extends KContainer {
 
         top.setLayout(new BorderLayout());
 
-        cliDetail.setPreferredSize(new Dimension(780, 150));
+        cliDetail.setPreferredSize(new Dimension(780, 165));
 
         //ajout des Listeners sur les boutons
         addContact.addActionListener(new addContactListener());
@@ -165,8 +167,16 @@ public class ClientDetail extends KContainer {
         hh.put("cliid", cli_id);
         hh.put("intersuppr", false);
         inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
+        boolean chkinter = false;
         for (final Interlocuteur in : inter)
         {
+            if(HibernateConnection.online == true)
+            {
+                if(chkinter != true)
+                {
+                    chkinter = sync.chkobject(in.getInteruniqid(), "models.Interlocuteur");
+                }
+            }
             LinkLabelData LblInter = new LinkLabelData(in.getInterprenom() + " " + in.getInternom(), in.getInterid());
             LblInter.setIcon(new ImageIcon("ressources/images/eye.gif"));
 
@@ -296,10 +306,23 @@ public class ClientDetail extends KContainer {
                 }
             }
         });
-
         JPanel name_ste = new JPanel();
         name_ste.setPreferredSize(new Dimension(100, 20));
         name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
+        if(HibernateConnection.online == true)
+        {
+            HibernateConnection.openConnectionBisOff();
+            boolean chkcli = sync.chkobject(cli.getCliuniqid(), "models.Client");
+            if(chkcli == true || chkinter == true)
+            {
+                name_ste.setPreferredSize(new Dimension(100, 40));
+                JLabel lblsync = new JLabel();
+                lblsync.setPreferredSize(new Dimension(780, 15));
+                lblsync.setText("<html><p color=red>Attention: ce client est en attente de synchronisation, toutes nouvelles modifications pourraient être perdues.</p></html>");
+                name_ste.add(lblsync);
+            }
+            HibernateConnection.closeConnectionBis();
+        }
         name_ste.add(new JLabel("<html><b>" + cli.getClinom() + "</b> - </html>"));
         name_ste.add(LblSte);
         name_ste.add(new JLabel(" - "));
@@ -317,17 +340,18 @@ public class ClientDetail extends KContainer {
         //suivi satisfaction
         JPanel suivi_satisfaction = new JPanel();
         suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-        suivi_satisfaction.setPreferredSize(new Dimension(120, 50));
+        suivi_satisfaction.setPreferredSize(new Dimension(120, 40));
         bottom.add(suivi_satisfaction);
-        bottom.add(Box.createVerticalStrut(10));
+        //bottom.add(Box.createVerticalStrut(10));
 
         //alertes
         JPanel alertes = new JPanel();
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
-        alertes.setPreferredSize(new Dimension(120, 50));
+        alertes.setPreferredSize(new Dimension(120, 40));
         // lisye alertes
         TableDispatcher cp = new TableDispatcher();
         alertes.add(cp.showtable(ModelesTables.ALERTE, this.cli_id), BorderLayout.NORTH);
+        cp.setPreferredSize(new Dimension(100, 20));
         // bouton voir tout
         JButton btn_view_alertes = new JButton("Voir toutes les alertes");
         btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -338,13 +362,13 @@ public class ClientDetail extends KContainer {
         });
         alertes.add(btn_view_alertes, BorderLayout.SOUTH);
         bottom.add(alertes);
-        bottom.add(Box.createVerticalStrut(10));
+        //bottom.add(Box.createVerticalStrut(10));
 
         //Reporting
         JPanel reporting = new JPanel();
         // reporting.setBackground(Color.J);
         reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
-        reporting.setPreferredSize(new Dimension(120, 50));
+        reporting.setPreferredSize(new Dimension(120, 40));
         bottom.add(reporting);
         bottom.add(Box.createVerticalStrut(10));
 
