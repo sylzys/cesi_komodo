@@ -80,11 +80,11 @@ public class DetailDevis {
     @Column(name="intersuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean intersuppr ;
     
-    @Column(name="suivdosid", columnDefinition="INTEGER", nullable=true)
-    private int suivdosid ;
-    
-    @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
-    private boolean suividossuppr ;
+//    @Column(name="suivdosid", columnDefinition="INTEGER", nullable=true)
+//    private int suivdosid ;
+//    
+//    @Column(name="suividossuppr", columnDefinition="BOOLEAN", nullable=true)
+//    private boolean suividossuppr ;
 
     public int getComid() {
         return comid;
@@ -270,21 +270,21 @@ public class DetailDevis {
         this.intersuppr = intersuppr;
     }
 
-    public int getSuivdosid() {
-        return suivdosid;
-    }
-
-    public void setSuivdosid(int suivdosid) {
-        this.suivdosid = suivdosid;
-    }
-
-    public boolean isSuividossuppr() {
-        return suividossuppr;
-    }
-
-    public void setSuividossuppr(boolean suividossupp) {
-        this.suividossuppr = suividossupp;
-    }
+//    public int getSuivdosid() {
+//        return suivdosid;
+//    }
+//
+//    public void setSuivdosid(int suivdosid) {
+//        this.suivdosid = suivdosid;
+//    }
+//
+//    public boolean isSuividossuppr() {
+//        return suividossuppr;
+//    }
+//
+//    public void setSuividossuppr(boolean suividossupp) {
+//        this.suividossuppr = suividossupp;
+//    }
     
     
 }

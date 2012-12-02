@@ -12,12 +12,19 @@ u.utiid, u.utinom, u.utiprenom, u.utisuppr
 FROM commande AS c , client AS l , interlocuteur AS i , utilisateur AS u , demande AS d
 WHERE c.interid = i.interid AND c.demandeid = d.demandeid AND d.cliid = l.cliid AND d.utiid = u.utiid;
 
+CREATE OR REPLACE VIEW detaildevis AS 
+SELECT d.devid, d.devdate, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
+l.clilogin,  l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel, i.intersuppr
+FROM devis d, client l, interlocuteur i
+WHERE d.interid = i.interid AND i.cliid = l.cliid;
 
+/*
 CREATE OR REPLACE VIEW detaildevis AS 
 SELECT d.devid, d.devdate, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
 l.clilogin,  l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel, i.intersuppr, s.suivdosid, s.suividossuppr
 FROM devis d, client l, suivdossier s, interlocuteur i
 WHERE d.devid = s.devid AND s.interid = i.interid AND i.cliid = l.cliid;
+*/
 
 CREATE OR REPLACE VIEW calcultempsnom AS 
 SELECT c.comid, c.comqte, n.nomid, n.nomtemps FROM comnom c, nomenclature n WHERE c.nomid = n.nomid;

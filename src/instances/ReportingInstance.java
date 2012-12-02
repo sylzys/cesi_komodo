@@ -146,4 +146,19 @@ public class ReportingInstance {
             return false;
         }
     }
+    public int nbOcc(int id, String table, String champs)
+    {
+        try {
+        HibernateConnection connection = HibernateConnection.getInstance();
+        Query query = connection.getSession().createSQLQuery("SELECT COUNT(*) FROM "+table+" WHERE "+champs+"=:"+champs+"");
+        query.setParameter(champs, id);
+        int nb = Integer.parseInt(query.uniqueResult().toString());
+        return nb;
+        }
+        catch(HibernateException e)
+        {
+            System.out.println(e.getMessage());
+            return 0;
+        }
+    }
 }

@@ -4,6 +4,7 @@
  */
 package views;
 
+import instances.ReportingInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -45,6 +46,10 @@ public class ReportView extends JPanel{
     }
     public JPanel initPanel(Client cli)
     {
+        ReportingInstance ri = ReportingInstance.getInstance(); 
+        int nbdmd = ri.nbOcc(cli.getCliid(), "DetailsDemande", "cliid");
+        int nbdvi = ri.nbOcc(cli.getCliid(), "DetailDevis", "cliid");
+        int nbcmd = ri.nbOcc(cli.getCliid(), "DetailCommande", "cliid");
         pnlinfos.setPreferredSize(new Dimension(200, 150));      
         pnlcenter.setPreferredSize(new Dimension(680, 150));      
         pnltopcenter.setPreferredSize(new Dimension(675, 20));
@@ -69,7 +74,9 @@ public class ReportView extends JPanel{
         imgicon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         imgdetail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         pnltopwest.add(lblinfos);
-        pnlmiddlewest.add(new JLabel("<html><p color=green><b>Infos :</b></p></html>"), BorderLayout.CENTER);
+        pnlmiddlewest.add(new JLabel("<html><p color=green><b>Nb. Demande(s) : "+nbdmd+"</b></p></html>"));
+        pnlmiddlewest.add(new JLabel("<html><p color=green><b>Nb. Devis(s) : "+nbdvi+"</b></p></html>"));
+        pnlmiddlewest.add(new JLabel("<html><p color=green><b>Nb. Commande(s) : "+nbcmd+"</b></p></html>"));
         pnlinfos.add(pnltopwest, BorderLayout.NORTH);
         pnlinfos.add(pnlmiddlewest, BorderLayout.CENTER);
         
