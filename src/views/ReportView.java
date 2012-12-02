@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.GetReporting;
+import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 /**
  *
@@ -120,7 +121,12 @@ public class ReportView extends JPanel{
                 {
                    imgstt.setIcon(new ImageIcon("ressources/images/fleche_rouge.png"));
                 }
+                String enqdetail = grp.getEnqdesc();
                 String enqdesc = grp.getEnqdesc();
+                if(enqdesc.length() > 26)
+                {
+                    enqdesc = enqdesc.substring(0, 26);
+                }
                 String enqtitle = grp.getEnqint();
                 SimpleDateFormat  simpleFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String enqdte = simpleFormat.format(grp.getEnqdte());
@@ -133,6 +139,7 @@ public class ReportView extends JPanel{
                 lbltitle.setPreferredSize(new Dimension(85, 20));
                 lbldesc.setFont(fontdesc);
                 lbldesc.setText("<html><p>"+enqdesc+" (...)</p></html>");
+                lbldesc.setToolTipText(enqdetail);
                 lbldesc.setPreferredSize(new Dimension(165, 20));
                 lbldte.setFont(fontdte);
                 lbldte.setText("<html><p>"+enqdte+"</p></html>");
@@ -155,7 +162,7 @@ public class ReportView extends JPanel{
         
         pnlcenterbutton.add(imgdetail);
         
-        pnlgraph.add(new JLabel("<html><p color=green><b>Graphique :</b></p></html>"), BorderLayout.NORTH);
+        pnlgraph.add(new JLabel("<html><p color=green><b></b></p></html>"), BorderLayout.NORTH);
         pnlbutton.add(pnltopbutton, BorderLayout.NORTH);
         pnlbutton.add(pnlcenterbutton, BorderLayout.CENTER);
         pnlcontent.add(pnlinfos, BorderLayout.WEST);
