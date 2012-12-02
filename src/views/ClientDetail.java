@@ -340,14 +340,14 @@ public class ClientDetail extends KContainer {
         //suivi satisfaction
         JPanel suivi_satisfaction = new JPanel();
         suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-        suivi_satisfaction.setPreferredSize(new Dimension(120, 40));
+        suivi_satisfaction.setPreferredSize(new Dimension(120, 15));
         bottom.add(suivi_satisfaction);
         //bottom.add(Box.createVerticalStrut(10));
 
         //alertes
         JPanel alertes = new JPanel();
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
-        alertes.setPreferredSize(new Dimension(120, 40));
+        alertes.setPreferredSize(new Dimension(120, 45));
         // lisye alertes
         TableDispatcher cp = new TableDispatcher();
         alertes.add(cp.showtable(ModelesTables.ALERTE, this.cli_id), BorderLayout.NORTH);
@@ -367,8 +367,8 @@ public class ClientDetail extends KContainer {
         //Reporting
         JPanel reporting = new JPanel();
         // reporting.setBackground(Color.J);
-        reporting.setBorder(BorderFactory.createTitledBorder("Reporting"));
-        reporting.setPreferredSize(new Dimension(120, 40));
+        reporting.setBorder(BorderFactory.createTitledBorder("Rapports"));
+        reporting.setPreferredSize(new Dimension(120, 80));
         ReportView rv = new ReportView();
         JPanel pnlreport = rv.initPanel(cli);
         reporting.add(pnlreport, BorderLayout.CENTER);

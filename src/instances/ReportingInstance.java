@@ -19,7 +19,8 @@ public class ReportingInstance {
     private static ReportingInstance instance;
     private List<GetReporting> lstreport;
     private String where;
-    private Hashtable h;
+    int limit;
+    private int id;
     private Enquete enq;
 
     /**
@@ -43,9 +44,10 @@ public class ReportingInstance {
         return instance;
     }
 
-    public synchronized List<GetReporting> GetReporting(String where, Hashtable h) {
+    public synchronized List<GetReporting> GetReporting(String where, int id, int limit) {
         this.where = where;
-        this.h = h;
+        this.id = id;
+        this.limit = limit;
         slctbdd();
         return lstreport;
     }
@@ -64,26 +66,23 @@ public class ReportingInstance {
         {
             lstreport.clear();
         }
-
         HibernateConnection connection = HibernateConnection.getInstance();
         String sql = "from getreporting ";
         if (!where.isEmpty())
         {
-            sql += where;
+            sql += "where " + where +"=:"+where;
         }
-
+        sql += " ORDER BY enqdte DESC";
         try
         {
             Query query = connection.getSession().createQuery(sql);
-            if (!h.isEmpty())
+            if (id != -1)
             {
-                Set<String> set = h.keySet();
-                Iterator<String> itr = set.iterator();
-                while (itr.hasNext())
-                {
-                    String str = itr.next();
-                    query.setParameter(str, h.get(str));
-                }
+               query.setParameter(where, id);
+            }
+            if(limit != -1)
+            {
+                query.setMaxResults(limit);
             }
             this.lstreport = query.list();
         }
