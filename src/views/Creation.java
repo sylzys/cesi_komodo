@@ -78,8 +78,8 @@ public class Creation extends KContainer {
             lbl_clisiren = new JLabel("SIREN *"),
             lbl_clisiret = new JLabel("SIRET"),
             lbl_clica = new JLabel("Chiffre d'Affaire");
-private ClientInstance cli_inst = ClientInstance.getInstance();
-private  CurrentDatas cur_dat = CurrentDatas.getInstance();
+    private ClientInstance cli_inst = ClientInstance.getInstance();
+    private CurrentDatas cur_dat = CurrentDatas.getInstance();
 
     public Creation(UserActif user) {
         super();
@@ -102,6 +102,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         //nom.setBackground(Color.WHITE);
         nom.setLayout(new FlowLayout());
         nom.add(lbl_clinom);
+        lbl_clinom.setPreferredSize(new Dimension(100, 30));
         cli_nom.setAlignmentX(Box.RIGHT_ALIGNMENT);
         cli_nom.setPreferredSize(new Dimension(200, 30));
         nom.add(cli_nom);
@@ -111,6 +112,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel addr = new JPanel();
         //addr.setBackground(Color.WHITE);
         addr.setLayout(new FlowLayout());
+        lbl_cliadd.setPreferredSize(new Dimension(100, 30));
         addr.add(lbl_cliadd);
         cli_add.setPreferredSize(new Dimension(200, 30));
         cli_add.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -120,6 +122,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel cp = new JPanel();
         // cp.setBackground(Color.WHITE);
         cp.setLayout(new FlowLayout());
+        lbl_clicp.setPreferredSize(new Dimension(100, 30));
         cp.add(lbl_clicp);
         cli_cp.setPreferredSize(new Dimension(200, 30));
         cli_cp.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -129,6 +132,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel ville = new JPanel();
         // cp.setBackground(Color.WHITE);
         ville.setLayout(new FlowLayout());
+        lbl_cliville.setPreferredSize(new Dimension(100, 30));
         ville.add(lbl_cliville);
         cli_ville.setPreferredSize(new Dimension(200, 30));
         cli_ville.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -139,6 +143,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel tel = new JPanel();
         //tel.setBackground(Color.WHITE);
         tel.setLayout(new FlowLayout());
+        lbl_clitel.setPreferredSize(new Dimension(100, 30));
         tel.add(lbl_clitel);
         cli_tel.setPreferredSize(new Dimension(200, 30));
         cli_tel.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -148,6 +153,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel fax = new JPanel();
         // fax.setBackground(Color.WHITE);
         fax.setLayout(new FlowLayout());
+        lbl_clifax.setPreferredSize(new Dimension(100, 30));
         fax.add(lbl_clifax);
         cli_fax.setPreferredSize(new Dimension(200, 30));
         cli_fax.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -158,6 +164,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel mail = new JPanel();
         // mail.setBackground(Color.WHITE);
         mail.setLayout(new FlowLayout());
+        lbl_climail.setPreferredSize(new Dimension(100, 30));
         mail.add(lbl_climail);
         cli_mail.setPreferredSize(new Dimension(200, 30));
         cli_mail.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -167,6 +174,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel web = new JPanel();
         // web.setBackground(Color.WHITE);
         web.setLayout(new FlowLayout());
+        lbl_clisite.setPreferredSize(new Dimension(100, 30));
         web.add(lbl_clisite);
         cli_site.setPreferredSize(new Dimension(200, 30));
         cli_site.setAlignmentX(Box.RIGHT_ALIGNMENT);
@@ -182,6 +190,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel dir = new JPanel();
         //   dir.setBackground(Color.WHITE);
         dir.setLayout(new FlowLayout());
+        lbl_clidir.setPreferredSize(new Dimension(100, 30));
         dir.add(lbl_clidir);
         cli_dir.setAlignmentX(Box.LEFT_ALIGNMENT);
         cli_dir.setPreferredSize(new Dimension(200, 30));
@@ -192,6 +201,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel naf = new JPanel();
         //  naf.setBackground(Color.WHITE);
         naf.setLayout(new FlowLayout());
+        lbl_clinaf.setPreferredSize(new Dimension(100, 30));
         naf.add(lbl_clinaf);
         cli_naf.setPreferredSize(new Dimension(200, 30));
         cli_naf.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -201,6 +211,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel act = new JPanel();
         // act.setBackground(Color.WHITE);
         act.setLayout(new FlowLayout());
+        lbl_cliact.setPreferredSize(new Dimension(100, 30));
         act.add(lbl_cliact);
         cli_act.setPreferredSize(new Dimension(200, 30));
         cli_act.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -211,6 +222,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel siren = new JPanel();
         // siren.setBackground(Color.WHITE);
         siren.setLayout(new FlowLayout());
+        lbl_clisiren.setPreferredSize(new Dimension(100, 30));
         siren.add(lbl_clisiren);
         cli_siren.setPreferredSize(new Dimension(200, 30));
         cli_siren.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -220,6 +232,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel siret = new JPanel();
         //   siret.setBackground(Color.WHITE);
         siret.setLayout(new FlowLayout());
+        lbl_clisiret.setPreferredSize(new Dimension(100, 30));
         siret.add(lbl_clisiret);
         cli_siret.setPreferredSize(new Dimension(200, 30));
         cli_siret.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -230,6 +243,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         JPanel ca = new JPanel();
         // ca.setBackground(Color.WHITE);
         ca.setLayout(new FlowLayout());
+        lbl_clica.setPreferredSize(new Dimension(100, 30));
         ca.add(lbl_clica);
         cli_ca.setPreferredSize(new Dimension(200, 30));
         cli_ca.setAlignmentX(Box.LEFT_ALIGNMENT);
@@ -297,34 +311,34 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         cli.setClidteadd(Calendar.getInstance().getTime());
         Uniqid uniqid = new Uniqid(user);
         cli.setCliuniqid(uniqid.getUniqid());
-        
+
         if (!Strings.isNullOrEmpty(cli_ca.getText()) && !cli_ca.getText().trim().isEmpty())
         {
             cli.setClica(Integer.parseInt(cli_ca.getText()));
         }
         String uuid = (UUID.randomUUID().toString()).replace("-", "");
-       // System.out.println("uuid = " + uuid);
+        // System.out.println("uuid = " + uuid);
         cli.setCliurltmp(uuid);
         Random rand = new Random(System.currentTimeMillis());
         int randomNum = rand.nextInt(66666 - 11111 + 1) + 11111;
-        cli.setClilogin("client_"+Integer.toString(randomNum));
+        cli.setClilogin("client_" + Integer.toString(randomNum));
 //        SendEmail send = new SendEmail();
         cli_inst.setClient(cli);
         //inserer client
         Boolean is_ok = cli_inst.ajouterDansBaseDeDonnees();
         String str = is_ok ? "L'ajout du client a été effectué" : "L'ajout du client a échoué";
-        String msg = "<html>Cher client,\n\n"+
-                "Afin de pouvoir suivre vos commandes chez Plast'Prod, voici votre login:<b>"+
-                cli.getClilogin()+"</b>\n\nPour finaliser la création de votre accès, merce de créer votre mot"+
-                "de passe en vous rendant à l'adresse ci-dessous:\n\nhttp://cesi2/dev/client/register/?login="+cli.getClilogin()+"&url="+cli.getCliurltmp()+
-                "\n\nCordialement,\n\nL'équipe Plast'Prod</html>";
+        String msg = "<html>Cher client,\n\n"
+                + "Afin de pouvoir suivre vos commandes chez Plast'Prod, voici votre login:<b>"
+                + cli.getClilogin() + "</b>\n\nPour finaliser la création de votre accès, merce de créer votre mot"
+                + "de passe en vous rendant à l'adresse ci-dessous:\n\nhttp://cesi2/dev/client/register/?login=" + cli.getClilogin() + "&url=" + cli.getCliurltmp()
+                + "\n\nCordialement,\n\nL'équipe Plast'Prod</html>";
         SendEmail send = new SendEmail(msg, "Votre accès à l'interface client Plast'Prod", cli_mail.getText());
         JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.INFORMATION_MESSAGE);
         HibernateConnection connection = HibernateConnection.getInstance();
         Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
         int last_value = ((BigInteger) query.uniqueResult()).intValue();
 
-        
+
         if (HibernateConnection.online == false)
         {
             HibernateConnection.newConnect(false);
@@ -333,7 +347,7 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         {
             HibernateConnection.newConnect(true);
         }
-       
+
         cur_dat.setSoc_id(last_value);
         ClientDetail cd = new ClientDetail(last_value);
         cd.addInterlocuteur(last_value);
@@ -353,6 +367,17 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         {
             str += "<html>Le champ <i>CP</i> ne peut être vide<br />";
         }
+        else
+        {
+            try
+            {
+                double d = Double.parseDouble(cli_cp.getText());
+            }
+            catch (NumberFormatException nfe)
+            {
+                str += "<html>Le champ <i>CP</i> doit être une valeur numérique<br />";
+            }
+        }
         if (Strings.isNullOrEmpty(cli_ville.getText()) || cli_ville.getText().trim().isEmpty())
         {
             str += "<html>Le champ <i>Ville</i> ne peut être vide<br />";
@@ -365,9 +390,11 @@ private  CurrentDatas cur_dat = CurrentDatas.getInstance();
         {
             str += "<html>Le champ <i>Email</i> ne peut être vide<br />";
         }
-        else {
-             EmailValidator ev = new EmailValidator();
-            if (!ev.validate(cli_mail.getText())){
+        else
+        {
+            EmailValidator ev = new EmailValidator();
+            if (!ev.validate(cli_mail.getText()))
+            {
                 str += "<html>L'adresse <i>Email</i> est invalide<br />";
             }
         }

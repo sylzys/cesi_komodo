@@ -18,7 +18,7 @@ public class loginDialog extends JDialog {
 
     public loginDialog(JFrame parent, String title, boolean modal) {
         super(parent, title, modal);
-        this.setSize(650, 300);
+        this.setSize(450, 300);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -43,7 +43,7 @@ public class loginDialog extends JDialog {
         //Le nom
         JPanel panInfos = new JPanel();
         panInfos.setBackground(Color.white);
-        panInfos.setPreferredSize(new Dimension(320, 100));
+        panInfos.setPreferredSize(new Dimension(220, 100));
         panInfos.setBorder(BorderFactory.createLineBorder(Color.black));
         login = new JTextField();
         login.setPreferredSize(new Dimension(150, 25));
