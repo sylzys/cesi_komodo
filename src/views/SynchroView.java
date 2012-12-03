@@ -134,6 +134,7 @@ public class SynchroView extends KContainer {
                  LabelData lblimg = new LabelData(i, ht2);
                  lblimg.setIcon(new ImageIcon("ressources/images/delete.png"));
                  lblimg.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                 lblimg.setToolTipText("Supprimer l'action");
                  chkbox.setSelected(true);
                  listchk.add(chkbox);
                  listlbl.add(lblimg);
