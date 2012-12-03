@@ -166,6 +166,7 @@ public class Recherche extends KContainer {
         panelListSearch.add(new JLabel(""));
         
         //scroller.add(panelListSearch);
+        scroller.setPreferredSize(new Dimension(750,540));
         scroller.setViewportView(panelListSearch);
         global.add(scroller,BorderLayout.CENTER);
 
@@ -184,9 +185,8 @@ public class Recherche extends KContainer {
     private void search(String query)
     {
         panelListSearch.removeAll();
-        panelListSearch.revalidate();  
-       
-        scroller.setViewportView(panelListSearch);
+        panelListSearch.revalidate();         
+        
         if(!query.isEmpty())
         {
             
@@ -205,7 +205,7 @@ public class Recherche extends KContainer {
                     panelCom.add(new JLabel("Commande n°"+ com.getComid()+""));               
                     //panelCom.setBackground(Color.WHITE);
                     panelCom.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-                    panelCom.setPreferredSize(new Dimension(750,100));
+                    panelCom.setPreferredSize(new Dimension(700,100));
                     JLabel comLabel = new JLabel();
                     comLabel.setText("Titre : " + com.getComtitre());
                     panelCom.add(comLabel);
@@ -218,13 +218,17 @@ public class Recherche extends KContainer {
                         }
                     });
                     panelCom.add(btnGoToCmd);
-                    panelListSearch.add(panelCom,BorderLayout.CENTER);
+                    JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelCom,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
             if(rbDevis.isSelected())
             {
-                List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE devid =" +query).addEntity(models.Devis.class).list();        
+                List<models.Devis>list = session.createSQLQuery("SELECT * From devis WHERE upper(devtitre) LIKE '%" +query+ "%'").addEntity(models.Devis.class).list();        
                 models.Devis devis = null;
                 JPanel panelDevis = null;
                 for (int i = 0; i < list.size(); i++) {
@@ -232,7 +236,8 @@ public class Recherche extends KContainer {
                     devis = list.get(i);
                     panelDevis = new JPanel();
                     panelDevis.add(new JLabel("Devis n°"+ devis.getDevid()+""));               
-                    panelDevis.setBackground(Color.WHITE);
+                   // panelDevis.setBackground(Color.WHITE);
+                    panelDevis.setBorder(javax.swing.BorderFactory.createEtchedBorder());
                     panelDevis.setPreferredSize(new Dimension(750,100));
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Prix: " + devis.getDevprix());
@@ -246,7 +251,11 @@ public class Recherche extends KContainer {
                         }
                     });
                     panelDevis.add(btnGoToCmd);
-                    panelListSearch.add(panelDevis,BorderLayout.CENTER);             
+                    JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelDevis,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);                   
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
@@ -260,7 +269,7 @@ public class Recherche extends KContainer {
                     client = list.get(i);
                     panelClient = new JPanel();
                     panelClient.add(new JLabel("Client n°"+ client.getCliid()+""));               
-                    panelClient.setBackground(Color.WHITE);
+                   // panelClient.setBackground(Color.WHITE);
                     panelClient.setPreferredSize(new Dimension(750,100));
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Nom: " + client.getClinom());
@@ -274,7 +283,11 @@ public class Recherche extends KContainer {
                         }
                     });
                     panelClient.add(btnGoToCmd);
-                    panelListSearch.add(panelClient,BorderLayout.CENTER);             
+                    JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelClient,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);             
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
@@ -288,7 +301,7 @@ public class Recherche extends KContainer {
                     client = list.get(i);
                     panelClient = new JPanel();
                     panelClient.add(new JLabel("Client n°"+ client.getCliid()+""));               
-                    panelClient.setBackground(Color.WHITE);
+                    //panelClient.setBackground(Color.WHITE);
                     panelClient.setPreferredSize(new Dimension(750,100));
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Nom: " + client.getClinom());
@@ -302,7 +315,11 @@ public class Recherche extends KContainer {
                         }
                     });                    
                     panelClient.add(btnGoToCmd);
-                    panelListSearch.add(panelClient,BorderLayout.CENTER);             
+                    JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelClient,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);       
                 }
             }
             if(rbNomenclature.isSelected())
@@ -316,7 +333,7 @@ public class Recherche extends KContainer {
                     nomen = list.get(i);
                     panelNom = new JPanel();
                     panelNom.add(new JLabel("Nomclature n°"+ nomen.getNomid()+""));               
-                    panelNom.setBackground(Color.WHITE);
+                    //panelNom.setBackground(Color.WHITE);
                     panelNom.setPreferredSize(new Dimension(750,100));
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Description: " + nomen.getNomdes());
@@ -330,7 +347,11 @@ public class Recherche extends KContainer {
                         }
                     });
                     panelNom.add(btnGoToCmd);
-                    panelListSearch.add(panelNom,BorderLayout.CENTER);             
+                    JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelNom,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);            
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
@@ -344,7 +365,7 @@ public class Recherche extends KContainer {
                     demande = list.get(i);
                     panelDem = new JPanel();
                     panelDem.add(new JLabel("Demande n°"+ demande.getDemandeid()+""));               
-                    panelDem.setBackground(Color.WHITE);
+                    //panelDem.setBackground(Color.WHITE);
                     panelDem.setPreferredSize(new Dimension(750,100));
                     JLabel nomLabel = new JLabel();
                     nomLabel.setText("Titre" + demande.getDemandetitre());
@@ -358,7 +379,11 @@ public class Recherche extends KContainer {
                         }
                     });
                     panelDem.add(btnGoToCmd);
-                    panelListSearch.add(panelDem,BorderLayout.CENTER);             
+                     JPanel box = new JPanel();
+                    box.setPreferredSize(new Dimension(750,10));
+                    box.setBackground(new java.awt.Color(255, 255, 255));
+                    panelListSearch.add(panelDem,BorderLayout.SOUTH);
+                    panelListSearch.add(box,BorderLayout.SOUTH);            
                 }
                 Fenetre.getInstance().RenewContener(panel);
             }
@@ -372,8 +397,8 @@ public class Recherche extends KContainer {
         {
             panelListSearch.add(new JLabel("Veuillez saisir un mot pour la recherche"),BorderLayout.CENTER);
         }
-        Fenetre.getInstance().RenewContener(panel);
-      
+        scroller.setViewportView(panelListSearch);
+        Fenetre.getInstance().RenewContener(panel);      
     }
 
 //    private List<Commande> search(String query)
