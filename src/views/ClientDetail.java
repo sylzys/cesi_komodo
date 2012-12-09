@@ -494,7 +494,7 @@ public class ClientDetail extends KContainer {
 
         getInterlocuteurInfos interInfos = addInter.showZDialog(cli_id);
 
-        if ("N/A" != interInfos.toString())
+        if ("<html>" != interInfos.toString() && "" != interInfos.toString())
         {
             CurrentDatas cd = CurrentDatas.getInstance();
             String[] infos = interInfos.toString().split("#-#");

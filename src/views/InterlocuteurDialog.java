@@ -1,6 +1,8 @@
 package views;
 
 import classes.WhitePanel;
+import com.google.common.base.Strings;
+import controllers.EmailValidator;
 import controllers.getInterlocuteurInfos;
 import instances.InterlocuteurInstance;
 import java.awt.BorderLayout;
@@ -66,22 +68,23 @@ public class InterlocuteurDialog extends JDialog {
         mail = new JTextField();
         mail.setPreferredSize(new Dimension(250, 25));
         panInfos.setBorder(BorderFactory.createTitledBorder("Informations interlocuteur"));
+        panInfos.add(new JLabel("<html>Les champs suivis d'une * sont obligatoires</br></br></html>"));
         WhitePanel name = new WhitePanel();
         name.setLayout(new FlowLayout());
         name.setBackground(Color.white);
-        name.add(new JLabel("Nom :"));
+        name.add(new JLabel("Nom : *"));
         name.add(nom);
 
         WhitePanel firstname = new WhitePanel();
         firstname.setBackground(Color.white);
         firstname.setLayout(new FlowLayout());
-        firstname.add(new JLabel("Prénom :"));
+        firstname.add(new JLabel("Prénom : *"));
         firstname.add(prenom);
 
         WhitePanel phone = new WhitePanel();
         phone.setLayout(new FlowLayout());
         phone.setBackground(Color.white);
-        phone.add(new JLabel("Tel :"));
+        phone.add(new JLabel("Tel : *"));
         phone.add(tel);
 
         WhitePanel Fax = new WhitePanel();
@@ -93,7 +96,7 @@ public class InterlocuteurDialog extends JDialog {
         WhitePanel email = new WhitePanel();
         email.setLayout(new FlowLayout());
         email.setBackground(Color.white);
-        email.add(new JLabel("Email :"));
+        email.add(new JLabel("Email : *"));
         email.add(mail);
 
         WhitePanel modif = new WhitePanel();
@@ -200,16 +203,25 @@ public class InterlocuteurDialog extends JDialog {
             }
             else
             {
-                for (Interlocuteur in : inter)
+                String str = check_fields();
+                if (str == "")
                 {
-                    in.setInternom(nom.getText());
-                    in.setInterprenom(prenom.getText());
-                    in.setIntertel(tel.getText());
-                    in.setIntermail(mail.getText());
-                    interInstance.updaterBaseDeDonnees(in);
+                    for (Interlocuteur in : inter)
+                    {
+                        in.setInternom(nom.getText());
+                        in.setInterprenom(prenom.getText());
+                        in.setIntertel(tel.getText());
+                        in.setIntermail(mail.getText());
+                        interInstance.updaterBaseDeDonnees(in);
+                    }
+                    disable_all();
+                    btn_modif.setText("Modifier");
                 }
-                disable_all();
-                btn_modif.setText("Modifier");
+                else
+                {
+                    JOptionPane.showMessageDialog(null, str, "Attention", JOptionPane.WARNING_MESSAGE);
+                }
+                ;
             }
         }
     }
@@ -232,5 +244,38 @@ public class InterlocuteurDialog extends JDialog {
             }
             btn_modif.setText("Modifier");
         }
+    }
+
+    private String check_fields() {
+        String str = "";
+        if (Strings.isNullOrEmpty(nom.getText()) || nom.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Nom</i> ne peut être vide<br />";
+        }
+       if (Strings.isNullOrEmpty(prenom.getText()) || prenom.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Prénom</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(tel.getText()) || tel.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Téléphone</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(mail.getText()) || mail.getText().trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Email</i> ne peut être vide<br />";
+        }
+        else
+        {
+            EmailValidator ev = new EmailValidator();
+            if (!ev.validate(mail.getText()))
+            {
+                str += "<html>L'adresse <i>Email</i> est invalide<br />";
+            }
+        }
+        if (!Strings.isNullOrEmpty(str))
+        {
+            str += "</html>";
+        }
+        return str;
     }
 }

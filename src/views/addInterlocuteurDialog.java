@@ -120,9 +120,9 @@ public class addInterlocuteurDialog extends JDialog {
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 zInfo = new getInterlocuteurInfos(nom.getText(), prenom.getText(), tel.getText(), mail.getText());
-                if (!zInfo.is_ok())
+                if (!("".equals(zInfo.is_ok())))
                 {
-                    JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, zInfo.is_ok(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {

@@ -1,5 +1,7 @@
 package controllers;
 
+import com.google.common.base.Strings;
+
 public class getInterlocuteurInfos {
 
     private String nom, prenom, tel, fax, mail;
@@ -18,23 +20,52 @@ public class getInterlocuteurInfos {
     }
 
     public String toString() {
-        String str;
-        if (this.cancel)
+        String str = "";
+
+        if (!this.cancel)
         {
-            str = "N/A";
-        }
-        else
-        {
-            str = this.nom + "#-#" + this.prenom + "#-#" + this.tel + "#-#" + this.mail;
+            if (is_ok() != "")
+            {
+
+                str = this.nom + "#-#" + this.prenom + "#-#" + this.tel + "#-#" + this.mail;
+            }
+            else {
+                str = is_ok();
+            }
         }
         return str;
     }
 
-    public Boolean is_ok() {
-        if (this.nom.isEmpty() || this.prenom.isEmpty() || this.tel.isEmpty() || this.mail.isEmpty())
+    public String is_ok() {
+        String str = "";
+        if (Strings.isNullOrEmpty(this.nom) || this.nom.trim().isEmpty())
         {
-            return false;
+            str += "<html>Le champ <i>Nom</i> ne peut être vide<br />";
         }
-        return true;
+        if (Strings.isNullOrEmpty(this.prenom) || this.prenom.trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Prénom</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(this.tel) || this.tel.trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Téléphone</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(this.mail) || this.mail.trim().isEmpty())
+        {
+            str += "<html>Le champ <i>Email</i> ne peut être vide<br />";
+        }
+        else
+        {
+            EmailValidator ev = new EmailValidator();
+            if (!ev.validate(this.mail))
+            {
+                str += "<html>L'adresse <i>Email</i> est invalide<br />";
+            }
+        }
+        if (!Strings.isNullOrEmpty(str))
+        {
+            str += "</html>";
+        }
+        return str;
     }
 }
