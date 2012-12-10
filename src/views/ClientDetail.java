@@ -493,8 +493,8 @@ public class ClientDetail extends KContainer {
         addInterlocuteurDialog addInter = new addInterlocuteurDialog(null, "Ajouter un interlocuteur", true, cli_id);
 
         getInterlocuteurInfos interInfos = addInter.showZDialog(cli_id);
-
-        if ("<html>" != interInfos.toString() && "" != interInfos.toString())
+        System.out.println((interInfos.toString()).substring(0, 5));
+        if (!"ERROR".equals(interInfos.toString().substring(0, 5)))
         {
             CurrentDatas cd = CurrentDatas.getInstance();
             String[] infos = interInfos.toString().split("#-#");

@@ -247,7 +247,7 @@ public class InterlocuteurDialog extends JDialog {
     }
 
     private String check_fields() {
-        String str = "";
+        String str = "<html>";
         if (Strings.isNullOrEmpty(nom.getText()) || nom.getText().trim().isEmpty())
         {
             str += "<html>Le champ <i>Nom</i> ne peut être vide<br />";

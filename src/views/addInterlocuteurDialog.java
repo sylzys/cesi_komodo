@@ -120,9 +120,9 @@ public class addInterlocuteurDialog extends JDialog {
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 zInfo = new getInterlocuteurInfos(nom.getText(), prenom.getText(), tel.getText(), mail.getText());
-                if (!("".equals(zInfo.is_ok())))
+                if (!zInfo.is_ok())
                 {
-                    JOptionPane.showMessageDialog(null, zInfo.is_ok(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, zInfo.getStr(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
                 else
                 {
