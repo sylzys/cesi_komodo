@@ -152,8 +152,28 @@ public class TableDispatcher extends JPanel {
                  
                 break;
            case ALERTE:
-               table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-               break;
+               // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(800, 110));
+                // on definit l'index de la colonne et la largeur sohaitée
+                colIndex = 0;
+                colWidth = 150;
+                col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                colIndex2 = 1;
+                colWidth2 = 125;
+                col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                colIndex3 = 2;
+                colWidth3 = 80;
+                col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                colIndex4 = 3;
+                colWidth4 = 445;
+                col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
+                break;
             
         }
         
