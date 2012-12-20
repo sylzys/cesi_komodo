@@ -6,6 +6,7 @@ final class Application_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abs
     protected $_acl;
     protected $_authPage;
     protected $_cliPage;
+    protected $_cliPageRegister;
     protected $_errorPage;
     protected $_request;
 
@@ -15,6 +16,7 @@ final class Application_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abs
             'user' => array('module' => 'default', 'controller' => 'Login', 'action' => 'loginuser')
         );
         $this->_cliPage = array('module' => 'default', 'controller' => 'clientinternet', 'action' => 'index');
+        $this->_cliPageRegister = array('module' => 'default', 'controller' => 'clientinternet', 'action' => 'register');
         $this->_errorPage = array('module' => 'default', 'controller' => 'error', 'action' => 'denied');
         
         $this->_auth = Zend_Auth::getInstance();
@@ -40,7 +42,12 @@ final class Application_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abs
         $action = $this->_request->getActionName();
         if (in_array($controller, array('clientinternet', 'login')) && isset($this->getAuth()->getIdentity()->cliid)) {
             return;
+        } elseif (!isset($this->getAuth()->getIdentity()->cliid) && $controller == "clientinternet" && $action == "register") {
+            // on est pas logged, on accepte de passer par la page register
+            //$this->redirectClientRegister();
+            return;
         } elseif (isset($this->getAuth()->getIdentity()->cliid) && !in_array($controller, array('clientinternet', 'login'))) {
+            // on est logged on redirige vers la page par defaut
             $this->redirectClient();
             return;
         }
@@ -88,6 +95,12 @@ final class Application_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abs
         $this->_request->setModuleName($this->_cliPage['module']);
         $this->_request->setControllerName($this->_cliPage['controller']);
         $this->_request->setActionName($this->_cliPage['action']);
+    }
+    
+    public function redirectClientRegister() {
+        $this->_request->setModuleName($this->_cliPageRegister['module']);
+        $this->_request->setControllerName($this->_cliPageRegister['controller']);
+        $this->_request->setActionName($this->_cliPageRegister['action']);
     }
  
 }
