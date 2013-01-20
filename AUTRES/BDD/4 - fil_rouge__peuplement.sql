@@ -178,12 +178,12 @@ UTIDTELOG,
 UTISUPPR
 )
 VALUES 
-(nextval('utilisateur_utiid_seq'), 'Administrateur', 'admin' , 'admin', MD5( 'admin' ) , 'admin@plastprod.fr', '0654637643','2012-12-05', false), 
-(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', MD5( 'com1' ) , 'commercial1@plastprod.fr', '0689764365','2012-11-25', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', MD5( 'com2' ) , 'commercial2@plastprod.fr', '0689344365','2012-10-15', false),
-(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', MD5( 'com3' ) , 'commercial3@plastprod.fr', '0689762315','2012-12-08', false),
-(nextval('utilisateur_utiid_seq'), 'Stock', 'stock' , 'stock', MD5( 'stock' ) , 'stock@plastprod.fr', '066543643','2012-12-12', false),
-(nextval('utilisateur_utiid_seq'), 'Production', 'prod' , 'prod', MD5( 'prod' ) , 'prod@plastprod.fr', '0676543465','2012-11-24', false);
+(nextval('utilisateur_utiid_seq'), 'Administrateur', 'admin' , 'admin', '$2a$08$AORLWKJ2s.RNF3Zvl7EGHe7wfQLeeiWDgkgVTnxoR5KO95OssKnsa' , 'admin@plastprod.fr', '0654637643','2012-12-05', false), 
+(nextval('utilisateur_utiid_seq'), 'Commercial 1', 'com' , 'com1', '$2a$08$/Rr8I66W884D1NfmrKnVSeWPVKtGmzLuhX0ZnJEZDAeC9Mpq0CyAW' , 'commercial1@plastprod.fr', '0689764365','2012-11-25', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 2', 'com' , 'com2', '$2a$08$EJvshdF8HOuwYuhdoRXvJ.Ix39Pg6zwwSw0dx7K4iX1mTZ.6Q2cRO' , 'commercial2@plastprod.fr', '0689344365','2012-10-15', false),
+(nextval('utilisateur_utiid_seq'), 'Commercial 3', 'com' , 'com3', '$2a$08$hpaXp0/Qfzu5GnfoqjbDM.dqZYx0z4660JCtrHjpUl5.loGyMs1PG' , 'commercial3@plastprod.fr', '0689762315','2012-12-08', false),
+(nextval('utilisateur_utiid_seq'), 'Stock', 'stock' , 'stock','$2a$08$W64Nftix7keyS/xWzBpNCeMIGadMMJSr9zob2MJgoVBgT2NLDnWUm' , 'stock@plastprod.fr', '066543643','2012-12-12', false),
+(nextval('utilisateur_utiid_seq'), 'Production', 'prod' , 'prod', '$2a$08$Q/oQuFTVBk9PzuJu1BFA3O1R8p1DjWqtLfh/CptQpy.ueS71MPSyW' , 'prod@plastprod.fr', '0676543465','2012-11-24', false);
 
 /*
 INSERT INTO fonction (
