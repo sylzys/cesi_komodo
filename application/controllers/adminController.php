@@ -170,7 +170,10 @@ class adminController extends Zend_Controller_Action
         $o_Utilisateur = new Application_Model_Utilisateur();
         $o_Utilisateur->setUtilogin($result['login']);
         $o_Utilisateur->setUtimail($result['email']);
-        $o_Utilisateur->setUtimdp(md5($result['passwd']));
+        // generation hash bcrypt
+        $bcrypt = new Application_Controller_Plugin_Bcrypt();
+        $hash = $bcrypt->HashPassword($result['passwd']);
+        $o_Utilisateur->setUtimdp($hash);
         $o_Utilisateur->setUtinom($result['lastname']);
         $o_Utilisateur->setUtiprenom($result['firstname']);
         $o_Utilisateur->setUtitel($result['tel']);
@@ -201,7 +204,9 @@ class adminController extends Zend_Controller_Action
         $o_Utilisateur->setUtilogin($result['login']);
         $o_Utilisateur->setUtimail($result['email']);
         if ($result['passwd'] != '') {
-            $o_Utilisateur->setUtimdp(md5($result['passwd']));
+            $bcrypt = new Application_Controller_Plugin_Bcrypt();
+            $hash = $bcrypt->HashPassword($result['passwd']);
+            $o_Utilisateur->setUtimdp($hash);
         }
         $o_Utilisateur->setUtinom($result['lastname']);
         $o_Utilisateur->setUtiprenom($result['firstname']);
