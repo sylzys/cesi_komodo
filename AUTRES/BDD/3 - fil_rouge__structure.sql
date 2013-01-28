@@ -975,7 +975,7 @@ create table UTILISATEUR (
    UTINOM               VARCHAR(50)          null,
    UTIPRENOM            VARCHAR(50)          null,
    UTILOGIN             VARCHAR(50)          null,
-   UTIMDP               VARCHAR(32)          null,
+   UTIMDP               CHAR(60) 	         null,
    UTIMAIL              VARCHAR(50)          null,
    UTITEL               VARCHAR(20)          null,
    UTISUPPR             BOOL                 null,
