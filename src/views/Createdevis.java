@@ -5,6 +5,7 @@
 package views;
 
 import classes.Uniqid;
+import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.DevisInstance;
 import models.Demande;
@@ -12,6 +13,7 @@ import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,10 +31,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
 import models.Devis;
+import models.ModelesTables;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import models.Suivdossier;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -59,9 +63,13 @@ public class Createdevis extends KContainer {
 
     @Override
     protected void initPanel() {
+        JPanel content = new JPanel();
+        content.setLayout(new FlowLayout());
+        content.setPreferredSize(new Dimension(1000, 750));
+                
         JPanel ab1 = new JPanel();
-        ab1.setLayout(new BoxLayout(ab1, BoxLayout.LINE_AXIS));
-        ab1.setPreferredSize(new Dimension(200, 20));
+        ab1.setPreferredSize(new Dimension(650, 750));
+        ab1.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
 
         JButton button = new JButton();
         JTextField jTextField1 = new javax.swing.JTextField();
@@ -112,9 +120,6 @@ public class Createdevis extends KContainer {
         ab4.setPreferredSize(new Dimension(200, 50));
 
 
-        JPanel content = new JPanel();
-        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
-        content.setPreferredSize(new Dimension(500, 180));
         content.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
 
         JButton retour = new JButton("Annuler");
@@ -127,14 +132,30 @@ public class Createdevis extends KContainer {
 
         button.setText("Ajouter");
         jLabel3.setPreferredSize(new Dimension(200, 20));
-        content.add(title);
+        
+        
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setBorder(new EmptyBorder(0, 0, 10, 0));
+        Font f = new Font("Euphemia", Font.PLAIN, 22);
+        title.setFont(f);
+        title.setPreferredSize(new Dimension(1000, 40));
+
+        JLabel icon = new JLabel(new ImageIcon("ressources/images/newdevis.jpg"));
+               
+        TableDispatcher ld = new TableDispatcher();
+        ld.setBackground(Color.white);
+        ld.setPreferredSize(new Dimension(240, 140));
+   //     ab1.add(ld.showtable(ModelesTables.NOMENCLATURELIST, dvis.getDevid()), BorderLayout.CENTER);
+        
+        ab1.add(icon);
+        ab1.add(title);
+        ab1.add(b1);
+        ab1.add(ab2);
+        ab1.add(b2);
+        ab1.add(ab3);
+        ab1.add(ab4);
+        ab1.add(jLabel3);
         content.add(ab1);
-        content.add(b1);
-        content.add(ab2);
-        content.add(b2);
-        content.add(ab3);
-        content.add(ab4);
-        content.add(jLabel3);
 
 
         button.addActionListener(new java.awt.event.ActionListener() {
@@ -144,18 +165,11 @@ public class Createdevis extends KContainer {
             }
         });
 
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setBorder(new EmptyBorder(0, 0, 10, 0));
-        Font f = new Font("Euphemia", Font.PLAIN, 22);
-        title.setFont(f);
-        title.setPreferredSize(new Dimension(1000, 40));
-
-        JLabel icon = new JLabel(new ImageIcon("ressources/images/newdevis.jpg"));
 
 
 
-        this.panel.add(icon, BorderLayout.PAGE_START);
-        this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
+   //     this.panel.add(icon, BorderLayout.PAGE_START);
+  //      this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
         this.panel.add(content, BorderLayout.PAGE_END);
 
     }
