@@ -17,6 +17,7 @@ import models.Demande;
 import models.Devis;
 import models.ModelesTables;
 import tableModels.AlerteClientModel;
+import tableModels.AllnomenclaturelistModel;
 import tableModels.ClientCommModel;
 import tableModels.CommandeModel;
 import tableModels.DemandeModel;
@@ -63,6 +64,9 @@ public class TableDispatcher extends JPanel {
                 break;
             case NOMENCLATURELIST:
                 model = new NomenclaturelistModel(id);
+                break;
+            case ALLNOMENCLATURELIST:
+                model = new AllnomenclaturelistModel();
                 break;
             case ALERTE:
                 model = new AlerteClientModel(id);
@@ -150,6 +154,26 @@ public class TableDispatcher extends JPanel {
                  col3 = table.getColumnModel().getColumn(colIndex3);         
                 col3.setPreferredWidth(colWidth3);
                  
+                break;     
+           case ALLNOMENCLATURELIST:
+                // Desactive la taille automatique des colonnes
+                table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                // Fixe la dimension du tableau
+                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                // on definit l'index de la colonne et la largeur sohaitée
+                 colIndex = 0;
+                 colWidth = 80;
+                 col = table.getColumnModel().getColumn(colIndex);         
+                col.setPreferredWidth(colWidth);
+                 colIndex2 = 1;
+                 colWidth2 = 120;
+                 col2 = table.getColumnModel().getColumn(colIndex2);         
+                col2.setPreferredWidth(colWidth2);
+                 colIndex3 = 2;
+                 colWidth3 = 40;
+                 col3 = table.getColumnModel().getColumn(colIndex3);         
+                col3.setPreferredWidth(colWidth3);
+                 
                 break;
            case ALERTE:
                // Desactive la taille automatique des colonnes
@@ -215,6 +239,8 @@ public class TableDispatcher extends JPanel {
                             DevisDetail devislist = new DevisDetail((Integer) tm.getValueAt(row, 999));
                             Fenetre fen2 = Fenetre.getInstance();
                             fen2.RenewContener(devislist.getPanel());
+                            break;
+                        case ALLNOMENCLATURELIST:
                             break;
                         case NOMENCLATURELIST:
                             break;

@@ -145,7 +145,7 @@ public class Createdevis extends KContainer {
         TableDispatcher ld = new TableDispatcher();
         ld.setBackground(Color.white);
         ld.setPreferredSize(new Dimension(240, 140));
-   //     ab1.add(ld.showtable(ModelesTables.NOMENCLATURELIST, dvis.getDevid()), BorderLayout.CENTER);
+        content.add(ld.showtable(ModelesTables.ALLNOMENCLATURELIST, 5), BorderLayout.CENTER);
         
         ab1.add(icon);
         ab1.add(title);
@@ -165,11 +165,6 @@ public class Createdevis extends KContainer {
             }
         });
 
-
-
-
-   //     this.panel.add(icon, BorderLayout.PAGE_START);
-  //      this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
         this.panel.add(content, BorderLayout.PAGE_END);
 
     }
