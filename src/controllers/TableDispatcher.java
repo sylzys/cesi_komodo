@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -26,6 +27,7 @@ import tableModels.DevisModel;
 import tableModels.NomenclaturelistModel;
 import views.ClientDetail;
 import views.CommandeDetail;
+import views.Createdevis;
 import views.DemandeDetail;
 import views.DevisDetail;
 import views.Fenetre;
@@ -239,8 +241,6 @@ public class TableDispatcher extends JPanel {
                             DevisDetail devislist = new DevisDetail((Integer) tm.getValueAt(row, 999));
                             Fenetre fen2 = Fenetre.getInstance();
                             fen2.RenewContener(devislist.getPanel());
-                            break;
-                        case ALLNOMENCLATURELIST:
                             break;
                         case NOMENCLATURELIST:
                             break;
