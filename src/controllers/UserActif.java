@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import classes.BCrypt;
 import java.util.Date;
 import java.util.List;
 import instances.HibernateConnection;
@@ -20,25 +21,25 @@ public class UserActif {
     int id;
     Date lastLogin;
     boolean deleted;
+    private Boolean _userExists;
     
     public UserActif(String login) {
         this.login = login;
+        this._userExists = false;
         GetActiveUser();
     }
 
     public UserActif(String login, String pass) {
         this.login = login;
         this.pass = pass;
+        this._userExists = false;
         GetActiveUser();
     }
 
-    public boolean verify(String pass) {
-        //admin / admin
-        if (pass.equals(this.pass)) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean verify(String passwd) {
+        //String hashed = BCrypt.hashpw(pass, BCrypt.gensalt(8));
+        System.out.println(passwd + ":::" + this.pass);
+        return BCrypt.checkpw(passwd, this.pass);
     }
      
     private void GetActiveUser() {
@@ -57,10 +58,15 @@ public class UserActif {
                     this.setDeleted(uti.getUtisuppr());
                     this.setLastLogin(uti.getUtidtelog());
                     this.setId(uti.getUtiid());
+                    this._userExists = true;
                 }
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
+    }
+    
+    public Boolean Exists() {
+        return this._userExists;
     }
     
     public String getFullName() {
