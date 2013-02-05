@@ -1,5 +1,6 @@
 package views;
 
+import classes.BCrypt;
 import controllers.getLoginInfos;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -71,7 +72,11 @@ public class loginDialog extends JDialog {
         okBouton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
-                zInfo = new getLoginInfos(login.getText(), pass.getText());
+                
+                
+                //zInfo = new getLoginInfos(login.getText(), pass.getText());
+                zInfo.setLogin(login.getText());
+                zInfo.setPasswd(pass.getText());
                 setVisible(false);
             }
         });
@@ -80,6 +85,7 @@ public class loginDialog extends JDialog {
         cancelBouton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent arg0) {
+                zInfo.setCancelled(true);
                 setVisible(false);
             }
         });
