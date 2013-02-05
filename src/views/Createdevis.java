@@ -8,6 +8,7 @@ import classes.Uniqid;
 import controllers.TableDispatcher;
 import controllers.UserActif;
 import instances.DevisInstance;
+import instances.DevnomInstance;
 import models.Demande;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
@@ -40,6 +41,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import models.CurrentDatas;
 import models.Devis;
+import models.Devnom;
 import models.ModelesTables;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -60,8 +62,6 @@ public class Createdevis extends KContainer {
     JLabel title = new JLabel("Créer un devis");
     JPanel left = new JPanel(),
             right = new JPanel();
-    JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
-    JFormattedTextField jFormattedTextField2 = new javax.swing.JFormattedTextField();
     public JLabel nomRow = new javax.swing.JLabel();
     int id;
     private Fenetre fen = Fenetre.getInstance();
@@ -70,7 +70,10 @@ public class Createdevis extends KContainer {
     public JLabel newRow = new javax.swing.JLabel();
     public JLabel newPrice = new javax.swing.JLabel();
     public JLabel newTotal = new javax.swing.JLabel();
-    
+    public JFormattedTextField linedisc = new JFormattedTextField();
+    public JFormattedTextField Intitule = new JFormattedTextField();
+    public JTextArea Description = new JTextArea();
+
     public Createdevis(UserActif user, int id) {
         super();
         this.user = user;
@@ -88,8 +91,6 @@ public class Createdevis extends KContainer {
         ab1.setPreferredSize(new Dimension(650, 750));
         ab1.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
 
-        JFormattedTextField Intitule = new JFormattedTextField();
-        JTextArea Description = new JTextArea();
         Description.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
         JLabel jLabel1 = new javax.swing.JLabel();
         JLabel jLabel2 = new javax.swing.JLabel();
@@ -135,6 +136,7 @@ public class Createdevis extends KContainer {
         selectedNom.setLayout(new BoxLayout(selectedNom, BoxLayout.LINE_AXIS));
         selectedNom.setPreferredSize(new Dimension(500, 300));
         selectedNom.add(nomRow);
+        
         JPanel ab3 = new JPanel();
         ab3.setLayout(new BoxLayout(ab3, BoxLayout.LINE_AXIS));
         ab3.setPreferredSize(new Dimension(200, 20));
@@ -169,9 +171,9 @@ public class Createdevis extends KContainer {
 
         JLabel icon = new JLabel(new ImageIcon("ressources/images/newdevis.jpg"));
 
-        
 
-        
+
+
         model = new AllnomenclaturelistModel();
         table.setModel(model);
         //tri des colonnes
@@ -183,7 +185,7 @@ public class Createdevis extends KContainer {
         table.setBackground(Color.white);
         table.setPreferredSize(new Dimension(240, 140));
         content.add(table, BorderLayout.CENTER);
-        
+
         ab1.setBackground(Color.white);
         ab2.setBackground(Color.white);
         b1.setBackground(Color.white);
@@ -192,8 +194,9 @@ public class Createdevis extends KContainer {
         ab3.setBackground(Color.white);
         jLabel3.setBackground(Color.white);
         ab4.setBackground(Color.white);
-        
-        
+
+        linedisc.setPreferredSize(new Dimension(80, 20));
+
         newRow.setText("");
         selectedNom.add(newRow);
         newPrice.setText("");
@@ -206,17 +209,29 @@ public class Createdevis extends KContainer {
         ab1.add(ab2);
         ab1.add(b2);
         ab1.add(selectedNom);
+        ab1.add(linedisc, BorderLayout.CENTER);
         ab1.add(newTotal);
         ab1.add(ab3);
         ab1.add(ab4);
         ab1.add(jLabel3);
         content.add(ab1);
 
-
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //  buttonActionPerformed(evt);
                 addToDataBase();
+            }
+        });
+
+        calculIt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                String oldTotalString = newTotal.getText();
+                Integer linediscValue = Integer.parseInt(linedisc.getText());
+                double newLinediscValue = (((double)linediscValue) / 100);
+                oldTotalString = oldTotalString.replace("Total : ", "");
+                oldTotalString = oldTotalString.replace(" €", "");
+                Integer oldTotal = Integer.parseInt(oldTotalString);
+                Integer theNewTotal = (int) Math.round(oldTotal - (oldTotal * newLinediscValue));
+                newTotal.setText("Total : " + Integer.toString(theNewTotal) + " €");
             }
         });
 
@@ -231,17 +246,20 @@ public class Createdevis extends KContainer {
                     int column = target.convertColumnIndexToModel(target.columnAtPoint(p));
                     TableModel tm = table.getModel();
                     String numnum = (String) tm.getValueAt(row, 0);
+                    Integer idNumnum = (Integer) tm.getValueAt(row, 999);
                     Integer price = (Integer) tm.getValueAt(row, 2);
-                  //  String thename = table.getColumnName(numnum);
                     String oldTotalString = newTotal.getText();
                     oldTotalString = oldTotalString.replace("Total : ", "");
                     oldTotalString = oldTotalString.replace(" €", "");
                     Integer oldTotal = Integer.parseInt(oldTotalString);
                     Integer theNewTotal = oldTotal + price;
                     String oldRows = newRow.getText();
-                    String newRowContent = oldRows + "     " + numnum + " - " + String.valueOf(price) + " €";
+                    String newRowContent = oldRows + "     -" + idNumnum + ";" + numnum + "  " + String.valueOf(price) + " €";
                     newRow.setText(newRowContent);
                     newTotal.setText("Total : " + String.valueOf(theNewTotal) + " €");
+                }
+                if (e.getClickCount() == 1) {
+                    //----> Affichage du detail de la nom ?
                 }
             }
         });
@@ -252,6 +270,10 @@ public class Createdevis extends KContainer {
     private void addToDataBase() {
         try {
             CurrentDatas cd = CurrentDatas.getInstance();
+
+
+
+
             Devis dvis = new Devis();
             dvis.setDevetat("En cours");
             dvis.setDevdate(new Date());
@@ -260,7 +282,11 @@ public class Createdevis extends KContainer {
             oldTotalString = oldTotalString.replace(" €", "");
             dvis.setDevprix(Integer.parseInt(oldTotalString));
             dvis.setDevsuppr(false);
+            String titre = Intitule.getText();
+            String desc = newTotal.getText();
             dvis.setDemandeid(id);
+            dvis.setDevtitre(titre);
+            dvis.setDevdesc(desc);
             Uniqid uniqid = new Uniqid(cd.getUser().getId());
             dvis.setDevuniqid(uniqid.getUniqid());
 
@@ -272,7 +298,34 @@ public class Createdevis extends KContainer {
 
             dvis_inst.setDevis(dvis);
 
+            System.out.println("a");
             if (dvis_inst.ajouterDansBaseDeDonnees()) {
+
+                System.out.println("b");
+                System.out.println(newRow.getText());
+                String str[] = newRow.getText().split("-");
+
+                for (int i = 1; i < str.length; i = i + 2) {
+                    System.out.println(str[i]);
+                    System.out.println(str.length);
+                    String idCutString[] = str[i].split(";");
+                    System.out.println(idCutString.length);
+                    System.out.println("c");
+                    if (idCutString.length > 0) {
+                        System.out.println(idCutString.length);
+                        System.out.println("d");
+                        System.out.println(idCutString[0]);
+                        Devnom devisNom = new Devnom();
+                        devisNom.setDevid(38);
+                        devisNom.setDevnomqte(1);
+                        devisNom.setNomid(5);
+                        DevnomInstance dvnom_inst = DevnomInstance.getInstance();
+                        dvnom_inst.setDevnom(devisNom);
+                        dvnom_inst.ajouterDansBaseDeDonnees();
+                    }
+
+
+                }
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
             }
 
