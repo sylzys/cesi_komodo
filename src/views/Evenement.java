@@ -12,12 +12,14 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.toedter.calendar.JDateChooser;
 import controllers.GoogleCalendar;
 import controllers.UserActif;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.TimeZone;
@@ -25,6 +27,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import org.jdesktop.swingx.JXDatePicker;
+import org.jdesktop.swingx.plaf.DatePickerAddon;
+import org.jdesktop.swingx.plaf.DatePickerUI;
 
 /**
  *
@@ -40,7 +45,9 @@ public class Evenement extends KContainer {
     JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
     JTextArea jTextArea1 = new javax.swing.JTextArea();
     JLabel jLabel3 = new javax.swing.JLabel();
-    JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
+    //JFormattedTextField jFormattedTextField1 = new javax.swing.JFormattedTextField();
+    JXDatePicker datepicker_debut = new JXDatePicker();
+    //JXDatePicker datepicker_fin = new JXDatePicker();
     JFormattedTextField jFormattedTextField2 = new javax.swing.JFormattedTextField();
     JLabel jLabel4 = new javax.swing.JLabel();
     JLabel jLabel5 = new javax.swing.JLabel();
@@ -59,8 +66,8 @@ public class Evenement extends KContainer {
     JLabel jLabel18 = new javax.swing.JLabel();
     JLabel jLabel19 = new javax.swing.JLabel();
     JLabel jLabel20 = new javax.swing.JLabel();
-    JFormattedTextField jFormattedTextField3 = new javax.swing.JFormattedTextField();
-    JFormattedTextField jFormattedTextField4 = new javax.swing.JFormattedTextField();
+    //JFormattedTextField jFormattedTextField3 = new javax.swing.JFormattedTextField();
+    //JFormattedTextField jFormattedTextField4 = new javax.swing.JFormattedTextField();
 
     public Evenement(UserActif user) {
         super();
@@ -120,9 +127,9 @@ public class Evenement extends KContainer {
         b3.add(jLabel11, BorderLayout.CENTER);
         jLabel3.setText("Date de début");
         b3.add(jLabel3, BorderLayout.WEST);
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        //jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        b3.add(jFormattedTextField1, BorderLayout.CENTER);
+        b3.add(datepicker_debut, BorderLayout.CENTER);
         b3.add(jLabel14, BorderLayout.CENTER);
         b3.add(jLabel12, BorderLayout.CENTER);
         b3.add(jFormattedTextField2, BorderLayout.EAST);
@@ -143,10 +150,10 @@ public class Evenement extends KContainer {
         jLabel17.setText("Heure");
         b4.add(jLabel16, BorderLayout.WEST);
         b4.add(jLabel4, BorderLayout.WEST);
-        b4.add(jFormattedTextField3, BorderLayout.CENTER);
+       // b4.add(jFormattedTextField3, BorderLayout.CENTER);
         b4.add(jLabel19, BorderLayout.WEST);
         b4.add(jLabel17, BorderLayout.WEST);
-        b4.add(jFormattedTextField4, BorderLayout.EAST);
+        //b4.add(jFormattedTextField4, BorderLayout.EAST);
         b4.add(jLabel18, BorderLayout.WEST);
         
         JPanel ab5 = new JPanel();
@@ -159,6 +166,7 @@ public class Evenement extends KContainer {
             content.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GRAY));
             
         button.setText("Ajouter");
+        
         jLabel15.setPreferredSize(new Dimension(200, 20));
         content.add(title);
         content.add(ab1);
@@ -171,11 +179,39 @@ public class Evenement extends KContainer {
         content.add(b4);
         content.add(ab5);;
         content.add(button, BorderLayout.LINE_END);
-        content.add(jLabel15);
-
+        content.add(jLabel15);  
+        
+        JXDatePicker plop = new JXDatePicker();
+        
+        
+        
 
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+                GoogleCalendar gc =  new GoogleCalendar();
+                gc.init();
+                Event event = new Event();
+                Date startDate = new Date();
+                Date endDate = new Date(startDate.getTime() + 3600000);
+                DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
+                event.setStart(new EventDateTime().setDateTime(start));
+                DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
+                event.setEnd(new EventDateTime().setDateTime(end));
+
+                event.setSummary("plop");
+                event.setDescription("Description");
+
+                String title = "Nouvel Evènement";     
+
+                Calendar calendar = null;
+                try {
+                    calendar = gc.getCalendars("My agenda");
+                    gc.addEvent(calendar, event);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
             }
         });
@@ -194,8 +230,7 @@ public class Evenement extends KContainer {
         this.panel.add(content, BorderLayout.PAGE_END);
         
         
-        GoogleCalendar gc =  new GoogleCalendar();
-        gc.init();
+     
         //partie CM 
 //            try {
 //      try {
@@ -225,28 +260,8 @@ public class Evenement extends KContainer {
 ////        DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
 //        
 //
-        Event event = new Event();
-		Date startDate = new Date();
-		Date endDate = new Date(startDate.getTime() + 3600000);
-		DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
-		event.setStart(new EventDateTime().setDateTime(start));
-		DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
-		event.setEnd(new EventDateTime().setDateTime(end));
-
-		event.setSummary("plop");
         
-        String title = "Nouvel �v�nement";
         
-      
-        
-        Calendar calendar = null;
-        try {
-            calendar = gc.getCalendars("My agenda");
-        } catch (IOException ex) {
-            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            gc.addEvent(calendar, event);
     //        googleCalendar.addEvent(calendar,event);
     //        googleCalendar.showEvents(calendar);
     //        //deleteCalendarsUsingBatch();
@@ -260,9 +275,7 @@ public class Evenement extends KContainer {
     //    }
     //        
     //
-        } catch (IOException ex) {
-            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
 //    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {
