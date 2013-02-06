@@ -136,7 +136,7 @@ public class Createdevis extends KContainer {
         selectedNom.setLayout(new BoxLayout(selectedNom, BoxLayout.LINE_AXIS));
         selectedNom.setPreferredSize(new Dimension(500, 300));
         selectedNom.add(nomRow);
-        
+
         JPanel ab3 = new JPanel();
         ab3.setLayout(new BoxLayout(ab3, BoxLayout.LINE_AXIS));
         ab3.setPreferredSize(new Dimension(200, 20));
@@ -226,7 +226,7 @@ public class Createdevis extends KContainer {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 String oldTotalString = newTotal.getText();
                 Integer linediscValue = Integer.parseInt(linedisc.getText());
-                double newLinediscValue = (((double)linediscValue) / 100);
+                double newLinediscValue = (((double) linediscValue) / 100);
                 oldTotalString = oldTotalString.replace("Total : ", "");
                 oldTotalString = oldTotalString.replace(" €", "");
                 Integer oldTotal = Integer.parseInt(oldTotalString);
@@ -315,13 +315,12 @@ public class Createdevis extends KContainer {
                         System.out.println(idCutString.length);
                         System.out.println("d");
                         System.out.println(idCutString[0]);
-                        Devnom devisNom = new Devnom();
-                        devisNom.setDevid(38);
-                        devisNom.setDevnomqte(1);
-                        devisNom.setNomid(5);
-                        DevnomInstance dvnom_inst = DevnomInstance.getInstance();
-                        dvnom_inst.setDevnom(devisNom);
-                        dvnom_inst.ajouterDansBaseDeDonnees();
+                        HibernateConnection connection = HibernateConnection.getInstance();
+                        connection.getSession().createSQLQuery("INSERT INTO devnom (devid, devnomqte, nomid) VALUES (?, ?, ?)")
+                                .setParameter(1, 1)
+                                .setParameter(2, 1) // Since you want it to be a TIMESTAMP
+                                .setParameter(3, idCutString[0])
+                                .executeUpdate();
                     }
 
 
