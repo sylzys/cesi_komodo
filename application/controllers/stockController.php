@@ -272,7 +272,7 @@ class stockController extends Zend_Controller_Action
 		(matid integer, fourid integer, fourrais varchar(10), fournom varchar(50), fouradresse varchar(250), fourcp varchar(10),
 		fourville varchar(100), foursuppr bool, interid integer, internom varchar(50), interprenom varchar(50), intermail varchar(50),
 		intertel varchar(20), intersuppr bool, stockid integer, stockdatecom varchar(10), stockentree varchar(10), stocksortie varchar(10), stockqte integer,
-		stockreffour varchar(100), stockpu integer, stocksuppr bool, matlib varchar(100), matsuppr bool) ORDER BY stockid";
+		stockreffour varchar(100), stockpu numeric(20,2), stocksuppr bool, matlib varchar(100), matsuppr bool) ORDER BY stockid";
 		$result = $db->query($query);
 		//Enregistrement du résultat dans un tableau
 		foreach($result as $k => $value)
