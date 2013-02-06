@@ -2,6 +2,7 @@ package models;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 import org.hibernate.search.annotations.Analyze;
@@ -53,8 +54,8 @@ public class Commande implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date comprodfin ;
     
-    @Column(name="comprix", columnDefinition="INTEGER", nullable=true)
-    private Integer comprix ;
+    @Column(name="comprix", columnDefinition="NUMERIC(20,2)", nullable=true)
+    private BigDecimal comprix ;
     
     @Column(name="comsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean comsuppr ;
@@ -156,11 +157,11 @@ public class Commande implements Serializable {
         this.comprodfin = comprodfin;
     }
 
-    public Integer getComprix() {
+    public BigDecimal getComprix() {
         return comprix;
     }
 
-    public void setComprix(Integer comprix) {
+    public void setComprix(BigDecimal comprix) {
         this.comprix = comprix;
     }
 
