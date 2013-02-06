@@ -5,13 +5,17 @@
 package views;
 
 import classes.ButtonData;
+import classes.MyPdf;
 import controllers.UserActif;
 import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -26,7 +30,9 @@ import models.Client;
 import models.Commande;
 import models.Demande;
 import models.DetailDevis;
+import models.Matiere;
 import models.Nomenclature;
+import models.Nommat;
 import org.hibernate.Session;
 
 /**
@@ -343,7 +349,9 @@ public class Recherche extends KContainer {
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
                             ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                            btn_temp.getId();
+                            //Fenetre.getInstance().RenewCmd(btn_temp.getId());
+                            makePdf( Integer.toString(btn_temp.getId()));
                         }
                     });
                     panelNom.add(btnGoToCmd);
@@ -399,6 +407,66 @@ public class Recherche extends KContainer {
         }
         scroller.setViewportView(panelListSearch);
         Fenetre.getInstance().RenewContener(panel);      
+    }
+    
+    private void makePdf(String id)
+    {
+    
+        Session session = HibernateConnection.getSession();        
+        List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomid ="+id+ " ").addEntity(Nomenclature.class).list();               
+        Nomenclature nomen = list.get(0);
+        List<Nommat>listNomMat = session.createSQLQuery("SELECT * From nommat WHERE nomid ="+id+ " ").addEntity(Nommat.class).list();
+        
+         
+        int i = 0;
+        Nommat nommat;
+        List<Matiere> listMatiere;
+        Matiere mat;
+        String[][]data = new String[listNomMat.size()][3];
+        for(i =0;i< listNomMat.size();i++)
+        {
+            nommat = listNomMat.get(i);
+            listMatiere =  session.createSQLQuery("SELECT * From matiere WHERE matid ="+id+ " ").addEntity(Matiere.class).list();
+            mat = listMatiere.get(0);
+            data[i][0] = Integer.toString(mat.getMatid());
+            data[i][1] = mat.getMatlib();
+            data[i][2] = Integer.toString(nommat.getMatqte());                   
+        }
+        
+        MyPdf mypdf = new MyPdf(Integer.toString(nomen.getNomid()));
+        try
+        {
+            mypdf.addTitlePage(nomen.getNomdate(),Integer.toString(nomen.getNomid()),nomen.getNomdes());	
+            mypdf.createQrcode(Integer.toString(nomen.getNomid()));
+            mypdf.addTable(data);
+            mypdf.addRow("Prix : " + nomen.getNomprix());
+            mypdf.document.close();
+            
+        }
+        catch(Exception e)
+        {
+            e.getStackTrace();
+        }
+        
+        File file = new File(mypdf.getFILE()); 
+		if (Desktop.isDesktopSupported())
+		{
+		    Desktop desktop = Desktop.getDesktop();
+		     try
+		        {
+		            desktop.open(file);
+		        }
+		        catch (Exception e)
+		        {
+		            e.printStackTrace();
+		        }
+		   
+		}
+		else
+		    System.err.println("Desktop not supported");
+        
+        
+        
     }
 
 //    private List<Commande> search(String query)

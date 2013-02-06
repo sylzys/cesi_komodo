@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  06/02/2013 09:35:24                      */
+/* Date de création :  06/02/2013 11:15:36                      */
 /*==============================================================*/
 
 
@@ -865,7 +865,7 @@ create table STOCK (
    STOCKSORTIE          VARCHAR(10)          null,
    STOCKQTE             INT4                 null,
    STOCKREFFOUR         VARCHAR(100)         null,
-   STOCKPU              INT4                 null,
+   STOCKPU              NUMERIC(20,2)        null,
    STOCKSUPPR           BOOL                 null,
    constraint PK_STOCK primary key (STOCKID)
 );
