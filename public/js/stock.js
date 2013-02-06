@@ -570,7 +570,7 @@ function addCmdMat()
     var reffour = $("#reffour").val();
     var testNumQte = verif_numeric(qte);
     var testNumPu = verif_numeric(pu);
-    if(idFrn != "slctOpt" && qte!="" && testNumQte == true && pu!="" && testNumPu == true && reffour != "")
+    if(idFrn != "slctOpt" && qte!="" && testNumQte == true && pu!="" && reffour != "")
     {
             $.ajax({'url' : '../stock/ajaxcmdmat',
                     data:       {'matid':matid, 'idFrn':idFrn, 'qte':qte, 'pu':pu, 'reffourmat':reffour},
@@ -597,10 +597,10 @@ function addCmdMat()
          {
              alert("La quantité doit être un entier");
          }
-         else if(testNumPu == false)
-         {
-           alert("Le prix unitaire doit être un entier");  
-         }   
+//         else if(testNumPu == false)
+//         {
+//           alert("Le prix unitaire doit être un entier");  
+//         }   
      }
 }
 function verif_numeric(variable)
