@@ -248,8 +248,9 @@ public class Createdevis extends KContainer {
                     int column = target.convertColumnIndexToModel(target.columnAtPoint(p));
                     TableModel tm = table.getModel();
                     String numnum = (String) tm.getValueAt(row, 0);
+                    Integer idNumnum = (Integer) tm.getValueAt(row, 999);
                     BigDecimal price = new BigDecimal(tm.getValueAt(row, 2).toString());
-                  //  String thename = table.getColumnName(numnum);
+                    //  String thename = table.getColumnName(numnum);
                     String oldTotalString = newTotal.getText();
                     oldTotalString = oldTotalString.replace("Total : ", "");
                     oldTotalString = oldTotalString.replace(" €", "");
@@ -304,6 +305,9 @@ public class Createdevis extends KContainer {
             System.out.println("a");
             if (dvis_inst.ajouterDansBaseDeDonnees()) {
 
+                HibernateConnection connection = HibernateConnection.getInstance();
+                Query query = connection.getSession().createSQLQuery("SELECT last_value FROM devis_devid_seq");
+                int idLastDevis = ((BigInteger) query.uniqueResult()).intValue();
                 System.out.println("b");
                 System.out.println(newRow.getText());
                 String str[] = newRow.getText().split("-");
@@ -318,11 +322,7 @@ public class Createdevis extends KContainer {
                         System.out.println(idCutString.length);
                         System.out.println("d");
                         System.out.println(idCutString[0]);
-                        HibernateConnection connection = HibernateConnection.getInstance();
-                        connection.getSession().createSQLQuery("INSERT INTO devnom (devid, devnomqte, nomid) VALUES (?, ?, ?)")
-                                .setParameter(1, 1)
-                                .setParameter(2, 1) // Since you want it to be a TIMESTAMP
-                                .setParameter(3, idCutString[0])
+                        connection.getSession().createSQLQuery("INSERT INTO devnom (devid, devnomqte, nomid) VALUES ("+idLastDevis+", 1, " + idCutString[0] + ")")
                                 .executeUpdate();
                     }
 
