@@ -2,6 +2,7 @@ package models;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 @Entity
@@ -19,8 +20,8 @@ public class Devis implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date devdate ;
      
-    @Column(name="devprix", columnDefinition="INTEGER", nullable=true)
-    private int devprix ;
+    @Column(name="devprix", columnDefinition="NUMERIC(20,2)", nullable=true)
+    private BigDecimal devprix ;
     
     @Column(name="devsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean devsuppr ;
@@ -68,11 +69,11 @@ public class Devis implements Serializable {
         this.devdate = devdate;
     }
 
-    public int getDevprix() {
+    public BigDecimal getDevprix() {
         return devprix;
     }
 
-    public void setDevprix(int devprix) {
+    public void setDevprix(BigDecimal devprix) {
         this.devprix = devprix;
     }
 

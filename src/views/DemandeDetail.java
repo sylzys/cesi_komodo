@@ -18,6 +18,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -262,7 +263,7 @@ public class DemandeDetail extends KContainer {
             cmd.setComsuppr(false);
 
             HibernateConnection connection = HibernateConnection.getInstance();
-            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
+            BigDecimal value = (BigDecimal) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
             cmd.setComprix(value);
 
             CommandeInstance cmd_inst = CommandeInstance.getInstance();

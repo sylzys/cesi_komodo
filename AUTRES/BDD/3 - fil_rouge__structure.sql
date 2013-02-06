@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  30/11/2012 21:42:26                      */
+/* Date de création :  06/02/2013 09:35:24                      */
 /*==============================================================*/
 
 
@@ -243,7 +243,7 @@ create table CMDMAT (
    FOURID               INT4                 not null,
    DATECMDMAT           VARCHAR(10)          null,
    QTECMDMAT            INT4                 null,
-   PUCMDMAT             INT4                 null,
+   PUCMDMAT             NUMERIC(20,2)        null,
    REFFOURCMDMAT        VARCHAR(254)         null,
    constraint PK_CMDMAT primary key (CMDMATID)
 );
@@ -285,7 +285,7 @@ create table COMMANDE (
    COMRESUME            VARCHAR(1000)        null,
    COMPRODDEB           DATE                 null,
    COMPRODFIN           DATE                 null,
-   COMPRIX              INT4                 null,
+   COMPRIX              NUMERIC(20,2)        null,
    COMSUPPR             BOOL                 null,
    COMUNIQID            VARCHAR(500)         null,
    constraint PK_COMMANDE primary key (COMID)
@@ -425,7 +425,7 @@ create table DEVIS (
    DEVDESC              VARCHAR(500)         null,
    DEVETAT              VARCHAR(50)          null,
    DEVDATE              DATE                 null,
-   DEVPRIX              INT4                 null,
+   DEVPRIX              NUMERIC(20,2)        null,
    DEVSUPPR             BOOL                 null,
    DEVUNIQID            VARCHAR(500)         null,
    constraint PK_DEVIS primary key (DEVID)
@@ -709,7 +709,7 @@ create table NOMENCLATURE (
    NOMTEMPS             CHAR(10)             null,
    NOMNBCHAINE          INT4                 null,
    NOMQR                VARCHAR(100)         null,
-   NOMPRIX              INT4                 null,
+   NOMPRIX              NUMERIC(20,2)        null,
    NOMDES               VARCHAR(250)         null,
    NOMSUPPR             BOOL                 null,
    constraint PK_NOMENCLATURE primary key (NOMID)
@@ -975,7 +975,7 @@ create table UTILISATEUR (
    UTINOM               VARCHAR(50)          null,
    UTIPRENOM            VARCHAR(50)          null,
    UTILOGIN             VARCHAR(50)          null,
-   UTIMDP               CHAR(60) 	         null,
+   UTIMDP               CHAR(60)             null,
    UTIMAIL              VARCHAR(50)          null,
    UTITEL               VARCHAR(20)          null,
    UTISUPPR             BOOL                 null,
