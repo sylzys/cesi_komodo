@@ -65,7 +65,7 @@ class Application_Model_Client extends Application_Model_Element_Abstract {
     }
 
     public function getCliurltmp() {
-        return $this->_utiid;
+        return $this->_cliurltmp;
     }
 
     public function setCliurltmp($cliurltmp) {

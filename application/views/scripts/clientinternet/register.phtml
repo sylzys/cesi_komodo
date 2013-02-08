@@ -1,1 +1,19 @@
-<h1>kikoo</h1>
+<div id="contentLogin">
+    <p>
+        <?php echo $this->welcome; ?>
+
+        <span>
+           Pour toute question, veuillez contacter notre commercial.
+        </span>
+    </p>
+    <?php if ($this->error_auth): ?>
+    <div id="auth_form_error">
+        <?php echo $this->message; ?>
+    </div>
+    <?php endif; ?>
+<?php
+    //$this->formLogin->setAction('clientinternet/verifypassword');
+    //var_dump($this->formClient);
+    echo $this->formClient;
+?>
+</div>

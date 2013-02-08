@@ -21,7 +21,7 @@ class prodController extends Zend_Controller_Action {
  * @author sylvain
  * @param $nomName, $filename, $nomDesc, $nomChain, $nomTime, $nomId
  * @return boolean
- * 
+ *
  */
 public function generatePdf($nomName, $filename, $nomDesc, $nomChain, $nomTime, $nomId) {
 
@@ -89,7 +89,7 @@ public function generatePdf($nomName, $filename, $nomDesc, $nomChain, $nomTime, 
  * @author sylvain
  * @param $id, $comid, $chaineid, $listeNom
  * @return boolean
- * 
+ *
  */
  public function generatePdfBat($id, $comid, $chaineid, $listeNom) {
     $date = date('d/m/Y');
@@ -161,7 +161,7 @@ public function generatePdfBaj($id, $comid) {
  * @author sylvain
  * @param array $tab_nom
  * @return array
- * 
+ *
  */
  public function check_stock($tab_nom) {
     $dbAdapter = Zend_Registry::get('dbAdapter');
@@ -172,7 +172,7 @@ public function generatePdfBaj($id, $comid) {
             $result = $dbAdapter->query("SELECT stockqte from stock where matid = {$infos[$j]['matid']}");
             $resultqtemat = 0;
             foreach($result as $k => $value)
-            { 
+            {
             	//Addition des qte en stock
                 $resultqtemat = $resultqtemat + $value['stockqte'];
             }
@@ -213,11 +213,11 @@ public function processbatAction() {
             $chaine = $request->getPost('chaine');
             //nomenclature(s) utilisées
             $tab_nom = explode(',', $nom);
-            
+
             //vérifie si le stock ne devient pas négatif
             $stockNeg = $this->check_stock($tab_nom);
             //Si négatif
-            if ($stockNeg != false) 
+            if ($stockNeg != false)
             {
             	echo ("Attention : <br>
             		La matière : <b>{$stockNeg}</b> est en quantité insuffisante<br>
@@ -232,15 +232,15 @@ public function processbatAction() {
             {
             	$dbAdapter = Zend_Registry::get('dbAdapter');
             	//Boucle sur les nomenclatures
-            	for ($i = 0; $i < count($tab_nom); $i++) 
+            	for ($i = 0; $i < count($tab_nom); $i++)
 	            {
 	            	$nomid = $tab_nom[$i];
 	            	//Selection des infos matieres de la nomenclature
 	                $infos = $dbAdapter->fetchAll("SELECT * FROM nommat where nomid=$nomid");
 	                //Boucle sur les infos nommat
 	                for ($j = 0; $j < count($infos); $j++)
-	                {	
-	                	$qteMat = $infos[$j]['matqte'];             
+	                {
+	                	$qteMat = $infos[$j]['matqte'];
 	                	//Variable pour sortir de la boucle do
 	                	$sortie = false;
 	                	//Boucle pour soustraire la qte de matière
@@ -259,7 +259,7 @@ public function processbatAction() {
 		                		if($slcStock[$k]['stockentree'] != "")
 		                		{
 		                			//Conversion en timestamp
-		                			$timestamp[] = $this->convtime($dateStock); 
+		                			$timestamp[] = $this->convtime($dateStock);
 		                		}
 		                	}
 		                	//On récupère le plus petit timestamp
@@ -319,22 +319,22 @@ public function processbatAction() {
 	                	} while ($sortie == false);
 	                } //Fin boucle nommat
 	            } //Fin boucle nomenclature
-	            
+
 	            //remplit la table production
 	            $dbAdapter->query('INSERT into production (comid, chaineid, chainedatedeb, prodsuppr) VALUES (?, ?, ? , ?)', array($idCommande, $chaine, 'NOW()', 'false'));
 	            $lastId = $dbAdapter->fetchAll('SELECT last_value FROM production_prodid_seq');
 	            $lastIdProd = $lastId[0]['last_value'];
-	            
+
 	            //creating QR code
 	            $filename = BASE_PATH . '/public/images/BAT/bat_' . $lastIdProd . '.png';
 	            $short_name = $lastIdProd . '.png';
 	            $this->createNewNom($lastIdProd, $filename);
-	            
+
 	            //remplit table BAT
 	            $dbAdapter->query('INSERT into bonatirer (prodid, bonatirerdte, bonatirersuppr) VALUES (?, ?, ?)', array($lastIdProd, '$NOW()', 'false'));
 	            $lastId = $dbAdapter->fetchAll('SELECT last_value FROM bonatirer_bonatirerid_seq');
 	            $lastIdBat = $lastId[0]['last_value'];
-	            
+
 	            //met à jour le champ bonatirerid dans la table production
 	            $data = array(
 	            		'bonatirerid' => $lastIdBat,
@@ -342,19 +342,19 @@ public function processbatAction() {
 	            );
 	            $where[] = "prodid = {$lastIdProd}";
 	            $result = $dbAdapter->update("production", $data, $where);
-	            
+
 	            //indique la chaine choisie comme non disponible
 	            $o_chainMapper = new Application_Model_ChaineMapper();
 	            $o_chaine = $o_chainMapper->find((int) $chaine);
 	            $o_chaine->setChainedispo(0);
-	            $o_chainMapper->save($o_chaine);  
-	                      
+	            $o_chainMapper->save($o_chaine);
+
 	            //genère le PDF
 	            $this->generatePdfBat($lastIdProd, $idCommande, $chaine, $nom);
 	            $this->_helper->layout->disableLayout();
 	            echo 'lastId='.$lastIdBat;
-            } //Fin si stock négatif         
-        } 
+            } //Fin si stock négatif
+        }
     }
 }
 /**
@@ -400,7 +400,7 @@ public function processbajAction() {
             $etatComm = $etatComm[0]['cometat'];
 
             //ON REINTEGRE LA MATIERE DE LA COMMANDE
-            
+
             $historique = $dbAdapter->fetchAll("SELECT * FROM histostock WHERE comid = $id AND histosuppr = false");
             for ($i = 0; $i < count($historique); $i++)
             {
@@ -413,10 +413,10 @@ public function processbajAction() {
             		$dbAdapter->query("UPDATE stock SET stockqte = $qteNew WHERE stockid = $stockid");
             		$dbAdapter->query("UPDATE histostock SET histosuppr=true WHERE histoid = $histoid");
             }
-            
+
             //FIN REINTEGRATION MATIERE
-            
-            
+
+
                 //genère le PDF
             $this->generatePdfBaj($lastIdBaj, $id);
             $this->_helper->layout->disableLayout();
@@ -624,7 +624,7 @@ public function ajaxdelchainAction()
     $dbAdapter = Zend_Registry::get('dbAdapter');
         //On récupère la désignation de la chaine
     $id = $this->_getParam('id');
-       
+
         //Exécution de la requete
     $dbAdapter->query("DELETE FROM chaine WHERE chaineid=".$id);
     $this->_helper->layout->disableLayout();
