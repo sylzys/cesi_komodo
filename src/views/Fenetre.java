@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
 import models.DetailDevis;
 
+
 /**
  *
  * @author sylv
@@ -61,38 +62,28 @@ public class Fenetre extends JFrame {
             this.setResizable(false);
             boolean login_ok = false;
 
-        while (!login_ok)
-        {
-            loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
-            getLoginInfos zInfos = zd.showZDialog();
-            JOptionPane jop = new JOptionPane();
-            System.out.println(zInfos.toString());
-            if ("-NA-".equals(zInfos.toString()))
+            while (!login_ok)
             {
-                System.exit(0);
-            }
-            String[] login = zInfos.toString().split("#");
-            if (!login[0].isEmpty() && !login[1].isEmpty())
-            {
-                user = new UserActif(login[0]);
-                if (user.verify(login[1]))
-                {
-                    break;
-                }
-                else
-                {
-                    JOptionPane jop3 = new JOptionPane();
-                    jop3.showMessageDialog(null, "Votre login est incorrect", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                loginDialog zd = new loginDialog(null, "Veuillez vous connecter", true);
+                getLoginInfos zInfos = zd.showZDialog();
+                
+                if (zInfos.getCancelled()) {
+                    System.exit(0);
+                } else {
+                    user = new UserActif(zInfos.getLogin());
+                    if (user.Exists() && user.verify(zInfos.getPasswd()) == true) {
+                        //user.setLastLogin();
+                        login_ok = true;
+                        break;
+                    } else {
+                        JOptionPane jop3 = new JOptionPane();
+                        jop3.showMessageDialog(null, "Login ou mot de passe incorrects", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
-            else
-            {
-                JOptionPane jop4 = new JOptionPane();
-                jop4.showMessageDialog(null, "Les champs 'identifiant' et 'mot de passe' ne peuvent pas être vides", "Erreur de connexion", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+            
+            
             //menu
-            user = new UserActif("admin");
             
             cd.setUser(user);
             afficher.addActionListener(new DisplayListener());

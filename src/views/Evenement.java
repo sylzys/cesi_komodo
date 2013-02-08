@@ -5,11 +5,24 @@
 package views;
 
 //import com.google.gdata.client.calendar.CalendarService;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.util.DateTime;
+
+
+import com.google.api.services.calendar.model.Calendar;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
+import controllers.GoogleCalendar;
 import controllers.UserActif;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.IOException;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -180,6 +193,76 @@ public class Evenement extends KContainer {
         this.panel.add(title, BorderLayout.AFTER_LINE_ENDS);
         this.panel.add(content, BorderLayout.PAGE_END);
         
+        
+        GoogleCalendar gc =  new GoogleCalendar();
+        gc.init();
+        //partie CM 
+//            try {
+//      try {
+//        // authorization
+//          GoogleCalendar googleCalendar = new GoogleCalendar();
+//          
+//        Credential credential = googleCalendar.authorize();
+//
+//        // set up global Calendar instance
+//        com.google.api.services.calendar.Calendar client = new com.google.api.services.calendar.Calendar.Builder(
+//            GoogleCalendar.HTTP_TRANSPORT, GoogleCalendar.JSON_FACTORY, credential).setApplicationName(
+//            "Google-CalendarSample/1.0").build();
+//        // run commands
+//        googleCalendar.showCalendars();
+//        //addCalendarsUsingBatch();
+//        //Calendar calendar = addCalendar();
+//        //updateCalendar(calendar);
+//        Calendar calendar = googleCalendar.getCalendars("My agenda");
+//        if(calendar == null){
+//        	
+//        	calendar = googleCalendar.addCalendar();
+//        	//calendar = addCalendarsUsingBatch("My agenda");
+//        }
+////        Date startDate = new Date();
+////        DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
+////        Date endDate = new Date(startDate.getTime() + 3600000);
+////        DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
+//        
+//
+        Event event = new Event();
+		Date startDate = new Date();
+		Date endDate = new Date(startDate.getTime() + 3600000);
+		DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
+		event.setStart(new EventDateTime().setDateTime(start));
+		DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
+		event.setEnd(new EventDateTime().setDateTime(end));
+
+		event.setSummary("plop");
+        
+        String title = "Nouvel �v�nement";
+        
+      
+        
+        Calendar calendar = null;
+        try {
+            calendar = gc.getCalendars("My agenda");
+        } catch (IOException ex) {
+            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gc.addEvent(calendar, event);
+    //        googleCalendar.addEvent(calendar,event);
+    //        googleCalendar.showEvents(calendar);
+    //        //deleteCalendarsUsingBatch();
+    //        //deleteCalendar(calendar);
+    //
+    //      } catch (IOException e) {
+    //        System.err.println(e.getMessage());
+    //      }
+    //    } catch (Throwable t) {
+    //      t.printStackTrace();
+    //    }
+    //        
+    //
+        } catch (IOException ex) {
+            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 //    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {

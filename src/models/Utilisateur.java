@@ -20,7 +20,7 @@ public class Utilisateur {
     @Column(name="utilogin", columnDefinition="VARCHAR(50)", nullable=true)
     private String utilogin ;
 
-    @Column(name="utimdp", columnDefinition="VARCHAR(32)", nullable=true)
+    @Column(name="utimdp", columnDefinition="CHAR(60)", nullable=true)
     private String utimdp ;
 
     @Column(name="utimail", columnDefinition="VARCHAR(50)", nullable=true)

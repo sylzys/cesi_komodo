@@ -353,7 +353,9 @@ public class ClientDetail extends KContainer {
         alertes.add(cp.showtable(ModelesTables.ALERTE, this.cli_id), BorderLayout.NORTH);
         cp.setPreferredSize(new Dimension(100, 20));
         // bouton voir tout
-        JButton btn_view_alertes = new JButton("Voir toutes les alertes");
+        LinkLabelData btn_view_alertes = new LinkLabelData("", 0);
+        btn_view_alertes.setIcon(new ImageIcon("ressources/images/seeall.png"));
+        btn_view_alertes.setToolTipText("Voir toutes les alertes");
         btn_view_alertes.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {

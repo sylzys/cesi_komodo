@@ -18,6 +18,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -61,22 +62,13 @@ public class DemandeDetail extends KContainer {
                 listeDmd = new JPanel(),
                 listeDevis = new JPanel(),
                 detailDmd = new JPanel(),
-                left = new JPanel(),
                 right = new JPanel(),
                 top_right = new JPanel(),
                 centertop_right = new JPanel(),
                 center_right = new JPanel(),
                 bottom_right = new JPanel(),
                 bottom_bottom = new JPanel();
-        JLabel jLabel4 = new javax.swing.JLabel();
         JLabel jLabel5 = new javax.swing.JLabel();
-        JLabel jLabel6 = new javax.swing.JLabel();
-        JLabel jLabel7 = new javax.swing.JLabel();
-        JLabel jLabel8 = new javax.swing.JLabel();
-        JLabel jLabel9 = new javax.swing.JLabel();
-        JLabel jLabel10 = new javax.swing.JLabel();
-        JLabel jLabel11 = new javax.swing.JLabel();
-        JLabel jLabel12 = new javax.swing.JLabel();
 
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
@@ -271,7 +263,7 @@ public class DemandeDetail extends KContainer {
             cmd.setComsuppr(false);
 
             HibernateConnection connection = HibernateConnection.getInstance();
-            Integer value = (Integer) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
+            BigDecimal value = (BigDecimal) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
             cmd.setComprix(value);
 
             CommandeInstance cmd_inst = CommandeInstance.getInstance();

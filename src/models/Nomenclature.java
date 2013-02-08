@@ -1,6 +1,7 @@
 package models;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 @Entity
@@ -27,8 +28,8 @@ public class Nomenclature {
     @Column(name="nomqr", columnDefinition="VARCHAR(250)", nullable=true)
     private String nomqr ;
     
-    @Column(name="nomprix", columnDefinition="INTEGER", nullable=true)
-    private int nomprix ;
+    @Column(name="nomprix", columnDefinition="NUMERIC(20,2)", nullable=true)
+    private BigDecimal nomprix ;
 
     @Column(name="nomdes", columnDefinition="VARCHAR(250)", nullable=true)
     private String nomdes ;
@@ -85,11 +86,11 @@ public class Nomenclature {
         this.nomqr = nomqr;
     }
 
-    public int getNomprix() {
+    public BigDecimal getNomprix() {
         return nomprix;
     }
 
-    public void setNomprix(int nomprix) {
+    public void setNomprix(BigDecimal nomprix) {
         this.nomprix = nomprix;
     }
 
