@@ -90,7 +90,7 @@ class LoginController extends Zend_Controller_Action
 
            // on crée le formulaire
 		$form = new Application_Form_Login();
-		$form->setAction('loginclient');
+		$form->setAction('login/loginclient');
 	//on l'ajoute a la vue
 		$this->view->formLogin = $form;
 	//on regarde si on est en post

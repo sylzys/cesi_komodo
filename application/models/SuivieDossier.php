@@ -16,6 +16,15 @@ class Application_Model_SuivieDossier extends Application_Model_Element_Abstract
     protected $_devid;
     
     protected $_utiid;
+    public function getSuivdosuniqid() {
+        return $this->_suivdosuniqid;
+    }
+
+    public function setSuivdosuniqid($suivdosuniqid) {
+        $this->_suivdosuniqid = $suivdosuniqid;
+    }
+
+        protected $_suivdosuniqid;
     
     protected $_demandeid;
     public function getDemandeid() {
