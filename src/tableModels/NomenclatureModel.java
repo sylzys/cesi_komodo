@@ -4,35 +4,32 @@
  */
 package tableModels;
 
-import instances.AllnomenclaturelistInstance;
 import instances.ClientInstance;
-import instances.DemandeInstance;
-import instances.NomenclaturelistInstance;
-import java.util.Date;
+import instances.NomenclatureInstance;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import models.Client;
-import models.Demande;
-import models.Nomenclature;
 import models.Nomenclature;
 
 /**
  *
  * @author sylv
  */
-public class AllnomenclaturelistModel extends AbstractTableModel {
+public class NomenclatureModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Libélé",  "Description", "Prix"
+        "Libellé", "Prix", "Chaines", "Temps"
     };
-    private List<Nomenclature> nomenclatures;
+    private List<Nomenclature> demandes;
 
-    public AllnomenclaturelistModel() {
+    public NomenclatureModel(int id) {
         super();
-        AllnomenclaturelistInstance AllnomclaturelisteInstance = AllnomenclaturelistInstance.getInstance();
-        nomenclatures = AllnomclaturelisteInstance.GetNomenclatures();
+        NomenclatureInstance DmdInstance = NomenclatureInstance.getInstance();
+        Hashtable h = new Hashtable();
+        h.put("nomid", id);
+        demandes = DmdInstance.GetNomenclatures("where nomid = :nomid", h);
     }
 
     @Override
@@ -47,7 +44,7 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return nomenclatures.size();
+        return demandes.size();
     }
 
     @Override
@@ -55,18 +52,20 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
         switch (columnIndex)
         {
 
+
             case 0:
-                return nomenclatures.get(rowIndex).getNomlib();
+                return demandes.get(rowIndex).getNomlib();
 
             case 1:
-                return nomenclatures.get(rowIndex).getNomdes();
-                
+                return demandes.get(rowIndex).getNomprix();
+
             case 2:
-                return nomenclatures.get(rowIndex).getNomprix();
+                return demandes.get(rowIndex).getNomnbchaine();
+            case 3:
+                return demandes.get(rowIndex).getNomtemps();
 
             case 999:
-                return nomenclatures.get(rowIndex).getNomid();
-
+                return demandes.get(rowIndex).getNomid();
             default:
                 throw new IllegalArgumentException();
         }
@@ -77,19 +76,22 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
         switch (columnIndex)
         {
 
-            case 0:
-                return String.class;
-            
             case 1:
                 return String.class;
+            case 0:
+                return Integer.class;
             case 2:
+                return Integer.class;
+            case 3:
+                return Integer.class;
+            case 999:
                 return Integer.class;
             default:
                 return Object.class;
         }
     }
 
-    public List<Nomenclature> getNomenclatureslist() {
-        return nomenclatures;
+    public List<Nomenclature> getNomenclatures() {
+        return demandes;
     }
 }

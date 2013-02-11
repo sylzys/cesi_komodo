@@ -20,11 +20,19 @@ import java.awt.Point;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -33,11 +41,15 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -45,14 +57,17 @@ import models.CurrentDatas;
 import models.Devis;
 import models.Devnom;
 import models.ModelesTables;
+import models.Nomenclature;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import models.Suivdossier;
 import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import tableModels.AllnomenclaturelistModel;
+import tableModels.NomenclatureModel;
 import tableModels.NomenclaturelistModel;
 
 /**
@@ -68,13 +83,17 @@ public class Createdevis extends KContainer {
     int id;
     private Fenetre fen = Fenetre.getInstance();
     private TableModel model;
+    private TableModel modelListSelectedNom;
     private JTable table = new JTable();
+    private JTable selectedNomList = new JTable();
     public JLabel newRow = new javax.swing.JLabel();
     public JLabel newPrice = new javax.swing.JLabel();
     public JLabel newTotal = new javax.swing.JLabel();
     public JFormattedTextField linedisc = new JFormattedTextField();
     public JFormattedTextField Intitule = new JFormattedTextField();
     public JTextArea Description = new JTextArea();
+    public HashMap<Integer, Nomenclature> listeSelectedNom = new HashMap();
+    public DefaultTableModel modelSelectedNom = new DefaultTableModel();
 
     public Createdevis(UserActif user, int id) {
         super();
@@ -89,8 +108,8 @@ public class Createdevis extends KContainer {
         content.setLayout(new FlowLayout());
         content.setPreferredSize(new Dimension(1000, 750));
 
-        JPanel ab1 = new JPanel();
-        ab1.setPreferredSize(new Dimension(650, 750));
+        final JPanel ab1 = new JPanel();
+        right.setPreferredSize(new Dimension(650, 750));
         ab1.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.LIGHT_GRAY));
 
         Description.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
@@ -102,6 +121,7 @@ public class Createdevis extends KContainer {
         JLabel jLabel6 = new javax.swing.JLabel();
         JLabel jLabel7 = new javax.swing.JLabel();
         JLabel jLabel8 = new javax.swing.JLabel();
+        JPanel listeDevis = new JPanel();
 
         JPanel b1 = new JPanel();
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
@@ -141,7 +161,7 @@ public class Createdevis extends KContainer {
 
         JPanel ab3 = new JPanel();
         ab3.setLayout(new BoxLayout(ab3, BoxLayout.LINE_AXIS));
-        ab3.setPreferredSize(new Dimension(200, 20));
+        ab3.setPreferredSize(new Dimension(400, 400));
 
         JPanel ab4 = new JPanel();
         ab4.setLayout(new BoxLayout(ab4, BoxLayout.LINE_AXIS));
@@ -174,7 +194,9 @@ public class Createdevis extends KContainer {
         JLabel icon = new JLabel(new ImageIcon("ressources/images/newdevis.jpg"));
 
 
-
+        listeDevis.setBackground(Color.white);
+        listeDevis.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+        listeDevis.setLayout(new BoxLayout(listeDevis, BoxLayout.LINE_AXIS));
 
         model = new AllnomenclaturelistModel();
         table.setModel(model);
@@ -182,11 +204,21 @@ public class Createdevis extends KContainer {
         table.setAutoCreateRowSorter(true);
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
         table.setRowSorter(sorter);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 270));
+        table.setPreferredScrollableViewportSize(new Dimension(220, 220));
         table.setFillsViewportHeight(true);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.add(table.getTableHeader(), BorderLayout.PAGE_START);
+
+        JTableHeader headerListLeft = table.getTableHeader();
+        headerListLeft.setBackground(Color.cyan);
+        JScrollPane paneLeft = new JScrollPane(table);
+
         table.setBackground(Color.white);
-        table.setPreferredSize(new Dimension(240, 140));
-        content.add(table, BorderLayout.CENTER);
+        left.setBackground(Color.white);
+        right.setBackground(Color.white);
+        content.setBackground(Color.white);
+        left.add(paneLeft, BorderLayout.PAGE_START);
+        content.add(left);
 
         ab1.setBackground(Color.white);
         ab2.setBackground(Color.white);
@@ -197,26 +229,84 @@ public class Createdevis extends KContainer {
         jLabel3.setBackground(Color.white);
         ab4.setBackground(Color.white);
 
-        linedisc.setPreferredSize(new Dimension(80, 20));
 
-        newRow.setText("");
-        selectedNom.add(newRow);
-        newPrice.setText("");
-        selectedNom.add(newPrice);
+
+        Object[][] data = {};
+        Object[] header = {"Id", "Libellé", "prix", "Qté"};
+        modelSelectedNom = new DefaultTableModel(data, header);
+        selectedNomList = new JTable(modelSelectedNom);
+        selectedNomList.setPreferredScrollableViewportSize(new Dimension(500, 270));
+        selectedNomList.setFillsViewportHeight(true);
+        selectedNomList.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+
+
+        JTableHeader headerList = selectedNomList.getTableHeader();
+        headerList.setBackground(Color.cyan);
+        JScrollPane pane = new JScrollPane(selectedNomList);
+        pane.setBorder(BorderFactory.createMatteBorder(0, 70, 0, 100, Color.white));
+
+        right.add(icon, BorderLayout.NORTH);
+        right.add(title, BorderLayout.NORTH);
+        right.add(retour, BorderLayout.NORTH);
+
+        right.add(b1, BorderLayout.AFTER_LAST_LINE);
+        right.add(b2, BorderLayout.AFTER_LAST_LINE);
+
+        right.add(pane, BorderLayout.CENTER);
+
         newTotal.setText("Total : 0 €");
-        ab1.add(icon);
-        ab1.add(title);
-        ab1.add(retour);
-        ab1.add(b1);
-        ab1.add(ab2);
-        ab1.add(b2);
-        ab1.add(selectedNom);
-        ab1.add(linedisc, BorderLayout.CENTER);
-        ab1.add(newTotal);
-        ab1.add(ab3);
-        ab1.add(ab4);
-        ab1.add(jLabel3);
-        content.add(ab1);
+
+        JLabel LinediscLbl = new JLabel("Remise (en %)");
+        LinediscLbl.setBorder(BorderFactory.createMatteBorder(0, 300, 0, 10, Color.white));
+        linedisc.setPreferredSize(new Dimension(50, 20));
+
+        newTotal.setBorder(BorderFactory.createMatteBorder(0, 300, 0, 0, Color.white));
+
+        JPanel divTotal = new JPanel();
+        divTotal.setPreferredSize(new Dimension(650, 25));
+        JPanel divLinedisc = new JPanel();
+        divLinedisc.setPreferredSize(new Dimension(650, 25));
+
+        divLinedisc.add(LinediscLbl);
+        divLinedisc.add(linedisc);
+        divTotal.add(newTotal);
+        right.add(divLinedisc);
+        right.add(divTotal);
+        right.add(ab4);
+
+        content.add(right);
+
+        selectedNomList.addKeyListener(new KeyListener() {
+            public void actionPerformed(KeyListener ime) {
+                
+            }
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                Integer i = 0;
+                BigDecimal price = new BigDecimal(0);
+                while (i < modelSelectedNom.getRowCount()) {
+                    BigDecimal priceNom = new BigDecimal(modelSelectedNom.getValueAt(i, 2).toString());
+                    BigDecimal qtYNom = new BigDecimal(modelSelectedNom.getValueAt(i, 3).toString());
+                    System.out.println("cdgsgs");
+                    i = i + 1;
+                    BigDecimal tralala = qtYNom.multiply(priceNom);
+                    price = price.add(tralala);
+                }
+
+                newTotal.setText("Total : " + String.valueOf(price) + " €");
+            }
+        });
 
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,16 +318,23 @@ public class Createdevis extends KContainer {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 String oldTotalString = newTotal.getText();
                 Integer linediscValue = Integer.parseInt(linedisc.getText());
-                double newLinediscValue = (((double) linediscValue) / 100);
+                BigDecimal newLinediscValue = new BigDecimal((((double) linediscValue) / 100));
                 oldTotalString = oldTotalString.replace("Total : ", "");
                 oldTotalString = oldTotalString.replace(" €", "");
-                Integer oldTotal = Integer.parseInt(oldTotalString);
-                Integer theNewTotal = (int) Math.round(oldTotal - (oldTotal * newLinediscValue));
-                newTotal.setText("Total : " + Integer.toString(theNewTotal) + " €");
+                BigDecimal oldTotal = new BigDecimal(oldTotalString);
+                
+                    BigDecimal tralala = oldTotal.multiply(newLinediscValue);
+                    oldTotal = oldTotal.subtract(tralala).round(MathContext.DECIMAL32);
+                    
+                newTotal.setText("Total : " + oldTotal + " €");
             }
         });
 
+
+
         table.addMouseListener(new MouseAdapter() {
+            int flag = 0;
+
             public void mousePressed(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     JTable target = (JTable) e.getSource();
@@ -257,9 +354,15 @@ public class Createdevis extends KContainer {
                     BigDecimal oldTotal = new BigDecimal(oldTotalString);
                     BigDecimal theNewTotal = oldTotal.add(price);
                     String oldRows = newRow.getText();
-                    String newRowContent = oldRows + "     -" + idNumnum + ";" + numnum + "  " + String.valueOf(price) + " €";
-                    newRow.setText(newRowContent);
+                    Nomenclature nomToAdd = new Nomenclature();
+                    nomToAdd.setNomid(idNumnum);
+                    nomToAdd.setNomlib(numnum);
+                    nomToAdd.setNomprix(price);
+                    flag = flag + 1;
                     newTotal.setText("Total : " + String.valueOf(theNewTotal) + " €");
+
+                    modelSelectedNom.insertRow(0, new Object[]{idNumnum, numnum, price, 1});
+
                 }
                 if (e.getClickCount() == 1) {
                     //----> Affichage du detail de la nom ?
@@ -307,27 +410,35 @@ public class Createdevis extends KContainer {
 
                 HibernateConnection connection = HibernateConnection.getInstance();
                 Query query = connection.getSession().createSQLQuery("SELECT last_value FROM devis_devid_seq");
-                int idLastDevis = ((BigInteger) query.uniqueResult()).intValue();
+                int idLastDevis = Integer.valueOf(((BigInteger) query.uniqueResult()).intValue());
                 System.out.println("b");
-                System.out.println(newRow.getText());
-                String str[] = newRow.getText().split("-");
 
-                for (int i = 1; i < str.length; i = i + 2) {
-                    System.out.println(str[i]);
-                    System.out.println(str.length);
-                    String idCutString[] = str[i].split(";");
-                    System.out.println(idCutString.length);
-                    System.out.println("c");
-                    if (idCutString.length > 0) {
-                        System.out.println(idCutString.length);
-                        System.out.println("d");
-                        System.out.println(idCutString[0]);
-                        connection.getSession().createSQLQuery("INSERT INTO devnom (devid, devnomqte, nomid) VALUES ("+idLastDevis+", 1, " + idCutString[0] + ")")
-                                .executeUpdate();
+                System.out.println(selectedNomList.getRowCount());
+
+                System.out.println("fdgdg");
+                System.out.println(modelSelectedNom.getRowCount());
+                int i = 0;
+                Session mysession = connection.getSession();
+                Transaction transaction = null;
+                try {
+                    while (i < modelSelectedNom.getRowCount()) {
+                        transaction = mysession.beginTransaction();
+                        int idNom = (int) modelSelectedNom.getValueAt(i, 0);
+                        int qtYNom = (int) modelSelectedNom.getValueAt(i, 3);
+                        String muery = "INSERT INTO devnom (devid, devnomqte, nomid) VALUES (" + idLastDevis + ", " + qtYNom + ", " + idNom + ")";
+                        System.out.println(muery);
+                        mysession.createSQLQuery(muery).executeUpdate();
+                        System.out.println("cdgsgs");
+                        i = i + 1;
+                        mysession.getTransaction().commit();
                     }
-
-
+                    mysession.flush();
+                } catch (HibernateException e) {
+                    transaction.rollback();
+                    e.printStackTrace();
+                } finally {
                 }
+                System.out.println("cdgsoooooooooogs");
                 JOptionPane.showMessageDialog(null, "Votre devis a été ajouté avec succès.");
             }
 

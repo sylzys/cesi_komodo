@@ -24,6 +24,7 @@ import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
 import tableModels.DevisModel;
+import tableModels.NomenclatureModel;
 import tableModels.NomenclaturelistModel;
 import views.ClientDetail;
 import views.CommandeDetail;
@@ -73,6 +74,9 @@ public class TableDispatcher extends JPanel {
             case ALERTE:
                 model = new AlerteClientModel(id);
                 break;
+            case NOMENCLATURE:
+                model = new NomenclatureModel(id);
+                break;
             
         }
 
@@ -92,6 +96,8 @@ public class TableDispatcher extends JPanel {
             case COMMANDE:
                 break;
             case DEMANDE:
+                break;
+            case NOMENCLATURE:
                 break;
             case DEVIS:
                 // Desactive la taille automatique des colonnes
@@ -243,6 +249,8 @@ public class TableDispatcher extends JPanel {
                             fen2.RenewContener(devislist.getPanel());
                             break;
                         case NOMENCLATURELIST:
+                            break;
+                        case NOMENCLATURE:
                             break;
                         case ALERTE:
                             Fenetre.getInstance().RenewCmd((Integer) tm.getValueAt(row, 999));
