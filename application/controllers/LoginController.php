@@ -105,11 +105,13 @@ class LoginController extends Zend_Controller_Action
 				$login = $form->getValue('login');
 				$password = $form->getValue('password');
 				$dbAdapter = Zend_Registry::get('dbAdapter');
-				$authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+                                
+                                $bcrypt = new Application_Controller_Plugin_Bcrypt();
+         
+                                $authAdapter = new Application_Model_Common_Bcrypt($dbAdapter);
 				$authAdapter->setTableName('client')
 				->setIdentityColumn('clilogin')
 				->setCredentialColumn('climdp')
-				->setCredentialTreatment('MD5(?)')
 				->setIdentity($login)
 				->setCredential($password);
 				$o_Select = $authAdapter->getDbSelect();

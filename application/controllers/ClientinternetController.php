@@ -171,15 +171,16 @@ class ClientinternetController extends Zend_Controller_Action {
                     }
                     else
                     {
-                        $o_Client->setClimdp($password);
+                        $bcrypt = new Application_Controller_Plugin_Bcrypt();
+                        $hash = $bcrypt->HashPassword($password);
+                        $o_Client->setClimdp($hash);
                         $o_Client->setCliacces(true);
                         $o_Client->setCliurltmp("");
                         $o_ClientMapper->save($o_Client);
-                        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+                        $authAdapter = new Application_Model_Common_Bcrypt($dbAdapter);
                         $authAdapter->setTableName('client')
                         ->setIdentityColumn('clilogin')
                         ->setCredentialColumn('climdp')
-                        //->setCredentialTreatment('MD5(?)')
                         ->setIdentity($login)
                         ->setCredential($password);
                         $o_Select = $authAdapter->getDbSelect();
@@ -202,10 +203,10 @@ class ClientinternetController extends Zend_Controller_Action {
                 $formData = $this->_request->getPost();
                 if ($form->isValid ( $formData ))
                 {
-                    $this->request->email = $form->getValue('email');
+                    $email = $form->getValue('email');
                     $o_ClientMapper = new Application_Model_ClientMapper();
                     $o_Select = $o_ClientMapper->getDbTable()->select();
-                    $o_Select->where("climail ='".$this->request->email."'");
+                    $o_Select->where("climail ='".$email."'");
                     $tab_Clients = $o_ClientMapper->fetchAll($o_Select);
                     if (count($tab_Clients) == 0) {
                         $error_auth = true;
@@ -214,9 +215,9 @@ class ClientinternetController extends Zend_Controller_Action {
                     else {
                         foreach ($tab_Clients as $cli) {
                             $o_Client = $cli;
-                            $this->view->welcome = "Une URL de réinitialisation du mot de passe a été envoyée à votre adresse<br />".$this->request->email;
+                            $this->view->welcome = "Une URL de réinitialisation du mot de passe a été envoyée à votre adresse<br />".$email;
                             $this->view->uuid = $this->gen_uuid();
-                            $this->send_mail($this->view->uuid, $this->request->email, $cli->getClinom());
+                            $this->send_mail($this->view->uuid, $email, $cli->getClinom());
                             $o_Client->setCliurltmp($this->view->uuid);
                             $o_Client->setCliacces(false);
                             $o_ClientMapper->save($o_Client);
