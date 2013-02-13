@@ -6,6 +6,7 @@ package views;
 
 //import com.google.gdata.client.calendar.CalendarService;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.json.GenericJson;
 import com.google.api.client.util.DateTime;
 
 
@@ -14,6 +15,8 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import controllers.GoogleCalendar;
 import controllers.UserActif;
+import instances.ClientInstance;
+import instances.HibernateConnection;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,12 +26,17 @@ import java.io.IOException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import models.Agenda;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.plaf.DatePickerAddon;
 import org.jdesktop.swingx.plaf.DatePickerUI;
@@ -230,14 +238,43 @@ public class Evenement extends KContainer {
                     String title = "Nouvel Evènement";     
 
                     Calendar calendar = null;
-                    try {
+                    
+                    //test si la connection internet est valide. 
+                    if(HibernateConnection.online == true )
+                    {
+                        try {
                         calendar = gc.getCalendars("My agenda");
                         gc.addEvent(calendar, event);
 
-                    } catch (IOException ex) {
-                        Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+                        }catch (IOException ex) {
+                            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
                     }
-                    JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
+                    else
+                    {
+                        //on doit sauvegarder les evenement pour les synchroniser plus tard. 
+                        Agenda agenda = new Agenda();
+                        agenda.setAgedeb(startDate);
+                        agenda.setAgefin(endDate);
+                        agenda.setAgeintitule(txt_title.getText());
+                        agenda.setAgedesc(txt_description.getText());                                                
+                        agenda.setUtiid(Fenetre.getInstance().user.getId());
+                        Session session = HibernateConnection.getSession();
+                        Transaction tx = session.beginTransaction();
+                        session.save(agenda);      
+                        tx.commit();        
+                        
+                        JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
+                        
+                    }
+                    txt_description.setText("");
+                    txt_title.setText("");
+                    txt_heure_debut.setText("");
+                    txt_heure_fin.setText("");
+                    datepicker_debut.setDate(null);
+                    datepicker_fin.setDate(null);
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
                 }
