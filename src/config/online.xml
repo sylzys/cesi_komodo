@@ -20,6 +20,7 @@
   <mapping class="models.Suivdossier"/>
   <mapping class="models.Demande"/>
   <mapping class="models.Devis"/>
+  <mapping class="models.Devnom"/>
   <mapping class="models.Commande"/>
   <mapping class="models.DetailCommande"/>
   <mapping class="models.GetAlerte"/>

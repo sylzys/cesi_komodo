@@ -61,7 +61,6 @@ public class Fenetre extends JFrame {
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setResizable(false);
             boolean login_ok = false;
- 
 
             while (!login_ok)
             {

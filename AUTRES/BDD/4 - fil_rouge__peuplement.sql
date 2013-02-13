@@ -264,15 +264,15 @@ CLISIREN,
 CLIUNIQID
 )
 VALUES (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 'FRANCE', '0235458745', '0235458748', 'autoconstruct@outlook.com', '65z7841fr25', 55000, 'Paul Arthur', '100', 'client1', MD5( 'client1' ) , '1', false,'2012-03-14','2012-03-14', '784FDFFD54', 'gfdgdfgfd56454'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoConstruct', '11 rue Harry Cover', '76000', 'Rouen', 'FRANCE', '0235458745', '0235458748', 'autoconstruct@outlook.com', '65z7841fr25', 55000, 'Paul Arthur', '100', 'client1', '$2a$08$rD7Wc8ZcpS1mAUYVtNc9HeXQtL.BWAHj1k3ZhrryH0psz0hV88VJ.' , '1', false,'2012-03-14','2012-03-14', '784FDFFD54', 'gfdgdfgfd56454'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 'FRANCE', '0154789875', '0154789878', 'autord@outlook.com', '78r45125gt', 65478, 'Yves Dupont', '100', 'client2', MD5( 'client2' ) , '1', false,'2012-11-21','2012-03-14','SDSDQ5465465','gfhgfh5464564fghgfh'
+nextval('client_cliid_seq'), '1', '1', 'SA', 'AutoRD', '25 rue Henry', '75000', 'Paris', 'FRANCE', '0154789875', '0154789878', 'autord@outlook.com', '78r45125gt', 65478, 'Yves Dupont', '100', 'client2', '$2a$08$v77AvZb/8uU2D2RjsLzsU.8v7l5KD/L4sZ0btaFSmLjt5STAwS8Sm' , '1', false,'2012-11-21','2012-03-14','SDSDQ5465465','gfhgfh5464564fghgfh'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 'FRANCE', '0154789856', '0154789858', 'renot@outlook.com', '54dfd2155415', 78545, 'Dohn Carlos', '100', 'client3', MD5( 'client3' ) , '1', false,'2012-02-08','2012-03-14', 'JHJK564564','fdgfffffff2222222'
+nextval('client_cliid_seq'), '1', '1', 'SARL', 'Renot', '54 route de Paris', '76320', 'Saint Pierre', 'FRANCE', '0154789856', '0154789858', 'renot@outlook.com', '54dfd2155415', 78545, 'Dohn Carlos', '100', 'client3', '$2a$08$4Q14EysXIPbjXlED0wfloO3Z9NbV7JRFVdeeVj/siykKRAnJJmUNK' , '1', false,'2012-02-08','2012-03-14', 'JHJK564564','fdgfffffff2222222'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 'FRANCE', '0358745689', '0358745688', 'autosas@outlook.com', '4578dfre2145', 10005465, 'Jean Allezy', '100', 'client4', MD5( 'client4' ) , '1', false,'2012-09-17','2012-03-14','DZS54654','gdfdfdsddd5545674'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'AutoSAS', '198 rue Jean Bon', '27100', 'Val de Reuil', 'FRANCE', '0358745689', '0358745688', 'autosas@outlook.com', '4578dfre2145', 10005465, 'Jean Allezy', '100', 'client4', '$2a$08$mr5kWTQSpSB9sGDyqkeqm.4/Z9Fjt287bbHhSD0xd7proGAwokgwe' , '1', false,'2012-09-17','2012-03-14','DZS54654','gdfdfdsddd5545674'
 ), (
-nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 'FRANCE', '0254879852', '0254879858', 'prodsas@outlook.com', '75845fg5454', 6554654, 'Pierre Antoine', '100', 'client5', MD5( 'client5' ), '1', false,'2012-05-16','2012-03-14','ESDRZE56465','dgfdfgfdgfdgfdgfd'
+nextval('client_cliid_seq'), '1', '1', 'SAS', 'ProdSAS', '32 route de Dieppe', '76430', 'Montville', 'FRANCE', '0254879852', '0254879858', 'prodsas@outlook.com', '75845fg5454', 6554654, 'Pierre Antoine', '100', 'client5', '$2a$08$C7s58Q7P5H2XF6M9HB7Dbu2yNrgeWRY9u44QbgZikVhPJRzqA8P0S', '1', false,'2012-05-16','2012-03-14','ESDRZE56465','dgfdfgfdgfdgfdgfd'
 );
 
 INSERT INTO fournisseur (

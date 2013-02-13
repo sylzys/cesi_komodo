@@ -85,7 +85,7 @@ public class DevisDetail extends KContainer {
         statut.setFont(h);
                 
         top.setPreferredSize(new Dimension(700, 200));
-        middle.setPreferredSize(new Dimension(250, 170));
+        middle.setPreferredSize(new Dimension(300, 170));
         bottom.setPreferredSize(new Dimension(500, 30));
         sousTitre.setPreferredSize(new Dimension(700, 235));
         title.setPreferredSize(new Dimension(400, 25));
@@ -113,7 +113,7 @@ public class DevisDetail extends KContainer {
         String etat = dvis.getDevetat();
         title.setText("Détails du devis n°" + dvis.getDevid());
         jLabel7.setText("Montant total : " + dvis.getDevprix() + "€");
-        jLabel8.setText("Créé le : " + dvis.getDevdate());
+        jLabel8.setText("Créé le : " + dvis.getDevdate() + " Titre : " + dvis.getDevtitre() + " Description : " + dvis.getDevdesc());
         refuse.setText("Refus du devis");
         validate.setText("Validation du devis");
         Retour.setText("Retour à la demande");
@@ -142,7 +142,7 @@ public class DevisDetail extends KContainer {
         
         TableDispatcher ld = new TableDispatcher();
         ld.setBackground(Color.white);
-        ld.setPreferredSize(new Dimension(240, 140));
+        ld.setPreferredSize(new Dimension(290, 140));
         middle.add(ld.showtable(ModelesTables.NOMENCLATURELIST, dvis.getDevid()), BorderLayout.CENTER);
 
         bottom.add(Retour, BorderLayout.CENTER);

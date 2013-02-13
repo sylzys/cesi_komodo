@@ -15,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
 import models.Client;
 import models.Demande;
 import models.Nomenclature;
-import models.Nomenclaturelist;
+import models.Nomenclature;
 
 /**
  *
@@ -27,12 +27,12 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
     {
         "Libélé",  "Description", "Prix"
     };
-    private List<Nomenclaturelist> nomenclatures;
+    private List<Nomenclature> nomenclatures;
 
     public AllnomenclaturelistModel() {
         super();
         AllnomenclaturelistInstance AllnomclaturelisteInstance = AllnomenclaturelistInstance.getInstance();
-        nomenclatures = AllnomclaturelisteInstance.GetNomenclatureslist();
+        nomenclatures = AllnomclaturelisteInstance.GetNomenclatures();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
                 return nomenclatures.get(rowIndex).getNomprix();
 
             case 999:
-                return nomenclatures.get(rowIndex).getDevid();
+                return nomenclatures.get(rowIndex).getNomid();
 
             default:
                 throw new IllegalArgumentException();
@@ -89,7 +89,7 @@ public class AllnomenclaturelistModel extends AbstractTableModel {
         }
     }
 
-    public List<Nomenclaturelist> getNomenclatureslist() {
+    public List<Nomenclature> getNomenclatureslist() {
         return nomenclatures;
     }
 }
