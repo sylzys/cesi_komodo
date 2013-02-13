@@ -209,12 +209,12 @@ class ClientinternetController extends Zend_Controller_Action {
                     $tab_Clients = $o_ClientMapper->fetchAll($o_Select);
                     if (count($tab_Clients) == 0) {
                         $error_auth = true;
-                        $message = "Aucun compte n'est associé à cette adresse.<br /> Merci de contacter notre commercial";
+                        $message = "<font color='red'>Aucun compte n'est associé à cette adresse.<br /> Merci de contacter notre commercial</font>";
                     }
                     else {
                         foreach ($tab_Clients as $cli) {
                             $o_Client = $cli;
-                            $this->view->welcome = "Une URL de réinitialisation du mot de passe a été envoyée à votre adresse<br />".$this->request->email;
+                            $this->view->welcome = "<font color='green'>Une URL de réinitialisation du mot de passe a été envoyée à votre adresse<br /></font>".$this->request->email;
                             $this->view->uuid = $this->gen_uuid();
                             $this->send_mail($this->view->uuid, $this->request->email, $cli->getClinom());
                             $o_Client->setCliurltmp($this->view->uuid);
@@ -258,17 +258,17 @@ class ClientinternetController extends Zend_Controller_Action {
             );
     }
 
-    public function send_mail($uuid, $mail, $nom){
-        $boundary = "-----=".md5(uniqid(rand()));
-        $header= "MIME-Version: 1.0\r\n";
-        $header .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-        $header .= "\r\n";
-        $msg="\r\n";
-        $msg .= "--$boundary\r\n";
-        $msg .= "Content-Type: text/html; charset=\"iso-8859-1\"\r\n";
-        $msg .= "Content-Transfer-Encoding:8bit\r\n";
-        $msg .= "\r\n";
-        $msg .= "<html>
+    public function send_mail($uuid, $mail_addr, $nom){
+        $config = array('ssl' => 'tls', 'port' => 587, 'auth' => 'login',
+            'username' => 'plastprod76',
+            'password' => 'filrouge');
+
+        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
+
+        $mail = new Zend_Mail('UTF-8');
+        date_default_timezone_set('Europe/Berlin');
+
+        $msg = "<html>
         <body>
         <div id='content' style='font-size:17px;'>
 
@@ -276,17 +276,31 @@ class ClientinternetController extends Zend_Controller_Action {
         Bonjour ".$nom.",<br /><br />
         Votre demande de réinitialisation de mot de passe a bien été prise en compte.<br />
         Afin de redéfinir votre mot de passe, merci de vous rendre sur l'adresse suivante: <br /><br />
-        http://http://cesi2.dev/clientinternet/register?url=".$uuid."<br /><br />
+        http://cesi2.dev/clientinternet/register?url=".$uuid."<br /><br />
         Cordialement,
         Plast' Prod
-
         </div>
         </body></html>";
-        $msg .= "\r\n";
-        $msg .= "--$boundary\r\n";
+        //if no HTML on mail, msg in txt, just in case
+        $msg_txt ="Réinitialisation du mot de passe\r\n\r\n
+        Bonjour ".$nom.",\r\n\r\n
+        Votre demande de réinitialisation de mot de passe a bien été prise en compte.\r\n
+        Afin de redéfinir votre mot de passe, merci de vous rendre sur l'adresse suivante: \r\n\r\n
+        http://cesi2.dev/clientinternet/register?url=".$uuid."\r\n\r\n
+        Cordialement,
+        Plast' Prod";
+        // $msg .= "\r\n";
+        // $msg .= "--$boundary\r\n";
         $expediteur   = "Plast'Prod<plast@prod.fr>";
         $reponse      = $expediteur;
-        mail($mail, "Demande de réinitialisation de mot de passe", $msg, "Reply-to: $expediteur\r\nFrom: $expediteur\r\n".$header);
+
+        $mail->setBodyText($msg_txt);
+        $mail->setBodyHtml($msg);
+        $mail->setFrom('contact@plastprod.com', 'PlastProd');
+        $mail->addTo("sylzys@gmail.com", $nom);//$mail_addr, $nom);
+        $mail->setSubject('Votre demande de mot de passe');
+        $mail->send($transport);
+        //mail($mail, "Demande de réinitialisation de mot de passe", $msg, "Reply-to: $expediteur\r\nFrom: $expediteur\r\n".$header);
     }
 
 }
