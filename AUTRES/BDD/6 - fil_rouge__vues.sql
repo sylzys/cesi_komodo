@@ -96,7 +96,8 @@ SELECT
 "public".nomenclature.nomdes,
 "public".nomenclature.nomprix,
 "public".nomenclature.nomid, 
-"public".devnom.devid
+"public".devnom.devid, 
+"public".devnom.devnomqte
 FROM (devnom JOIN nomenclature ON ((nomenclature.nomid = devnom.nomid)))
 ;
 
