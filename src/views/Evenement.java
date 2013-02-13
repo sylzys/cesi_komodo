@@ -12,7 +12,6 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.toedter.calendar.JDateChooser;
 import controllers.GoogleCalendar;
 import controllers.UserActif;
 import java.awt.BorderLayout;
