@@ -284,8 +284,8 @@ public class Recherche extends KContainer {
                     btnGoToCmd.setId(client.getCliid());
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
-                            //ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            //Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
+                            ButtonData btn_temp = (ButtonData)arg0.getSource();
+                            Fenetre.getInstance().RenewClientdDetail(btn_temp.getId());
                         }
                     });
                     panelClient.add(btnGoToCmd);
