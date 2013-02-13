@@ -330,7 +330,7 @@ public class Creation extends KContainer {
         String msg = "<html>Cher client,\n\n"
                 + "Afin de pouvoir suivre vos commandes chez Plast'Prod, voici votre login:<b>"
                 + cli.getClilogin() + "</b>\n\nPour finaliser la création de votre accès, merce de créer votre mot"
-                + "de passe en vous rendant à l'adresse ci-dessous:\n\nhttp://cesi2/dev/client/register/?url=" + cli.getCliurltmp()
+                + " de passe en vous rendant à l'adresse ci-dessous:\n\nhttp://cesi2.dev/clientinternet/register/?url=" + cli.getCliurltmp()
                 + "\n\nCordialement,\n\nL'équipe Plast'Prod</html>";
         SendEmail send = new SendEmail(msg, "Votre accès à l'interface client Plast'Prod", cli_mail.getText());
         JOptionPane.showMessageDialog(null, str, "Ajout du client", JOptionPane.INFORMATION_MESSAGE);

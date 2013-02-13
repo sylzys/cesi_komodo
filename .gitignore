@@ -4,3 +4,5 @@ build/
 nbproject/
 .lighttpd.conf
 library/
+library/
+nbproject/
