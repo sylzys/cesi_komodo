@@ -30,6 +30,7 @@ import models.Client;
 import models.Commande;
 import models.Demande;
 import models.DetailDevis;
+import models.Devis;
 import models.Matiere;
 import models.Nomenclature;
 import models.Nommat;
@@ -253,7 +254,8 @@ public class Recherche extends KContainer {
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
                             ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            Fenetre.getInstance().RenewDetailsDevis(btn_temp.getId());
+                            //Fenetre.getInstance().RenewDetailsDevis(btn_temp.getId());
+                            makePdfDevis(Integer.toString(btn_temp.getId()));
                         }
                     });
                     panelDevis.add(btnGoToCmd);
@@ -351,7 +353,7 @@ public class Recherche extends KContainer {
                             ButtonData btn_temp = (ButtonData)arg0.getSource();
                             btn_temp.getId();
                             //Fenetre.getInstance().RenewCmd(btn_temp.getId());
-                            makePdf( Integer.toString(btn_temp.getId()));
+                            makePdfNomenclature(Integer.toString(btn_temp.getId()));
                         }
                     });
                     panelNom.add(btnGoToCmd);
@@ -383,7 +385,8 @@ public class Recherche extends KContainer {
                     btnGoToCmd.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent arg0) {
                             ButtonData btn_temp = (ButtonData)arg0.getSource();
-                            Fenetre.getInstance().RenewAlert(btn_temp.getId());
+                           // Fenetre.getInstance().RenewAlert(btn_temp.getId());
+                           Fenetre.getInstance().RenewDemandeDetail(btn_temp.getId());
                         }
                     });
                     panelDem.add(btnGoToCmd);
@@ -409,11 +412,35 @@ public class Recherche extends KContainer {
         Fenetre.getInstance().RenewContener(panel);      
     }
     
-    private void makePdf(String id)
+    
+    private void makePdfDevis(String id)
+    {
+        Session session = HibernateConnection.getSession();        
+        List<Devis> list = session.createSQLQuery("SELECT * FROM devis WHERE devid = " +id + ";" ).addEntity(Devis.class).list();
+        
+        Devis devis = (Devis)list.get(0);
+        MyPdf mypdf = new MyPdf(Integer.toString(devis.getDevid()));
+        try
+        {
+            mypdf.addTitlePage(devis.getDevdate(),Integer.toString(devis.getDevid()),devis.getDevdesc());	
+            mypdf.createQrcode(Integer.toString(devis.getDevid()));            
+            mypdf.addRow("Prix : " + devis.getDevid());
+            mypdf.document.close();
+            
+        }
+        catch(Exception e)
+        {
+            e.getStackTrace();
+        }
+        
+        savePdf(mypdf.getFILE());
+        
+    }
+    private void makePdfNomenclature(String id)
     {
     
         Session session = HibernateConnection.getSession();        
-        List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomid ="+id+ " ").addEntity(Nomenclature.class).list();               
+        List<Nomenclature>list = session.createSQLQuery("SELECT * From nomenclature WHERE nomid ="+id+ ";").addEntity(Nomenclature.class).list();               
         Nomenclature nomen = list.get(0);
         List<Nommat>listNomMat = session.createSQLQuery("SELECT * From nommat WHERE nomid ="+id+ " ").addEntity(Nommat.class).list();
         
@@ -448,48 +475,30 @@ public class Recherche extends KContainer {
             e.getStackTrace();
         }
         
-        File file = new File(mypdf.getFILE()); 
-		if (Desktop.isDesktopSupported())
-		{
-		    Desktop desktop = Desktop.getDesktop();
-		     try
-		        {
-		            desktop.open(file);
-		        }
-		        catch (Exception e)
-		        {
-		            e.printStackTrace();
-		        }
-		   
-		}
-		else
-		    System.err.println("Desktop not supported");
+        savePdf(mypdf.getFILE());
+       
         
         
         
     }
+    
+    private void savePdf(String path)
+    {
+         File file = new File(path); 
+        if (Desktop.isDesktopSupported())
+        {
+            Desktop desktop = Desktop.getDesktop();
+             try
+                {
+                    desktop.open(file);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
-//    private List<Commande> search(String query)
-//    {
-//
-//        Session session = HibernateConnection.getSession();
-//        FullTextSession fullTextSession = Search.getFullTextSession(session);
-//
-//        QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(models.Commande.class).get();
-//        org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("comtitre","comdesc").matching(query).createQuery();
-//
-//        // wrap Lucene query in a javax.persistence.Query
-//        org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery,models.Commande.class);
-//        List<Commande> commandes = fullTextQuery.list();
-//        //fullTextSession.close();
-//        return commandes;
-//    }
-//    private static void doIndex() throws InterruptedException {
-//        Session session = HibernateConnection.getSession();
-//
-//        FullTextSession fullTextSession = Search.getFullTextSession(session);
-//        fullTextSession.createIndexer().startAndWait();
-//
-//        //fullTextSession.close();
-//    }
+        }
+        else
+            System.err.println("Desktop not supported");
+    }
 }
