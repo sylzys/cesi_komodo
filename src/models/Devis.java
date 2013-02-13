@@ -13,6 +13,12 @@ public class Devis implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int devid;
 
+    @Column(name="devtitre", columnDefinition="VARCHAR(254)", nullable=true)
+    private String devtitre ;
+    
+    @Column(name="devdesc", columnDefinition="VARCHAR(500)", nullable=true)
+    private String devdesc ;
+    
     @Column(name="devetat", columnDefinition="VARCHAR(50)", nullable=true)
     private String devetat ;
     
@@ -49,6 +55,22 @@ public class Devis implements Serializable {
 
     public void setDevid(int devid) {
         this.devid = devid;
+    }
+
+    public String getDevtitre() {
+        return devtitre;
+    }
+
+    public void setDevtitre(String devtitre) {
+        this.devtitre = devtitre;
+    }
+
+    public String getDevdesc() {
+        return devdesc;
+    }
+
+    public void setDevdesc(String devdesc) {
+        this.devdesc = devdesc;
     }
 
     

@@ -24,6 +24,7 @@ import tableModels.CommandeModel;
 import tableModels.DemandeModel;
 import tableModels.DemandelistModel;
 import tableModels.DevisModel;
+import tableModels.NomenclatureModel;
 import tableModels.NomenclaturelistModel;
 import views.ClientDetail;
 import views.CommandeDetail;
@@ -73,6 +74,9 @@ public class TableDispatcher extends JPanel {
             case ALERTE:
                 model = new AlerteClientModel(id);
                 break;
+            case NOMENCLATURE:
+                model = new NomenclatureModel(id);
+                break;
             
         }
 
@@ -92,6 +96,8 @@ public class TableDispatcher extends JPanel {
             case COMMANDE:
                 break;
             case DEMANDE:
+                break;
+            case NOMENCLATURE:
                 break;
             case DEVIS:
                 // Desactive la taille automatique des colonnes
@@ -141,7 +147,7 @@ public class TableDispatcher extends JPanel {
                 // Desactive la taille automatique des colonnes
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 // Fixe la dimension du tableau
-                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                table.setPreferredScrollableViewportSize(new Dimension(280, 140));
                 // on definit l'index de la colonne et la largeur sohaitée
                  colIndex = 0;
                  colWidth = 80;
@@ -155,13 +161,17 @@ public class TableDispatcher extends JPanel {
                  colWidth3 = 40;
                  col3 = table.getColumnModel().getColumn(colIndex3);         
                 col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
                  
                 break;     
            case ALLNOMENCLATURELIST:
                 // Desactive la taille automatique des colonnes
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 // Fixe la dimension du tableau
-                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                table.setPreferredScrollableViewportSize(new Dimension(280, 140));
                 // on definit l'index de la colonne et la largeur sohaitée
                  colIndex = 0;
                  colWidth = 80;
@@ -175,6 +185,10 @@ public class TableDispatcher extends JPanel {
                  colWidth3 = 40;
                  col3 = table.getColumnModel().getColumn(colIndex3);         
                 col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
                  
                 break;
            case ALERTE:
@@ -243,6 +257,8 @@ public class TableDispatcher extends JPanel {
                             fen2.RenewContener(devislist.getPanel());
                             break;
                         case NOMENCLATURELIST:
+                            break;
+                        case NOMENCLATURE:
                             break;
                         case ALERTE:
                             Fenetre.getInstance().RenewCmd((Integer) tm.getValueAt(row, 999));

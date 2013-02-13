@@ -18,8 +18,8 @@ import org.hibernate.Transaction;
 public class AllnomenclaturelistInstance {
 
     private static AllnomenclaturelistInstance instance;
-    private List<Nomenclaturelist> nomenclaturelists;
-    private Nomenclaturelist nomenclaturelist;
+    private List<Nomenclature> nomenclaturelists;
+    private Nomenclature nomenclaturelist;
 
     /**
      * Constructeur prive
@@ -42,12 +42,12 @@ public class AllnomenclaturelistInstance {
         return instance;
     }
 
-    public synchronized List<Nomenclaturelist> GetNomenclatureslist() {
+    public synchronized List<Nomenclature> GetNomenclatures() {
         chargerDepuisBaseDeDonnees();
         return nomenclaturelists;
     }
     
-    public synchronized void setNomenclatureslists(Nomenclaturelist nmc) {
+    public synchronized void setNomenclatures(Nomenclature nmc) {
         this.nomenclaturelist = nmc;
     }
     
@@ -63,7 +63,7 @@ public class AllnomenclaturelistInstance {
         if (nomenclaturelists == null)
         {
             //return;
-            nomenclaturelists = new ArrayList<Nomenclaturelist>();
+            nomenclaturelists = new ArrayList<Nomenclature>();
         }
         else
         {
@@ -71,7 +71,7 @@ public class AllnomenclaturelistInstance {
         }
 
         HibernateConnection connection = HibernateConnection.getInstance();
-        String sql = "from Nomenclaturelist ";
+        String sql = "from Nomenclature ";
 
         try
         {

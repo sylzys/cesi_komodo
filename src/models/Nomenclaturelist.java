@@ -22,6 +22,9 @@ public class Nomenclaturelist {
 
     @Column(name="devid", columnDefinition="INTEGER", nullable=true)
     private int devid ;
+            
+    @Column(name="devnomqte", columnDefinition="INTEGER", nullable=true)
+    private int devnomqte ;
     
     
     public int getNomid() {
@@ -62,6 +65,14 @@ public class Nomenclaturelist {
 
     public void setDevid(int devid) {
         this.devid = devid;
+    }
+
+    public int getDevnomqte() {
+        return devnomqte;
+    }
+
+    public void setDevnomqte(int devnomqte) {
+        this.devnomqte = devnomqte;
     }
     
       

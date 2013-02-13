@@ -201,7 +201,7 @@ create table CLIENT (
    CLIDG                VARCHAR(100)         null,
    CLIETAT              INT4                 null,
    CLILOGIN             CHAR(50)             null,
-   CLIMDP               CHAR(32)             null,
+   CLIMDP               CHAR(60)             null,
    CLIACCES             BOOL                 null,
    CLISUPPR             BOOL                 null,
    CLIDTELOG            DATE                 null,
