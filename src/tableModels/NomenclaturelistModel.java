@@ -24,7 +24,7 @@ public class NomenclaturelistModel extends AbstractTableModel {
 
     private final String[] entetes =
     {
-        "Libélé",  "Description", "Prix"
+        "Libélé",  "Description", "Prix", "Qté"
     };
     private List<Nomenclaturelist> nomenclatures;
 
@@ -64,6 +64,8 @@ public class NomenclaturelistModel extends AbstractTableModel {
                 
             case 2:
                 return nomenclatures.get(rowIndex).getNomprix();
+            case 3:
+                return nomenclatures.get(rowIndex).getDevnomqte();
 
             case 999:
                 return nomenclatures.get(rowIndex).getDevid();
@@ -84,6 +86,8 @@ public class NomenclaturelistModel extends AbstractTableModel {
             case 1:
                 return String.class;
             case 2:
+                return Integer.class;
+            case 3:
                 return Integer.class;
             default:
                 return Object.class;

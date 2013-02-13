@@ -390,7 +390,7 @@ public class Createdevis extends KContainer {
             dvis.setDevprix(prix);
             dvis.setDevsuppr(false);
             String titre = Intitule.getText();
-            String desc = newTotal.getText();
+            String desc = Description.getText();
             dvis.setDemandeid(id);
             dvis.setDevtitre(titre);
             dvis.setDevdesc(desc);
@@ -423,8 +423,9 @@ public class Createdevis extends KContainer {
                 try {
                     while (i < modelSelectedNom.getRowCount()) {
                         transaction = mysession.beginTransaction();
-                        int idNom = (int) modelSelectedNom.getValueAt(i, 0);
-                        int qtYNom = (int) modelSelectedNom.getValueAt(i, 3);
+                        Integer idNom = Integer.parseInt(modelSelectedNom.getValueAt(i, 0).toString());
+                        Integer qtYNom = Integer.parseInt(modelSelectedNom.getValueAt(i, 3).toString());
+                        
                         String muery = "INSERT INTO devnom (devid, devnomqte, nomid) VALUES (" + idLastDevis + ", " + qtYNom + ", " + idNom + ")";
                         System.out.println(muery);
                         mysession.createSQLQuery(muery).executeUpdate();

@@ -147,7 +147,7 @@ public class TableDispatcher extends JPanel {
                 // Desactive la taille automatique des colonnes
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 // Fixe la dimension du tableau
-                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                table.setPreferredScrollableViewportSize(new Dimension(280, 140));
                 // on definit l'index de la colonne et la largeur sohaitée
                  colIndex = 0;
                  colWidth = 80;
@@ -161,13 +161,17 @@ public class TableDispatcher extends JPanel {
                  colWidth3 = 40;
                  col3 = table.getColumnModel().getColumn(colIndex3);         
                 col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
                  
                 break;     
            case ALLNOMENCLATURELIST:
                 // Desactive la taille automatique des colonnes
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
                 // Fixe la dimension du tableau
-                table.setPreferredScrollableViewportSize(new Dimension(240, 140));
+                table.setPreferredScrollableViewportSize(new Dimension(280, 140));
                 // on definit l'index de la colonne et la largeur sohaitée
                  colIndex = 0;
                  colWidth = 80;
@@ -181,6 +185,10 @@ public class TableDispatcher extends JPanel {
                  colWidth3 = 40;
                  col3 = table.getColumnModel().getColumn(colIndex3);         
                 col3.setPreferredWidth(colWidth3);
+                 colIndex4 = 3;
+                 colWidth4 = 40;
+                 col4 = table.getColumnModel().getColumn(colIndex4);         
+                col4.setPreferredWidth(colWidth4);
                  
                 break;
            case ALERTE:
