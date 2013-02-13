@@ -171,15 +171,16 @@ class ClientinternetController extends Zend_Controller_Action {
                     }
                     else
                     {
-                        $o_Client->setClimdp($password);
+                        $bcrypt = new Application_Controller_Plugin_Bcrypt();
+                        $hash = $bcrypt->HashPassword($password);
+                        $o_Client->setClimdp($hash);
                         $o_Client->setCliacces(true);
                         $o_Client->setCliurltmp("");
                         $o_ClientMapper->save($o_Client);
-                        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+                        $authAdapter = new Application_Model_Common_Bcrypt($dbAdapter);
                         $authAdapter->setTableName('client')
                         ->setIdentityColumn('clilogin')
                         ->setCredentialColumn('climdp')
-                        //->setCredentialTreatment('MD5(?)')
                         ->setIdentity($login)
                         ->setCredential($password);
                         $o_Select = $authAdapter->getDbSelect();
