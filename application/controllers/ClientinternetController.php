@@ -14,6 +14,15 @@ class ClientinternetController extends Zend_Controller_Action {
     public function indexAction() {
         $this->_redirect($this->baseUrl . '/clientinternet/viewcommands');
     }
+    
+    public function satisfactionAction() {
+        
+        $clientMapper = new Application_Model_ClientMapper();
+
+        $clientRow = $clientMapper->find($this->_session->cliid);
+
+        $this->view->client = $clientRow;
+    }
 
     public function viewcommandsAction() {
         $clientMapper = new Application_Model_ClientMapper();
@@ -37,6 +46,10 @@ class ClientinternetController extends Zend_Controller_Action {
         if($commandes != null){
             $this->view->commands = $commandes;
         }
+        $resultCountDmd = $db->query('SELECT Count(commande.comid) as total FROM commande
+        INNER JOIN demande ON commande.demandeid = demande.demandeid
+        WHERE commande.cometat = 100 AND demande.cliid = ' . $this->_session->cliid . '');
+        $this->view->totalCmd = $resultCountDmd->fetch();
     }
     public function testcommandeAction(){
 
