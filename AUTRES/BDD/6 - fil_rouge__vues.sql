@@ -13,7 +13,7 @@ FROM commande AS c , client AS l , interlocuteur AS i , utilisateur AS u , deman
 WHERE c.interid = i.interid AND c.demandeid = d.demandeid AND d.cliid = l.cliid AND d.utiid = u.utiid;
 
 CREATE OR REPLACE VIEW detaildevis AS 
-SELECT d.devid, d.devdate, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
+SELECT d.devid, d.devdate, d.devetat, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
 l.clilogin,  l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel, i.intersuppr
 FROM devis d, client l, interlocuteur i
 WHERE d.interid = i.interid AND i.cliid = l.cliid;
@@ -105,3 +105,6 @@ CREATE OR REPLACE VIEW getreporting AS
 SELECT e.enqid, e.utiid, e.interid, i.interuniqid, c.cliid, c.cliuniqid, e.enqdos, e.enqiddos, e.enqdte, e.enqint, e.enqdesc, e.enqpos, e.enqtype, e.enquniqid
 FROM enquete e, interlocuteur i, client c
 WHERE e.interid = i.interid AND i.cliid = c.cliid AND e.enqsuppr = false AND e.enqtype = false;
+
+CREATE OR REPLACE VIEW getreportcount AS
+SELECT COUNT(*), cliid, enqpos FROM getreporting GROUP BY enqdte, cliid, enqpos ORDER BY enqdte DESC LIMIT 10;

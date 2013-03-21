@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
-/* Date de création :  06/02/2013 11:15:36                      */
+/* Date de création :  21/03/2013 07:50:44                      */
 /*==============================================================*/
 
 
@@ -854,6 +854,36 @@ PROFID
 );
 
 /*==============================================================*/
+/* Table : SATISFACTION                                         */
+/*==============================================================*/
+create table SATISFACTION (
+   SATID                SERIAL               not null,
+   CLIID                INT4                 not null,
+   Q1                   INT4                 null,
+   Q2                   INT4                 null,
+   Q3                   INT4                 null,
+   Q4                   INT4                 null,
+   Q5                   INT4                 null,
+   SATCOM               VARCHAR(2000)        null,
+   SATDATE              DATE                 null,
+   constraint PK_SATISFACTION primary key (SATID)
+);
+
+/*==============================================================*/
+/* Index : SATISFACTION_PK                                      */
+/*==============================================================*/
+create unique index SATISFACTION_PK on SATISFACTION (
+SATID
+);
+
+/*==============================================================*/
+/* Index : SATCLI_FK                                            */
+/*==============================================================*/
+create  index SATCLI_FK on SATISFACTION (
+CLIID
+);
+
+/*==============================================================*/
 /* Table : STOCK                                                */
 /*==============================================================*/
 create table STOCK (
@@ -1219,6 +1249,11 @@ alter table PROFACTION
 alter table PROFACTION
    add constraint FK_PROFACTI_PROFACTIO_PROFIL foreign key (PROFID)
       references PROFIL (PROFID)
+      on delete restrict on update restrict;
+
+alter table SATISFACTION
+   add constraint FK_SATISFAC_SATCLI_CLIENT foreign key (CLIID)
+      references CLIENT (CLIID)
       on delete restrict on update restrict;
 
 alter table STOCK

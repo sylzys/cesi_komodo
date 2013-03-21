@@ -252,21 +252,25 @@ public class Createdevis extends KContainer {
         right.add(b1, BorderLayout.AFTER_LAST_LINE);
         right.add(b2, BorderLayout.AFTER_LAST_LINE);
 
+        pane.setBackground(Color.white);
         right.add(pane, BorderLayout.CENTER);
 
         newTotal.setText("Total : 0 €");
 
         JLabel LinediscLbl = new JLabel("Remise (en %)");
         LinediscLbl.setBorder(BorderFactory.createMatteBorder(0, 300, 0, 10, Color.white));
+        LinediscLbl.setBackground(Color.white);
         linedisc.setPreferredSize(new Dimension(50, 20));
 
         newTotal.setBorder(BorderFactory.createMatteBorder(0, 300, 0, 0, Color.white));
-
+        newTotal.setBackground(Color.white);
+        
         JPanel divTotal = new JPanel();
         divTotal.setPreferredSize(new Dimension(650, 25));
         JPanel divLinedisc = new JPanel();
         divLinedisc.setPreferredSize(new Dimension(650, 25));
-
+        divLinedisc.setBackground(Color.white);
+        divTotal.setBackground(Color.white);
         divLinedisc.add(LinediscLbl);
         divLinedisc.add(linedisc);
         divTotal.add(newTotal);
@@ -298,7 +302,6 @@ public class Createdevis extends KContainer {
                 while (i < modelSelectedNom.getRowCount()) {
                     BigDecimal priceNom = new BigDecimal(modelSelectedNom.getValueAt(i, 2).toString());
                     BigDecimal qtYNom = new BigDecimal(modelSelectedNom.getValueAt(i, 3).toString());
-                    System.out.println("cdgsgs");
                     i = i + 1;
                     BigDecimal tralala = qtYNom.multiply(priceNom);
                     price = price.add(tralala);
@@ -347,7 +350,6 @@ public class Createdevis extends KContainer {
                     String numnum = (String) tm.getValueAt(row, 0);
                     Integer idNumnum = (Integer) tm.getValueAt(row, 999);
                     BigDecimal price = new BigDecimal(tm.getValueAt(row, 2).toString());
-                    //  String thename = table.getColumnName(numnum);
                     String oldTotalString = newTotal.getText();
                     oldTotalString = oldTotalString.replace("Total : ", "");
                     oldTotalString = oldTotalString.replace(" €", "");

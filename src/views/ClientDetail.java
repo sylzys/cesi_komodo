@@ -6,6 +6,7 @@ package views;
 
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
+import classes.SimpleBarChart;
 import classes.Uniqid;
 import controllers.Synchro;
 import controllers.TableDispatcher;
@@ -22,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -338,10 +340,52 @@ public class ClientDetail extends KContainer {
         //JPanel pour accordeons
 
         //suivi satisfaction
+        double[] value = new double[5];
+        String[] languages = new String[5];
+        value[0] = 9;
+        languages[0] = "Transports";
+            value[1] = 7;
+        languages[1] = "Service commercial";
+        value[2] = 3;
+        languages[2] = "Qualité";
+        value[3] = 2;
+        languages[3] = "Rapidité";
+        value[4] = 5;
+        languages[4] = "Satisfaction globale";
+        SimpleBarChart test = new SimpleBarChart(value, languages, "Satisfaction client (dernières cmdes)");
+        
+        
+        double[] value2 = new double[5];
+        String[] languages2 = new String[5];
+        value2[0] = 7;
+        languages2[0] = "Transports";
+            value2[1] = 7;
+        languages2[1] = "Service commercial";
+        value2[2] = 9;
+        languages2[2] = "Qualité";
+        value2[3] = 10;
+        languages2[3] = "Rapidité";
+        value2[4] = 8;
+        languages2[4] = "Satisfaction globale";
+        SimpleBarChart test2 = new SimpleBarChart(value2, languages2, "Satisfaction client (moyenne)");
+        
         JPanel suivi_satisfaction = new JPanel();
-        suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-        suivi_satisfaction.setPreferredSize(new Dimension(120, 15));
+        suivi_satisfaction.setSize(1000, 320);
+        test.setSize(410, 300);
+        test2.setSize(410, 300);
+        
+        suivi_satisfaction.setLayout(new BoxLayout(suivi_satisfaction, BoxLayout.LINE_AXIS));
+        suivi_satisfaction.add(Box.createRigidArea(new Dimension(20, 0)));
+        suivi_satisfaction.add(test);
+        suivi_satisfaction.add(Box.createRigidArea(new Dimension(10, 0)));
+        suivi_satisfaction.add(test2);
         bottom.add(suivi_satisfaction);
+        
+        
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        
+        
+        
         //bottom.add(Box.createVerticalStrut(10));
 
         //alertes

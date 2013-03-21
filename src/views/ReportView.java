@@ -11,7 +11,9 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -31,19 +33,17 @@ import sun.org.mozilla.javascript.internal.regexp.SubString;
 public class ReportView extends JPanel{
     private JPanel pnlcontent = new JPanel();
     private JPanel pnlinfos = new JPanel();
-    private JPanel pnlcenter = new JPanel();
-    private JPanel pnltopcenter = new JPanel();
-    private JPanel pnlmiddlecenter = new JPanel();
-    private JPanel pnltopwest = new JPanel();
-    private JPanel pnlmiddlewest = new JPanel();
+    private JPanel pnlmsg = new JPanel();
+    private JPanel pnlbutton = new JPanel();
+    private JPanel pnltopinfos = new JPanel();
+    private JPanel pnltopmsg = new JPanel();
+    private JPanel pnltopbutton = new JPanel();
+    private JPanel pnlmiddleinfos = new JPanel();
+    private JPanel pnlmiddlemsg = new JPanel();
+    private JPanel pnlmiddlebutton = new JPanel();
     private JLabel lblinfos = new JLabel("<html><p color=#561513><b>Informations</b></p></html>");   
     private JLabel lblmsg = new JLabel("<html><center><p color=#561513><b>Derniers rapports</b></p></center></html>");
-    private JLabel lblstat = new JLabel("<html><center><p color=#561513><b>Statut</b></p></center></html>");
-    private JPanel pnlmsg = new JPanel();
-    private JPanel pnlgraph = new JPanel();
-    private JPanel pnlbutton = new JPanel();
-    private JPanel pnltopbutton = new JPanel();
-    private JPanel pnlcenterbutton = new JPanel();
+    private JLabel lblicon = new JLabel("");
     private JLabel imgicon = new JLabel(new ImageIcon("ressources/images/iconreport.png"));
     private JLabel imgdetail = new JLabel(new ImageIcon("ressources/images/reportdetail.png"));
     public ReportView()
@@ -53,55 +53,66 @@ public class ReportView extends JPanel{
     public JPanel initPanel(Client cli)
     {
         ReportingInstance ri = ReportingInstance.getInstance(); 
+        BigDecimal total = ri.totalcmd(cli.getCliid());
+        int nbdevok = ri.nbdevok(cli.getCliid());
+        int nbcmdend = ri.nbcmdend(cli.getCliid());
         int nbdmd = ri.nbOcc(cli.getCliid(), "DetailsDemande", "cliid");
         int nbdvi = ri.nbOcc(cli.getCliid(), "DetailDevis", "cliid");
         int nbcmd = ri.nbOcc(cli.getCliid(), "DetailCommande", "cliid");
         int nbreport = ri.nbOcc(cli.getCliid(), "GetReporting", "cliid");
+        String img = "";
+        Boolean etat = ri.etat(cli.getCliid());
+        if(nbreport != 0 && etat == true)
+        {
+            img = "<img src=\"file:ressources/images/fleche_vert.png\">";
+        }
+        else if(nbreport != 0 && etat == false)
+        {
+            img = "<img src=\"file:ressources/images/fleche_rouge.png\">";
+        }
+        else if(nbreport == 0)
+        {
+            img = "<p color=red>Aucun rapport</p>";
+        }
         List<GetReporting> lstgp = ri.GetReporting("cliid",cli.getCliid(),5);
         imgdetail.setToolTipText("Visualiser tous les rapports");
         imgicon.setToolTipText("Saisir un rapport");
-        pnlinfos.setPreferredSize(new Dimension(200, 185));      
-        pnlcenter.setPreferredSize(new Dimension(695, 185));      
-        pnltopcenter.setPreferredSize(new Dimension(685, 20));
-        pnlmiddlecenter.setPreferredSize(new Dimension(695, 175));       
-        pnlgraph.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.black));       
-        lblmsg.setPreferredSize(new Dimension(130, 20));
-        lblstat.setPreferredSize(new Dimension(160, 20));
-        pnlmsg.setPreferredSize(new Dimension(350, 165));  
-        pnlgraph.setPreferredSize(new Dimension(330, 165));
-        pnlbutton.setPreferredSize(new Dimension(80, 165));   
-        pnltopwest.setPreferredSize(new Dimension(190, 25));
-        pnltopwest.setLayout(new FlowLayout(0,60,0));
-        pnlmiddlewest.setPreferredSize(new Dimension(190, 175));
-        pnltopbutton.setPreferredSize(new Dimension(70, 65));
-        pnlcenterbutton.setPreferredSize(new Dimension(70, 70));
-        pnlmiddlewest.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.black));
+        pnlinfos.setPreferredSize(new Dimension(350, 185));       
+        pnltopinfos.setPreferredSize(new Dimension(350, 25));
+        pnlmiddleinfos.setPreferredSize(new Dimension(350, 160));    
+        pnlmsg.setPreferredSize(new Dimension(550, 185));       
+        pnltopmsg.setPreferredSize(new Dimension(550, 25));
+        pnlmiddlemsg.setPreferredSize(new Dimension(550, 160)); 
+        pnlbutton.setPreferredSize(new Dimension(80, 185));       
+        pnltopbutton.setPreferredSize(new Dimension(80, 25));
+        pnlmiddlebutton.setPreferredSize(new Dimension(80, 160)); 
+        pnlmiddleinfos.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.black));   
         pnlcontent.setLayout(new BoxLayout(pnlcontent, BoxLayout.LINE_AXIS));
         pnlcontent.setLayout(new BorderLayout());            
-        pnlcontent.setPreferredSize(new Dimension(980, 180));
+        pnlcontent.setPreferredSize(new Dimension(980, 180));       
         imgicon.setPreferredSize(new Dimension(60, 60));
         imgdetail.setPreferredSize(new Dimension(60, 60));
         imgicon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         imgdetail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        pnltopwest.add(lblinfos);
-        pnlmiddlewest.add(new JLabel("<html><table><tr><td><p>Nb. Demande(s) : </p></td><td><p color=blue>"+nbdmd+"</p></td></tr>"
-                + "<tr><td><p>Nb. Devis(s) : </p></td><td><p color=blue>"+nbdvi+"</p></td></tr>"
-                + "<tr><td><p>Nb. Commande(s) : </p></td><td><p color=blue>"+nbcmd+"</p></td></tr>"
-                + "<tr><td><p>Nb. Report(s) : </p></td><td><p color=blue>"+nbreport+"</p></td></tr>"
+        pnltopinfos.add(lblinfos);
+        pnlmiddleinfos.add(new JLabel("<html><table><tr><td><p>Nb. Demande(s) : </p></td><td><p color=blue>"+nbdmd+"</p></td>"
+                + "<td><p> --- &nbsp;&nbsp; Total CA ("+Calendar.getInstance().get(Calendar.YEAR)+") : </p></td><td><p color=green> &nbsp;"+total+" €</p></td></tr>"
+                + "<tr><td><p>Nb. Devis(s) : </p></td><td><p color=blue>"+nbdvi+"</p></td>"
+                + "<td><p> --- &nbsp;&nbsp; Acceptés(s) : </p></td><td><p color=green> &nbsp;"+nbdevok+"</p></td></tr>"
+                + "<tr><td><p>Nb. Commande(s) : </p></td><td><p color=blue>"+nbcmd+"</p></td>"
+                + "<td><p> --- &nbsp;&nbsp; Livrée(s) : </p></td><td><p color=green> &nbsp;"+nbcmdend+"</p></td></tr>"
+                + "<tr><td><p>Nb. Report(s) : </p></td><td><p color=blue>"+nbreport+"</p></td>"
+                + "<td><p> --- &nbsp;&nbsp; Etat (10 dern.) : </p></td><td>"+img+"</td></tr>"
                 + "</table></html>"));
-        pnlinfos.add(pnltopwest, BorderLayout.NORTH);
-        pnlinfos.add(pnlmiddlewest, BorderLayout.CENTER);
+        pnltopmsg.add(lblmsg);
+        pnltopbutton.add(lblicon);
+        pnlinfos.add(pnltopinfos, BorderLayout.NORTH);
+        pnlinfos.add(pnlmiddleinfos, BorderLayout.CENTER);
+        pnlmsg.add(pnltopmsg, BorderLayout.NORTH);
+        pnlmsg.add(pnlmiddlemsg, BorderLayout.CENTER);
+        pnlbutton.add(pnltopbutton, BorderLayout.NORTH);
+        pnlbutton.add(pnlmiddlebutton, BorderLayout.CENTER);
         
-        pnltopcenter.setLayout(new FlowLayout(0,150,0)); 
-        
-        pnltopcenter.add(lblstat);
-        pnltopcenter.add(lblmsg);
-        
-        pnlmiddlecenter.add(pnlgraph, BorderLayout.WEST);
-        pnlmiddlecenter.add(pnlmsg, BorderLayout.EAST);
-        
-        pnlcenter.add(pnltopcenter, BorderLayout.NORTH);
-        pnlcenter.add(pnlmiddlecenter, BorderLayout.CENTER);
         if(!lstgp.isEmpty())
         {
             for(GetReporting grp : lstgp)
@@ -111,7 +122,7 @@ public class ReportView extends JPanel{
                 JLabel lbltitle = new JLabel();
                 JLabel lbldesc = new JLabel();
                 JLabel lbldte = new JLabel();
-                pnltitle.setPreferredSize(new Dimension(350, 22));
+                pnltitle.setPreferredSize(new Dimension(500, 22));
                 boolean statut = grp.isEnqpos();
                 if(statut == true)
                 {
@@ -124,9 +135,9 @@ public class ReportView extends JPanel{
                 String enqdetail = grp.getEnqdesc();
                 String enqdesc = grp.getEnqdesc();
                 int i = enqdesc.length();
-                if(enqdesc.length() > 29)
+                if(i > 49)
                 {
-                    enqdesc = enqdesc.substring(0, 26);
+                    enqdesc = enqdesc.substring(0, 46);
                     lbldesc.setText("<html><p>"+enqdesc+" (...)</p></html>");
                 }
                 else
@@ -145,7 +156,7 @@ public class ReportView extends JPanel{
                 lbltitle.setPreferredSize(new Dimension(85, 20));
                 lbldesc.setFont(fontdesc);
                 lbldesc.setToolTipText(enqdetail);
-                lbldesc.setPreferredSize(new Dimension(165, 20));
+                lbldesc.setPreferredSize(new Dimension(300, 20));
                 lbldte.setFont(fontdte);
                 lbldte.setText("<html><p>"+enqdte+"</p></html>");
                 lbldte.setPreferredSize(new Dimension(55, 20));
@@ -153,25 +164,20 @@ public class ReportView extends JPanel{
                 pnltitle.add(lbltitle);
                 pnltitle.add(lbldesc);
                 pnltitle.add(lbldte);
-                pnlmsg.add(pnltitle);
+                pnlmiddlemsg.add(pnltitle);
                 
             }
-           pnlmsg.add(new JLabel("<html><p><b></b></p></html>")); 
         }
         else
         {
-           pnlmsg.add(new JLabel("<html><p color=red><b>Aucun report</b></p></html>"), BorderLayout.CENTER);  
+           pnlmiddlemsg.add(new JLabel("<html><p color=red><b>Aucun report</b></p></html>"), BorderLayout.CENTER);  
         }
-        
-        pnltopbutton.add(imgicon);
-        
-        pnlcenterbutton.add(imgdetail);
-        
-        pnlgraph.add(new JLabel("<html><p color=green><b></b></p></html>"), BorderLayout.NORTH);
+        pnlmiddlebutton.add(imgicon, BorderLayout.NORTH);     
+        pnlmiddlebutton.add(imgdetail, BorderLayout.SOUTH);
         pnlbutton.add(pnltopbutton, BorderLayout.NORTH);
-        pnlbutton.add(pnlcenterbutton, BorderLayout.CENTER);
+        pnlbutton.add(pnlmiddlebutton, BorderLayout.CENTER);
         pnlcontent.add(pnlinfos, BorderLayout.WEST);
-        pnlcontent.add(pnlcenter, BorderLayout.CENTER);
+        pnlcontent.add(pnlmsg, BorderLayout.CENTER);
         pnlcontent.add(pnlbutton, BorderLayout.EAST);
         
         return pnlcontent;

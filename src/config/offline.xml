@@ -34,5 +34,7 @@
   <mapping class="models.Unite"/>
   <mapping class="models.Enquete"/>
   <mapping class="models.GetReporting"/>
+  <mapping class="models.GetReportCount"/>
+  <mapping class="models.Satisfaction"/>
 </session-factory>
 </hibernate-configuration>
