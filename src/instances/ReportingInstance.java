@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -166,7 +167,7 @@ public class ReportingInstance {
     {
             try {
                 HibernateConnection connection = HibernateConnection.getInstance();             
-                Query query = connection.getSession().createSQLQuery("SELECT SUM(comprix) FROM detailcommande WHERE cliid=1 AND date_part('year', DATE(comdate)) = 2013");
+                Query query = connection.getSession().createSQLQuery("SELECT SUM(comprix) FROM detailcommande WHERE cliid=:cliid AND CAST(comdate AS VARCHAR(10)) LIKE '%"+Calendar.getInstance().get(Calendar.YEAR)+"%'");
                 query.setParameter("cliid", cliid);
                 Object result = query.uniqueResult();
                 if ( result != null )
@@ -184,5 +185,96 @@ public class ReportingInstance {
                 System.out.println(e.getMessage());
                 return new BigDecimal(0);
             }
+    }
+    public int nbdevok(int cliid)
+    {
+         try {
+                HibernateConnection connection = HibernateConnection.getInstance();             
+                Query query = connection.getSession().createSQLQuery("SELECT COUNT(*) FROM detaildevis WHERE cliid=:cliid AND devetat='Accepté'");
+                query.setParameter("cliid", cliid);
+                Object result = query.uniqueResult();
+                if ( result != null )
+                {
+                    int nb = Integer.parseInt(query.uniqueResult().toString());
+                    return nb;
+                }
+                else
+                {
+                   return 0;
+                }
+            }
+            catch(HibernateException e)
+            {
+                System.out.println(e.getMessage());
+                return 0;
+            }
+    }
+    public int nbcmdend(int cliid)
+    {
+         try {
+                HibernateConnection connection = HibernateConnection.getInstance();             
+                Query query = connection.getSession().createSQLQuery("SELECT COUNT(*) FROM detailcommande WHERE cliid=:cliid AND cometat=100");
+                query.setParameter("cliid", cliid);
+                Object result = query.uniqueResult();
+                if ( result != null )
+                {
+                    int nb = Integer.parseInt(query.uniqueResult().toString());
+                    return nb;
+                }
+                else
+                {
+                   return 0;
+                }
+            }
+            catch(HibernateException e)
+            {
+                System.out.println(e.getMessage());
+                return 0;
+            }
+    }
+    public boolean etat(int cliid)
+    {
+        int nbtrue = 0;
+        int nbfalse = 0;
+        boolean etat = false;
+        try {
+                HibernateConnection connection = HibernateConnection.getInstance();             
+                Query query = connection.getSession().createSQLQuery("SELECT COUNT(*) FROM getreportcount WHERE cliid=:cliid AND enqpos='f'");
+                query.setParameter("cliid", cliid);
+                Object result = query.uniqueResult();
+                if ( result != null )
+                {
+                    nbfalse = Integer.parseInt(query.uniqueResult().toString());
+                }
+                else
+                {
+                   nbfalse = 0;
+                }
+                query = connection.getSession().createSQLQuery("SELECT COUNT(*) FROM getreportcount WHERE cliid=:cliid AND enqpos='t'");
+                query.setParameter("cliid", cliid);
+                result = query.uniqueResult();
+                if ( result != null )
+                {
+                    nbtrue = Integer.parseInt(query.uniqueResult().toString());
+                }
+                else
+                {
+                   nbtrue = 0;
+                }
+                if(nbtrue >= nbfalse)
+                {
+                    etat = true;
+                }
+                else
+                {
+                    etat = false;
+                }
+            }
+            catch(HibernateException e)
+            {
+                System.out.println(e.getMessage());
+                etat = false;
+            }
+        return etat;
     }
 }
