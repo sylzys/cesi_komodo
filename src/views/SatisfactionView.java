@@ -24,7 +24,7 @@ public class SatisfactionView extends JPanel {
     public JPanel initPanel(Client cli) {
         JPanel suivi_satisfaction = new JPanel();
         suivi_satisfaction.setSize(820, 320);
-        
+       // suivi_satisfaction.setOpaque(false);
         
         double[] value = new double[5];
         String[] languages = new String[5];
@@ -56,6 +56,8 @@ public class SatisfactionView extends JPanel {
         SimpleBarChart test2 = new SimpleBarChart(value2, languages2, "Satisfaction client (moyenne)");
         test.setSize(410, 300);
         test2.setSize(410, 300);
+        test.setBackground(Color.white);
+        test2.setBackground(Color.white);
         test.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
         test2.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
         

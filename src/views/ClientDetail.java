@@ -340,6 +340,8 @@ public class ClientDetail extends KContainer {
         //JPanel pour accordeons
 
         //suivi satisfaction
+        
+        
         JPanel suivi_satisfaction = new JPanel();
         suivi_satisfaction.setSize(820, 320);
         
