@@ -11,7 +11,7 @@
     <div>
     
 	<?php 
-        if(($this->totalCmd['total'] / 2) > $this->totalSatisfaction['total']){
+        if(($this->totalCmd['total'] / 2) >= $this->totalSatisfaction['total']){
             echo '<a href="' . $this->baseUrl('clientinternet/satisfaction') . '" alt="Enquete de satisfaction" style="float:right;">> Enquête de satisfaction</a>';
         }
         
