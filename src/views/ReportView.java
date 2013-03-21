@@ -54,10 +54,26 @@ public class ReportView extends JPanel{
     {
         ReportingInstance ri = ReportingInstance.getInstance(); 
         BigDecimal total = ri.totalcmd(cli.getCliid());
+        int nbdevok = ri.nbdevok(cli.getCliid());
+        int nbcmdend = ri.nbcmdend(cli.getCliid());
         int nbdmd = ri.nbOcc(cli.getCliid(), "DetailsDemande", "cliid");
         int nbdvi = ri.nbOcc(cli.getCliid(), "DetailDevis", "cliid");
         int nbcmd = ri.nbOcc(cli.getCliid(), "DetailCommande", "cliid");
         int nbreport = ri.nbOcc(cli.getCliid(), "GetReporting", "cliid");
+        String img = "";
+        Boolean etat = ri.etat(cli.getCliid());
+        if(nbreport != 0 && etat == true)
+        {
+            img = "<img src=\"file:ressources/images/fleche_vert.png\">";
+        }
+        else if(nbreport != 0 && etat == false)
+        {
+            img = "<img src=\"file:ressources/images/fleche_rouge.png\">";
+        }
+        else if(nbreport == 0)
+        {
+            img = "<p color=red>Aucun rapport</p>";
+        }
         List<GetReporting> lstgp = ri.GetReporting("cliid",cli.getCliid(),5);
         imgdetail.setToolTipText("Visualiser tous les rapports");
         imgicon.setToolTipText("Saisir un rapport");
@@ -82,11 +98,11 @@ public class ReportView extends JPanel{
         pnlmiddleinfos.add(new JLabel("<html><table><tr><td><p>Nb. Demande(s) : </p></td><td><p color=blue>"+nbdmd+"</p></td>"
                 + "<td><p> --- &nbsp;&nbsp; Total CA ("+Calendar.getInstance().get(Calendar.YEAR)+") : </p></td><td><p color=green> &nbsp;"+total+" €</p></td></tr>"
                 + "<tr><td><p>Nb. Devis(s) : </p></td><td><p color=blue>"+nbdvi+"</p></td>"
-                + "<td><p> --- &nbsp;&nbsp; Acceptés(s) : </p></td><td><p color=green> &nbsp;"+nbdvi+"</p></td></tr>"
+                + "<td><p> --- &nbsp;&nbsp; Acceptés(s) : </p></td><td><p color=green> &nbsp;"+nbdevok+"</p></td></tr>"
                 + "<tr><td><p>Nb. Commande(s) : </p></td><td><p color=blue>"+nbcmd+"</p></td>"
-                + "<td><p> --- &nbsp;&nbsp; Livrée(s) : </p></td><td><p color=green> &nbsp;"+nbcmd+"</p></td></tr>"
+                + "<td><p> --- &nbsp;&nbsp; Livrée(s) : </p></td><td><p color=green> &nbsp;"+nbcmdend+"</p></td></tr>"
                 + "<tr><td><p>Nb. Report(s) : </p></td><td><p color=blue>"+nbreport+"</p></td>"
-                + "<td><p> --- &nbsp;&nbsp; Etat (20 dern.) : </p></td><td><img src=\"file:ressources/images/fleche_vert.png\"></td></tr>"
+                + "<td><p> --- &nbsp;&nbsp; Etat (10 dern.) : </p></td><td>"+img+"</td></tr>"
                 + "</table></html>"));
         pnltopmsg.add(lblmsg);
         pnltopbutton.add(lblicon);
