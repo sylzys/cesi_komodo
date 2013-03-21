@@ -37,18 +37,18 @@ public class SimpleBarChart extends JPanel {
         }
        // Dimension dim = 200;
         int clientWidth = 450;
-        int clientHeight = getHeight();
+        int clientHeight = 140;
         int barWidth = clientWidth / value.length;
-        Font titleFont = new Font("Arial", Font.BOLD, 15);
+        Font titleFont = new Font("Arial", Font.BOLD, 12);
         FontMetrics titleFontMetrics = graphics.getFontMetrics(titleFont);
-        Font labelFont = new Font("Arial", Font.PLAIN, 10);
+        Font labelFont = new Font("Arial", Font.PLAIN, 11);
         FontMetrics labelFontMetrics = graphics.getFontMetrics(labelFont);
         int titleWidth = titleFontMetrics.stringWidth(title);
         int q = titleFontMetrics.getAscent();
         int p = (clientWidth - titleWidth) / 2;
         graphics.setFont(titleFont);
         graphics.drawString(title, p, q);
-        int top = titleFontMetrics.getHeight();
+        int top = titleFontMetrics.getHeight() + 10;
         int bottom = labelFontMetrics.getHeight();
         if (maxValue == minValue) {
             return;
