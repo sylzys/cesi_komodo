@@ -10,7 +10,13 @@
 <div id="commandClient"> 
     <div>
     
-	<?php if($this->commands){ ?>
+	<?php 
+        if(($this->totalCmd['total'] / 2) > $this->totalSatisfaction['total']){
+            echo '<a href="' . $this->baseUrl('clientinternet/satisfaction') . '" alt="Enquete de satisfaction" style="float:right;">> Enquête de satisfaction</a>';
+        }
+        
+        
+        if($this->commands){ ?>
     <h6>
         Veuillez sélectionner une commande :
     </h6>

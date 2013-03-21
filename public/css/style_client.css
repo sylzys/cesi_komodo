@@ -16,14 +16,13 @@ html
 #main 
 {
     position:relative;
-    height: 600px;
     overflow: auto;
     border: #101010 2px solid;
     background-image: url('../images/noise.png');
     background-color: rgba(248, 245, 240, 0.65);
     width : 1082px;
     margin : 0 auto;
-    height : 700px;
+    min-height : 700px;
 }
 #clientBox
 {
@@ -43,7 +42,7 @@ html
 {
     float :left;
     width : 730px;
-    height: 620px;
+    min-height: 620px;
     border-radius: 10px;
     margin-top: 20px;
     margin-left : 20px;
@@ -194,4 +193,67 @@ margin-bottom: 10px;
     float:left;
     margin-right:10px;
     cursor:pointer;
+}
+
+
+
+#satisfaction #commandClient h2 {
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+#satisfaction #commandClient p {
+    font-size: 14px;
+    text-align: justify;
+    padding: 10px 0;
+}
+#satisfaction form {
+    width: 500px;
+    margin: 20px 75px;
+    float: left;
+}
+#satisfaction form label {
+    font-weight: bold;
+    clear: both;
+    margin-top: 20px;
+    float: left;
+}
+#satisfaction form small{
+    font-weight: normal;
+    font-style: italic;
+    font-size: 11px;
+    float:left;
+    margin-top: 20px;
+}
+#satisfaction form input{
+    float: left;
+    margin: 10px 45px;
+}
+#satisfaction form span{
+    float: left;
+    margin: 10px 0px;
+}
+#satisfaction form textarea {
+    float: left;
+    margin: 10px 0;
+    width: 475px;
+    height:100px;
+}
+#satisfaction #graph {
+    width: 40px;
+    height: 300px;
+    border: 1px solid rgb(199, 199, 199);
+    position:relative;
+    float: left;
+    float: right;
+    margin-top: 150px;
+    background-color: rgba(254, 254, 254, 0.86);
+}
+#satisfaction #graph #totalGraph{
+    width: 38px;
+    height: 150px;
+    border: 1px solid #fff;
+    position:absolute;
+    bottom: 0;
+    background-color: #fff;
 }
