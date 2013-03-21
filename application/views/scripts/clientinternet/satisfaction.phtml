@@ -26,82 +26,103 @@
             </label>
             <input type="range" id="supportDegres" class="range" min="0" max="10" step="1"/>
             <span id="supportDegres_span">5</span>
-            
+
             <label>
                 > A combien vous estimez-vous satifait des délais de fabrication ?* <br />
             </label>
             <input type="range" id="timeDegres" class="range" min="0" max="10" step="1"/>
             <span id="timeDegres_span">5</span>
-            
+
             <label>
                 > A combien vous estimez-vous satifait de nos produits ?* <br />
             </label>
             <input type="range" id="productDegres" class="range" min="0" max="10" step="1"/>
             <span id="productDegres_span">5</span>
-            
+
             <label>
                 > A combien vous estimez-vous satifait de nos services de livraison ?* <br />
             </label>
             <input type="range" id="transportDegres" class="range" min="0" max="10" step="1"/>
             <span id="transportDegres_span">5</span>
-            
+
             <label>
                 > Globalement à combien vous estimez-vous satifait de vos dernières commandes ?* <br />
             </label>
             <input type="range" id="satisDegres" class="range" min="0" max="10" step="1"/>
             <span id="satisDegres_span">5</span>
 
-                <small>* 0 si vous n'etes pas du tout satisfait et 10 pour une satisfaction totale</small>
+            <small>* 0 si vous n'etes pas du tout satisfait et 10 pour une satisfaction totale</small>
             <label>
                 Commentaires :
             </label>
-            <textarea></textarea>
-            <input type="submit" value="Enregistrer" style="margin-left: 0;"/>
+            <textarea id="commentsTxtArea"></textarea>
+            <input type="button" id="saveBtn" value="Enregistrer" style="margin-left: 0;"/>
         </form>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-            $('.range').change(function(){
-                var id = $(this).attr('id');
-                var value = $(this).val();
-                $('#'+id+'_span').html(value);
-                if(value <=4){
-                    $('#'+id+'_span').css('color', 'red');
-                }else{
-                    $('#'+id+'_span').css('color', 'black');
-                }
-                if(value >=6){
-                    $('#'+id+'_span').css('color', 'rgb(91, 206, 91)');
-                }
-                var total = 0;
-                $('.range').each(function(){
-                    total = total + parseInt($(this).val());
-                });
-                total = total * 6;
-                if(total >= 299){
-                    total = 298;
-                }
-                $('#totalGraph').css('height', total);
-                if(total >= 151){
-                    $('#totalGraph').css('background', 'rgb(204, 255, 176)');
-                }if(total > 200){
-                    $('#totalGraph').css('background', 'rgb(153, 236, 108)');
-                }
-                if(total > 250){
-                    $('#totalGraph').css('background', 'rgb(91, 206, 91)');
-                }if(total >= 130 && total <= 170){
-                    $('#totalGraph').css('background', '#fff');
-                }
-                if(total <= 149){
-                    $('#totalGraph').css('background', 'rgb(255, 165, 142)');
-                }
-                if(total < 100){
-                    $('#totalGraph').css('background', 'rgb(252, 102, 81)');
-                }
-                if(total < 50){
-                    $('#totalGraph').css('background', 'red');
-                }
+        var saveSatisfactionUrl = "<?php echo $this->baseUrl('/clientinternet/savesatisfaction');?>";
+        $('#saveBtn').click(function(){
+            var q1 = $('#supportDegres').val();
+            var q2 = $('#timeDegres').val();
+            var q3 = $('#productDegres').val();
+            var q4 = $('#transportDegres').val()
+            var q5 = $('#satisDegres').val();
+            var comment = $('#commentsTxtArea').val();
+            $.ajax({'url' : saveSatisfactionUrl,
+            data: {'comment':comment, 'q1':q1, 'q2': q2, 'q3': q3, 'q4': q4, 'q5': q5},
+            dataType: 'json',
+            type : 'POST',
+            success : function (data){
+                $(location).attr('href',"<?php echo $this->baseUrl('clientinternet/viewcommands') ?>");			
+            }	,    
+            error : function(data){
+                alert(data);
+            }
+        });
+        });
+        
+        $('.range').change(function(){
+            var id = $(this).attr('id');
+            var value = $(this).val();
+            $('#'+id+'_span').html(value);
+            if(value <=4){
+                $('#'+id+'_span').css('color', 'red');
+            }else{
+                $('#'+id+'_span').css('color', 'black');
+            }
+            if(value >=6){
+                $('#'+id+'_span').css('color', 'rgb(91, 206, 91)');
+            }
+            var total = 0;
+            $('.range').each(function(){
+                total = total + parseInt($(this).val());
             });
+            total = total * 6;
+            if(total >= 299){
+                total = 298;
+            }
+            $('#totalGraph').css('height', total);
+            if(total >= 151){
+                $('#totalGraph').css('background', 'rgb(204, 255, 176)');
+            }if(total > 200){
+                $('#totalGraph').css('background', 'rgb(153, 236, 108)');
+            }
+            if(total > 250){
+                $('#totalGraph').css('background', 'rgb(91, 206, 91)');
+            }if(total >= 130 && total <= 170){
+                $('#totalGraph').css('background', '#fff');
+            }
+            if(total <= 149){
+                $('#totalGraph').css('background', 'rgb(255, 165, 142)');
+            }
+            if(total < 100){
+                $('#totalGraph').css('background', 'rgb(252, 102, 81)');
+            }
+            if(total < 50){
+                $('#totalGraph').css('background', 'red');
+            }
+        });
     });
 </script>
