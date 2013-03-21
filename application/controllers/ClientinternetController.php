@@ -186,13 +186,14 @@ class ClientinternetController extends Zend_Controller_Action {
                         $o_Select = $authAdapter->getDbSelect();
                         $o_Select->where('clisuppr = false');
                         $o_Select->where('cliacces = true');
-                        $this->_redirect('clientinternet/index');
+                        $this->_redirect('clientinternet/');
 
                     }
 
                 }
 
             }
+
         }
         else if ($request->getParam('lost_password') != null){
             $this->view->welcome = "Bonjour. <br />Pour générer un nouveau mot de passe, merci d'entrer votre adresse email. Un lien vous sera envoyé rapidement.";
@@ -222,6 +223,7 @@ class ClientinternetController extends Zend_Controller_Action {
                             $o_Client->setCliacces(false);
                             $o_ClientMapper->save($o_Client);
                         }
+                        $this->_redirect('clientinternet/');
                     }
 
                 }
