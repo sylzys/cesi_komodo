@@ -2,6 +2,8 @@ package instances;
 
 import controllers.Synchro;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -159,5 +161,28 @@ public class ReportingInstance {
             System.out.println(e.getMessage());
             return 0;
         }
+    }
+    public BigDecimal totalcmd(int cliid)
+    {
+            try {
+                HibernateConnection connection = HibernateConnection.getInstance();             
+                Query query = connection.getSession().createSQLQuery("SELECT SUM(comprix) FROM detailcommande WHERE cliid=1 AND date_part('year', DATE(comdate)) = 2013");
+                query.setParameter("cliid", cliid);
+                Object result = query.uniqueResult();
+                if ( result != null )
+                {
+                    BigDecimal total = new BigDecimal(query.uniqueResult().toString());
+                    return total;
+                }
+                else
+                {
+                   return new BigDecimal(0);
+                }
+            }
+            catch(HibernateException e)
+            {
+                System.out.println(e.getMessage());
+                return new BigDecimal(0);
+            }
     }
 }

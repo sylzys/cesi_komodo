@@ -113,6 +113,8 @@ public class Replication extends Thread {
         commd.add("-t");
         commd.add("detailsdemande");
         commd.add("-t");
+        commd.add("satisfaction");
+        commd.add("-t");
         commd.add("getalerte");
         commd.add("-t");
         commd.add("getreporting");

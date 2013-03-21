@@ -11,6 +11,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +53,7 @@ public class ReportView extends JPanel{
     public JPanel initPanel(Client cli)
     {
         ReportingInstance ri = ReportingInstance.getInstance(); 
+        BigDecimal total = ri.totalcmd(cli.getCliid());
         int nbdmd = ri.nbOcc(cli.getCliid(), "DetailsDemande", "cliid");
         int nbdvi = ri.nbOcc(cli.getCliid(), "DetailDevis", "cliid");
         int nbcmd = ri.nbOcc(cli.getCliid(), "DetailCommande", "cliid");
@@ -59,7 +61,6 @@ public class ReportView extends JPanel{
         List<GetReporting> lstgp = ri.GetReporting("cliid",cli.getCliid(),5);
         imgdetail.setToolTipText("Visualiser tous les rapports");
         imgicon.setToolTipText("Saisir un rapport");
-        
         pnlinfos.setPreferredSize(new Dimension(350, 185));       
         pnltopinfos.setPreferredSize(new Dimension(350, 25));
         pnlmiddleinfos.setPreferredSize(new Dimension(350, 160));    
@@ -79,7 +80,7 @@ public class ReportView extends JPanel{
         imgdetail.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         pnltopinfos.add(lblinfos);
         pnlmiddleinfos.add(new JLabel("<html><table><tr><td><p>Nb. Demande(s) : </p></td><td><p color=blue>"+nbdmd+"</p></td>"
-                + "<td><p> --- &nbsp;&nbsp; Total CA ("+Calendar.getInstance().get(Calendar.YEAR)+") : </p></td><td><p color=green> &nbsp;"+nbdmd+" €</p></td></tr>"
+                + "<td><p> --- &nbsp;&nbsp; Total CA ("+Calendar.getInstance().get(Calendar.YEAR)+") : </p></td><td><p color=green> &nbsp;"+total+" €</p></td></tr>"
                 + "<tr><td><p>Nb. Devis(s) : </p></td><td><p color=blue>"+nbdvi+"</p></td>"
                 + "<td><p> --- &nbsp;&nbsp; Acceptés(s) : </p></td><td><p color=green> &nbsp;"+nbdvi+"</p></td></tr>"
                 + "<tr><td><p>Nb. Commande(s) : </p></td><td><p color=blue>"+nbcmd+"</p></td>"
@@ -87,7 +88,6 @@ public class ReportView extends JPanel{
                 + "<tr><td><p>Nb. Report(s) : </p></td><td><p color=blue>"+nbreport+"</p></td>"
                 + "<td><p> --- &nbsp;&nbsp; Etat (20 dern.) : </p></td><td><img src=\"file:ressources/images/fleche_vert.png\"></td></tr>"
                 + "</table></html>"));
-        System.out.println(System.getProperty("user.dir"));
         pnltopmsg.add(lblmsg);
         pnltopbutton.add(lblicon);
         pnlinfos.add(pnltopinfos, BorderLayout.NORTH);
@@ -119,7 +119,7 @@ public class ReportView extends JPanel{
                 String enqdetail = grp.getEnqdesc();
                 String enqdesc = grp.getEnqdesc();
                 int i = enqdesc.length();
-                if(enqdesc.length() > 49)
+                if(i > 49)
                 {
                     enqdesc = enqdesc.substring(0, 46);
                     lbldesc.setText("<html><p>"+enqdesc+" (...)</p></html>");
