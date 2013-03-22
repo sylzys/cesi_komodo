@@ -187,10 +187,11 @@ public class ReportView extends JPanel{
         pnlcontent.add(pnlmsg, BorderLayout.CENTER);
         pnlcontent.add(pnlbutton, BorderLayout.EAST);
         imgicon.addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent me) {
                     Fenetre fen = Fenetre.getInstance();
                     Reportadd re = new Reportadd(fen.user, cli);
-                    fen.RenewContener(re.initPanel());
+                    fen.RenewContener(re.getPanel());
                 }
             });
         

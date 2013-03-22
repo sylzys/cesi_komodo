@@ -1,10 +1,12 @@
 package instances;
 
 import controllers.Synchro;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 import models.Enquete;
 import models.GetReporting;
+import models.Interlocuteur;
 import models.ParamSync;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -276,5 +279,17 @@ public class ReportingInstance {
                 etat = false;
             }
         return etat;
+    }
+    public List<Interlocuteur> getinter(int cli)
+    {
+        List<Interlocuteur> inter = new ArrayList<Interlocuteur>();
+        HibernateConnection connection = HibernateConnection.getInstance();             
+        Query query = connection.getSession().createSQLQuery("SELECT * FROM interlocuteur WHERE cliid=:cliid AND intersuppr='f'").addEntity(Interlocuteur.class);
+        query.setParameter("cliid", cli);
+        Iterator it = query.list().iterator();
+        while (it.hasNext()) {
+            inter.add((Interlocuteur) it.next());
+        }
+        return inter;
     }
 }
