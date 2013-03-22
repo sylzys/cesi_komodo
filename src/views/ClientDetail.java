@@ -6,6 +6,7 @@ package views;
 
 import classes.BackgroundPanel;
 import classes.LinkLabelData;
+import classes.SimpleBarChart;
 import classes.Uniqid;
 import controllers.Synchro;
 import controllers.TableDispatcher;
@@ -22,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -338,10 +340,17 @@ public class ClientDetail extends KContainer {
         //JPanel pour accordeons
 
         //suivi satisfaction
+        
+        
         JPanel suivi_satisfaction = new JPanel();
-        suivi_satisfaction.setBorder(BorderFactory.createTitledBorder("Suivi Satisfaction"));
-        suivi_satisfaction.setPreferredSize(new Dimension(120, 15));
-        bottom.add(suivi_satisfaction);
+        suivi_satisfaction.setSize(820, 320);
+        
+        SatisfactionView sv = new SatisfactionView();
+        JPanel satisf = sv.initPanel(cli);
+        bottom.add(satisf);
+        
+        
+        
         //bottom.add(Box.createVerticalStrut(10));
 
         //alertes
