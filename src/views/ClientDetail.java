@@ -68,6 +68,7 @@ public class ClientDetail extends KContainer {
     private ClientInstance ci = ClientInstance.getInstance();
     private AlerteInstance ai = AlerteInstance.getInstance();
     CurrentDatas cd = CurrentDatas.getInstance();
+
     public ClientDetail(int id) {
         super();
         cli_id = id;
@@ -169,12 +170,13 @@ public class ClientDetail extends KContainer {
         hh.put("cliid", cli_id);
         hh.put("intersuppr", false);
         inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
+        System.out.println("inter ->" + inter.size());
         boolean chkinter = false;
         for (final Interlocuteur in : inter)
         {
-            if(HibernateConnection.online == true)
+            if (HibernateConnection.online == true)
             {
-                if(chkinter != true)
+                if (chkinter != true)
                 {
                     chkinter = sync.chkobject(in.getInteruniqid(), "models.Interlocuteur");
                 }
@@ -311,11 +313,11 @@ public class ClientDetail extends KContainer {
         JPanel name_ste = new JPanel();
         name_ste.setPreferredSize(new Dimension(100, 20));
         name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
-        if(HibernateConnection.online == true)
+        if (HibernateConnection.online == true)
         {
             HibernateConnection.openConnectionBisOff();
             boolean chkcli = sync.chkobject(cli.getCliuniqid(), "models.Client");
-            if(chkcli == true || chkinter == true)
+            if (chkcli == true || chkinter == true)
             {
                 name_ste.setPreferredSize(new Dimension(100, 40));
                 JLabel lblsync = new JLabel();
@@ -340,17 +342,17 @@ public class ClientDetail extends KContainer {
         //JPanel pour accordeons
 
         //suivi satisfaction
-        
-        
+
+
         JPanel suivi_satisfaction = new JPanel();
         suivi_satisfaction.setSize(820, 320);
-        
+
         SatisfactionView sv = new SatisfactionView();
         JPanel satisf = sv.initPanel(cli);
         bottom.add(satisf);
-        
-        
-        
+
+
+
         //bottom.add(Box.createVerticalStrut(10));
 
         //alertes
@@ -454,11 +456,17 @@ public class ClientDetail extends KContainer {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
-
-            getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
-
-
+            
+            if (inter.size() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Vous devez renseigner au moins 1 interlocuteur", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+ 
+            else
+            {
+                NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
+                getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+            }
         }
     }
 
