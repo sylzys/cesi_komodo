@@ -68,7 +68,6 @@ public class ClientDetail extends KContainer {
     private ClientInstance ci = ClientInstance.getInstance();
     private AlerteInstance ai = AlerteInstance.getInstance();
     CurrentDatas cd = CurrentDatas.getInstance();
-
     public ClientDetail(int id) {
         super();
         cli_id = id;
@@ -120,10 +119,10 @@ public class ClientDetail extends KContainer {
         cliDetail.setPreferredSize(new Dimension(780, 165));
 
         //ajout des Listeners sur les boutons
-        addContact.addActionListener(new addContactListener());
-        validateCmd.addActionListener(new validateCmdListener());
-        validateDmd.addActionListener(new validateDmdListener());
-        newDemand.addActionListener(new newDmdListener());
+        addContact.addActionListener(new ClientDetail.addContactListener());
+        validateCmd.addActionListener(new ClientDetail.validateCmdListener());
+        validateDmd.addActionListener(new ClientDetail.validateDmdListener());
+        newDemand.addActionListener(new ClientDetail.newDmdListener());
         //adresse, contacts raison sociale etc
 
 
@@ -139,6 +138,7 @@ public class ClientDetail extends KContainer {
         cliAddr.setBorder(new EmptyBorder(0, 0, 0, 20));
         cliAddr.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
         cliAddr.add(addr);
+        cliAddr.setBackground(Color.white);
         cliInfos.add(cliAddr);
 
         //contacts
@@ -150,15 +150,18 @@ public class ClientDetail extends KContainer {
         cliContact.setBorder(new EmptyBorder(0, 0, 0, 20));
         cliContact.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
         cliContact.add(contact);
+        cliContact.setBackground(Color.white);
+        cliInfos.setBackground(Color.white);
         cliInfos.add(cliContact);
 
         //raison sociale
         JPanel cliRS = new JPanel();
-        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
+        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>ActivitÃ© :"
                 + cli.getCliactivite() + "<br>SIRET: "
                 + cli.getClisiret() + "<br>CA: "
                 + Integer.toString(cli.getClica()) + "</html>");
         cliRS.add(RS);
+        cliRS.setBackground(Color.white);
         cliInfos.add(cliRS);
 
         //Boutons contact
@@ -170,13 +173,12 @@ public class ClientDetail extends KContainer {
         hh.put("cliid", cli_id);
         hh.put("intersuppr", false);
         inter = interInstance.GetInterlocuteurs("where cliid = :cliid and intersuppr = :intersuppr", hh);
-        System.out.println("inter ->" + inter.size());
         boolean chkinter = false;
         for (final Interlocuteur in : inter)
         {
-            if (HibernateConnection.online == true)
+            if(HibernateConnection.online == true)
             {
-                if (chkinter != true)
+                if(chkinter != true)
                 {
                     chkinter = sync.chkobject(in.getInteruniqid(), "models.Interlocuteur");
                 }
@@ -222,11 +224,11 @@ public class ClientDetail extends KContainer {
         cliButtons.add(addContact);
 
 
-        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
+        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos SociÃ©tÃ©"));
 
         //Panneau des combos box
         JButton retour = new JButton("Retour");
-        retour.addActionListener(new retourListener());
+        retour.addActionListener(new ClientDetail.retourListener());
         JPanel r = new JPanel();
         r.setLayout(new FlowLayout());
         //comboPanel.setLayout(new BorderLayout());
@@ -276,6 +278,9 @@ public class ClientDetail extends KContainer {
         //ajout des combobox a droite
         comboPanel.add(comboDmd_panel);
         comboPanel.add(comboCmd_panel);
+        comboPanel.setBackground(Color.white);
+        comboCmd_panel.setBackground(Color.white);
+        comboDmd_panel.setBackground(Color.white);
 
         //ajout des panels au JPanel principal
         top.add(comboPanel, BorderLayout.EAST);
@@ -313,16 +318,16 @@ public class ClientDetail extends KContainer {
         JPanel name_ste = new JPanel();
         name_ste.setPreferredSize(new Dimension(100, 20));
         name_ste.setLayout(new FlowLayout((FlowLayout.LEFT)));
-        if (HibernateConnection.online == true)
+        if(HibernateConnection.online == true)
         {
             HibernateConnection.openConnectionBisOff();
             boolean chkcli = sync.chkobject(cli.getCliuniqid(), "models.Client");
-            if (chkcli == true || chkinter == true)
+            if(chkcli == true || chkinter == true)
             {
                 name_ste.setPreferredSize(new Dimension(100, 40));
                 JLabel lblsync = new JLabel();
                 lblsync.setPreferredSize(new Dimension(780, 15));
-                lblsync.setText("<html><p color=red>Attention: ce client est en attente de synchronisation, toutes nouvelles modifications pourraient être perdues.</p></html>");
+                lblsync.setText("<html><p color=red>Attention: ce client est en attente de synchronisation, toutes nouvelles modifications pourraient Ãªtre perdues.</p></html>");
                 name_ste.add(lblsync);
             }
             HibernateConnection.closeConnectionBis();
@@ -335,30 +340,27 @@ public class ClientDetail extends KContainer {
         cliDetail.add(cliInfos, BorderLayout.CENTER);
         cliDetail.add(cliButtons, BorderLayout.SOUTH);
         top.add(cliDetail, BorderLayout.WEST);
+        cliDetail.setBackground(Color.white);
+        cliButtons.setBackground(Color.white);
+        cliInfos.setBackground(Color.white);
+        name_ste.setBackground(Color.white);
+        r.setBackground(Color.white);
         content.add(top, BorderLayout.NORTH);
 
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
         //JPanel pour accordeons
 
-        //suivi satisfaction
-
-
-        JPanel suivi_satisfaction = new JPanel();
-        suivi_satisfaction.setSize(820, 320);
-
-        SatisfactionView sv = new SatisfactionView();
-        JPanel satisf = sv.initPanel(cli);
-        bottom.add(satisf);
-
-
-
+        
+        
+        
         //bottom.add(Box.createVerticalStrut(10));
 
         //alertes
         JPanel alertes = new JPanel();
         alertes.setBorder(BorderFactory.createTitledBorder("Alertes"));
         alertes.setPreferredSize(new Dimension(120, 45));
+        alertes.setBackground(Color.white);
         // lisye alertes
         TableDispatcher cp = new TableDispatcher();
         alertes.add(cp.showtable(ModelesTables.ALERTE, this.cli_id), BorderLayout.NORTH);
@@ -380,17 +382,34 @@ public class ClientDetail extends KContainer {
         //Reporting
         JPanel reporting = new JPanel();
         // reporting.setBackground(Color.J);
+        reporting.setBackground(Color.white);
         reporting.setBorder(BorderFactory.createTitledBorder("Rapports"));
         reporting.setPreferredSize(new Dimension(120, 80));
         ReportView rv = new ReportView();
         JPanel pnlreport = rv.initPanel(cli);
+        rv.setBackground(Color.white);
+        pnlreport.setBackground(Color.white);
         reporting.add(pnlreport, BorderLayout.CENTER);
         bottom.add(reporting);
+        
+        //suivi satisfaction
+        
+        
+        JPanel suivi_satisfaction = new JPanel();
+        suivi_satisfaction.setSize(820, 320);
+        
+        SatisfactionView sv = new SatisfactionView();
+        JPanel satisf = sv.initPanel(cli);
+        bottom.add(satisf);
+        
+        
+        
         bottom.add(Box.createVerticalStrut(10));
 
-        content.add(bottom, BorderLayout.CENTER);
-
-
+        content.setBorder(new EmptyBorder(10, 10, 10, 10));
+        content.add(bottom);
+        content.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+        bottom.setBackground(Color.BLACK);
         //refresh de la fenetre
 
         fen.conteneur.setVisible(false);
@@ -455,16 +474,12 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (inter.size() == 0)
-            {
-                JOptionPane.showMessageDialog(null, "Vous devez renseigner au moins 1 interlocuteur", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
- 
-            else
-            {
-                NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
-                getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
-            }
+
+            NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
+
+            getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+
+
         }
     }
 
