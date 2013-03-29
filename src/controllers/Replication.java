@@ -29,7 +29,7 @@ public class Replication extends Thread {
     String PATH_CREATE_DB = "";
     String PATH_PGRESTORE = "";
     String WIN_PREFIX = "C:\\replicationBDD\\";
-    String MAC_PREFIX = "~/replicationBDD";
+    String MAC_PREFIX = "/tmp/replicationBDD";
     
     public void run() {
         //getting os name
@@ -53,7 +53,7 @@ public class Replication extends Thread {
             PATH_DROP_DB = MAC_PREFIX + "dropdb";
             PATH_CREATE_DB = MAC_PREFIX + "createdb";
             PATH_PGRESTORE = MAC_PREFIX + "pg_restore";
-            f = new File ("~/replicationBDD");
+            f = new File ("/tmp/replicationBDD");
             t = new File ("ressources/replicationMAC");
         }
         Fenetre fen = Fenetre.getInstance();
@@ -65,7 +65,10 @@ public class Replication extends Thread {
                 file.copy(t, f);
                 fen.rep(8, "Fin de la copie des outils de réplication");               
                 fen.rep(10, "Nettoyage des fichiers temporaires");
-                file.SupprRep(t);
+                if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
+                {
+                    file.SupprRep(t);
+                }
                 fen.rep(15, "Fin du nettoyage");
                 fen.rep(20, "Sauvegarde de la base en ligne");
             }
@@ -73,8 +76,7 @@ public class Replication extends Thread {
             {
                 System.out.println(e.getMessage());
             }
-
-        }else{
+        } else{
             fen.rep(5, "Sauvegarde de la base en ligne");
         }
         try
