@@ -7,3 +7,4 @@ library/
 /nbproject
 nbprojet/
 .gitignore
+build.xml
