@@ -474,10 +474,16 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
-
-            getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+if (inter.size() == 0)
+            {
+                JOptionPane.showMessageDialog(null, "Vous devez renseigner au moins 1 interlocuteur", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+ 
+            else
+            {
+                NouvelleDemande addDmd = new NouvelleDemande(null, "Ajouter une demande", true, cli_id);
+                getDemandeInfos interInfos = addDmd.showZDialog(cli_id);
+            }
 
 
         }
