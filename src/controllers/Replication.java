@@ -10,10 +10,12 @@ import instances.ThreadOnline;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import views.Fenetre;
 import views.ReplicView;
+import classes.FileClass;
 
 /**
  *
@@ -32,6 +34,7 @@ public class Replication extends Thread {
     public void run() {
         //getting os name
         String os = "";
+        File f = null;
         if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
         {
             PATH_EXE = WIN_PREFIX + "pg_dump.exe";
@@ -39,6 +42,7 @@ public class Replication extends Thread {
             PATH_DROP_DB = WIN_PREFIX + "dropdb.exe";
             PATH_CREATE_DB = WIN_PREFIX + "createdb.exe";
             PATH_PGRESTORE = WIN_PREFIX + "pg_restore.exe";
+            f = new File ("C:\\replicationBDD");
         }
         else if ((System.getProperty("os.name").toLowerCase().indexOf("linux") > -1) || (System.getProperty("os.name").toLowerCase().indexOf("mac") > -1))
         {
@@ -47,11 +51,30 @@ public class Replication extends Thread {
             PATH_DROP_DB = MAC_PREFIX + "dropdb";
             PATH_CREATE_DB = MAC_PREFIX + "createdb";
             PATH_PGRESTORE = MAC_PREFIX + "pg_restore";
+            f = new File ("/usr/bin/");
         }
-
+        File t = new File ("ressources/replicationBDD");
         Fenetre fen = Fenetre.getInstance();
-        fen.progBar();
-        fen.rep(0, "Sauvegarde de la base en ligne");
+        fen.progBar();      
+
+        if (!f.exists()){
+            FileClass file = new FileClass();
+            try {
+                file.copy(t, f);
+                fen.rep(8, "Fin de la copie des outils de réplication");               
+                fen.rep(10, "Nettoyage des fichiers temporaires");
+                file.SupprRep(t);
+                fen.rep(15, "Fin du nettoyage");
+                fen.rep(20, "Sauvegarde de la base en ligne");
+            }
+            catch(IOException e)
+            {
+                System.out.println(e.getMessage());
+            }
+
+        }else{
+            fen.rep(5, "Sauvegarde de la base en ligne");
+        }
         try
         {
             // pause
