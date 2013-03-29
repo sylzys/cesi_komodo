@@ -284,7 +284,26 @@ class adminController extends Zend_Controller_Action
     }
     
     public function profiladdAction() {
+        $request = $this->getRequest();
+        $result = $request->getPost();
+        $this->_helper->layout->disableLayout();
+        $o_ProfilMapper = new Application_Model_ProfilMapper();
         
+        
+        
+        $o_Select = $o_ProfilMapper->getDbTable()->select();
+        $o_Select->where('proflib = :proflib');
+        $o_Select->where('profsuppr = FALSE');
+        $o_Select->bind(array(':proflib'=>$result['proflib']));
+        if (!is_null($o_ProfilMapper->fetchAll($o_Select))) {
+            echo 'Ce profil existe deja';
+            return false;
+        }
+        $o_Profil = new Application_Model_Profil();
+        $o_Profil->setProflib($result['proflib']);
+        $o_Profil->setProfsuppr(false);
+        $o_ProfilMapper->save($o_Profil);
+        return true;
     }
     
 }

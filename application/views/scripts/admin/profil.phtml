@@ -1,32 +1,148 @@
-<?php echo '<h1>' . $this->titre .'</h1>'; ?>
+<?php echo '<h1>' . $this->titre . '</h1>'; ?>
 
-<a href="<?php echo $this->baseUrl('admin/profiladd'); ?>">ajout profil</a>
+<p style="text-align: right; margin-right: 150px;">
+    <a href="#" id="button_profil_add" onclick="return false;">
+        <img src="<?php echo $this->baseUrl("images/ajouter.png"); ?>" style="width: 25px;" />
+        Ajouter un nouveau profil
+    </a>
+</p>
+<br>
 <table id="admin_profil_table">
 
 </table>
+<div id="popup_profil_add" style="display: none;">
+    <table>
+        <tr>
+            <td colspan="2" id="profil_add_error" style="display: none; color: red;">
 
-  
-<script type="text/javascript">
-    var urlProfilChangeRight = "<?php echo $this->baseUrl('admin/profilchangeright'); ?>";
-    var urlProfilList = "<?php echo $this->baseUrl('admin/profillist'); ?>";
-       
-    $(document).ready(function(){
-        loadProfil();
-    });     
-            
-    function loadProfil(){
-        $.ajax({
-            url:        urlProfilList,
-            type:       'POST',
-            dataType:   'html',
-            success: function(data) {
-                $('#admin_profil_table').html(data);
-            },
-            error : function(data){
-//                alert(data.responseText);
-            }
-        });
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" id="profil_add_success" style="display: none; color: green;">
+
+            </td>
+        </tr>
+        <tr>
+            <th>Nom du profil</th>
+            <td><input type="text" id="profil_add_proflib"></td>
+        </tr>
+    </table>
+</div>
+<div id="popup_profil_edit" style="display: none;">
+    <input type="hidden" value="" id="profil_edit_id">
+    <table>
+        <tr>
+            <td colspan="2" id="profil_edit_error" style="display: none; color: red;">
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" id="profil_edit_success" style="display: none; color: green;">
+
+            </td>
+        </tr>
+        <tr>
+            <th>Nom du profil</th>
+            <td><input type="text" id="profil_edit_proflib"></td>
+        </tr>
+    </table>
+</div>
+
+<div id="popup_profil_delete" style="display: none;">
+    <p id="profil_delete_error" style="display: none; color: red;"></p>
+    <input type="hidden" value="" id="profil_id">
+    Voulez-vous vraiment supprimer l'utilisateur <b class="profil_name"></b> ?
+</div>
+
+<style>
+    label, input {
+        display: inline;
+        margin: 5px;
+
     }
-          
-    
+    th {
+        text-align: right;
+    }
+    td {
+        text-align: left
+    }
+</style>
+
+
+<script type="text/javascript">
+        var urlProfilChangeRight = "<?php echo $this->baseUrl('admin/profilchangeright'); ?>";
+        var urlProfilList = "<?php echo $this->baseUrl('admin/profillist'); ?>";
+        var urlProfilAdd = "<?php echo $this->baseUrl('admin/profiladd'); ?>";
+        var urlProfilEdit = "<?php echo $this->baseUrl('admin/profiledit'); ?>";
+        var urlProfilDelete = "<?php echo $this->baseUrl('admin/profildelete'); ?>";
+
+        $(document).ready(function() {
+            loadProfil();
+        });
+
+        $("#button_profil_add").click(function() {
+            $("#popup_profil_add").dialog({
+                modal: true,
+                width: 500,
+                buttons: {
+                    "Fermer": function() {
+                        $(this).dialog("close");
+                    },
+                    "Ajouter": function() {
+                        var error = '';
+                        var success = '';
+                        var proflib = $("#profil_add_proflib").val();
+
+                        $("#profil_add_error").hide();
+                        $("#profil_add_success").hide();
+                        $.ajax({
+                            url: urlProfilAdd,
+                            data: {
+                                proflib: proflib
+                            },
+                            type: 'POST',
+                            dataType: 'html',
+                            success: function(data) {
+                                $("#profil_add_error").hide();
+                                $("#profil_add_success").hide();
+                                if (data == '') {
+                                    $("#profil_add_success").html("Profil cree avec succes").show();
+                                } else {
+                                    $("#profil_add_error").html(data).show();
+                                }
+                                $("#profil_add_proflib").val('');
+                            },
+                            error: function(data) {
+                                $("#profil_add_success").hide();
+                                $("#profil_add_error").html(data).show();
+                            }
+                        });
+                    }
+                },
+                open: function(event, ui) {
+                    $("#profil_add_proflib").val('');
+                    $("#profil_add_success").hide();
+                    $("#profil_add_error").hide();
+                },
+                close: function(event, ui) {
+                    loadProfil();
+                }
+            });
+        });
+
+        function loadProfil() {
+            $.ajax({
+                url: urlProfilList,
+                type: 'POST',
+                dataType: 'html',
+                success: function(data) {
+                    $('#admin_profil_table').html(data);
+                },
+                error: function(data) {
+//                alert(data.responseText);
+                }
+            });
+        }
+
+
 </script>
