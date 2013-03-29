@@ -4,6 +4,10 @@
  */
 package views;
 
+import controllers.Replication;
+import controllers.Synchro;
+import controllers.UserActif;
+import instances.HibernateConnection;
 import instances.ReportingInstance;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,6 +15,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,12 +52,14 @@ public class ReportView extends JPanel{
     private JLabel lblicon = new JLabel("");
     private JLabel imgicon = new JLabel(new ImageIcon("ressources/images/iconreport.png"));
     private JLabel imgdetail = new JLabel(new ImageIcon("ressources/images/reportdetail.png"));
+    public Client cli;
     public ReportView()
     {
         super();
     }
-    public JPanel initPanel(Client cli)
+    public JPanel initPanel(Client client)
     {
+        cli = client;
         ReportingInstance ri = ReportingInstance.getInstance(); 
         BigDecimal total = ri.totalcmd(cli.getCliid());
         int nbdevok = ri.nbdevok(cli.getCliid());
@@ -75,6 +83,16 @@ public class ReportView extends JPanel{
             img = "<p color=red>Aucun rapport</p>";
         }
         List<GetReporting> lstgp = ri.GetReporting("cliid",cli.getCliid(),5);
+        pnlcontent.setBackground(Color.white);
+        pnlbutton.setBackground(Color.white);
+        pnlinfos.setBackground(Color.white);
+        pnlmiddlebutton.setBackground(Color.white);
+        pnlmiddleinfos.setBackground(Color.white);
+        pnlmiddlemsg.setBackground(Color.white);
+        pnlmsg.setBackground(Color.white);
+        pnltopbutton.setBackground(Color.white);
+        pnltopinfos.setBackground(Color.white);
+        pnltopmsg.setBackground(Color.white);
         imgdetail.setToolTipText("Visualiser tous les rapports");
         imgicon.setToolTipText("Saisir un rapport");
         pnlinfos.setPreferredSize(new Dimension(350, 185));       
@@ -164,8 +182,8 @@ public class ReportView extends JPanel{
                 pnltitle.add(lbltitle);
                 pnltitle.add(lbldesc);
                 pnltitle.add(lbldte);
+                pnltitle.setBackground(Color.white);
                 pnlmiddlemsg.add(pnltitle);
-                
             }
         }
         else
@@ -179,6 +197,14 @@ public class ReportView extends JPanel{
         pnlcontent.add(pnlinfos, BorderLayout.WEST);
         pnlcontent.add(pnlmsg, BorderLayout.CENTER);
         pnlcontent.add(pnlbutton, BorderLayout.EAST);
+        imgicon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent me) {
+                    Fenetre fen = Fenetre.getInstance();
+                    Reportadd re = new Reportadd(fen.user, cli);
+                    fen.RenewContener(re.getPanel());
+                }
+            });
         
         return pnlcontent;
     }
