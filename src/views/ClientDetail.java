@@ -455,8 +455,6 @@ public class ClientDetail extends KContainer {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            
             if (inter.size() == 0)
             {
                 JOptionPane.showMessageDialog(null, "Vous devez renseigner au moins 1 interlocuteur", "Erreur", JOptionPane.ERROR_MESSAGE);
