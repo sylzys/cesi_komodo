@@ -1,3 +1,9 @@
-/nbproject/private/
+build/
 /build/
-/nbproject/
+.DS_Store
+.lighttpd.conf
+/library
+library/
+/nbproject
+nbprojet/
+.gitignore
