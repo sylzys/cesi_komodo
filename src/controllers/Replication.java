@@ -29,12 +29,13 @@ public class Replication extends Thread {
     String PATH_CREATE_DB = "";
     String PATH_PGRESTORE = "";
     String WIN_PREFIX = "C:\\replicationBDD\\";
-    String MAC_PREFIX = "/usr/bin/";
+    String MAC_PREFIX = "~/replicationBDD";
     
     public void run() {
         //getting os name
         String os = "";
         File f = null;
+        File t = null;
         if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
         {
             PATH_EXE = WIN_PREFIX + "pg_dump.exe";
@@ -43,6 +44,7 @@ public class Replication extends Thread {
             PATH_CREATE_DB = WIN_PREFIX + "createdb.exe";
             PATH_PGRESTORE = WIN_PREFIX + "pg_restore.exe";
             f = new File ("C:\\replicationBDD");
+            t = new File ("ressources/replicationBDD");
         }
         else if ((System.getProperty("os.name").toLowerCase().indexOf("linux") > -1) || (System.getProperty("os.name").toLowerCase().indexOf("mac") > -1))
         {
@@ -51,9 +53,9 @@ public class Replication extends Thread {
             PATH_DROP_DB = MAC_PREFIX + "dropdb";
             PATH_CREATE_DB = MAC_PREFIX + "createdb";
             PATH_PGRESTORE = MAC_PREFIX + "pg_restore";
-            f = new File ("/usr/bin/");
+            f = new File ("~/replicationBDD");
+            t = new File ("ressources/replicationMAC");
         }
-        File t = new File ("ressources/replicationBDD");
         Fenetre fen = Fenetre.getInstance();
         fen.progBar();      
 
