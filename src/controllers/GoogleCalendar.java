@@ -85,7 +85,7 @@ public class GoogleCalendar {
         // set up global Calendar instance
         client = new com.google.api.services.calendar.Calendar.Builder(
             HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(
-            "test-google-calendar").build();
+            "plastprodagenda").build();
         
         
         // run commands

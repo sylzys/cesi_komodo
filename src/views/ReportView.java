@@ -83,6 +83,16 @@ public class ReportView extends JPanel{
             img = "<p color=red>Aucun rapport</p>";
         }
         List<GetReporting> lstgp = ri.GetReporting("cliid",cli.getCliid(),5);
+        pnlcontent.setBackground(Color.white);
+        pnlbutton.setBackground(Color.white);
+        pnlinfos.setBackground(Color.white);
+        pnlmiddlebutton.setBackground(Color.white);
+        pnlmiddleinfos.setBackground(Color.white);
+        pnlmiddlemsg.setBackground(Color.white);
+        pnlmsg.setBackground(Color.white);
+        pnltopbutton.setBackground(Color.white);
+        pnltopinfos.setBackground(Color.white);
+        pnltopmsg.setBackground(Color.white);
         imgdetail.setToolTipText("Visualiser tous les rapports");
         imgicon.setToolTipText("Saisir un rapport");
         pnlinfos.setPreferredSize(new Dimension(350, 185));       
@@ -172,6 +182,7 @@ public class ReportView extends JPanel{
                 pnltitle.add(lbltitle);
                 pnltitle.add(lbldesc);
                 pnltitle.add(lbldte);
+                pnltitle.setBackground(Color.white);
                 pnlmiddlemsg.add(pnltitle);
             }
         }

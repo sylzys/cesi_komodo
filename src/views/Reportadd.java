@@ -64,8 +64,7 @@ public class Reportadd extends KContainer {
         cbinter.addItem("");
         for (final Interlocuteur in : inter)
         {
-            cbinter.addItem((in.getInterid()+ ". " +in.getInterprenom() + " " + in.getInternom()));        
-        
+            cbinter.addItem(in.getInterprenom() + " " + in.getInternom()+" N°"+in.getInterid());     
         }
         pnlcenter.add(lblinter);
         pnlcenter.add(cbinter);
