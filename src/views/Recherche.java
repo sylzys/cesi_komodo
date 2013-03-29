@@ -401,7 +401,7 @@ public class Recherche extends KContainer {
 
             if(flag == false)
             {
-                panelListSearch.add(new JLabel("Aucun résultats"),BorderLayout.CENTER);
+                panelListSearch.add(new JLabel("Aucun résultat"),BorderLayout.CENTER);
             }
         }
         else

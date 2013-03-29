@@ -6,6 +6,7 @@ package views;
 
 import classes.Uniqid;
 import classes.WhitePanel;
+import com.google.common.base.Strings;
 import controllers.getDemandeInfos;
 import instances.DemandeInstance;
 import instances.InterlocuteurInstance;
@@ -27,16 +28,13 @@ public class NouvelleDemande extends JDialog {
 
     private getDemandeInfos zInfo = new getDemandeInfos();
     private boolean sendData;
-    
     private Fenetre fen = Fenetre.getInstance();
-    
     JLabel title = new JLabel("PANNEAU AJOUT DEMANDE");
     WhitePanel left = new WhitePanel(),
             right = new WhitePanel();
     JTextField suivdoscom = new JTextField(),
             suivdostitre = new JTextField(),
             interid = new JTextField();
-          
     JLabel lbl_titre = new JLabel("Intitulé de la demande"),
             lbl_comm = new JLabel("Commentaire"),
             lbl_interlo = new JLabel("Interlocuteur");
@@ -47,6 +45,7 @@ public class NouvelleDemande extends JDialog {
 
     public NouvelleDemande(JFrame parent, String title, boolean modal, int id) {
         super(parent, title, modal);
+
         this.setSize(400, 270);
         this.setLocationRelativeTo(null);
         this.dmd_id = id;
@@ -62,7 +61,7 @@ public class NouvelleDemande extends JDialog {
     }
 
     private void initComponent() {
-        
+
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
         JPanel panel3 = new JPanel();
@@ -84,25 +83,25 @@ public class NouvelleDemande extends JDialog {
         label4.setPreferredSize(new Dimension(30, 20));
         label5.setPreferredSize(new Dimension(30, 30));
         label6.setPreferredSize(new Dimension(30, 20));
-                
+
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.LINE_AXIS));
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.LINE_AXIS));
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.LINE_AXIS));
         panel1.setPreferredSize(new Dimension(450, 20));
         panel2.setPreferredSize(new Dimension(450, 30));
         panel3.setPreferredSize(new Dimension(450, 20));
-        
-        
+
+
         lbl_titre.setPreferredSize(new Dimension(130, 20));
         suivdostitre.setPreferredSize(new Dimension(200, 20));
-        
+
         panel1.add(label1, BorderLayout.WEST);
         panel1.add(lbl_titre, BorderLayout.CENTER);
         panel1.add(suivdostitre, BorderLayout.EAST);
         panel1.add(label4, BorderLayout.WEST);
         panel1.setBorder(new EmptyBorder(30, 5, 30, 5));
-        
-        
+
+
         InterlocuteurInstance interInstance = InterlocuteurInstance.getInstance();
         Hashtable hh = new Hashtable();
         hh.put("cliid", dmd_id);
@@ -111,29 +110,29 @@ public class NouvelleDemande extends JDialog {
         cb_interlo.addItem("Interlocuteurs");
         for (final Interlocuteur in : inter)
         {
-            cb_interlo.addItem((in.getInterid()+ ". " +in.getInterprenom() + " " + in.getInternom()));        
-        
+            cb_interlo.addItem((in.getInterid() + ". " + in.getInterprenom() + " " + in.getInternom()));
+
         }
         lbl_interlo.setPreferredSize(new Dimension(130, 30));
         cb_interlo.setPreferredSize(new Dimension(120, 30));
-        
+
         panel2.add(label2, BorderLayout.WEST);
         panel2.add(lbl_interlo);
         panel2.add(cb_interlo, BorderLayout.CENTER);
         panel2.add(label5, BorderLayout.EAST);
         panel2.setBorder(new EmptyBorder(0, 5, 0, 5));
-        
-        
-        
+
+
+
         lbl_comm.setPreferredSize(new Dimension(130, 20));
         suivdoscom.setPreferredSize(new Dimension(200, 20));
-        
+
         panel3.add(label3, BorderLayout.WEST);
         panel3.add(lbl_comm);
         panel3.add(suivdoscom);
         panel3.add(label6, BorderLayout.WEST);
         panel3.setBorder(new EmptyBorder(30, 5, 30, 5));
-      
+
 
         content.setBackground(Color.white);
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -147,11 +146,21 @@ public class NouvelleDemande extends JDialog {
 
         okBouton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-               
+                String str = check_fields();
+                if (str == "")
+                {
                     addToDataBase();
-                new ClientDetail(dmd_id);
-                setVisible(false);
+                    new ClientDetail(dmd_id);
                     setVisible(false);
+
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, str, "Erreur", JOptionPane.ERROR_MESSAGE);
+
+                }
+
+                //setVisible(false);
             }
         });
 
@@ -163,7 +172,7 @@ public class NouvelleDemande extends JDialog {
                 setVisible(false);
             }
         });
-        
+
         control.add(okBouton);
         control.add(cancelBouton);
         control.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
@@ -172,29 +181,44 @@ public class NouvelleDemande extends JDialog {
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 
-  
-    
-    private void addToDataBase() {
-            CurrentDatas cd = CurrentDatas.getInstance();
-            Demande dmde = new Demande();
-            dmde.setCliid(dmd_id);
-            //dmde.setUtiid(1);
-            dmde.setUtiid(cd.getUser().getId());
-            Uniqid uniqid = new Uniqid(cd.getUser().getId());
-            dmde.setDemandeuniqid(uniqid.getUniqid());
-            String interlo = (String) cb_interlo.getSelectedItem();
-            String str[]=interlo.split(". ");
-            
-            dmde.setInterid((Integer.parseInt(str[0])));
-            dmde.setDemandeetat(20);
-            dmde.setDemandetitre(suivdostitre.getText());
-            dmde.setDemandedesc(suivdoscom.getText());
-            dmde.setDemandesuppr(false);
-            dmde.setDemandedteadd(new Date());
+    private String check_fields() {
+        String str = "";
+        if (Strings.isNullOrEmpty(suivdoscom.getText()))
+        {
+            str += "<html>Le champ <i>Commentaire</i> ne peut être vide<br />";
+        }
+        if (Strings.isNullOrEmpty(suivdostitre.getText()))
+        {
+            str += "<html>Le champ <i>Intitulé de la demande</i> ne peut être vide<br />";
+        }
+        if ("Interlocuteurs".equals(cb_interlo.getSelectedItem()))
+        {
+            str += "<html>Vous devez choisir un interlocuteur<br />";
+        }
+        return str;
+    }
 
-            DemandeInstance dmd_inst = DemandeInstance.getInstance();
-            dmd_inst.setDemandes(dmde);
-            dmd_inst.ajouterDansBaseDeDonnees();
+    private void addToDataBase() {
+        CurrentDatas cd = CurrentDatas.getInstance();
+        Demande dmde = new Demande();
+        dmde.setCliid(dmd_id);
+        //dmde.setUtiid(1);
+        dmde.setUtiid(cd.getUser().getId());
+        Uniqid uniqid = new Uniqid(cd.getUser().getId());
+        dmde.setDemandeuniqid(uniqid.getUniqid());
+        String interlo = (String) cb_interlo.getSelectedItem();
+        String str[] = interlo.split(". ");
+
+        dmde.setInterid((Integer.parseInt(str[0])));
+        dmde.setDemandeetat(20);
+        dmde.setDemandetitre(suivdostitre.getText());
+        dmde.setDemandedesc(suivdoscom.getText());
+        dmde.setDemandesuppr(false);
+        dmde.setDemandedteadd(new Date());
+
+        DemandeInstance dmd_inst = DemandeInstance.getInstance();
+        dmd_inst.setDemandes(dmde);
+        dmd_inst.ajouterDansBaseDeDonnees();
 
     }
 }
