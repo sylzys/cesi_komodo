@@ -34,8 +34,6 @@ public class Replication extends Thread {
     public void run() {
         //getting os name
         String os = "";
-        File f = null;
-        File t = null;
         if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
         {
             PATH_EXE = WIN_PREFIX + "pg_dump.exe";
@@ -386,6 +384,22 @@ public class Replication extends Thread {
                 System.out.println(ex.toString());
             }
         }
+        if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
+        {
+            File f = new File ("ressources/replicationWIN/save.bak");
+            if(f.exists())
+            {
+                f.delete();
+            }
+        }
+        else if ((System.getProperty("os.name").toLowerCase().indexOf("linux") > -1) || (System.getProperty("os.name").toLowerCase().indexOf("mac") > -1))
+        {
+            File f = new File ("ressources/replicationMAC/save.bak");
+            if(f.exists())
+            {
+                f.delete();
+            }
+        }    
         fen.rep(100, "Fin de la réplication ... Redirection vers l'accueil");
         //Nouvelle connection hors ligne
         HibernateConnection.offline();
