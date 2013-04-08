@@ -30,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import models.Client;
 import models.GetReporting;
-import sun.org.mozilla.javascript.internal.regexp.SubString;
 
 /**
  *
