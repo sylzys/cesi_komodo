@@ -28,8 +28,8 @@ public class Replication extends Thread {
     String PATH_DROP_DB = "";
     String PATH_CREATE_DB = "";
     String PATH_PGRESTORE = "";
-    String WIN_PREFIX = "C:\\replicationBDD\\";
-    String MAC_PREFIX = "/tmp/replicationBDD";
+    String WIN_PREFIX = "ressources\\replicationWIN\\";
+    String MAC_PREFIX = "ressources/replicationMAC/";
     
     public void run() {
         //getting os name
@@ -43,8 +43,6 @@ public class Replication extends Thread {
             PATH_DROP_DB = WIN_PREFIX + "dropdb.exe";
             PATH_CREATE_DB = WIN_PREFIX + "createdb.exe";
             PATH_PGRESTORE = WIN_PREFIX + "pg_restore.exe";
-            f = new File ("C:\\replicationBDD");
-            t = new File ("ressources/replicationBDD");
         }
         else if ((System.getProperty("os.name").toLowerCase().indexOf("linux") > -1) || (System.getProperty("os.name").toLowerCase().indexOf("mac") > -1))
         {
@@ -53,32 +51,10 @@ public class Replication extends Thread {
             PATH_DROP_DB = MAC_PREFIX + "dropdb";
             PATH_CREATE_DB = MAC_PREFIX + "createdb";
             PATH_PGRESTORE = MAC_PREFIX + "pg_restore";
-            f = new File ("/tmp/replicationBDD");
-            t = new File ("ressources/replicationMAC");
         }
         Fenetre fen = Fenetre.getInstance();
         fen.progBar();      
-
-        if (!f.exists()){
-            FileClass file = new FileClass();
-            try {
-                file.copy(t, f);
-                fen.rep(8, "Fin de la copie des outils de réplication");               
-                fen.rep(10, "Nettoyage des fichiers temporaires");
-                if (System.getProperty("os.name").toLowerCase().indexOf("windows") > -1)
-                {
-                    file.SupprRep(t);
-                }
-                fen.rep(15, "Fin du nettoyage");
-                fen.rep(20, "Sauvegarde de la base en ligne");
-            }
-            catch(IOException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        } else{
-            fen.rep(5, "Sauvegarde de la base en ligne");
-        }
+        fen.rep(5, "Sauvegarde de la base en ligne");
         try
         {
             // pause
