@@ -104,7 +104,7 @@ FROM (devnom JOIN nomenclature ON ((nomenclature.nomid = devnom.nomid)))
 CREATE OR REPLACE VIEW getreporting AS
 SELECT e.enqid, e.utiid, e.interid, i.interuniqid, c.cliid, c.cliuniqid, e.enqdos, e.enqiddos, e.enqdte, e.enqint, e.enqdesc, e.enqpos, e.enqtype, e.enquniqid
 FROM enquete e, interlocuteur i, client c
-WHERE e.interid = i.interid AND i.cliid = c.cliid AND e.enqsuppr = false AND e.enqtype = false;
+WHERE e.interid = i.interid AND i.cliid = c.cliid AND e.enqsuppr = false;
 
 CREATE OR REPLACE VIEW getreportcount AS
 SELECT COUNT(*), cliid, enqpos FROM getreporting GROUP BY enqdte, cliid, enqpos ORDER BY enqdte DESC LIMIT 10;

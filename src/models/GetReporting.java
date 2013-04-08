@@ -24,12 +24,6 @@ public class GetReporting {
     
     @Column(name="cliuniqid", columnDefinition="VARCHAR(500)", nullable=true)
     private String cliuniqid ;
-    
-    @Column(name="enqdos", columnDefinition="VARCHAR(50)", nullable=true)
-    private String enqdos ;
-
-    @Column(name="enqiddos", columnDefinition="INTEGER", nullable=true)
-    private int enqiddos ;
 
     @Column(name="enqdte", columnDefinition="DATE", nullable=true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -93,22 +87,6 @@ public class GetReporting {
 
     public void setCliuniqid(String cliuniqid) {
         this.cliuniqid = cliuniqid;
-    }
-
-    public String getEnqdos() {
-        return enqdos;
-    }
-
-    public void setEnqdos(String enqdos) {
-        this.enqdos = enqdos;
-    }
-
-    public int getEnqiddos() {
-        return enqiddos;
-    }
-
-    public void setEnqiddos(int enqiddos) {
-        this.enqiddos = enqiddos;
     }
 
     public Date getEnqdte() {

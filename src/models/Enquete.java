@@ -17,27 +17,18 @@ public class Enquete implements Serializable {
     @Column(name="interid", columnDefinition="INTEGER", nullable=true)
     private int interid ;
 
-    @Column(name="enqdos", columnDefinition="VARCHAR(50)", nullable=true)
-    private String enqdos ;
-
-    @Column(name="enqiddos", columnDefinition="INTEGER", nullable=true)
-    private int enqiddos ;
-
     @Column(name="enqdte", columnDefinition="DATE", nullable=true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date enqdte ;
 
-    @Column(name="enqint", columnDefinition="VARCHCHAR(50)", nullable=true)
-    private String enqint ;
-
     @Column(name="enqdesc", columnDefinition="VARCHAR(500)", nullable=true)
     private String enqdesc ;
+    
+    @Column(name="enqint", columnDefinition="VARCHAR(50", nullable=true)
+    private String enqint ;
 
     @Column(name="enqpos", columnDefinition="BOOLEAN", nullable=true)
     private boolean enqpos ;
-
-    @Column(name="enqtype", columnDefinition="BOOLEAN", nullable=true)
-    private boolean enqtype ;
     
     @Column(name="enqsuppr", columnDefinition="BOOLEAN", nullable=true)
     private boolean enqsuppr ;
@@ -69,36 +60,12 @@ public class Enquete implements Serializable {
         this.interid = interid;
     }
 
-    public String getEnqdos() {
-        return enqdos;
-    }
-
-    public void setEnqdos(String enqdos) {
-        this.enqdos = enqdos;
-    }
-
-    public int getEnqiddos() {
-        return enqiddos;
-    }
-
-    public void setEnqiddos(int enqiddos) {
-        this.enqiddos = enqiddos;
-    }
-
     public Date getEnqdte() {
         return enqdte;
     }
 
     public void setEnqdte(Date enqdte) {
         this.enqdte = enqdte;
-    }
-
-    public String getEnqint() {
-        return enqint;
-    }
-
-    public void setEnqint(String enqint) {
-        this.enqint = enqint;
     }
 
     public String getEnqdesc() {
@@ -108,21 +75,21 @@ public class Enquete implements Serializable {
     public void setEnqdesc(String enqdesc) {
         this.enqdesc = enqdesc;
     }
+    
+    public String getEnqint() {
+        return enqint;
+    }
 
+    public void setEnqint(String enqint) {
+        this.enqint = enqint;
+    }
+    
     public boolean isEnqpos() {
         return enqpos;
     }
 
     public void setEnqpos(boolean enqpos) {
         this.enqpos = enqpos;
-    }
-
-    public boolean isEnqtype() {
-        return enqtype;
-    }
-
-    public void setEnqtype(boolean enqtype) {
-        this.enqtype = enqtype;
     }
 
     public boolean isEnqsuppr() {
