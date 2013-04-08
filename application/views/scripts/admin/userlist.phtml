@@ -1,69 +1,70 @@
-    <tr>
-        <th>Nom Prenom</th>
-        <th>Login</th>
-        <th>Actions</th>
-        <th>Profil</th>
-    </tr>
+<tr>
+    <th>Nom Prenom</th>
+    <th>Login</th>
+    <th>Profil</th>
+    <th>Actions</th>
+</tr>
 <?php if (!$this->utilisateurs): ?>
     <tr><td colspan="2" align="center">Aucuns utilisateurs pour le moment</td></tr>
 <?php else: ?>
     <?php foreach ($this->utilisateurs as $user): ?>
-    <tr>
-        <td><?php echo $user->getUtinom();?> <?php echo $user->getUtiprenom(); ?></td>
-        <td><?php echo $user->getUtilogin(); ?></td>
-        <td>
-            <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
-            <input type="hidden" name="user_firstname" value="<?php echo $user->getUtiprenom(); ?>">
-            <input type="hidden" name="user_lastname" value="<?php echo $user->getUtinom();?>">
-            <input type="hidden" name="user_login" value="<?php echo $user->getUtilogin();?>">
-            <input type="hidden" name="user_mail" value="<?php echo $user->getUtimail();?>">
-            <input type="hidden" name="user_tel" value="<?php echo $user->getUtitel();?>">
-            <p>
-                <img src="<?php echo $this->baseUrl('images/user_edit.png'); ?>" class="userEdit" alt="Modifier" title="Modifier">
-                <img src="<?php echo $this->baseUrl('images/user_delete.png'); ?>" class="userDelete" alt="Supprimer" title="Supprimer">
-            </p>
-        </td>
-        <td>
-            <select name="profils" id="<?php echo $user->getId(); ?>" multiple="multiple" class="select_profil">
-                <?php foreach ($this->profils as $profil): ?>
-                <option value="<?php echo $profil->getId(); ?>" <?php echo (isset($this->profils_used[$user->getId()]) && in_array($profil->getId(), $this->profils_used[$user->getId()])) ? 'selected': ''; ?>><?php echo $profil->getProflib(); ?></option>
-                <?php endforeach; ?>
-            </select>
-            <div class="select_profil_updated">
-                <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Profils modifies
-            </div>
-        </td>
-    </tr>
+        <tr>
+            <td><?php echo $user->getUtinom(); ?> <?php echo $user->getUtiprenom(); ?></td>
+            <td><?php echo $user->getUtilogin(); ?></td>
+
+            <td>
+                <select name="profils" id="<?php echo $user->getId(); ?>" multiple="multiple" class="select_profil">
+                    <?php foreach ($this->profils as $profil): ?>
+                        <option value="<?php echo $profil->getId(); ?>" <?php echo (isset($this->profils_used[$user->getId()]) && in_array($profil->getId(), $this->profils_used[$user->getId()])) ? 'selected' : ''; ?>><?php echo $profil->getProflib(); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="select_profil_updated">
+                    <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Profils modifies
+                </div>
+            </td>
+            <td>
+                <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
+                <input type="hidden" name="user_firstname" value="<?php echo $user->getUtiprenom(); ?>">
+                <input type="hidden" name="user_lastname" value="<?php echo $user->getUtinom(); ?>">
+                <input type="hidden" name="user_login" value="<?php echo $user->getUtilogin(); ?>">
+                <input type="hidden" name="user_mail" value="<?php echo $user->getUtimail(); ?>">
+                <input type="hidden" name="user_tel" value="<?php echo $user->getUtitel(); ?>">
+                <p>
+                    <img src="<?php echo $this->baseUrl('images/user_edit.png'); ?>" class="userEdit" alt="Modifier" title="Modifier">
+                    <img src="<?php echo $this->baseUrl('images/user_delete.png'); ?>" class="userDelete" alt="Supprimer" title="Supprimer">
+                </p>
+            </td>
+        </tr>
     <?php endforeach; ?>
-    
-   
-    
+
+
+
 <?php endif; ?>
 
-    
-    <style>
-        img {
-            cursor: pointer;
-            text-align: left;
-            margin: 0px 5px;
-            width: 25px;
-        }
-    </style>    
-    
+
+<style>
+    img {
+        cursor: pointer;
+        text-align: left;
+        margin: 0px 5px;
+        width: 25px;
+    }
+</style>    
+
 <script>
     var urlUtilisateurChangeProfil = "<?php echo $this->baseUrl('admin/userchangeprofil'); ?>";
     var urlUtilisateurList = "<?php echo $this->baseUrl('admin/userlist'); ?>";
-        
+
     $(document).ready(function() {
-                
+
         $(".select_profil").multiselect({
             header: false,
             height: 200,
             minWidht: "auto",
             checkAllText: "Tous",
             uncheckAllText: "Aucuns",
-            noneSelectedText : "Choisir",
-            selectedText : "#/# s&eacute;lectionn&eacute;s",
+            noneSelectedText: "Choisir",
+            selectedText: "#/# s&eacute;lectionn&eacute;s",
             beforeopen: function() {
                 $(".select_profil_updated").hide();
             },
@@ -71,32 +72,32 @@
                 var item = $(this);
                 var Id_Utilisateur = item.attr('id');
                 var profils = item.multiselect("getChecked").map(function() {
-                    return this.value;	
+                    return this.value;
                 }).get();
                 if (profils.length == 0) {
                     profils = 0;
                 }
                 $.ajax({
-                    url:        urlUtilisateurChangeProfil,
-                    data:       { id_utilisateur: Id_Utilisateur, profils: profils},
-                    type:       'POST',
-                    dataType:   'html',
-                    success:    function(data) {
+                    url: urlUtilisateurChangeProfil,
+                    data: {id_utilisateur: Id_Utilisateur, profils: profils},
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function(data) {
                         item.parent().children(".select_profil_updated").show();
 //                        loadUser();
                     },
-                    error :     function(data){
-        //                alert(data.responseText);
+                    error: function(data) {
+                        //                alert(data.responseText);
                     }
                 });
             }
         });
-        
-        
-        
+
+
+
     });
-    
-    
+
+
     $(".userEdit").click(function() {
         var id = $(this).parent().parent().children("input[name=user_id]").val();
         var firstname = $(this).parent().parent().children("input[name=user_firstname]").val();
@@ -112,13 +113,13 @@
         $("#user_edit_tel").val(tel);
 
         $("#popup_user_edit").dialog({
-            modal : true,
-            width : 500,
+            modal: true,
+            width: 500,
             buttons: {
-                "Fermer" : function() {
+                "Fermer": function() {
                     $(this).dialog("close");
                 },
-                "Modifier" : function() {
+                "Modifier": function() {
                     var error = '';
                     var success = '';
                     var id = $("#user_edit_id").val();
@@ -129,7 +130,7 @@
                     var passwd2 = $("#user_edit_passwd2").val();
                     var email = $("#user_edit_mail").val();
                     var tel = $("#user_edit_tel").val();
-                    
+
                     $("#user_edit_error").hide();
                     $("#user_edit_success").hide();
                     if (login == '') {
@@ -141,8 +142,8 @@
                         $("#user_edit_error").html(error).show();
                     } else {
                         $.ajax({
-                            url:        urlUserEdit,
-                            data:       {
+                            url: urlUserEdit,
+                            data: {
                                 id: id,
                                 firstname: firstname,
                                 lastname: lastname,
@@ -151,9 +152,9 @@
                                 email: email,
                                 tel: tel
                             },
-                            type:       'POST',
-                            dataType:   'html',
-                            success:    function(data) {
+                            type: 'POST',
+                            dataType: 'html',
+                            success: function(data) {
                                 $("#user_edit_error").hide();
                                 $("#user_edit_success").hide();
                                 if (data == '') {
@@ -162,7 +163,7 @@
                                     $("#user_edit_error").html(data).show();
                                 }
                             },
-                            error :     function(data){
+                            error: function(data) {
                                 $("#user_edit_success").hide();
                                 $("#user_edit_error").html(data.responseText).show();
                             }
@@ -196,9 +197,9 @@
             }
         });
     });
-    
-    
-    
+
+
+
     $(".userDelete").click(function() {
         var id = $(this).parent().parent().children("input[name=user_id]").val();
         var firstname = $(this).parent().parent().children("input[name=user_firstname]").val();
@@ -206,23 +207,23 @@
         $("#popup_user_delete").children("input[name=user_id]").val(id);
         $("#popup_user_delete").children("b.user_name").html(firstname + " " + lastname);
         $("#popup_user_delete").dialog({
-            modal : true,
-            width : 400,
+            modal: true,
+            width: 400,
             buttons: {
-                "Non" : function() {
+                "Non": function() {
                     $(this).dialog("close");
                 },
-                "Oui" : function() {
+                "Oui": function() {
                     var error = false;
                     $.ajax({
-                        url:        urlUserDelete,
-                        data:       { id: id },
-                        type:       'POST',
-                        dataType:   'html',
-                        success:    function(data) {
+                        url: urlUserDelete,
+                        data: {id: id},
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function(data) {
                             $(this).dialog("close");
                         },
-                        error :     function(data){
+                        error: function(data) {
                             error = true;
                             $("#user_delete_error").html(data).show();
                         }
@@ -237,5 +238,5 @@
             }
         });
     });
-        
+
 </script>

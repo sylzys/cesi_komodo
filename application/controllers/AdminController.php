@@ -1,21 +1,18 @@
 <?php
 
-class adminController extends Zend_Controller_Action
-{
+class adminController extends Zend_Controller_Action {
 
-    public function init()
-    {
+    public function init() {
         parent::init();
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $oUtilisateurMapper = new Application_Model_UtilisateurMapper();
         $oUserSelect = $oUtilisateurMapper->getDbTable()->Select();
         $oClientMapper = new Application_Model_ClientMapper();
         $oCliSelect = $oClientMapper->getDbTable()->select();
-        
-        
+
+
         $oUserSelect->where('utisuppr = FALSE');
         $tabUsers = $oUtilisateurMapper->fetchAll($oUserSelect);
 //        $oUserSelect->where('date_last_logged != NULL');
@@ -30,7 +27,7 @@ class adminController extends Zend_Controller_Action
 //        $oCliSelect->order('date_last_logged DESC');
         $oCliSelect->limit(5, 0);
         $tabCliLogged = $oClientMapper->fetchAll($oCliSelect);
-        
+
         $this->view->titre = "Administration";
         $this->view->users_nb = count($tabUsers);
         $this->view->users_last = $tabUsersLogged;
@@ -38,12 +35,12 @@ class adminController extends Zend_Controller_Action
         $this->view->clients_nb_remote = count($tabCliRemote);
         $this->view->clients_last = $tabCliLogged;
     }
-    
+
     public function clientAction() {
         $this->view->titre = "Gestion des clients";
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . '/css/admin_clients.css');
     }
-    
+
     public function clientlistAction() {
         $o_ClientMapper = new Application_Model_ClientMapper();
         $o_Select = $o_ClientMapper->getDbTable()->select();
@@ -65,12 +62,12 @@ class adminController extends Zend_Controller_Action
         $this->view->clients = $tab_Clients;
         $this->_helper->layout->disableLayout();
     }
-    
+
     public function clientchangeaccesAction() {
         $request = $this->getRequest();
-    	$o_ClientMapper = new Application_Model_ClientMapper();
+        $o_ClientMapper = new Application_Model_ClientMapper();
         $result = $request->getPost();
-        $o_Client = $o_ClientMapper->find((int)$result['id']);
+        $o_Client = $o_ClientMapper->find((int) $result['id']);
         // modify client acces
         switch ($result['modif']) {
             case "disable":
@@ -91,11 +88,11 @@ class adminController extends Zend_Controller_Action
         $this->view->titre = "Gestion des utilisateurs";
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . '/css/admin_utilisateurs.css');
     }
-    
+
     public function usersheetAction() {
         
     }
-    
+
     public function userlistAction() {
         $o_UtilisateurMapper = new Application_Model_UtilisateurMapper();
         $o_Select = $o_UtilisateurMapper->getDbTable()->select();
@@ -122,16 +119,16 @@ class adminController extends Zend_Controller_Action
         $this->view->utilisateurs = $tab_Utilisateurs;
         $this->_helper->layout->disableLayout();
     }
-    
+
     public function userchangeprofilAction() {
         $request = $this->getRequest();
         $o_UtilisateurMapper = new Application_Model_UtilisateurMapper();
         $o_ProfilMapper = new Application_Model_ProfilMapper();
-    	$result = $request->getPost();
+        $result = $request->getPost();
         if (!isset($result['id_utilisateur']) || !isset($result['profils'])) {
             return false;
         }
-        $o_Utilisateur = $o_UtilisateurMapper->find((int)$result['id_utilisateur']);
+        $o_Utilisateur = $o_UtilisateurMapper->find((int) $result['id_utilisateur']);
         if (is_null($o_Utilisateur)) {
             return false;
         }
@@ -140,7 +137,7 @@ class adminController extends Zend_Controller_Action
         }
         if (is_array($result['profils'])) {
             foreach ($result['profils'] as $id_profil) {
-                $o_Profil = $o_ProfilMapper->find((int)$id_profil);
+                $o_Profil = $o_ProfilMapper->find((int) $id_profil);
                 if (is_null($o_Profil)) {
                     return false;
                 }
@@ -153,7 +150,7 @@ class adminController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         return true;
     }
-    
+
     public function useraddAction() {
         $request = $this->getRequest();
         $result = $request->getPost();
@@ -162,7 +159,7 @@ class adminController extends Zend_Controller_Action
         $o_Select = $o_UtilisateurMapper->getDbTable()->select();
         $o_Select->where('utilogin = :login');
         $o_Select->where('utisuppr = FALSE');
-        $o_Select->bind(array(':login'=>$result['login']));
+        $o_Select->bind(array(':login' => $result['login']));
         if (!is_null($o_UtilisateurMapper->fetchAll($o_Select))) {
             echo 'Ce login existe deja';
             return false;
@@ -181,7 +178,7 @@ class adminController extends Zend_Controller_Action
         $o_UtilisateurMapper->save($o_Utilisateur);
         return true;
     }
-    
+
     public function usereditAction() {
         $request = $this->getRequest();
         $result = $request->getPost();
@@ -196,7 +193,7 @@ class adminController extends Zend_Controller_Action
         $o_Select->where('utilogin = :login');
         $o_Select->where('utisuppr = FALSE');
         $o_Select->where('utiid != ' . $o_Utilisateur->getId());
-        $o_Select->bind(array(':login'=>$result['login']));
+        $o_Select->bind(array(':login' => $result['login']));
         if (!is_null($o_UtilisateurMapper->fetchAll($o_Select))) {
             echo 'Ce login existe deja';
             return false;
@@ -215,26 +212,25 @@ class adminController extends Zend_Controller_Action
         $o_UtilisateurMapper->save($o_Utilisateur);
         return true;
     }
-    
+
     public function userdeleteAction() {
         $request = $this->getRequest();
         $result = $request->getPost();
         $this->_helper->layout->disableLayout();
         $o_UtilisateurMapper = new Application_Model_UtilisateurMapper();
-        $o_Utilisateur = $o_UtilisateurMapper->find((int)$result['id']);
-    	if ($o_Utilisateur == null) {
+        $o_Utilisateur = $o_UtilisateurMapper->find((int) $result['id']);
+        if ($o_Utilisateur == null) {
             return false;
         }
         $o_Utilisateur->setUtisuppr(true);
         return $o_UtilisateurMapper->save($o_Utilisateur);
     }
-    
+
     public function profilAction() {
         $this->view->titre = "Gestion des profils";
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . '/css/admin_profils.css');
     }
-    
-    
+
     public function profillistAction() {
         $o_ProfilMapper = new Application_Model_ProfilMapper();
         $tab_Profils = $o_ProfilMapper->findProfils();
@@ -246,22 +242,21 @@ class adminController extends Zend_Controller_Action
             $this->view->rights = $tab_Ressources;
             $this->view->current_rights = $tab_CurrentRights;
         }
-        
+
         $this->view->profils = $tab_Profils;
         $this->_helper->layout->disableLayout();
     }
-    
-    
+
     public function profilchangerightAction() {
         $request = $this->getRequest();
         $o_ProfilMapper = new Application_Model_ProfilMapper();
-    	$result = $request->getPost();
-        
-        
+        $result = $request->getPost();
+
+
         if (!isset($result['id_profil']) || !isset($result['droits'])) {
             return false;
         }
-        $o_Profil = $o_ProfilMapper->find((int)$result['id_profil']);
+        $o_Profil = $o_ProfilMapper->find((int) $result['id_profil']);
         if (is_null($o_Profil)) {
             return false;
         }
@@ -271,7 +266,7 @@ class adminController extends Zend_Controller_Action
         if (is_array($result['droits'])) {
             $result['droits'] = array_unique($result['droits']);
             foreach ($result['droits'] as $id_act) {
-                if (!$o_ProfilMapper->addProfilRight($o_Profil->getId(), (int)$id_act)) {
+                if (!$o_ProfilMapper->addProfilRight($o_Profil->getId(), (int) $id_act)) {
                     echo 'bad insert for ' . $id_act;
 //                    return false;
                 }
@@ -282,19 +277,19 @@ class adminController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         return true;
     }
-    
+
     public function profiladdAction() {
         $request = $this->getRequest();
         $result = $request->getPost();
         $this->_helper->layout->disableLayout();
         $o_ProfilMapper = new Application_Model_ProfilMapper();
-        
-        
-        
+
+
+
         $o_Select = $o_ProfilMapper->getDbTable()->select();
         $o_Select->where('proflib = :proflib');
         $o_Select->where('profsuppr = FALSE');
-        $o_Select->bind(array(':proflib'=>$result['proflib']));
+        $o_Select->bind(array(':proflib' => $result['proflib']));
         if (!is_null($o_ProfilMapper->fetchAll($o_Select))) {
             echo 'Ce profil existe deja';
             return false;
@@ -305,6 +300,45 @@ class adminController extends Zend_Controller_Action
         $o_ProfilMapper->save($o_Profil);
         return true;
     }
-    
+
+    public function profileditAction() {
+        $request = $this->getRequest();
+        $result = $request->getPost();
+        $this->_helper->layout->disableLayout();
+        $o_ProfilMapper = new Application_Model_ProfilMapper();
+        $o_Profil = $o_ProfilMapper->find($result['id']);
+        if (is_null($o_Profil)) {
+            echo 'Cet profil n\'existe pas';
+            return false;
+        }
+        $o_Select = $o_ProfilMapper->getDbTable()->select();
+        $o_Select->where('proflib = :proflib');
+        $o_Select->where('profsuppr = FALSE');
+        $o_Select->where('profid != ' . $o_Profil->getId());
+        $o_Select->bind(array(':proflib' => $result['proflib']));
+        if (!is_null($o_ProfilMapper->fetchAll($o_Select))) {
+            echo 'Ce nom de profil existe deja';
+            return false;
+        }
+        $o_Profil->setProflib($result['proflib']);
+        $o_Profil->setProfsuppr(false);
+        $o_ProfilMapper->save($o_Profil);
+        return true;
+    }
+
+    public function profildeleteAction() {
+        $request = $this->getRequest();
+        $result = $request->getPost();
+        $this->_helper->layout->disableLayout();
+        $o_ProfilMapper = new Application_Model_ProfilMapper();
+        $o_Profil = $o_ProfilMapper->find((int) $result['id']);
+        if ($o_Profil == null) {
+            echo 'Ce profil n\'existe pas';
+            return false;
+        }
+        $o_Profil->setProfsuppr(true);
+        return $o_ProfilMapper->save($o_Profil);
+    }
+
 }
 
