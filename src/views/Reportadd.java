@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -64,12 +66,19 @@ public class Reportadd extends KContainer {
         cbinter.addItem("");
         for (final Interlocuteur in : inter)
         {
-            cbinter.addItem(in.getInterprenom() + " " + in.getInternom()+" N°"+in.getInterid());     
+            cbinter.addItem(in.getInterid()+". "+in.getInterprenom() + " " + in.getInternom());     
         }
         pnlcenter.add(lblinter);
         pnlcenter.add(cbinter);
         content.add(pnltop);
         content.add(pnlcenter);
+        lblretour.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent me) {
+                    Fenetre fen = Fenetre.getInstance();
+                    fen.RenewClientdDetail(cli.getCliid());
+                }
+            });
         this.panel.add(content);
     }
 }
