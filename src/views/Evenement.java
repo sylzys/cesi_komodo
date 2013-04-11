@@ -201,81 +201,78 @@ public class Evenement extends KContainer {
         content.add(b4);
         content.add(ab5);;
         content.add(button, BorderLayout.LINE_END);
-        content.add(jLabel15);  
+        content.add(jLabel15);
         
-       
-        
-        
-        
-
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
-                    GoogleCalendar gc =  new GoogleCalendar();
-                    gc.init();
-                    Event event = new Event();
-                    Date startDate = datepicker_debut.getDate();
-                    //Date endDate = new Date(startDate.getTime() + 3600000);
-                    Date endDate  = datepicker_fin.getDate();
-                    //DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
-                    Format timeFormat = new SimpleDateFormat("HH:mm");
                     
-                    Date tmpDate = (Date)txt_heure_debut.getValue();
-                    startDate.setHours(tmpDate.getHours());
-                    startDate.setMinutes(tmpDate.getMinutes());
-                    DateTime start  = new DateTime(startDate,TimeZone.getTimeZone("UTC"));
-                    //DateTime start = (DateTime)timeFormat.parseObject(txt_heure_debut.getText());
-                    event.setStart(new EventDateTime().setDateTime(start));
-                    //DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
-                    //DateTime end = (DateTime)txt_heure_fin.getValue();
-                    Date tmpDate2 = (Date)txt_heure_fin.getValue();
-                    endDate.setHours(tmpDate2.getHours());
-                    endDate.setMinutes(tmpDate2.getMinutes());
-                    DateTime end = new DateTime(endDate,TimeZone.getTimeZone("UTC"));
-                    event.setEnd(new EventDateTime().setDateTime(end));
-
-                    event.setSummary(txt_title.getText());
-                    event.setDescription(txt_description.getText());
-
-                    String title = "Nouvel Evènement";     
-
-                    Calendar calendar = null;
                     
-                    //test si la connection internet est valide. 
-                    if(HibernateConnection.online == true )
+                    if(txt_description.getText()!= ""
+                        && txt_heure_debut.getText() != ""
+                            && txt_heure_fin.getText()!= ""
+                            && txt_title.getText()!= ""
+                            && datepicker_debut.getDate() != null
+                            && datepicker_fin.getDate()!= null)
                     {
-                        try {
-                        calendar = gc.getCalendars("My agenda");
-                        gc.addEvent(calendar, event);
+                        GoogleCalendar gc =  new GoogleCalendar();
+                        gc.init();
+                        Event event = new Event();
+                        Date startDate = datepicker_debut.getDate();
+                        //Date endDate = new Date(startDate.getTime() + 3600000);
+                        Date endDate  = datepicker_fin.getDate();
+                        //DateTime start = new DateTime(startDate, TimeZone.getTimeZone("UTC"));
+                        Format timeFormat = new SimpleDateFormat("HH:mm");
 
-                        }catch (IOException ex) {
-                            Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+                        Date tmpDate = (Date)txt_heure_debut.getValue();
+                        startDate.setHours(tmpDate.getHours());
+                        startDate.setMinutes(tmpDate.getMinutes());
+                        DateTime start  = new DateTime(startDate,TimeZone.getTimeZone("UTC"));
+                        //DateTime start = (DateTime)timeFormat.parseObject(txt_heure_debut.getText());
+                        event.setStart(new EventDateTime().setDateTime(start));
+                        //DateTime end = new DateTime(endDate, TimeZone.getTimeZone("UTC"));
+                        //DateTime end = (DateTime)txt_heure_fin.getValue();
+                        Date tmpDate2 = (Date)txt_heure_fin.getValue();
+                        endDate.setHours(tmpDate2.getHours());
+                        endDate.setMinutes(tmpDate2.getMinutes());
+                        DateTime end = new DateTime(endDate,TimeZone.getTimeZone("UTC"));
+                        event.setEnd(new EventDateTime().setDateTime(end));
+
+                        event.setSummary(txt_title.getText());
+                        event.setDescription(txt_description.getText());
+
+                        String title = "Nouvel Evènement";     
+
+                        Calendar calendar = null;
+
+                        //test si la connection internet est valide. 
+                        if(HibernateConnection.online == true )
+                        {
+                            try {
+                            calendar = gc.getCalendars("My agenda");
+                            gc.addEvent(calendar, event);
+
+                            }catch (IOException ex) {
+                                Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
+                            txt_description.setText("");
+                            txt_title.setText("");
+                            txt_heure_debut.setText("");
+                            txt_heure_fin.setText("");
+                            datepicker_debut.setDate(null);
+                            datepicker_fin.setDate(null);
                         }
-                        JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
+                        else
+                        {                      
+                            JOptionPane.showMessageDialog(null,"Impossible d'ajouter l'évènement en mode hors ligne.");                       
+                        }
                     }
                     else
                     {
-                        //on doit sauvegarder les evenement pour les synchroniser plus tard. 
-                        Agenda agenda = new Agenda();
-                        agenda.setAgedeb(startDate);
-                        agenda.setAgefin(endDate);
-                        agenda.setAgeintitule(txt_title.getText());
-                        agenda.setAgedesc(txt_description.getText());                                                
-                        agenda.setUtiid(Fenetre.getInstance().user.getId());
-                        Session session = HibernateConnection.getSession();
-                        Transaction tx = session.beginTransaction();
-                        session.save(agenda);      
-                        tx.commit();        
-                        
-                        JOptionPane.showMessageDialog(null,"Votre évènement a été ajouté avec succès.");
-                        
+                        JOptionPane.showMessageDialog(null,"Vous devez compléter tous les champs");                   
                     }
-                    txt_description.setText("");
-                    txt_title.setText("");
-                    txt_heure_debut.setText("");
-                    txt_heure_fin.setText("");
-                    datepicker_debut.setDate(null);
-                    datepicker_fin.setDate(null);
+                    
                     
                 } catch (Exception ex) {
                     Logger.getLogger(Evenement.class.getName()).log(Level.SEVERE, null, ex);
