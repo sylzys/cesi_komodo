@@ -118,7 +118,7 @@ public class ReportView extends JPanel{
                 + "<td><p> --- &nbsp;&nbsp; Acceptés(s) : </p></td><td><p color=green> &nbsp;"+nbdevok+"</p></td></tr>"
                 + "<tr><td><p>Nb. Commande(s) : </p></td><td><p color=blue>"+nbcmd+"</p></td>"
                 + "<td><p> --- &nbsp;&nbsp; Livrée(s) : </p></td><td><p color=green> &nbsp;"+nbcmdend+"</p></td></tr>"
-                + "<tr><td><p>Nb. Report(s) : </p></td><td><p color=blue>"+nbreport+"</p></td>"
+                + "<tr><td><p>Nb. Rapport(s) : </p></td><td><p color=blue>"+nbreport+"</p></td>"
                 + "<td><p> --- &nbsp;&nbsp; Etat (10 dern.) : </p></td><td>"+img+"</td></tr>"
                 + "</table></html>"));
         pnltopmsg.add(lblmsg);
@@ -187,7 +187,7 @@ public class ReportView extends JPanel{
         }
         else
         {
-           pnlmiddlemsg.add(new JLabel("<html><p color=red><b>Aucun report</b></p></html>"), BorderLayout.CENTER);  
+           pnlmiddlemsg.add(new JLabel("<html><p color=red><b>Aucun rapport</b></p></html>"), BorderLayout.CENTER);  
         }
         pnlmiddlebutton.add(imgicon, BorderLayout.NORTH);     
         pnlmiddlebutton.add(imgdetail, BorderLayout.SOUTH);
@@ -204,7 +204,14 @@ public class ReportView extends JPanel{
                     fen.RenewContener(re.getPanel());
                 }
             });
-        
+        imgdetail.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent me) {
+                    Fenetre fen = Fenetre.getInstance();
+                    ReportList re = new ReportList(fen.user, cli);
+                    fen.RenewContener(re.getPanel());
+                }
+            });
         return pnlcontent;
     }
 }
