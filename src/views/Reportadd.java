@@ -97,6 +97,8 @@ public class Reportadd extends KContainer {
         radioPanel.add(upButton);
         radioPanel.add(downButton);
         txtdesc.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        txtdesc.setPreferredSize(new Dimension(500, 200));
+        txtdesc.setLineWrap(true);
         pnltop.setLayout(new FlowLayout(FlowLayout.LEFT));
         pnltop.add(lblretour);
         pnltop.add(lblvide);

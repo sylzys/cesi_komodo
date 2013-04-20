@@ -18,7 +18,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import models.CurrentDatas;
 import models.DetailDevis;
-
+import models.Client;
 
 /**
  *
@@ -411,5 +411,9 @@ public class Fenetre extends JFrame {
         public void rep(int value, String title) {
             ReplicView pb = new ReplicView();
             RenewContener(pb.stateChanged(value, title));
+        }
+         public void renewRapport(Client cli) {
+            ReportList rl = new ReportList(user,cli);
+            RenewContener(rl.getPanel());
         }
     }

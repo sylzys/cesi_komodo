@@ -154,14 +154,24 @@ public class ReportView extends JPanel{
                 int i = enqdesc.length();
                 if(i > 49)
                 {
-                    enqdesc = enqdesc.substring(0, 46);
-                    lbldesc.setText("<html><p>"+enqdesc+" (...)</p></html>");
+                enqdesc = enqdesc.substring(0, 46);
+                lbldesc.setText("<html><p>"+enqdesc+" (...)</p></html>");
                 }
                 else
                 {
                     lbldesc.setText("<html><p>"+enqdesc+"</p></html>");
                 }
                 String enqtitle = grp.getEnqint();
+                int j = enqtitle.length();
+                if(j > 10)
+                {
+                    enqtitle = enqtitle.substring(0, 7);
+                    lbltitle.setText("<html><p>"+enqtitle+" (...)</p></html>");
+                }
+                else
+                {
+                    lbltitle.setText("<html><p>"+enqtitle+"</p></html>");
+                }
                 SimpleDateFormat  simpleFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String enqdte = simpleFormat.format(grp.getEnqdte());
                 imgstt.setPreferredSize(new Dimension(20, 20));
@@ -169,7 +179,6 @@ public class ReportView extends JPanel{
                 Font fontdesc = new Font("Arial",Font.HANGING_BASELINE,12);
                 Font fontdte = new Font("Arial",Font.BOLD,11);
                 lbltitle.setFont(fonttitle);
-                lbltitle.setText("<html><p>"+enqtitle+" : </p></html>");
                 lbltitle.setPreferredSize(new Dimension(85, 20));
                 lbldesc.setFont(fontdesc);
                 lbldesc.setToolTipText(enqdetail);

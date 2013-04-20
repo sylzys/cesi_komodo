@@ -28,7 +28,6 @@ public class ReportingInstance {
     int limit;
     private int id;
     private Enquete enq;
-
     /**
      * Constructeur prive
      */
@@ -61,7 +60,9 @@ public class ReportingInstance {
     public synchronized void setReporting(Enquete enq) {
         this.enq = enq;
     }
-
+    public Enquete getReporting() {
+        return this.enq;
+    }
     public void slctbdd() {
 
         if (enq == null)
@@ -98,7 +99,24 @@ public class ReportingInstance {
         }
 
     }
+        public void slctenqbdd(GetReporting gr) 
+        {
+        
+            HibernateConnection connection = HibernateConnection.getInstance();
+            String sql = "from Enquete ";
+            sql += "where " + "enqid" +"=:"+"enqid";
+            try
+            {
+                Query query = connection.getSession().createQuery(sql);
+                query.setParameter("enqid", gr.getEnqid());
+                this.enq = (Enquete)query.uniqueResult();
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
 
+    }
     public synchronized Boolean updtbdd(Enquete enq) {
         if (HibernateConnection.online == false)
         {
