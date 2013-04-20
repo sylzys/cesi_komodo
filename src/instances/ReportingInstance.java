@@ -302,7 +302,7 @@ public class ReportingInstance {
     {
         List<Interlocuteur> inter = new ArrayList<Interlocuteur>();
         HibernateConnection connection = HibernateConnection.getInstance();             
-        Query query = connection.getSession().createSQLQuery("SELECT * FROM interlocuteur WHERE cliid=:cliid AND intersuppr='f'").addEntity(Interlocuteur.class);
+        Query query = connection.getSession().createSQLQuery("SELECT * FROM interlocuteur WHERE cliid=:cliid AND intersuppr='f' ORDER BY interid").addEntity(Interlocuteur.class);
         query.setParameter("cliid", cli);
         Iterator it = query.list().iterator();
         while (it.hasNext()) {

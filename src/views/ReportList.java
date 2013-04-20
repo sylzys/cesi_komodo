@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -123,7 +124,10 @@ private Enquete enq;
                 interinfo = in.getInterprenom() + " " + in.getInternom();
             }
             String title = report.getEnqint();
-            String date = report.getEnqdte().toString();
+            Date date = report.getEnqdte();
+            SimpleDateFormat formater = null;
+            formater = new SimpleDateFormat("dd/MM/yy");
+            String dte = formater.format(date);
             String descr = report.getEnqdesc();
             JLabel lbldesc = new JLabel();
             lbldesc.setToolTipText(descr);
@@ -178,7 +182,7 @@ private Enquete enq;
             lbledit.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbledit.setPreferredSize(new Dimension(35, 35));
             JLabel lblinter = new JLabel(interinfo);
-            JLabel lbldate = new JLabel(date);
+            JLabel lbldate = new JLabel(dte);
             lbltitre.setBorder(new EmptyBorder(0, 10, 0, 0));
             lblinter.setBorder(new EmptyBorder(0, 10, 0, 0));
             lbldate.setBorder(new EmptyBorder(0, 10, 0, 0));
@@ -215,9 +219,22 @@ private Enquete enq;
                         }
                     }
                  });
+            lbledit.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent me) {
+                    ReportingInstance re = ReportingInstance.getInstance();
+                    LabelData lbldata = (LabelData) me.getComponent();
+                    Hashtable tmp = lbldata.getData();
+                    GetReporting gr = (GetReporting)tmp.get("objet");
+                    re.slctenqbdd(gr);
+                    Enquete enq = re.getReporting();
+                    Fenetre fen = Fenetre.getInstance();
+                    Reportedit rep = new Reportedit(fen.user, cli, enq);
+                    fen.RenewContener(rep.getPanel());
+                }
+            });
             i = i + 1;           
         }
-        
         pnltop.add(lblretour);
         pnltop.add(lblvide);
         pnltop.add(lbltitle);

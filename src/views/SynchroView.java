@@ -124,6 +124,10 @@ public class SynchroView extends KContainer {
                  String clinom = param.getClinom();
                  String type = param.getType();
                  String table = sync.table(dir[i].getName());
+                 if(table.equals("Enquete"))
+                 {
+                     table = "Rapport";
+                 }
                  FlowLayout flchk = new FlowLayout();
                  Hashtable ht = new Hashtable();
                  ht.put("objet", dir[i].getName());
