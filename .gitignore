@@ -8,3 +8,5 @@ library/
 nbprojet/
 .gitignore
 build.xml
+/vpproject/
+/dist/
