@@ -40,7 +40,6 @@ public class Fenetre extends JFrame {
     private JMenuItem evenements = new JMenuItem("Evenements"),
             synchro = new JMenuItem("Synchronisation"),
             recherche = new JMenuItem("Recherche"),
-//            sortie = new JMenuItem("Quitter"),
             alertes_new = new JMenuItem("Nouvelles"),
             alertes_histo = new JMenuItem("Historique"),
             afficher = new JMenuItem("Afficher"),
@@ -88,7 +87,7 @@ public class Fenetre extends JFrame {
             
             
             //menu
-            
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             cd.setUser(user);
             afficher.addActionListener(new DisplayListener());
             this.societes.add(afficher);
@@ -114,12 +113,6 @@ public class Fenetre extends JFrame {
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
             recherche.addActionListener(new FindListener());
             this.menu.add(recherche);
-//            this.menu.addSeparator();
-//            sortie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-//                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-//            sortie.addActionListener(new LogoutListener());
-            this.setUndecorated(true);
-//            this.menu.add(sortie);
             this.menuBar.add(menu);
             this.setJMenuBar(menuBar);
             this.conteneur.setLayout(new BorderLayout());
@@ -129,8 +122,12 @@ public class Fenetre extends JFrame {
 
             logout.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {
-                    Logout lo = new Logout(user);
-                    RenewContener(lo.getPanel());
+                     int option = JOptionPane.showConfirmDialog(null, "Voulez-vous quitter l'application ?", "Fin de session", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        if (option == JOptionPane.OK_OPTION)
+                        {
+                            Logout lo = new Logout(user);
+                            RenewContener(lo.getPanel());
+                        }
                 }
             });
             username.setText(user.getFullName());
@@ -317,18 +314,6 @@ public class Fenetre extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 SynchroView sy = new SynchroView(user);
                 RenewContener(sy.getPanel());
-            }
-        }
-
-        private class LogoutListener implements ActionListener {
-
-            public LogoutListener() {
-            }
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Logout lo = new Logout(user);
-                RenewContener(lo.getPanel());
             }
         }
 

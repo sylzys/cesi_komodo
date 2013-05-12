@@ -38,6 +38,7 @@ public class Accueil extends KContainer {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dtelast = this.user.getLastLogin();
         String dtelog = dateFormat.format(dtelast);
+        //content.setBackground(Color.white);
         title.setText("<html><center>Bienvenue "+name+"<br>"+
                 "Votre dernière connexion date du " +
                 dtelog+"</center></html>");

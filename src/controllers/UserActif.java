@@ -8,6 +8,7 @@ import classes.BCrypt;
 import java.util.Date;
 import java.util.List;
 import instances.HibernateConnection;
+import java.text.SimpleDateFormat;
 import models.Utilisateur;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -67,12 +68,12 @@ public class UserActif {
             System.out.println(e.getMessage());
         }
     }
-     public void SetDteActiveUser(Date utidtelog) {
+     public void SetDteActiveUser() {
         HibernateConnection connection = HibernateConnection.getInstance();
             Session mysession = connection.getSession();
                 Transaction transaction = null;
                 try {
-                        String req = "UPDATE Utilisateur SET utidtelog='"+utidtelog+"' WHERE utilogin='"+this.login+"'";
+                        String req = "UPDATE Utilisateur SET utidtelog='"+new Date()+"' WHERE utiid='"+this.getId()+"'";
                         mysession.createSQLQuery(req).executeUpdate();
                         mysession.beginTransaction();
                         mysession.getTransaction().commit();
