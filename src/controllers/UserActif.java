@@ -64,7 +64,15 @@ public class UserActif {
             System.out.println(e.getMessage());
         }
     }
-    
+     public void SetDteActiveUser(Date utidtelog) {
+        HibernateConnection connection = HibernateConnection.getInstance();
+        try {
+                Query query = connection.getSession().createSQLQuery("UPDATE Utilisateur SET utidtelog='"+utidtelog+"' WHERE utilogin='"+this.login+"'");
+                query.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
     public Boolean Exists() {
         return this._userExists;
     }

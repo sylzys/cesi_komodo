@@ -8,6 +8,8 @@ import controllers.UserActif;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,11 +35,15 @@ public class Accueil extends KContainer {
         content.setOpaque(false);
         JLabel icon = new JLabel(new ImageIcon("ressources/images/komodo.gif"));
         String name = this.user.getFullName();
-        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
+        Date dtelast = this.user.getLastLogin();
+        String dteheure = heureFormat.format(dtelast);
+        String dtelog = dateFormat.format(dtelast);
         //content.setBackground(Color.white);
         title.setText("<html><center>Bienvenue "+name+"<br>"+
                 "Votre dernière connexion date du " +
-                this.user.getLastLogin()+"</center></html>");
+                dtelog+" à "+ dteheure +"</center></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);  
         title.setBorder(new EmptyBorder(50, 0, 50, 0));
 
