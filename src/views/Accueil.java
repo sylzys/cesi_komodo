@@ -36,11 +36,14 @@ public class Accueil extends KContainer {
         JLabel icon = new JLabel(new ImageIcon("ressources/images/komodo.gif"));
         String name = this.user.getFullName();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat heureFormat = new SimpleDateFormat("HH:mm");
         Date dtelast = this.user.getLastLogin();
+        String dteheure = heureFormat.format(dtelast);
         String dtelog = dateFormat.format(dtelast);
+        //content.setBackground(Color.white);
         title.setText("<html><center>Bienvenue "+name+"<br>"+
                 "Votre dernière connexion date du " +
-                dtelog+"</center></html>");
+                dtelog+" à "+ dteheure +"</center></html>");
         title.setHorizontalAlignment(SwingConstants.CENTER);  
         title.setBorder(new EmptyBorder(50, 0, 50, 0));
 

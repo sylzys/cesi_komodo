@@ -19,7 +19,7 @@ public class Logout extends KContainer {
     JLabel title = new JLabel ("PANNEAU LOGOUT");
     public Logout(UserActif user) {
     super();
-    user.SetDteActiveUser(new Date());
+    user.SetDteActiveUser();
     HibernateConnection.closeConnection();
     System.exit(0);
     }
