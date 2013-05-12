@@ -129,7 +129,7 @@ if ($this->nomenclature) {
                             <input type="text" value="<?php echo $matQte; ?>" name="qte_<?php echo $flag; ?>" id="qte_<?php echo $flag; ?>" style="width: 50px;" /> 
                         </div>
                         <div class="px60">
-                            <input type="button"  class="deleteThisRow" style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close2.png'); ?>)"; />
+                            <input type="button"  class="deleteThisRow" id="<?php echo $matId; ?>" style="background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close2.png'); ?>)"; />
 
                         </div>
 
@@ -162,8 +162,23 @@ if ($this->nomenclature) {
     var newRowUrl = "<?php echo $this->baseUrl('prod/createnomrow'); ?>";
     var deleteNomUrl = "<?php echo $this->baseUrl('prod/deletenom'); ?>";
     var prodUrl = "<?php echo $this->baseUrl('prod'); ?>";
+    var removeProduct = "<?php echo $this->baseUrl('prod/removeproduct'); ?>";
     $(document).ready(function(){
-            
+        $('.deleteThisRow').live('click', function(){
+            var me = $(this);
+            $.ajax({
+                url:        removeProduct,
+                data: 'productid='+$(this).attr('id')+'&nomId='+$('#nomId').val(), //envoi du formulaire complet serialisé
+                type:       'POST',
+                dataType:   'html',
+                success: function(data) {
+                    me.parent().parent().remove();
+                },
+                error : function(data){
+                    alert('error' + data.response);
+                }
+            });
+        });
         $('.selectMat').change(function() {
             var refMatiere = $(this).attr('value').split("_")[0];
             var matPrix = $(this).attr('value').split("_")[1];
@@ -175,7 +190,7 @@ if ($this->nomenclature) {
             $('#prix_'+lineId).val(matPrix);
             $('#matName_'+lineId).value = matName;
         });
-            
+        
         $('#selectNom').click(function(){
             var nomId = $('#listExistingNom option:selected').attr('id');
             $.ajax({
@@ -185,9 +200,7 @@ if ($this->nomenclature) {
                 dataType:   'html',
                 success: function(data) {
                     $('.row').html(data);
-                    $('.deleteThisRow').click(function(){
-                        $(this).parent().parent().remove();
-                    });
+                    
                     $('.selectMat').change(function() {
                         var refMatiere = $(this).attr('value').split("_")[0];
                         var matPrix = $(this).attr('value').split("_")[1];
@@ -204,9 +217,6 @@ if ($this->nomenclature) {
               
         });
         
-        $('.deleteThisRow').click(function(){
-            $(this).parent().parent().remove();
-        });
         
         $('#deleteNom').click(function(){
             var idNom = $('#nomId').val();
