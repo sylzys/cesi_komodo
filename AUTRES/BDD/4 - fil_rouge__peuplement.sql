@@ -53,6 +53,8 @@ nextval('action_actionid_seq'), 1, 'userlist','Consultation de la liste des util
 ), (
 nextval('action_actionid_seq'), 1, 'userchangeprofil','Changement des profils utilisateurs', false
 ), (
+nextval('action_actionid_seq'), 1, 'removeproduct','Suppression d\'une matiere de nomenclature', false
+), (
 nextval('action_actionid_seq'), 2, 'index','Index du site', false
 ), (
 nextval('action_actionid_seq'), 2, 'getclientinfos','Consultation des informations des clients', false
@@ -920,6 +922,8 @@ VALUES (
 '62', '1'
 ), (
 '63', '1'
+), (
+'64', '1'
 ), (
 '8', '2'
 ), (
