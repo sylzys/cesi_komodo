@@ -27,7 +27,7 @@ WHERE d.devid = s.devid AND s.interid = i.interid AND i.cliid = l.cliid;
 */
 
 CREATE OR REPLACE VIEW calcultempsnom AS 
-SELECT c.comid, c.comqte, n.nomid, n.nomtemps FROM comnom c, nomenclature n WHERE c.nomid = n.nomid;
+SELECT nomenclature.nomtemps, devnom.devnomqte AS comqte, devnom.nomid, commande.comid FROM (((commande JOIN devis ON ((commande.demandeid = devis.demandeid))) JOIN devnom ON ((devis.devid = devnom.devid))) JOIN nomenclature ON ((devnom.nomid = nomenclature.nomid)));
 
 CREATE OR REPLACE VIEW client_comm AS 
  SELECT c.cliid, c.utiid, c.uti_utiid, c.clirais, c.clinom, c.clidteadd, C.cliacces, c.cliadresse, c.clicp, c.cliville, c.clisuppr, u.utinom, u.utiprenom FROM client c, utilisateur u WHERE c.utiid = u.utiid;
