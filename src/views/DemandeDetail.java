@@ -260,6 +260,9 @@ public class DemandeDetail extends KContainer {
             cmd.setComdate(new Date());
             cmd.setDemandeid(demande_id);
             cmd.setCometat(0);
+            cmd.setComproddeb(new Date());
+            cmd.setComdateprev(new Date());
+            cmd.setComprodfin(new Date());
             cmd.setComsuppr(false);
 
             HibernateConnection connection = HibernateConnection.getInstance();
