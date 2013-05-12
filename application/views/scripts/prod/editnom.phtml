@@ -45,7 +45,7 @@ if ($this->nomenclature) {
                 </li>
                 <li style="width:220px;">
                     <label for="">
-                        Prix
+                        Prix (en €)
                     </label>
                     <input type="text" value="<?php echo $prix; ?>" name="nomPrix" id="nomPrix" />
                 </li>
@@ -57,9 +57,9 @@ if ($this->nomenclature) {
                 </li>
                 <li style="width:220px;">
                     <label for="nomTemps">
-                        Temps
+                        Temps (en min)
                     </label>
-                    <input type="text" value="<?php echo $temps; ?>" name="nomTemps" id="nomTemps" />
+                    <input type="number"  value="<?php echo trim($temps); ?>" step="1" name="nomTemps" id="nomTemps" style="height:24px;"/>
                 </li>
                 <li style="position:absolute;top: -115px;right: 10px;" id="qr">
                     <img src="<?php echo $this->baseUrl('images/nomenclatures/') . $qr; ?>" alt="" style="max-width:150px;" />
@@ -271,7 +271,7 @@ if ($this->nomenclature) {
         $('#downloadNom').click(function(){
             var lblNom = $('#nomName').val();
             var urlNomPdf = urlPdfNom + 'nomenclature_' + lblNom + '.pdf';
-            window.open(urlNomPdf, '_blank');
+            window.open(urlNomPdf);
         });
         
         $('#updateNom').on('click', function(){
