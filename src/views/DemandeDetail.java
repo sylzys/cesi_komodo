@@ -33,6 +33,8 @@ import models.CurrentDatas;
 import models.Demande;
 import models.DetailDmd;
 import models.ModelesTables;
+import models.Satisfaction;
+import org.hibernate.Query;
 
 /**
  *
@@ -264,6 +266,7 @@ public class DemandeDetail extends KContainer {
             cmd.setComdateprev(new Date());
             cmd.setComprodfin(new Date());
             cmd.setComsuppr(false);
+            
 
             HibernateConnection connection = HibernateConnection.getInstance();
             BigDecimal value = (BigDecimal) connection.getSession().createSQLQuery("SELECT devprix FROM devis WHERE demandeid = " + ddd.get(0).getDemandeid() + "  and devetat = 'Accepté'").uniqueResult();
@@ -274,7 +277,7 @@ public class DemandeDetail extends KContainer {
             cmd_inst.ajouterDansBaseDeDonnees();
 
 
-
+            
             
             ClientDetail cd = new ClientDetail(cur.getSoc_id());
 
