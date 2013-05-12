@@ -8,6 +8,7 @@ import classes.BCrypt;
 import java.util.Date;
 import java.util.List;
 import instances.HibernateConnection;
+import java.text.SimpleDateFormat;
 import models.Utilisateur;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
