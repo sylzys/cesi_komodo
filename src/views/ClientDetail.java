@@ -156,7 +156,7 @@ public class ClientDetail extends KContainer {
 
         //raison sociale
         JPanel cliRS = new JPanel();
-        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>ActivitÃ© :"
+        JLabel RS = new JLabel("<html>Dirigeant: " + cli.getClidg() + "<br>Activité :"
                 + cli.getCliactivite() + "<br>SIRET: "
                 + cli.getClisiret() + "<br>CA: "
                 + Integer.toString(cli.getClica()) + "</html>");
@@ -224,7 +224,7 @@ public class ClientDetail extends KContainer {
         cliButtons.add(addContact);
 
 
-        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos SociÃ©tÃ©"));
+        cliDetail.setBorder(BorderFactory.createTitledBorder("Infos Société"));
 
         //Panneau des combos box
         JButton retour = new JButton("Retour");
@@ -327,7 +327,7 @@ public class ClientDetail extends KContainer {
                 name_ste.setPreferredSize(new Dimension(100, 40));
                 JLabel lblsync = new JLabel();
                 lblsync.setPreferredSize(new Dimension(780, 15));
-                lblsync.setText("<html><p color=red>Attention: ce client est en attente de synchronisation, toutes nouvelles modifications pourraient Ãªtre perdues.</p></html>");
+                lblsync.setText("<html><p color=red>Attention: ce client est en attente de synchronisation, toutes nouvelles modifications pourraient être perdues.</p></html>");
                 name_ste.add(lblsync);
             }
             HibernateConnection.closeConnectionBis();

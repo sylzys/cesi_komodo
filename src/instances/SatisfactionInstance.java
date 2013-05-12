@@ -1,15 +1,21 @@
 package instances;
 
 import controllers.Synchro;
+import java.awt.Dimension;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import models.Client;
-import models.Demande;
-import models.Nomenclature;
+import models.Enquete;
+import models.GetReporting;
+import models.Interlocuteur;
+import models.ParamSync;
 import models.Satisfaction;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -18,10 +24,8 @@ import org.hibernate.Transaction;
 public class SatisfactionInstance {
 
     private static SatisfactionInstance instance;
-    private List<Satisfaction> satisfactions;
-    private String where;
-    private Hashtable h;
-    private Satisfaction satisfaction;
+    private List<Satisfaction> listSatisfaction;
+    private int where;
 
     /**
      * Constructeur prive
@@ -44,83 +48,28 @@ public class SatisfactionInstance {
         return instance;
     }
 
-    public synchronized List<Satisfaction> GetSatisfactions(String where, Hashtable h) {
+    public synchronized List<Satisfaction> Satisfaction(int where) {
         this.where = where;
-        this.h = h;
-        chargerDepuisBaseDeDonnees();
-        return satisfactions;
+        slctbdd(where);
+        return listSatisfaction;
     }
-    
-    public synchronized void setSatisfaction(Satisfaction satis) {
-        this.satisfaction = satis;
-    }
-    
-    
 
-    /**
-     * Bouchon.
-     *
-     * Dans un vrai programme, ces donnees seraient chargees depuis la base.
-     */
-    private void chargerDepuisBaseDeDonnees() {
 
-        if (satisfactions == null)
-        {
-            //return;
-            satisfactions = new ArrayList<Satisfaction>();
-        }
-        else
-        {
-            satisfactions.clear();
-        }
-
+    public List<Satisfaction> slctbdd(int where) {
+        this.where = where;
+            listSatisfaction = new ArrayList<Satisfaction>();
         HibernateConnection connection = HibernateConnection.getInstance();
         String sql = "from satisfaction ";
-        if (!where.isEmpty())
-        {
-            sql += where;
-        }
-
         try
         {
-            Query query = connection.getSession().createQuery(sql);//"from Client where utiid = :utiid");
-            //query.setParameter("utiid", 1);
-            if (!h.isEmpty())
-            {
-                Set<String> set = h.keySet();
-                Iterator<String> itr = set.iterator();
-                while (itr.hasNext())
-                {
-                    String str = itr.next();
-                    query.setParameter(str, h.get(str));
-                }
-            }
-            
-            this.satisfactions = query.list();
+            Query query = connection.getSession().createSQLQuery("SELECT * FROM satisfaction where cliid = " + where + " order by satdate desc").addEntity(Satisfaction.class);
+        
+            this.listSatisfaction = query.list();
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
-
+        return this.listSatisfaction;
     }
-    
-    
-    public void ajouterDansBaseDeDonnees() {
-        try
-        {
-            Transaction tx = HibernateConnection.getSession().beginTransaction();
-
-            HibernateConnection.getSession().save(this.satisfaction);   
-            tx.commit();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    
-    
-    
 }
