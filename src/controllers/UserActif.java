@@ -9,7 +9,10 @@ import java.util.Date;
 import java.util.List;
 import instances.HibernateConnection;
 import models.Utilisateur;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -66,13 +69,20 @@ public class UserActif {
     }
      public void SetDteActiveUser(Date utidtelog) {
         HibernateConnection connection = HibernateConnection.getInstance();
-        try {
-                Query query = connection.getSession().createSQLQuery("UPDATE Utilisateur SET utidtelog='"+utidtelog+"' WHERE utilogin='"+this.login+"'");
-                query.executeUpdate();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-    }
+            Session mysession = connection.getSession();
+                Transaction transaction = null;
+                try {
+                        String req = "UPDATE Utilisateur SET utidtelog='"+utidtelog+"' WHERE utilogin='"+this.login+"'";
+                        mysession.createSQLQuery(req).executeUpdate();
+                        mysession.beginTransaction();
+                        mysession.getTransaction().commit();
+                        mysession.flush();
+                    } catch (HibernateException e) {
+                    transaction.rollback();
+                    e.printStackTrace();
+                } finally {
+                }
+     }
     public Boolean Exists() {
         return this._userExists;
     }

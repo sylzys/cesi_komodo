@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
@@ -38,7 +40,7 @@ public class Fenetre extends JFrame {
     private JMenuItem evenements = new JMenuItem("Evenements"),
             synchro = new JMenuItem("Synchronisation"),
             recherche = new JMenuItem("Recherche"),
-            sortie = new JMenuItem("Quitter"),
+//            sortie = new JMenuItem("Quitter"),
             alertes_new = new JMenuItem("Nouvelles"),
             alertes_histo = new JMenuItem("Historique"),
             afficher = new JMenuItem("Afficher"),
@@ -48,7 +50,7 @@ public class Fenetre extends JFrame {
     private JToolBar toolbar = new JToolBar() ;
 
     
-    private JButton logout = new JButton("Deconnexion");
+    private JLabel logout = new JLabel(new ImageIcon("ressources/images/quitter.png"));
         private JLabel username = new JLabel();
         private JLabel lblAccueil = new JLabel(new ImageIcon("ressources/images/accueil.png"));
         private JLabel lblOnline = new JLabel(new ImageIcon("ressources/images/online.png"));
@@ -112,11 +114,12 @@ public class Fenetre extends JFrame {
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
             recherche.addActionListener(new FindListener());
             this.menu.add(recherche);
-            this.menu.addSeparator();
-            sortie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-            sortie.addActionListener(new LogoutListener());
-            this.menu.add(sortie);
+//            this.menu.addSeparator();
+//            sortie.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+//                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+//            sortie.addActionListener(new LogoutListener());
+            this.setUndecorated(true);
+//            this.menu.add(sortie);
             this.menuBar.add(menu);
             this.setJMenuBar(menuBar);
             this.conteneur.setLayout(new BorderLayout());
@@ -124,12 +127,19 @@ public class Fenetre extends JFrame {
 
             //toolbar
 
-            logout.addActionListener(new LogoutListener());
+            logout.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent me) {
+                    Logout lo = new Logout(user);
+                    RenewContener(lo.getPanel());
+                }
+            });
             username.setText(user.getFullName());
             username.setBorder(new EmptyBorder(0, 20, 0, 20));
             toolbar.add(Box.createHorizontalGlue());
             lblOnline.setToolTipText("Passer en mode hors ligne");
             lblOnline.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            logout.setToolTipText("Quitter");
+            logout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             lblReseau.setText("Vous n'êtes pas connecté");
             lblOnline.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {

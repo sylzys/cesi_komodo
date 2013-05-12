@@ -20,10 +20,6 @@ public class Logout extends KContainer {
     public Logout(UserActif user) {
     super();
     user.SetDteActiveUser(new Date());
-//    Transaction tx = HibernateConnection.getSession().beginTransaction();
-//    HibernateConnection.getSession().update(user);
-//    tx.commit();
-    //JOptionPane.showMessageDialog(null, "Fonction de déconnexion", "LOGOUT", JOptionPane.INFORMATION_MESSAGE);
     HibernateConnection.closeConnection();
     System.exit(0);
     }
