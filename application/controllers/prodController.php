@@ -593,6 +593,12 @@ public function chainprocessAction() {
  */
 public function chainprocesslistAction() {
     $o_chainMapper = new Application_Model_ChaineMapper();
+
+    // $reqChain = "SELECT * FROM chaine WHERE chainesuppr = 'false'";
+    // $dbAdapter = Zend_Registry::get('dbAdapter');
+    // $res = $dbAdapter->fetchAll($reqMat);
+    //$where = array('chainesuppr = ' .'false');
+    //$tab_chaine = $o_chainMapper->getWhere($where);
     $tab_chaine = $o_chainMapper->fetchAll();
     $this->view->chaine = $tab_chaine;
     $this->_helper->layout->disableLayout();
@@ -610,7 +616,7 @@ public function ajaxaddchainAction()
     $lbl = $this->_getParam('lbl');
 
         //Exécution de la requete
-    $dbAdapter->query("INSERT into chaine (chainelib, chainedispo, chainesuppr) values ('$lbl', 'true', 'false')");
+    $dbAdapter->query("INSERT into chaine (chainelib, chainedispo, chainesuppr) values ('meuh', 'true', 'false')");
     $this->_helper->layout->disableLayout();
 }
 
@@ -621,6 +627,17 @@ public function ajaxaddchainAction()
 public function ajaxdelchainAction()
 {
     $request = $this->getRequest();
+   
+    //     //On récupère la désignation de la chaine
+    // $id = $this->_getParam('id');
+
+    //     //Exécution de la requete
+    // $o_chainMapper = new Application_Model_ChaineMapper();
+    // $o_chaine = $o_chainMapper->find((int) $id);
+    // $o_chaine->setChainesuppr(1);
+    // $o_chainMapper->save($o_chaine);
+    // $this->_helper->layout->disableLayout();
+     $request = $this->getRequest();
     $dbAdapter = Zend_Registry::get('dbAdapter');
         //On récupère la désignation de la chaine
     $id = $this->_getParam('id');

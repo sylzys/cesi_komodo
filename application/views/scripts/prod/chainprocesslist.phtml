@@ -1,4 +1,4 @@
-<li class="firstLine">
+<ul><li class="firstLine">
     <div>
         Nom chaine
     </div>
@@ -9,133 +9,136 @@
         Mettre en panne
     </div>
 </li>
-<!-- ajout d'un fieldset pour pouvoir ajouter dyn. des lignes -->
-<!--  <fieldset id="mainField"> -->
-<?php
+<!-- ajout d'un fieldset pour pouvoir ajouter dyn. des lignes-->
+<fieldset id="mainField">
+    <?php
 
-foreach ($this->chaine as $a) {
-    ?>
-    <li>
-        
-        <div>
-            <?php
-            if (!$a->getChainesuppr()){ ?>
-            <div ><?php echo $a->getChainelib(); ?></div><div>         
-            	<?php if ($a->getChainedispo()) {
+    foreach ($this->chaine as $a) {
+        ?>
+        <li>
+
+            <div>
+                <?php
+                if (!$a->getChainesuppr()){ ?>
+                <div ><?php echo $a->getChainelib(); ?></div><div>
+                <?php if ($a->getChainedispo()) {
+                    ?>
+                    <button type="button" id="<?php echo $a->getId(); ?>" class="stopChain" title="Stopper la chaine">
+                       <img alt="Desactiver la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/hand_thumbsup.png') ?>" width="32" height="32">
+                   </button>
+                   <?php } else { ?>
+                   <button type="button" id="<?php echo $a->getId(); ?>" class="startChain" title="Relancer la chaine">
+                       <img alt="Activer la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/hand_thumbsdown.png') ?>" width="32" height="32">
+                   </button>
+                   <?php } ?>
+               </div></div>
+               <div><div>
+                   <button type="button" id="<?php echo $a->getId(); ?>" class="disableChain" title="Mettre la chaine en panne">
+                       <img alt="Retirer la chaine de la production" src="<?php echo $this->baseUrl('images/pictos/gris/close.png'); ?>" width="32" height="32">
+                   </button>
+                   <?php } ?>
+               </div></div>
+           </li>
+           <?php
+       }
+       ?>
+   </ul>
+   <div id="nonWorkingChains" style="display:none;">
+    <ul>
+        <li class="firstLine">
+            <div>
+                Nom chaine
+            </div>
+            <div>
+                Réactiver
+            </div>
+            <div >
+                Supprimer
+            </div>
+        </li>
+        <?php
+        foreach ($this->chaine as $a) {
+           if ($a->getChainesuppr()){
+            echo "<li><div><div>".$a->getChainelib()."</div>";
             ?>
-	                <button type="button" id="<?php echo $a->getId(); ?>" class="stopChain" title="Stopper la chaine">
-	                    <img alt="Desactiver la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/hand_thumbsup.png') ?>" width="32" height="32">
-	                </button>
-	               <?php } else { ?>
-	                <button type="button" id="<?php echo $a->getId(); ?>" class="startChain" title="Relancer la chaine">
-	                    <img alt="Activer la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/hand_thumbsdown.png') ?>" width="32" height="32">
-	                </button>
-	            <?php } ?>
-	            </div></div>  
-	            <div><div>  	
-	                <button type="button" id="<?php echo $a->getId(); ?>" class="disableChain" title="Mettre la chaine en panne">
-	                    <img alt="Retirer la chaine de la production" src="<?php echo $this->baseUrl('images/pictos/gris/close.png'); ?>" width="32" height="32">
-	                </button>
-                <?php } ?>
-            </div></div>  
-        </li>
+            <div>
+                <button type="button" id="<?php echo $a->getId(); ?>" class="restoreChain">
+                    <img alt="Remettre la chaine en production" src="<?php echo $this->baseUrl('images/pictos/gris/reload.png'); ?>" width="32" height="32">
+                </button>
+            </div>
+            <div>
+               <button type="button" name="<?php echo $a->getChainelib(); ?>" id="<?php echo $a->getId(); ?>" class="deleteChain">
+                <img alt="Supprimer la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/trash_can.png'); ?>" width="32" height="32">
+            </button>
+        </div></div></li>
         <?php
-    	}
-    ?>
-    <br><br>
-    
-	<div id ="brokenChains">
-	<ul>
-	 <?php
+    }
+}
+?>
+</ul>
+</div>
+<input type="button" value="Afficher les chaines en panne" name="showChains" id="showChains" />
+<script type="text/javascript">
 
-  foreach ($this->chaine as $a) {?>
-    <li>
-            <?php
-            if ($a->getChainesuppr()){?>
-             <div><?php echo $a->getChainelib(); ?>
-            </div>
+var urlModifChaines = "<?php echo $this->baseUrl('prod/disablechain'); ?>";
+var urlLoadChaines = "<?php echo $this->baseUrl('prod/chainprocesslist'); ?>";
 
-            <div style="width:200px;" title="Remettre la chaine en production">               
-                    <button type="button" id="<?php echo $a->getId(); ?>" class="restoreChain">
-                        <img alt="Remettre la chaine en production" src="<?php echo $this->baseUrl('images/pictos/gris/reload.png'); ?>" width="32" height="32">
-                    </button>
-                <?php ?>
-            </div>
-             <div style="width:200px;" title="Supprimer la chaine">               
-                    <button type="button" name="<?php echo $a->getChainelib(); ?>" id="<?php echo $a->getId(); ?>" class="deleteChain">
-                        <img alt="Supprimer la chaine" src="<?php echo $this->baseUrl('images/pictos/gris/trash_can.png'); ?>" width="32" height="32">
-                    </button>
-                <?php } ?>
-            </div>
-        </li>
-        <?php
-        }
-    ?>
-
-	</ul>
-	</div>
-    <input type="button" value="Afficher les chaines en panne" name="showChains" id="showChains" />
-        <script type="text/javascript">
-        
-    var urlModifChaines = "<?php echo $this->baseUrl('prod/disablechain'); ?>";
-    var urlLoadChaines = "<?php echo $this->baseUrl('prod/chainprocesslist'); ?>";
-       
-    $(document).ready(function(){
-        $('#brokenChains').hide();
-        $('#showChains').click(function() {
-            if ($(this).attr('name') == 'showChains') {
-            $('#brokenChains').show();
+$(document).ready(function(){
+    $('#nonWorkingChains').hide();
+    $('#showChains').click(function() {
+        if ($(this).attr('name') == 'showChains') {
+            $('#nonWorkingChains').show();
             $(this).attr('name', 'hideChains');
             $(this).attr("value", "Masquer les chaines en panne");
         }
         else  {
-            $('#brokenChains').hide();
+            $('#nonWorkingChains').hide();
             $(this).attr('name', 'showChains');
             $(this).attr("value", "Afficher les chaines en panne");
         }
+    });
+    $('#hideChains').click(function() {
+        $('nonWorkingChains').hide();
+        $('#hideChains').attr('id', 'showChains');
+    });
+    $('.stopChain').click(function(event) {
+        var iD = $(this).attr('id');
+        $.ajax({
+            url:        urlModifChaines,
+            data: { modif: "stop", id: iD},
+            type:       'POST',
+            dataType:   'html',
+            success: function() {
+                loadListChain();
+            },
+            error : function(data){
+                alert(data.responseText);
+            }
         });
-        $('#hideChains').click(function() {
-            $('#brokenChains').hide();
-            $('#hideChains').attr('id', 'showChains');
+    });
+    $('.startChain').click(function(event) {
+        var iD = $(this).attr('id');
+        $.ajax({
+            url:        urlModifChaines,
+            data: { modif: "start", id: iD},
+            type:       'POST',
+            dataType:   'html',
+            success: function() {
+                loadListChain();
+            },
+            error : function(data){
+                alert(data.responseText);
+            }
         });
-        $('.stopChain').click(function(event) {
-            var iD = $(this).attr('id');
-            $.ajax({
-                url:        urlModifChaines,
-                data: { modif: "stop", id: iD},
-                type:       'POST',
-                dataType:   'html',
-                success: function() {
-                    loadListChain();
-                },
-                error : function(data){
-                    alert(data.responseText);
-                }
-            });
-        }); 
-        $('.startChain').click(function(event) {
-            var iD = $(this).attr('id');
-            $.ajax({
-                url:        urlModifChaines,
-                data: { modif: "start", id: iD},
-                type:       'POST',
-                dataType:   'html',
-                success: function() {
-                    loadListChain();
-                },
-                error : function(data){
-                    alert(data.responseText);
-                }
-            });
-        }); 
-        $('.deleteChain').click(function(event) {
-            var name = $(this).attr('name');
-            var iD = $(this).attr('id');
-            if(confirm("Attention la chaîne '"+ name +"' sera définitivement supprimée"))
+    });
+    $('.deleteChain').click(function(event) {
+        var name = $(this).attr('name');
+        var iD = $(this).attr('id');
+        if(confirm("Attention la chaîne '"+ name +"' sera définitivement supprimée " + iD))
         {
-            
+
             $.ajax({'url' : '../prod/ajaxdelchain',
-            data: {'id':iD},
+                data: {'id':iD},
                 type:       'POST',
                 dataType:   'html',
                 success: function() {
@@ -148,38 +151,38 @@ foreach ($this->chaine as $a) {
                 }
             });
         }
-        }); 
-        $('.disableChain').click(function(event) {
-            var iD = $(this).attr('id');
-            $.ajax({
-                url:        urlModifChaines,
-                data: { modif: "suppress", id: iD},
-                type:       'POST',
-                dataType:   'html',
-                success: function() {
-                    loadListChain();
-                },
-                error : function(data){
-                     alert(data.responseText);
-                }
-            });
-        }); 
-        $('.restoreChain').click(function(event) {
-            var iD = $(this).attr('id');
-            $.ajax({
-                url:        urlModifChaines,
-                data: { modif: "restore", id: iD},
-                type:       'POST',
-                dataType:   'html',
-                success: function() {
-                    loadListChain();
-                },
-                error : function(data){
-                     alert(data.responseText);
-                }
-            });
-        }); 
-    });     
-            
-    
+    });
+    $('.disableChain').click(function(event) {
+        var iD = $(this).attr('id');
+        $.ajax({
+            url:        urlModifChaines,
+            data: { modif: "suppress", id: iD},
+            type:       'POST',
+            dataType:   'html',
+            success: function() {
+                loadListChain();
+            },
+            error : function(data){
+               alert(data.responseText);
+           }
+       });
+    });
+    $('.restoreChain').click(function(event) {
+        var iD = $(this).attr('id');
+        $.ajax({
+            url:        urlModifChaines,
+            data: { modif: "restore", id: iD},
+            type:       'POST',
+            dataType:   'html',
+            success: function() {
+                loadListChain();
+            },
+            error : function(data){
+               alert(data.responseText);
+           }
+       });
+    });
+});
+
+
 </script>

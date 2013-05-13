@@ -10,11 +10,11 @@ echo '<h1>' . $this->titre .'</h1>';
 <?php
 foreach ($this->clients as $client)
      { ?><tr>
-		 <td width="20%"><span class="txt_cli"><?php echo $client['clirais'] . $client['clinom']; ?></span><span class="btn_cli" id="<?php echo $client['cliid'] ?>"><button><img width="20" height="20" src="images/pictos/gris/eye_open.png"></button></span></td>
-		 <td width="20%"><?php echo $client['utiprenom'] . $client['utinom']; ?></td>
-		 <td width="20%"><?php echo $client['cliadresse']; ?></td>
-		 <td width="3%"><?php echo $client['clicp'] ?></td>
-		 <td width="20%"><?php echo $client['cliville']; ?></td>
+		 <td><span class="txt_cli"><?php echo $client['clirais'] . $client['clinom']; ?></span><span class="btn_cli" id="<?php echo $client['cliid'] ?>"><button><img width="20" height="20" src="images/pictos/gris/eye_open.png"></button></span></td>
+		 <td><?php echo $client['utiprenom'] . $client['utinom']; ?></td>
+		 <td><?php echo $client['cliadresse']; ?></td>
+		 <td><?php echo $client['clicp'] ?></td>
+		 <td><?php echo $client['cliville']; ?></td>
 		 </tr>	 
 	<?php } ?>
 </table>

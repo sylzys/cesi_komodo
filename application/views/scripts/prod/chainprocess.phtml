@@ -9,15 +9,15 @@ echo '<h1>' . $this->titre . '</h1>';
           <img style="width:35px; height:35px;" src="<?php echo $this->baseUrl('images/ajouter.png'); ?>" alt="Ajouter une chaîne de production" title="Ajouter une chaîne de production" />
        </a> 
     </div>
-<ul id="listChain"> <!-- class="beautifulArray" -->
+<div id="listChain"> <!-- class="beautifulArray" -->
 
-</ul>
+</div>
 
  <div style="display:none" id="detail">
-    </div>  
+</div>  
 <script type="text/javascript">
    var urlModifChaines = "<?php echo $this->baseUrl('prod/disablechain'); ?>";
-    var urlLoadChaines = "<?php echo $this->baseUrl('prod/chainprocesslist'); ?>";
+   var urlLoadChaines = "<?php echo $this->baseUrl('prod/chainprocesslist'); ?>";
        
     $(document).ready(function(){
         loadListChain();
