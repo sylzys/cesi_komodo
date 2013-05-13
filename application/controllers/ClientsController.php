@@ -13,10 +13,10 @@ class clientsController extends Zend_Controller_Action
     {
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . "/css/filtergrid.css");
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . "/css/style_annuaire.css");
-        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/tablefilter.js");
+      //  $this->view->headScript()->prependFile($this->view->baseUrl() . "/js/tablefilter.js");
        // $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/tablefilter_compressed.js");
-        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/jquery-ui.js");
-        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/modernizr.js");
+    //    $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/jquery-ui.js");
+        $this->view->headScript()->prependFile($this->view->baseUrl() . "/js/modernizr.js");
         
         $this->view->titre = "Liste des Clients";
         $dbAdapter = Zend_Registry::get('dbAdapter');
