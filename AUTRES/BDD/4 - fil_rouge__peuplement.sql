@@ -53,7 +53,7 @@ nextval('action_actionid_seq'), 1, 'userlist','Consultation de la liste des util
 ), (
 nextval('action_actionid_seq'), 1, 'userchangeprofil','Changement des profils utilisateurs', false
 ), (
-nextval('action_actionid_seq'), 1, 'removeproduct','Suppression d\'une matiere de nomenclature', false
+nextval('action_actionid_seq'), 1, 'removeproduct','Suppression d une matiere de nomenclature', false
 ), (
 nextval('action_actionid_seq'), 2, 'index','Index du site', false
 ), (
@@ -166,8 +166,9 @@ nextval('action_actionid_seq'), 5, 'ajaxaddunite','Ajouter une unité de mesure'
 nextval('action_actionid_seq'), 5, 'ajaxupdtunite','Modifier une unité de mesure', false
 ), (
 nextval('action_actionid_seq'), 5, 'ajaxdelunite','Supprimer une unité de mesure', false
+), (
+nextval('action_actionid_seq'), 5, 'ajaxaddchain','Ajouter une chaine de production', false
 );
-
 INSERT INTO utilisateur (
 UTIID ,
 UTINOM ,
@@ -1032,4 +1033,7 @@ VALUES (
 '62', '3'
 ), (
 '63', '3'
+),
+ (
+'65', '1'
 );
