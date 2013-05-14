@@ -352,19 +352,19 @@ UNITELBL ,
 UNITESUPPR
 )
 VALUES (
-nextval('unite_uniteid_seq'), 'Kg' , false
+nextval('unite_uniteid_seq'), 'Kg(s)' , false
 ),(
-nextval('unite_uniteid_seq'), 'Gramme' , false
+nextval('unite_uniteid_seq'), 'Gramme(s)' , false
 ),(
-nextval('unite_uniteid_seq'), 'Mètre' , false
+nextval('unite_uniteid_seq'), 'Mètre(s)' , false
 ),(
 nextval('unite_uniteid_seq'), 'M3' , false
 ),(
-nextval('unite_uniteid_seq'), 'Litre' , false
+nextval('unite_uniteid_seq'), 'Litre(s)' , false
 ),(
-nextval('unite_uniteid_seq'), 'Unité' , false
+nextval('unite_uniteid_seq'), 'Unité(s)' , false
 ),(
-nextval('unite_uniteid_seq'), 'Carton' , false
+nextval('unite_uniteid_seq'), 'Carton(s)' , false
 ),(
 nextval('unite_uniteid_seq'), 'x 1000' , false
 );
