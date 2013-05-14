@@ -495,7 +495,7 @@ td {
 }
 
 
-#listClient, #adminIndex, #adminUser, #adminClient, #homeSweetHome {
+#listClient, #adminIndex, #adminUser, #adminClient, #adminProfils, #homeSweetHome {
     margin: 0px 15px 0px 0px;
     padding: 8px 10px 20px 15px;
     background-color: rgba(248, 245, 240, 0.9);

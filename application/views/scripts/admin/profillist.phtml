@@ -1,35 +1,54 @@
-    <tr>
-        <th>Profil</th>
-        <th>Droits</th>
-    </tr>
+<tr>
+    <th>Profil</th>
+    <th>Droits</th>
+    <th>Actions</th>
+</tr>
 <?php if (!$this->profils): ?>
     <tr><td colspan="2" align="center">Aucun profil pour le moment</td></tr>
 <?php else: ?>
     <?php foreach ($this->profils as $profil): ?>
-    <tr>
-        <td><?php echo $profil->getProflib();?></td>
-        <td>
-            <select name="rights" id="<?php echo $profil->getId(); ?>" multiple="multiple" class="select_right">
-                <?php foreach ($this->rights as $ctrl => $actions): ?>
-                <optgroup label="<?php echo $ctrl; ?>">
-                    <?php foreach ($actions as $act): ?>
-                        <option value="<?php echo $act->act_id; ?>" <?php echo (isset($this->current_rights[$profil->getId()]) && in_array($act->act_id, $this->current_rights[$profil->getId()])) ? 'selected': ''; ?>><?php echo $act->act_lib; ?></option>
+        <tr>
+            <td><?php echo $profil->getProflib(); ?></td>
+            <td>
+                <select name="rights" id="<?php echo $profil->getId(); ?>" multiple="multiple" class="select_right">
+                    <?php foreach ($this->rights as $ctrl => $actions): ?>
+                        <optgroup label="<?php echo $ctrl; ?>">
+                            <?php foreach ($actions as $act): ?>
+                                <option value="<?php echo $act->act_id; ?>" <?php echo (isset($this->current_rights[$profil->getId()]) && in_array($act->act_id, $this->current_rights[$profil->getId()])) ? 'selected' : ''; ?>><?php echo $act->act_lib; ?></option>
+                            <?php endforeach; ?>
+                        </optgroup>
                     <?php endforeach; ?>
-                </optgroup>
-                <?php endforeach; ?>
-            </select>
-            <div class="select_right_updated">
-                <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Droits modifies
-            </div>
-        </td>
-    </tr>
+                </select>
+                <div class="select_right_updated">
+                    <img src="<?php echo $this->baseUrl('images/pictos/gris/checkmark.png'); ?>"> Droits modifies
+                </div>
+            </td>
+            <td>
+                <input type="hidden" name="profil_id" value="<?php echo $profil->getId(); ?>">
+                <input type="hidden" name="profil_name" value="<?php echo $profil->getProflib(); ?>">
+                <p>
+                    <img src="<?php echo $this->baseUrl('images/profil_edit.png'); ?>" class="profilEdit" alt="Modifier" title="Modifier">
+                    <img src="<?php echo $this->baseUrl('images/profil_delete.png'); ?>" class="profilDelete" alt="Supprimer" title="Supprimer">
+                </p>
+            </td>
+        </tr>
     <?php endforeach; ?>
 <?php endif; ?>
+
+<style>
+    img {
+        cursor: pointer;
+        text-align: left;
+        margin: 0px 5px;
+        width: 25px;
+    }
+</style>    
+
 
 <script>
     var urlProfilChangeRight = "<?php echo $this->baseUrl('admin/profilchangeright'); ?>";
     var urlProfilList = "<?php echo $this->baseUrl('admin/profillist'); ?>";
-    
+
     $(document).ready(function() {
         $(".select_right").multiselect({
             header: false,
@@ -37,8 +56,8 @@
             minWidht: "auto",
             checkAllText: "Tous",
             uncheckAllText: "Aucuns",
-            noneSelectedText : "Choisir",
-            selectedText : "#/# s&eacute;lectionn&eacute;s",
+            noneSelectedText: "Choisir",
+            selectedText: "#/# s&eacute;lectionn&eacute;s",
             beforeopen: function() {
                 $(".select_profil_updated").hide();
             },
@@ -46,27 +65,134 @@
                 var item = $(this);
                 var Id_Profil = item.attr('id');
                 var droits = item.multiselect("getChecked").map(function() {
-                    return this.value;	
+                    return this.value;
                 }).get();
                 if (droits.length == 0) {
                     droits = 0;
                 }
                 $.ajax({
-                    url:        urlProfilChangeRight,
-                    data:       { id_profil: Id_Profil, droits: droits},
-                    type:       'POST',
-                    dataType:   'html',
-                    success:    function(data) {
+                    url: urlProfilChangeRight,
+                    data: {id_profil: Id_Profil, droits: droits},
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function(data) {
                         item.parent().children(".select_droit_updated").show();
 //                        document.write(data.responseText);
 //                        loadUser();
                     },
-                    error :     function(data){
+                    error: function(data) {
 //                        document.write(data.responseText);
                     }
                 });
             }
         });
     });
-        
+
+    $(".profilEdit").click(function() {
+        var id = $(this).parent().parent().children("input[name=profil_id]").val();
+        var name = $(this).parent().parent().children("input[name=profil_name]").val();
+        $("#profil_edit_id").val(id);
+        $("#profil_edit_proflib").val(name);
+
+        $("#popup_profil_edit").dialog({
+            modal: true,
+            width: 500,
+            buttons: {
+                "Fermer": function() {
+                    $(this).dialog("close");
+                },
+                "Modifier": function() {
+                    var error = '';
+                    var success = '';
+                    var id = $("#profil_edit_id").val();
+                    var name = $("#profil_edit_proflib").val();
+
+                    $("#profil_edit_error").hide();
+                    $("#profil_edit_success").hide();
+                    if (name === '') {
+                        error = "Vous devez saisir un nom de profil";
+                        $("#profil_edit_error").html(error).show();
+                    } else {
+                        $.ajax({
+                            url: urlProfilEdit,
+                            data: {
+                                id: id,
+                                proflib: name
+                            },
+                            type: 'POST',
+                            dataType: 'html',
+                            success: function(data) {
+                                $("#profil_edit_error").hide();
+                                $("#profil_edit_success").hide();
+                                if (data === '') {
+                                    $("#profil_edit_success").html("Profil modifie avec succes").show();
+                                } else {
+                                    $("#profil_edit_error").html(data).show();
+                                }
+                            },
+                            error: function(data) {
+                                $("#profil_edit_success").hide();
+                                $("#profil_edit_error").html(data.responseText).show();
+                            }
+                        });
+                    }
+                }
+            },
+            open: function(event, ui) {
+                var id = $(this).parent().parent().children("input[name=profil_id]").val();
+                var name = $(this).parent().parent().children("input[name=profil_name]").val();
+                var error = '';
+                var success = '';
+                $("#profil_edit_error").hide();
+                $("#profil_edit_success").hide();
+            },
+            close: function(event, ui) {
+                $("#profil_edit_proflib").val('');
+                $("#profil_edit_success").hide();
+                $("#profil_edit_error").hide();
+                loadProfil();
+            }
+        });
+    });
+
+
+
+    $(".profilDelete").click(function() {
+        var id = $(this).parent().parent().children("input[name=profil_id]").val();
+        var name = $(this).parent().parent().children("input[name=profil_name]").val();
+        $("#popup_profil_delete").children("input[name=profil_id]").val(id);
+        $("#popup_profil_delete").children("b.profil_name").html(name);
+        $("#popup_profil_delete").dialog({
+            modal: true,
+            width: 400,
+            buttons: {
+                "Non": function() {
+                    $(this).dialog("close");
+                },
+                "Oui": function() {
+                    var error = false;
+                    $.ajax({
+                        url: urlProfilDelete,
+                        data: {id: id},
+                        type: 'POST',
+                        dataType: 'html',
+                        success: function(data) {
+                            $(this).dialog("close");
+                        },
+                        error: function(data) {
+                            error = true;
+                            $("#profil_delete_error").html(data).show();
+                        }
+                    });
+                    if (!error) {
+                        $(this).dialog("close");
+                    }
+                }
+            },
+            close: function(event, ui) {
+                loadProfil();
+            }
+        });
+    });
+
 </script>

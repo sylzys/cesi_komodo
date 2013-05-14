@@ -16,8 +16,8 @@ echo '<h1>' . $this->titre .'</h1>';
     foreach ($this->users_last as $user) {
         echo '<p>';
         echo '<a href="'.$this->baseUrl('admin/user/'.$user->getId()).'">'.$user->getUtiprenom().''.$user->getUtinom().'</a>';
-        echo ' (jj/mm/aaaa)';
-//        echo ' ('.$user->getLastlogged().')';
+//        echo ' (jj/mm/aaaa)';
+        echo ' (' . $user->getUtidtelog() .')';
         echo '</p>';
     }
     ?>
@@ -35,7 +35,7 @@ echo '<h1>' . $this->titre .'</h1>';
     foreach ($this->clients_last as $client) {
         echo '<p>';
         echo $client->getClirais() . ' ' . $client->getClinom();
-        echo ' (jj/mm/aaaa)';
+        echo ' (' . $client->getClidtelog() . ')';
 //        echo ' ('.$client->getClilastlogged().')';
         echo '</p>';
     }
