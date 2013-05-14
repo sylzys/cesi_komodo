@@ -15,9 +15,9 @@ class clientsController extends Zend_Controller_Action
         $this->view->headLink()->appendStylesheet($this->view->baseUrl() . "/css/style_annuaire.css");
         $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/tablefilter.js");
        // $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/tablefilter_compressed.js");
-        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/jquery-ui.js");
         $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/modernizr.js");
-        
+        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/jquery.js");
+        $this->view->headScript()->appendFile($this->view->baseUrl() . "/js/jquery-ui.js");
         $this->view->titre = "Liste des Clients";
         $dbAdapter = Zend_Registry::get('dbAdapter');
         //get client name
@@ -25,7 +25,7 @@ class clientsController extends Zend_Controller_Action
         $res = $dbAdapter->fetchAll($sql);
         $this->view->clients = $res;
     }
-    
+
    public function getclientinfosAction()
     {
         //details commandes client
@@ -36,9 +36,9 @@ class clientsController extends Zend_Controller_Action
         $sql = 'SELECT * FROM detailcommande WHERE comid = ?';
         $res = $dbAdapter->fetchAll($sql, $result['id']);
         echo json_encode((array) $res[0]);
-        $this->_helper->layout->disableLayout();      
+        $this->_helper->layout->disableLayout();
     }
-    
-    
+
+
 }
 

@@ -1,17 +1,17 @@
-/* 
+/*
     Document   : style_prod_c
     Created on : 23 avr. 2012, 17:21:21
-    Author     : Cora 
+    Author     : Cora
     Description:
         Purpose of the stylesheet follows.
 */
 
-/* 
+/*
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-root { 
+root {
     display: block;
 }
 #editNom h6 {
@@ -143,7 +143,7 @@ root {
     border-top: 0px;
     float: left;
 }
-#listChain {
+#listChain{
     margin: 0px 15px 0px 0px;
     padding: 8px 10px 20px 15px;
     background-color: rgba(248, 245, 240, 0.9);
@@ -152,20 +152,28 @@ root {
     border: 1px solid #ccc;
     border-top: 0px;
 }
-#listChain li.firstLine div{
+#nonWorkingChains {
+    padding: 8px 10px 20px 15px;
+    background-color: rgba(248, 245, 240, 0.9);
+    width: 700px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-top: 0px;
+}
+#listChain li.firstLine div, #nonWorkingChains li.firstLine div{
     float:left;
     width: 200px;
     height: 40px;
     line-height: 30px;
 }
-#listChain li div div, #listChain li div button{
+#listChain li div div, #listChain li div button, #nonWorkingChains li div div, #nonWorkingChains li div button{
     float:left;
     width: 200px;
 }
-#listChain li div button{
+#listChain li div button, #nonWorkingChains li div button{
     width: 40px;
     height:37px;
-    margin-left: 50px;
+   /* margin-left: 50px;*/
 }
 
 
