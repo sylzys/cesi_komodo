@@ -58,7 +58,7 @@ class Application_Model_ProfilMapper extends Application_Model_Mapper_Abstract {
     
     public function findRights() {
         $db = Zend_Registry::get('dbAdapter');
-        $stmt = $db->query("SELECT * FROM actctrl");
+        $stmt = $db->query("SELECT * FROM controller_action");
         $stmt->setFetchMode(Zend_Db::FETCH_OBJ);
         $result = array();
         while ($row = $stmt->fetch()) {

@@ -25,7 +25,7 @@ class clientsController extends Zend_Controller_Action
         $res = $dbAdapter->fetchAll($sql);
         $this->view->clients = $res;
     }
-    
+
    public function getclientinfosAction()
     {
         //details commandes client
@@ -36,9 +36,9 @@ class clientsController extends Zend_Controller_Action
         $sql = 'SELECT * FROM detailcommande WHERE comid = ?';
         $res = $dbAdapter->fetchAll($sql, $result['id']);
         echo json_encode((array) $res[0]);
-        $this->_helper->layout->disableLayout();      
+        $this->_helper->layout->disableLayout();
     }
-    
-    
+
+
 }
 
