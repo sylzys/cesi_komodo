@@ -35,6 +35,8 @@ CREATE OR REPLACE VIEW client_comm AS
 CREATE OR REPLACE VIEW actctrl AS
 SELECT c.ctrlid, p.profid, c.ctrlnom, c.ctrllib, a.actionid, a.actionnom, a.actionlib FROM profil as p, controller as c, action as a, profaction as s WHERE p.profid=s.profid AND a.actionid = s.actionid AND a.ctrlid = c.ctrlid AND c.ctrlsuppr = false AND a.actionsuppr = false;
 ;
+CREATE OR REPLACE VIEW controller_action AS
+SELECT c.ctrlid, c.ctrlnom, c.ctrllib, a.actionid, a.actionnom, a.actionlib FROM controller c, action a WHERE (((a.ctrlid = c.ctrlid) AND (c.ctrlsuppr = false)) AND (a.actionsuppr = false));
 
 CREATE OR REPLACE VIEW qtestock AS
 SELECT s.stockqte, j.matid, s.stocksortie FROM stock as s, matiere as j WHERE s.matid = j.matid AND j.matsuppr = false AND s.stocksuppr = false;
