@@ -25,7 +25,7 @@ echo '<h1>' . $this->titre . '</h1>';
 
         <label for="nomChain">
             Chaines nécessaires
-        </label> 
+        </label>
         <select id="nomChain">
             <?php
             for ($i = 1; $i <= $this->nbreChaine; $i++) {
@@ -68,109 +68,114 @@ echo '<h1>' . $this->titre . '</h1>';
             </li>
             <div class="row" style="margin-top:20px;">
                 <?php for ($i = 0; $i <= 4; $i++) { ?>
-                    <li class="rowLi" id="row_<?php echo $i; ?>">
-                        <div class="px200">
-                            <select class="selectMat" name="listProd_<?php echo $i; ?>" id="listProd_<?php echo $i; ?>">
-                                <option>Selectionner un produit</option>
-                                <?php
-                                foreach ($this->matieres as $matiere) {
-                                    echo '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '">' . $matiere["matlib"] . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="px200">
-                            <input type="text" name="prod_<?php echo $i; ?>" id="prod_<?php echo $i; ?>"   /> 
-                        </div>
-                        <div class="px100">
-                            <input type="text" name="prix_<?php echo $i; ?>" id="prix_<?php echo $i; ?>"  style="width: 50px;" /> 
-                        </div>
-                        <input type="hidden" name="matName_<?php echo $i; ?>" id="matName_<?php echo $i; ?>" value="" /> 
-                        <div class="px100">
-                            <input type="text" name="qte_<?php echo $i; ?>" id="qte_<?php echo $i; ?>" style="width: 50px;" /> 
-                        </div>
-                        <div class="px60">
-                            <input type="button"  class="deleteThisRow" style="background-position: 50% 50%;background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close2.png'); ?>); width: 30px;" />
+                <li class="rowLi" id="row_<?php echo $i; ?>">
+                    <div class="px200">
+                        <select class="selectMat" name="listProd_<?php echo $i; ?>" id="listProd_<?php echo $i; ?>">
+                            <option>Selectionner un produit</option>
+                            <?php
+                            foreach ($this->matieres as $matiere) {
+                                echo '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '_'. $matiere["unitelbl"] . '">' . $matiere["matlib"] . '</option>';
 
-                        </div>
-                    </li>
-                    <?php
-                }
-                ?>
-            </div>
-        </ul>
-        <div style="display:block;clear:both;height:15px;"></div>
-        <input type="button" id="createNewNomBtn" value="Enregistrer la nomenclature" style="float:right; margin-right: 17px;" />
-        <div style="display:block;clear:both;"></div>
-    </form>
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="px200">
+                        <input type="text" name="prod_<?php echo $i; ?>" id="prod_<?php echo $i; ?>"   />
+                    </div>
+                    <div class="px100">
+                        <input type="text" name="prix_<?php echo $i; ?>" id="prix_<?php echo $i; ?>"  style="width: 50px;" />
+                    </div>
+                    <input type="hidden" name="matName_<?php echo $i; ?>" id="matName_<?php echo $i; ?>" value="" />
+                    <div class="px100">
+                        <input type="text" name="qte_<?php echo $i; ?>" id="qte_<?php echo $i; ?>" style="width: 50px;" />
+                    </div>
+                    <input type ="hidden" name="uni_<?php echo $i; ?>" id="uni_<?php echo $i; ?>" />
+                    <div class="px60">
+                        <input type="button"  class="deleteThisRow" style="background-position: 50% 50%;background-image: url(<?php echo $this->baseUrl('images/pictos/gris/close2.png'); ?>); width: 30px;" />
+
+                    </div>
+                </li>
+                <?php
+            }
+            ?>
+        </div>
+    </ul>
+    <div style="display:block;clear:both;height:15px;"></div>
+    <input type="button" id="createNewNomBtn" value="Enregistrer la nomenclature" style="float:right; margin-right: 17px;" />
+    <div style="display:block;clear:both;"></div>
+</form>
 </div>
 <script type="text/javascript">
-    var current = 5;
+var current = 5;
 <?php
 $optionRow = '';
 foreach ($this->matieres as $matiere) {
     $optionRow .= '<option value="' . $matiere["matid"] . '_' . $matiere["stockpu"] . '_' . $matiere["matlib"] . '">' . $matiere["matlib"] . '</option>';
 }
 ?>
-    var beginRow = '<li><div class="px200"><select id=""><option>Selectionner un produit</option>';
-    var middleRow = '<?php echo $optionRow ?>';         
-    var endRow = '</select></div><div class="px200"><input type="text" name="prod" id="" /></div><div class="px200"><input type="text" name="qte" id=""/></div><div class="px60"><input type="button"  class="deleteThisRow" style="width:15px;height:15px;" /></div></li>';
-    var theRow = beginRow + middleRow + endRow;
-   
-    var existingNom = "<?php echo $this->baseUrl('prod/createexistingnom'); ?>";
-    var urlCreationNomenclature = "<?php echo $this->baseUrl('prod/createqr'); ?>";
-    var urlLoadNom = "<?php echo $this->baseUrl('prod/loadnom'); ?>";
-    var newRowUrl = "<?php echo $this->baseUrl('prod/createnomrow'); ?>";
-    $(document).ready(function(){
-            
-        $('.selectMat').change(function() {
-            var refMatiere = $(this).attr('value').split("_")[0];
-            var matPrix = $(this).attr('value').split("_")[1];
-            var matName = $(this).attr('value').split("_")[2];
-            var lineId = $(this).attr('id').split("listProd_")[1];
-            $('#prod_'+lineId).val(refMatiere);
-            $('#prix_'+lineId).val(matPrix);
-            $('#matName_'+lineId).val(matName);
+var beginRow = '<li><div class="px200"><select id=""><option>Selectionner un produit</option>';
+var middleRow = '<?php echo $optionRow ?>';
+var endRow = '</select></div><div class="px200"><input type="text" name="prod" id="" /></div><div class="px200"><input type="text" name="qte" id=""/></div><div class="px60"><input type="button"  class="deleteThisRow" style="width:15px;height:15px;" /></div></li>';
+var theRow = beginRow + middleRow + endRow;
+
+var existingNom = "<?php echo $this->baseUrl('prod/createexistingnom'); ?>";
+var urlCreationNomenclature = "<?php echo $this->baseUrl('prod/createqr'); ?>";
+var urlLoadNom = "<?php echo $this->baseUrl('prod/loadnom'); ?>";
+var newRowUrl = "<?php echo $this->baseUrl('prod/createnomrow'); ?>";
+$(document).ready(function(){
+
+    $('.selectMat').change(function() {
+        var refMatiere = $(this).attr('value').split("_")[0];
+        var matPrix = $(this).attr('value').split("_")[1];
+        var matName = $(this).attr('value').split("_")[2];
+        var uniLbl = $(this).attr('value').split("_")[3];
+        var lineId = $(this).attr('id').split("listProd_")[1];
+        $('#prod_'+lineId).val(refMatiere);
+        $('#prix_'+lineId).val(matPrix);
+        $('#matName_'+lineId).val(matName);
+        $('#uni_'+lineId).val(uniLbl);
+
+    });
+
+    $('#selectNom').click(function(){
+        var nomId = $('#listExistingNom option:selected').attr('id');
+        $.ajax({
+            url:        existingNom,
+            data: 'idnom='+nomId,
+            type:       'POST',
+            dataType:   'html',
+            success: function(data) {
+                $('.row').html(data);
+                $('.deleteThisRow').click(function(){
+                    $(this).parent().parent().remove();
+                });
+                $('.selectMat').change(function() {
+                    var refMatiere = $(this).attr('value').split("_")[0];
+                    var matPrix = $(this).attr('value').split("_")[1];
+                    var matName = $(this).attr('value').split("_")[2];
+                    var lineId = $(this).attr('id').split("listProd_")[1];
+                    $('#prod_'+lineId).val(refMatiere);
+                    $('#prix_'+lineId).val(matPrix);
+                    $('#matName_'+lineId).val(matName);
+                });
+
+            },
+            error : function(data){
+                alert('error' + data.response);
+            }
         });
-            
-        $('#selectNom').click(function(){
-            var nomId = $('#listExistingNom option:selected').attr('id');
-            $.ajax({
-                url:        existingNom,
-                data: 'idnom='+nomId, 
-                type:       'POST',
-                dataType:   'html',
-                success: function(data) {
-                    $('.row').html(data);
-                    $('.deleteThisRow').click(function(){
-                        $(this).parent().parent().remove();
-                    });
-                    $('.selectMat').change(function() {
-                        var refMatiere = $(this).attr('value').split("_")[0];
-                        var matPrix = $(this).attr('value').split("_")[1];
-                        var matName = $(this).attr('value').split("_")[2];
-                        var lineId = $(this).attr('id').split("listProd_")[1];
-                        $('#prod_'+lineId).val(refMatiere);
-                        $('#prix_'+lineId).val(matPrix);
-                        $('#matName_'+lineId).val(matName);
-                    });
-                    
-                },
-                error : function(data){
-                    alert('error' + data.response);
-                }
-            });
-              
-        });
-        
-        $('.deleteThisRow').click(function(){
-            $(this).parent().parent().remove();
-        });
-        
-        $('#addRow').click(function(){
-            var lastrow = $('.row li').last().attr("id").split("row_")[1];
-            $.ajax({
-                url:        newRowUrl,
+
+});
+
+$('.deleteThisRow').click(function(){
+    $(this).parent().parent().remove();
+});
+
+$('#addRow').click(function(){
+    var lastrow = $('.row li').last().attr("id").split("row_")[1];
+    $.ajax({
+        url:        newRowUrl,
                 data: 'lastrowid='+lastrow, //envoi du formulaire complet serialisé
                 type:       'POST',
                 dataType:   'html',
@@ -186,29 +191,29 @@ foreach ($this->matieres as $matiere) {
                         var lineId = $(this).attr('id').split("listProd_")[1];
                         $('#prod_'+lineId).val(refMatiere);
                         $('#prix_'+lineId).val(matPrix);
-                        $('#matName_'+lineId).val(matName); 
+                        $('#matName_'+lineId).val(matName);
                     });
-                    
+
                 },
                 error : function(data){
                     alert('error' + data.response);
                 }
             });
-            $('.deleteThisRow').click(function(){
-                $(this).parent().parent().remove();
-            });
-        });
-        
-        $('#createNewNomBtn').on('click', function(){
-            nomName = $('#nomName').val().split(" ")[0];
-            nomName2 = $('#nomName').val().split(" ")[1];
-            if($('#nomName').val() != ""){
-                if(nomName2 != null){
-                    errorTxt = '<span style="font-size:10px;color:red">Pas d\'espaces dans le nom de la nomenclature</span>';
-                    $(errorTxt).insertAfter('#nomForm');
-                }else {
-                    $.ajax({
-                        url:        urlCreationNomenclature,
+$('.deleteThisRow').click(function(){
+    $(this).parent().parent().remove();
+});
+});
+
+$('#createNewNomBtn').on('click', function(){
+    nomName = $('#nomName').val().split(" ")[0];
+    nomName2 = $('#nomName').val().split(" ")[1];
+    if($('#nomName').val() != ""){
+        if(nomName2 != null){
+            errorTxt = '<span style="font-size:10px;color:red">Pas d\'espaces dans le nom de la nomenclature</span>';
+            $(errorTxt).insertAfter('#nomForm');
+        }else {
+            $.ajax({
+                url:        urlCreationNomenclature,
                         data: $('#nomForm').serialize(), //envoi du formulaire complet serialisé
                         type:       'POST',
                         dataType:   'html',
@@ -220,12 +225,12 @@ foreach ($this->matieres as $matiere) {
                             alert(data.statusText);
                         }
                     });
-                }
-            }else {
-                errorTxt = '<span style="font-size:10px;color:red">Veuillez indiquer un nom</span>';
-                $(errorTxt).insertAfter('#nomForm');
-            }
-        });
-        });
-    
+        }
+    }else {
+        errorTxt = '<span style="font-size:10px;color:red">Veuillez indiquer un nom</span>';
+        $(errorTxt).insertAfter('#nomForm');
+    }
+});
+});
+
 </script>
