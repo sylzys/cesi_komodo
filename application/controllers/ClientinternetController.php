@@ -88,9 +88,15 @@ class ClientinternetController extends Zend_Controller_Action {
     public function ajaxcommandAction() {
         $id = $this->_getParam('id');
         $tab_param = explode('_', $id);
-
+        $comid = $tab_param[1];
         $db = Zend_Registry::get('dbAdapter');
 
+        $res = $db->query('SELECT devid FROM devis WHERE demandeid IN (SELECT demandeid FROM commande WHERE comid = '.$comid.')');
+        foreach ($res as $l => $val) {
+            if ($l == 0)
+                $devid = $val;
+        }
+        
         $result = $db->query('select * from detailcommande where comid=' . $tab_param[1]);
 
         $suivieDossierMapper = new Application_Model_SuivieDossierMapper();
@@ -107,10 +113,10 @@ class ClientinternetController extends Zend_Controller_Action {
         foreach ($resultSuivieDossier as $k => $value) {
             $resultsuivie[] = $value->getSuivdoscom();
         }
-        $comNomDbTable = new Application_Model_DbTable_Comnom();
-        $select = $comNomDbTable->select();
-        $select->where('comid = ?', $tab_param[1]);
-        $rowsComNom = $comNomDbTable->fetchAll($select);
+        $devNomDbTable = new Application_Model_DbTable_Devnom();
+        $select = $devNomDbTable->select();
+        $select->where('devid = ?', $devid);
+        $rowsDevNom = $devNomDbTable->fetchAll($select);
 
         $nomenclatureDbTable = new Application_Model_DbTable_Nomenclature();
         $select = $nomenclatureDbTable->select();
@@ -118,7 +124,7 @@ class ClientinternetController extends Zend_Controller_Action {
         $arrayNom = array();
 
 
-        foreach ($rowsComNom as $val) {
+        foreach ($rowsDevNom as $val) {
             $nomenclatureDbTable = new Application_Model_DbTable_Nomenclature();
             $select = $nomenclatureDbTable->select();
             $select->where('nomid=?', $val->nomid);
