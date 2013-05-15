@@ -337,7 +337,7 @@ public class Creation extends KContainer {
         HibernateConnection connection = HibernateConnection.getInstance();
         Query query = connection.getSession().createSQLQuery("SELECT last_value FROM client_cliid_seq");
         int last_value = ((BigInteger) query.uniqueResult()).intValue();
-
+        System.out.println("http://cesi2.dev/clientinternet/register/?url="+cli.getCliurltmp());
 
         if (HibernateConnection.online == false)
         {

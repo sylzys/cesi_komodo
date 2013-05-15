@@ -4,7 +4,7 @@ DECLARE
 recclicom RECORD;
 BEGIN
 FOR recclicom 
-IN (SELECT comid FROM commande WHERE comid IN (SELECT comid FROM suivdossier WHERE interid IN (SELECT interid FROM interlocuteur WHERE cliid = $1)))
+IN (SELECT comid FROM commande WHERE interid IN (SELECT interid FROM interlocuteur WHERE cliid = $1))
 LOOP
 RETURN NEXT recclicom;
 END LOOP ;
