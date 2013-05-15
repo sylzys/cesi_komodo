@@ -12,6 +12,13 @@ u.utiid, u.utinom, u.utiprenom, u.utisuppr
 FROM commande AS c , client AS l , interlocuteur AS i , utilisateur AS u , demande AS d
 WHERE c.interid = i.interid AND c.demandeid = d.demandeid AND d.cliid = l.cliid AND d.utiid = u.utiid;
 
+
+CREATE OR REPLACE VIEW detailclient AS 
+SELECT i.internom, i.interprenom, i.intersuppr, l.cliid, l.clirais, l.clinom, l.clisuppr, u.utiid, u.utinom, u.utiprenom, u.utisuppr
+FROM client AS l , interlocuteur AS i , utilisateur AS u
+WHERE i.cliid = l.cliid AND i.utiid = u.utiid;
+
+
 CREATE OR REPLACE VIEW detaildevis AS 
 SELECT d.devid, d.devdate, d.devetat, d.devprix, d.devsuppr, l.cliid, l.clirais, l.clinom, l.cliadresse, l.clicp, l.cliville, l.clietat,
 l.clilogin,  l.climdp, l.cliacces, l.clisuppr, i.internom, i.interprenom, i.intermail, i.intertel, i.intersuppr
