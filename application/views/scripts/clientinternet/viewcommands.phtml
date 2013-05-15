@@ -1,40 +1,39 @@
 <div id="clientBox">
-   <?php 
-	echo '<p>Numéro client : <b>'.$this->client->getId().'</b></p>';
-    	echo '<p>Nom : <b>'.$this->client->getClinom().'</b></p>';
-	echo '<p>Adresse : <b>'.$this->client->getCliadresse().'</b></p>';
-   ?>
-    <input id="deconnexion" type="button" onclick="JavaScript:document.location.href='<?php echo $this->baseUrl('/login/logoutclient');?>'" value="Déconnexion">
+    <?php
+    echo '<p>Numéro client : <b>' . $this->client->getId() . '</b></p>';
+    echo '<p>Nom : <b>' . $this->client->getClinom() . '</b></p>';
+    echo '<p>Adresse : <b>' . $this->client->getCliadresse() . '</b></p>';
+    ?>
+    <input id="deconnexion" type="button" onclick="JavaScript:document.location.href='<?php echo $this->baseUrl('/login/logoutclient'); ?>'" value="Déconnexion">
 
 </div>
 <div id="commandClient"> 
     <div>
-    
-	<?php 
-        if(($this->totalCmd['total'] / 2) > $this->totalSatisfaction['total']){
+
+        <?php
+        if (($this->totalCmd['total'] / 2) > $this->totalSatisfaction['total']) {
             echo '<a href="' . $this->baseUrl('clientinternet/satisfaction') . '" alt="Enquete de satisfaction" style="float:right;">> Enquête de satisfaction</a>';
         }
-        
-        
-        if($this->commands){ ?>
-    <h6>
-        Veuillez sélectionner une commande :
-    </h6>
-    
-        <?php
-           foreach ($this->commands as $k =>$val)
-           {
-              echo '<p><a  class="cmd_click" id="clikcomid_'.$val->getId().'" href="#">- Commande n°'.$val->getId().' du '.$val->getComdateprev().'</a></p>';	   
 
-           }
-           ?>
-            </div>
-            <div id="result">
+
+        if ($this->commands) {
+            ?>
+            <h6>
+                Veuillez sélectionner une commande :
+            </h6>
+
             <?php
-           echo '<div class="command active" id="divcomid_'.$val->getId().'"></div>';
-            }else {
-                echo '<div class="scrolldiv"><p>Vous n\'avez aucune commande en cours.</p></div>';
+            foreach ($this->commands as $k => $val) {
+                echo '<p><a  class="cmd_click" id="clikcomid_' . $val->getId() . '" href="#">- Commande n°' . $val->getId() . ' du ' . $val->getComdateprev() . '</a></p>';
             }
+            ?>
+        </div>
+        <div id="result">
+            <?php
+            echo '<div class="command active" id="divcomid_' . $val->getId() . '"></div>';
+        } else {
+            echo '<div class="scrolldiv"><p>Vous n\'avez aucune commande en cours.</p></div>';
+        }
         ?>
 
         <div id="commentaire">
@@ -47,96 +46,93 @@
 </div>
 
 <script type="text/javascript">
-    var ajaxCommandUrl = "<?php echo $this->baseUrl('/clientinternet/ajaxcommand');?>";
+    var ajaxCommandUrl = "<?php echo $this->baseUrl('/clientinternet/ajaxcommand'); ?>";
     var urlPdfNom = '<?php echo $this->baseUrl('pdf/nomenclatures/'); ?>';
-	$(document).ready(function(){
+    $(document).ready(function(){
 	   
-	    $(".cmd_click").click(function (e){	
-		e.preventDefault();
-		$('.command').css('display','none');
-		$('.command').removeClass('active');
-		//requete ajax
-		$.ajax({'url' : ajaxCommandUrl,
-		    data: {'id':this.id},
-		    dataType: 'html',
-		    type : 'POST',
-		    success : function (data){
-			var arrayJSON = JSON.parse(data);				
-			var dataCom  = arrayJSON[1];			
-			var divid = "#divcomid_" + dataCom[0].comid;
-			$(divid).css('display','block');		
-			$(divid).slideDown('fast');
-			//pour vider la div
-			$(divid).html('');
+        $(".cmd_click").click(function (e){	
+            e.preventDefault();
+            $('.command').css('display','none');
+            $('.command').removeClass('active');
+            //requete ajax
+            $.ajax({'url' : ajaxCommandUrl,
+                data: {'id':this.id},
+                dataType: 'html',
+                type : 'POST',
+                success : function (data){
+                    var arrayJSON = JSON.parse(data);				
+                    var dataCom  = arrayJSON[1];			
+                    var divid = "#divcomid_" + dataCom[0].comid;
+                    $(divid).css('display','block');		
+                    $(divid).slideDown('fast');
+                    //pour vider la div
+                    $(divid).html('');
 			
-			var comments = '<ul id="ulcom">';
-			var i =0;
-			for(i;i<arrayJSON[0].length;i++)
-			{
-			    comments += '<li><p style="margin:10px;font-size:14px"><b>Commentaire : </b>'+ arrayJSON[0][i]+'</p></li>';
-			}
-                        comments += '</ul>';
-                        var pdf = "";
-			var i =0;
-                        for(i;i<arrayJSON[2].length;i++)
-			{
-			    pdf += '<p style="clear:both"><a href="'+urlPdfNom+'nomenclature_'+arrayJSON[2][i]+'.pdf" target="_blank">Voir la nomenclature de '+arrayJSON[2][i]+'</a></p>';
-			} 
+                    var comments = '<ul id="ulcom">';
+                    var i =0;
+                    for(i;i<arrayJSON[0].length;i++)
+                    {
+                        comments += '<li><p style="margin:10px;font-size:14px"><b>Commentaire : </b>'+ arrayJSON[0][i]+'</p></li>';
+                    }
+                    comments += '</ul>';
+                    var pdf = "";
+                    var i =0;
+                    for(i;i<arrayJSON[2].length;i++)
+                    {
+                        pdf += '<p style="clear:both"><a href="'+urlPdfNom+'nomenclature_'+arrayJSON[2][i]+'.pdf" target="_blank">Voir la nomenclature de '+arrayJSON[2][i]+'</a></p>';
+                    } 
                         
-			$(divid).html(
-                           '<p style="color:green;font-size:15px;margin-bottom:15px;padding-top:15px;float:left">ETAT DE LA COMMANDE : </p><div style="margin-left:5px;float:left" id="statusBar"><div style="float:left; width:'+arrayJSON[1][0].cometat+'%;"><span>'+arrayJSON[1][0].cometat+ '%</span></div></div>' + pdf + comments
-			    	);
-                        $(document).ready(function() {
-                            $('#ulcom').easyPaginate({
+                    $(divid).html(
+                    '<p style="color:green;font-size:15px;margin-bottom:15px;padding-top:15px;float:left">ETAT DE LA COMMANDE : </p><div style="margin-left:5px;float:left" id="statusBar"><div style="float:left; width:'+arrayJSON[1][0].cometat+'%;"><span>'+arrayJSON[1][0].cometat+ '%</span></div></div>' + pdf + comments
+                );
+                    $(document).ready(function() {
+                        $('#ulcom').easyPaginate({
                             step:5,
                             nextprev:true,
                             delay:0
-                            });
-                            $(".prev").html('<');
-                            $(".next").html('>');
-                       });
-			$(divid).addClass("active");			
-			$('#commentaire').css('display','block');			
-		    }	,    
-		    error : function(data){
-			alert(data);
-		    }
-		});
-	    });
-	    var ajaxComment = "<?php echo $this->baseUrl('/clientinternet/ajaxcomment');?>";
-	    $("#commenter").click(function(){
-		$.ajax({'url' : ajaxComment,
-		    data: {
-			    'id':$(".active").attr('id'),
-			    'comment' : $("#comments").val()
+                        });
+                        $(".prev").html('<');
+                        $(".next").html('>');
+                    });
+                    $(divid).addClass("active");			
+                    $('#commentaire').css('display','block');
+                    		
+                }	,    
+                error : function(data){
+                    alert(data);
+                }
+            });
+        });
+	    var ajaxComment = "<?php echo $this->baseUrl('/clientinternet/ajaxcomment'); ?>";
+                    $(document.body).on("click", "#commenter", function(){
+                        $.ajax({'url' : ajaxComment,
+                            data: 'id='+$(".active").attr('id')+'&comment='+ $("#comments").val(),
+                            dataType: 'html',
+                            type : 'POST',
+                            success : function(){
+                                var ht = $("#ulcom").html();
+                                $("#ulcom").html('<li><p style="margin:10px;font-size:14px"><b>Commentaire: </b>'+ $("#comments").val()+ '</p></li>'+ht);
+                                $("#comments").val('');
+                                $("#pagination").remove();
+                                $(document).ready(function() {
+                                    $("#ulcomvide").html();
+                                    $('#ulcom').easyPaginate({
+                                        step:5,
+                                        nextprev:true,
+                                        delay:0
+                                    });
+                                    $(".prev").html('<');
+                                    $(".next").html('>');
+                                });
+                            },
+                            error : function (){
+                                alert('Error');
+                            }
+                        });
 		    
-			},
-		    dataType: 'html',
-		    type : 'POST',
-		    success : function(){
-                        var ht = $("#ulcom").html();
-			$("#ulcom").html('<li><p style="margin:10px;font-size:14px"><b>Commentaire: </b>'+ $("#comments").val()+ '</p></li>'+ht);
-			$("#comments").val('');
-                        $("#pagination").remove();
-                        $(document).ready(function() {
-                            
-                            $('#ulcom').easyPaginate({
-                            step:5,
-                            nextprev:true,
-                            delay:0
-                            });
-                            $(".prev").html('<');
-                            $(".next").html('>');
-                       });
-		    },
-		    error : function (){
-			alert('Error');
-		    }
-		});
-		    
-	    });
+                    });	
 	    
-	});
+    });
 </script>
-    
+
 
