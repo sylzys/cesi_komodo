@@ -105,13 +105,16 @@ class ClientinternetController extends Zend_Controller_Action {
         $selectSuivieDossier->where('comid = ' . $tab_param[1]);
 
         $resultSuivieDossier = $suivieDossierMapper->fetchAll($selectSuivieDossier);
-
+        $resultsuivie = array();
         foreach ($result as $k => $value) {
             if ($k == 0)
                 $resultCommand[] = $value;
         }
-        foreach ($resultSuivieDossier as $k => $value) {
-            $resultsuivie[] = $value->getSuivdoscom();
+        if($resultSuivieDossier != null)
+        {
+            foreach ($resultSuivieDossier as $k => $value) {
+                $resultsuivie[] = $value->getSuivdoscom();
+            }
         }
         $devNomDbTable = new Application_Model_DbTable_Devnom();
         $select = $devNomDbTable->select();
