@@ -1,4 +1,5 @@
 
+
 <?php
 
 /**
@@ -66,7 +67,6 @@ class prodController extends Zend_Controller_Action {
             $page->drawText($request["prod_{$i}"], $x, $y);
             $page->drawText($request["matName_{$i}"], $x+=190, $y);
             $page->drawText($request["qte_{$i}"], $x+=190, $y);
-            $page->drawText($request["uni_{$i}"], $x+=20, $y);
             $page->drawText($request["prix_{$i}"], $x+=190, $y);
             $y -= 20;
             $x = 70;
@@ -429,10 +429,8 @@ class prodController extends Zend_Controller_Action {
         $where = array('nomsuppr = false');
         $tab_noms = $o_alerteMapper->getWhere($where);
         $this->view->nomenclatures = $tab_noms;
-    //     $reqMat = "SELECT matiere.matlib, stock.stockpu, matiere.matid
-    // FROM matiere , stock WHERE matiere.matid = stock.matid";
-        $reqMat = "SELECT unite.uniteid, unite.unitelbl, matiere.matlib, matiere.uniteid,stock.stockpu, matiere.matid
-    FROM matiere , stock, unite WHERE matiere.matid = stock.matid AND matiere.uniteid = unite.uniteid";
+        $reqMat = "SELECT matiere.matlib, stock.stockpu, matiere.matid
+    FROM matiere , stock WHERE matiere.matid = stock.matid";
         $dbAdapter = Zend_Registry::get('dbAdapter');
         $res = $dbAdapter->fetchAll($reqMat);
         $this->view->matieres = $res;
