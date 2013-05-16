@@ -61,7 +61,6 @@ public class Fenetre extends JFrame {
         public Fenetre() {
             this.setTitle("Plast'Prod");
             this.setSize(1024, 800);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setResizable(false);
             boolean login_ok = false;
 
