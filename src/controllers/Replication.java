@@ -67,7 +67,7 @@ public class Replication extends Thread {
         commd.add(PATH_EXE);
         commd.add("-i"); // IGNORE la version
         commd.add("-h"); // adresse du serveur de bdd
-        commd.add("127.0.0.1");
+        commd.add("172.16.0.205");
         commd.add("-p"); // port du serveur de bdd
         commd.add("5432");
         commd.add("-Fc"); // recreer toutes les TABLES pour backup
