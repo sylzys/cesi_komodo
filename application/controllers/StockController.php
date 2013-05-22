@@ -494,16 +494,16 @@ class stockController extends Zend_Controller_Action
 		$page = $pdf->pages[0];
 		$page->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES), 12);
 		//Affichage du texte
-		$page->drawText($idcmd, 275, 678);
-		$page->drawText($date, 450, 655);
-		$page->drawText($fourrais.' '.$fournom, 110, 590);
-		$page->drawText($fouradresse, 110, 575);
-		$page->drawText($fourcp.' '.$fourville, 110, 560);
-		$page->drawText($matlbl, 90, 510);
-		$page->drawText($reffour, 290, 510);
-		$page->drawText($qte.' '.$unitelbl, 355, 510);
-		$page->drawText($pu, 460, 510);
-		$page->drawText($total, 455, 380);
+		$page->drawText($idcmd, 275, 678,'Windows-1250');
+		$page->drawText($date, 450, 655,'Windows-1250');
+		$page->drawText($fourrais.' '.$fournom, 110, 590,'Windows-1250');
+		$page->drawText($fouradresse, 110, 575,'Windows-1250');
+		$page->drawText($fourcp.' '.$fourville, 110, 560,'Windows-1250');
+		$page->drawText($matlbl, 90, 510,'Windows-1250');
+		$page->drawText($reffour, 290, 510,'Windows-1250');
+		$page->drawText($qte.' '.$unitelbl, 355, 510,'Windows-1250');
+		$page->drawText($pu, 460, 510,'Windows-1250');
+		$page->drawText($total, 455, 380,'Windows-1250');
 		//sauvegarde du pdf
 		$pdf->save($filename);
 		//Affichage de l'url pour charger le pdf en jquery

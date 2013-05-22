@@ -180,7 +180,7 @@ class ClientinternetController extends Zend_Controller_Action {
         $error_auth = false;
         $o_Client = null;
         $message = "";
-        $form = new Application_Form_CLient();
+        $form = new Application_Form_Client();
         $this->_helper->layout->setLayout('loginclient');
         $o_ClientMapper = new Application_Model_ClientMapper();
         //on l'ajoute a la vue
